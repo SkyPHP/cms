@@ -1,0 +1,5 @@
+<?php
+
+$breadcrumb = 'Blog';
+
+?>

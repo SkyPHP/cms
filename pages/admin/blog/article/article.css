@@ -1,0 +1,120 @@
+
+h1, h2, h3, h4, h5, p, ul {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+h1 {
+	font-size:1.7em;
+}
+h2 {
+	font-size:1.4em;
+}
+h3 {
+	font-size:1.1em;
+}
+h4 {
+	font-size:12px;
+}
+a {
+	color:#1d8edf;
+	text-decoration:none;
+}
+a:hover {
+	color:#333;
+	text-decoration:underline;
+}
+
+.clear {
+	clear:both;
+}
+.valign {
+	vertical-align:middle;
+}
+.flt-left {
+	float:left;
+}
+.flt-right {
+	float:right;
+}
+
+input, textares{
+	font-family:Arial, Helvetica, sans-serif;}
+/*--------------*/
+
+
+
+#primary{
+	width:635px;
+	float:left;
+}
+	  
+	 
+#secondary{
+	width:280px;
+	float:right;
+}
+
+
+.side-div{
+	background:#ffffff url(/images/gre.jpg)  repeat-x top left;
+	width:215px;
+	margin-bottom:12px;
+	min-height:100px;
+	
+	}
+.side-div h2, .gry-bg h2{
+	padding-left:8px;
+	font-weight:normal;
+	padding-top:2px;
+	padding-bottom:3px;
+}	
+.side-data{
+	background:#FFFFFF;
+	margin:8px;
+	margin-top:3px;
+	padding:7px;
+	min-height:100px;}	 
+
+.gry-bg{
+	background:#ffffff url(/images/gre.jpg)  repeat-x top left;
+	
+}
+
+.module-container#image-picker {
+	height: 180px;
+}
+.module-container #image-picker-pagination {
+	text-align: right;
+	height: 15px;
+}
+#full-size {
+	float: left;
+}
+.img-item {
+	float: left;
+	font-size:9px;
+	text-align: center;
+}
+.img-item a {
+	display: block;
+}
+.module-bar span#image-picker-nav {
+	float: right;
+	display: inline;
+}
+a.image-picker-month {
+	font-size: 11px;
+	font-weight: normal;
+	padding: 0 1px;
+}
+a.image-picker-month.selected {
+	font-weight: bold;
+	color: #000000;
+}
+
+.img-item {
+	width: 70px;
+	height: 80px;
+	padding: 2px 2px 4px 2px;
+}

@@ -1,0 +1,37 @@
+.left_nav{
+	border:medium none;
+	float:none;
+	margin:0 0 0.5em;
+	overflow:hidden;
+	padding:0;
+	width:120px;
+	padding:5px 0 0;
+}
+.blog_listing{
+	padding:0;
+	width:100%;
+	margin-left:-140px;
+}
+	.content_listing{
+		margin-left:140px;
+	
+}
+
+
+.blog_author_market_fields{
+   float:left;
+   clear:none;
+}
+
+.blog_author_form_left, .blog_author_form_right{
+   float:left;
+   clear:none;
+}
+
+.blog_author_form_right{
+   margin-left:25px;
+}
+
+.blog_author_inactive{
+   display:none;
+}

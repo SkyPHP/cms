@@ -1,0 +1,35 @@
+/* html editor */
+
+body {
+ 	color: #333333;
+ 	font-size: 13px;
+ 	margin-bottom: 15px;
+}
+
+blockquote { 
+	font-style: italic; 
+	color: #555;
+	margin: 0 30px 1.5em 30px; 
+	padding: 0 0 0 10px;
+}
+
+
+.article_image {
+	float:left;
+	margin-right:10px;
+}
+
+	.article_image_caption{
+		margin-top:10px;
+		font-weight:bold;
+		font-size:12px;
+	}
+	.article_image_credits{
+		margin-top:2px;
+		font-style:italic;
+		font-size:10px;
+	}
+#article img {
+	margin: 2px 16px 10px 0;
+	border: 2px solid #CCCCCC;
+}  

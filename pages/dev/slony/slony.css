@@ -1,0 +1,60 @@
+label{
+   display:block;
+}
+
+fieldset{
+   margin-bottom:5px;
+}
+
+input,select{
+   margin-bottom:5px;
+}
+
+#slony_cluster_name_warning{
+   color:#ff0000;
+   display:none;	
+}
+
+.aql_deleted{
+   color: gray;
+   font-style:italic;
+}
+
+.master_node .hide_master{
+   display:none;
+}
+
+.master_node .slony_role{
+   font-weight:bold;
+}
+
+.slony_node_subscription_status{
+   border-style:none !important;
+}
+
+.slony_node_subscription_status td{
+   text-align:right;
+   border-style:none !important;
+   border-width:0px !important;
+}
+
+.slony_node_subscription_status td + td{
+   text-align:left;
+}
+
+.status_good{
+   color:#00ff00;
+}
+
+.status_bad{
+   color:#ff0000;
+}
+
+.status{
+   margin-right:15px;
+}
+
+.pid_warning{
+   font-weight:bold;
+   color:#ff0000;
+}

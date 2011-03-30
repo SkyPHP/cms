@@ -1,0 +1,17 @@
+.left_nav{
+	border:medium none;
+	float:none;
+	margin:0 0 0.5em;
+	overflow:hidden;
+	padding:0;
+	width:120px;
+	padding:5px 0 0;
+}
+.blog_listing{
+	padding:0;
+	width:100%;
+	margin-left:-140px;
+}
+	.content_listing{
+		margin-left:140px;
+	}
