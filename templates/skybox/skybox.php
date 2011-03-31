@@ -6,7 +6,7 @@ if ( $template_area == 'top' ) {
 		<?=$this->title?>
 	</div>
 	<div id="skybox_template_close" style="float:right;">
-		<a href="javascript:closeskybox()"><img src="/images/close-x.gif"></a>
+		<a href="javascript:history.back();"><img src="/images/close-x.gif"></a>
 	</div>
 	<div id="skybox_template_title_clear" style="clear:both; height: 15px;"></div>
 <?
