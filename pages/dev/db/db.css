@@ -1,0 +1,44 @@
+.rep_on {
+	font-weight: bold;
+	color: limegreen;
+}
+
+.rep_off {
+	font-weight: bold;
+	color: crimson;
+}
+#find_loading{
+	display:none;
+}
+body {
+	padding: 15px;
+}
+
+#sql_editor {
+	width: 600px;
+	height: 300px;
+}
+
+#function_bar {
+	padding: 5px;
+	background-color: #f0f0f0;
+	margin: 15px 0 15px 0;
+}
+
+.find {
+	margin-left: 15px;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+#execute{
+	font-size: 10px;
+}
+
+.hide{
+  display:none;
+}
+
+.sequence_warning{
+   color: #ff0000 !important;
+}

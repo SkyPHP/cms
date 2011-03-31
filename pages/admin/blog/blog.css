@@ -1,0 +1,21 @@
+fieldset {
+	margin: 15px 10px 0 0;
+	border: 1px solid #CCCCCC;
+	padding: 10px;
+	float: left;
+	width: 200px;
+	height: 150px;
+}
+fieldset ul {
+	padding-left: 15px;
+}
+legend {
+	font-weight: bold;
+	border: 1px solid #CCCCCC;
+	padding: 3px 8px 3px 8px;
+}
+
+ul_plain { 
+	list-style: none;
+	font-size: 11px;
+}

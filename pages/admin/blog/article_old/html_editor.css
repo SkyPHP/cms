@@ -1,0 +1,20 @@
+/* .blog-post-content */
+body {
+ 	color: #333333;
+ 	font-size: 13px;
+ 	margin-bottom: 15px;
+}
+
+blockquote { 
+	font-style: italic; 
+	color: #555;
+	margin: 0 30px 1.5em 30px; 
+	padding: 0 0 0 10px;
+	border-left: 1px solid #aaa; 
+}
+
+.article_image {
+	float:left;
+	margin: 2px 16px 10px 0;
+	border: 2px solid #CCCCCC;
+}

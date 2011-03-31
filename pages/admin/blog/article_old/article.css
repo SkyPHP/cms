@@ -1,0 +1,41 @@
+#blog_left {
+	float: left;
+	padding-right: 0px;
+}
+
+#blog_right {
+	float: left;
+}
+
+.blog_right_box {
+	border: 1px solid #999999;
+	width: 250px;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+
+.blog_right_box div {
+	margin-top: 10px;
+}
+
+#article_title {
+	font-size: 22px;
+	width: 620px;
+	margin-bottom: 10px;
+}
+
+#article_tags {
+	font-size: 16px;
+	width: 620px;
+	margin-bottom: 15px;
+}
+
+#insert_image {
+	padding-top: 15px;
+}
+
+#introduction {
+	width: 620px;
+	margin-bottom: 10px;
+}
+
