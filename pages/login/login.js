@@ -27,7 +27,12 @@ function login_submit(theform,url) {
 				tmp = url.indexOf('#skybox');
 				if ( tmp > -1 )
 					url = url.substring(0,tmp);
-				//alert(url); return;
+
+				tmp = url.indexOf('?skybox');
+				if ( tmp > -1 ) 
+					url = url.substring(0,tmp);
+
+				// alert(url); return;
 				window.location.href = url;
 			} else if (data=='false') {
 				document.getElementById('login_password').value = '';
