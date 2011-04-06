@@ -1,61 +1,22 @@
-h1, h2 {
-	margin:0;
-	padding:0;
+.field {
+    margin-bottom: 20px;
 }
-h1 {
-	font-size: 20px;
-}
-h2 {
-	font-size: 16px;
+.field-label {
+    font-size: 11px;
+    font-weight: bold;
 }
 
-#login_body {
-	padding: 10px 0 20px 0;
-	margin: 0 25px;
-}
-#login_body h2 {
-	height: 30px;
-	margin-bottom: 5px;
-}
-#login_body input#login_username,
-#login_body input#login_password {
-	width: 200px;
+#login_username,
+#login_password {
+    font-size: 22px;
 }
 
-#signup_body {
-	padding: 20px 0 10px 0;
-	margin: 0 25px;
-	border-top: 1px solid #ccc;
+.login-actions {
+    overflow: hidden;
 }
-
-h2.module-bar {
-	font-size:20px;
+#login_button {
+    font-size: 22px;
 }
-
-a.close {
-	position: absolute;
-	top: 15px;
-	right: 15px;
-	font-size: 12px;
-}
-
-.note {
-	font-size: 10px;
-	line-height: 12px;
-	margin-bottom: 5px;
-	width: 200px;
-}
-.note-big{
-	font-size:13px;
-	margin-top:3px;
-	float:left;
-	
-}
-
-#incorrect_login {
-}
-
-#login_loading {
-	height: 70px;
-	width: 100px;
+#login_box {
+    float: right;
 }
