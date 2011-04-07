@@ -2,9 +2,6 @@
 	$_POST['page_path']="pages/admin/seo/webpage/webpage.php";
 	$p->title="SEO";
 	$p->template('skybox','top');
-?>
-	<link rel="stylesheet" href="/pages/admin/seo/webpage/webpage-skybox.css" />
-<? 
 	$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
 	$website_id = $rs[0]['website_id'];
 	$aql="website_page { where page_path = '{$_POST['page_path']}' and website_id = {$website_id} }";

@@ -1,10 +1,18 @@
+<style>
+fieldset { 
+	width:200px;
+	margin-bottom:15px;	
+	border: 1px solid #ccc;
+	padding:20px;
+}
+</style>
 <?
 	if (is_array($seo_field_array)) {
 		foreach($seo_field_array as $type => $array) {
 			
 			if (!isset($header)) {
 ?>
-				<fieldset class="fieldset">
+				<fieldset>
                 	<legend class="legend"><?=ucwords(str_replace('_',' ',$type))?></legend>
 <?
 				$header = $type;
@@ -12,7 +20,7 @@
 			else if ($header != $type) {
 ?>
 					</fieldset>
-                    <fieldset class="fieldset">
+                    <fieldset>
                     	<legend class="legend"><?=ucwords(str_replace('_',' ',$type))?></legend>
 <?				
 				$header = $type;	
