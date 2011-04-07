@@ -4,7 +4,7 @@
 			
 			if (!isset($header)) {
 ?>
-				<fieldset class="seo-fieldset">
+				<fieldset>
                 	<legend class="legend"><?=ucwords(str_replace('_',' ',$type))?></legend>
 <?
 				$header = $type;
@@ -12,7 +12,7 @@
 			else if ($header != $type) {
 ?>
 					</fieldset>
-                    <fieldset class="seo-fieldset">
+                    <fieldset>
                     	<legend class="legend"><?=ucwords(str_replace('_',' ',$type))?></legend>
 <?				
 				$header = $type;	
