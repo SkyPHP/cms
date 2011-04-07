@@ -4,7 +4,7 @@
 			
 			if (!isset($header)) {
 ?>
-				<fieldset style=style="width:200px; margin-bottom:15px; border: 1px solid #ccc; padding:20px;">
+				<fieldset style="width:200px; margin-bottom:15px; border: 1px solid #ccc; padding:20px;">
                 	<legend class="legend"><?=ucwords(str_replace('_',' ',$type))?></legend>
 <?
 				$header = $type;
