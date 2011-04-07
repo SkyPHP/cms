@@ -1,11 +1,10 @@
 <?
-	$url = $_GET['url'];
 	$p->title="SEO";
 	$p->css[]="/pages/admin/seo/webpage/webpage.css";
 	$p->template('skybox','top');
 	$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
 	$website_id = $rs[0]['website_id'];
-	$aql="website_page { where page_path = '{$_GET['page_path']}' and website_id = {$website_id} }";
+	$aql="website_page { where page_path = '{$_POST['page_path']}' and website_id = {$website_id} }";
 	$rs = aql::select($aql);
 	$page = $rs[0];
 	if (is_numeric($page['website_page_id'])) {
