@@ -1,0 +1,9 @@
+.seo-fieldset {
+	width:200px;
+	margin-bottom:15px;	
+}
+.legend {
+	padding: 5px 10px 5px 10px;
+	border: 1px solid #ccc;
+	font-weight:bold;
+}
