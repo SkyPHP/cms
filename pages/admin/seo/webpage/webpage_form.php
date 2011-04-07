@@ -21,7 +21,7 @@
 			}
 			foreach($array as $field) {
 ?>			
-			<div>
+			<div style="padding-bottom:10px;">
 				<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 	    		<input type="text" class="seo-input" field="<?=$field?>" value="" />
             </div>
