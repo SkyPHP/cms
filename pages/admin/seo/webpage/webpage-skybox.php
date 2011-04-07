@@ -14,7 +14,7 @@
 		$rs = aql::select("website { where  domain = '{$_SERVER['SERVER_NAME']}' }");
         	if (is_numeric($rs[0]['website_id'])) {
             	$data = array(
-                	'page_path'=>$page_path,
+                	'page_path'=>$_POST['page_path'],
                     'website_id'=>$rs[0]['website_id'],
                     'start_mmdd'=>date('md')
                 );
