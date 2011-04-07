@@ -18,8 +18,10 @@
                     'website_id'=>$rs[0]['website_id'],
                     'start_mmdd'=>date('md')
                 );
-                    $insert = aql::insert('website_page',$data);
-                    $page_id = $insert[0]['website_page_id'];
+                    if ($_POST['page_path']) {
+						$insert = aql::insert('website_page',$data);
+                    	$page_id = $insert[0]['website_page_id'];
+					}
                 }
           
 		if (is_numeric($page_id)) {
