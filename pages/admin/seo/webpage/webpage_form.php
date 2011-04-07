@@ -1,5 +1,5 @@
 <div style="width:600px;">
-<?
+<? 
 	if (is_array($seo_field_array)) {
 		foreach($seo_field_array as $type => $array) {
 			
