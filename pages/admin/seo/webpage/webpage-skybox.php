@@ -1,5 +1,4 @@
 <?
-	echo $_POST['page_path'];
 	$p->title="SEO";
 	$p->template('skybox','top');
 	$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
