@@ -1,3 +1,4 @@
+<div style="width:500px;">
 <?
 	$_POST['page_path']="pages/admin/seo/webpage/webpage.php";
 	$p->title="SEO";
@@ -29,3 +30,4 @@
 	}	
 	$p->template('skybox','bottom');
 ?>
+</div>
