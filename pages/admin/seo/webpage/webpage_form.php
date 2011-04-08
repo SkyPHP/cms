@@ -36,7 +36,7 @@
 <?
 				} else {
 ?>
-	    			<input type="text" class="seo-input" field="<?=$field?>" value="<?=$fields[$field]?>" size="25" />
+	    			<input type="text" class="seo-input" field="<?=$field?>" value="<?=$fields[$field]?>" size="24" />
 <?                    
 				}
 ?>				 
