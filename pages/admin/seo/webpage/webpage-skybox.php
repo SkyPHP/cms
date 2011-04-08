@@ -46,6 +46,7 @@
 							$("#"+f).html(v)
 							alert('success')
 						}
+						else alert(data)
 					})	
 				}
 			}
