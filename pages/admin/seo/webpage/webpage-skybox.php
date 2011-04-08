@@ -31,4 +31,9 @@
 		}	
 		$p->template('skybox','bottom');
 	}
+	else {
+?>
+		<div style="width:600px; height:600px;">&nbsp;</div>
+<?	
+	}
 ?>
