@@ -33,7 +33,7 @@
 	}
 	else {
 ?>
-		<div style="width:600px; height:600px;">&nbsp;</div>
+		<div style="width:700px; height:600px;">&nbsp;</div>
 <?	
 	}
 ?>

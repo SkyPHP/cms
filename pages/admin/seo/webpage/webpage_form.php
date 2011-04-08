@@ -1,4 +1,4 @@
-<div style="width:600px">
+<div style="width:700px">
 <? 
 	if (is_array($seo_field_array)) {
 		foreach($seo_field_array as $type => $array) {
