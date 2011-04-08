@@ -34,8 +34,10 @@
 ?>
 
 <script language="javascript">
-	$(function(){
-		$('.seo-input').live('keyup', function(e){
+	$(function() {
+		
+		$('.seo-input').live('keyup', function(e) {
+			alert(e.keyCode)
 			if (e.keyCode ==13) {
 				var f = $(this).attr('field')
 				var v = $(this).val()
