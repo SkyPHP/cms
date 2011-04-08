@@ -20,18 +20,36 @@
 					);
 						if ($_POST['page_path']) {
 							$insert = aql::insert('website_page',$data);
-							$page_id = $insert[0]['website_page_id'];
+							$page['website_page_id'] = $insert[0]['website_page_id'];
 						}
 					}
 			  
-			if (is_numeric($page_id)) {
+			if (is_numeric($page['website_page_id'])) {
 				include('pages/admin/seo/webpage/webpage_form.php');
 			}
 			else exit($_SERVER['SERVER_NAME']." must be added to the website table");
 		}	
 		$p->template('skybox','bottom');
-	}
-	else {
+	
+?>
+
+<script language="javascript">
+	$(function(){
+		$('.seo-input').live('keyup', function(e){
+			if (e.keyCode ==13) {
+				var f = $(this).attr('field')
+				var v = $(this).val()
+				$.post('/admin/seo/webpage/ajax/save-seo',{ field: f, value: v, website_page_id:<?=$page['website_page_id']?> },function (data){
+					if (data == 'success') {
+						$("#"+f).html(v)
+					}
+				})	
+			}
+		})
+	})
+</script>
+
+<? 	} else {
 ?>
 		<div style="width:700px; height:600px;">&nbsp;</div>
 <?	
