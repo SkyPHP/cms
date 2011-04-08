@@ -43,7 +43,7 @@
 				var v = $(this).val()
 				$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, website_page_ide:'<?=$page['website_page_ide']?>' }, function (data){
 					if (data == 'success') {
-						if (f == 'h1' || f == 'paragraph')) $("#"+f).html(v)
+						if (f == 'h1' || f == 'paragraph') $("#"+f).html(v)
 					}
 					else alert(data)
 				})	
