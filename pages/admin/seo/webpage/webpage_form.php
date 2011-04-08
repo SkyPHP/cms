@@ -5,7 +5,7 @@
 			
 			if (!isset($header)) {
 ?>
-				<fieldset style="width:180px; margin-right:15px; border: 1px solid #ccc; padding:20px; float:left;">
+				<fieldset style="width:180px; margin-right:15px; border: 1px solid #ccc; padding:10px; float:left;">
                 	<legend class="legend"><?=ucwords(str_replace('_',' ',$type))?></legend>
 <?
 				$header = $type;
@@ -13,7 +13,7 @@
 			else if ($header != $type) {
 ?>
 					</fieldset>
-                    <fieldset style="width:180px; margin-right:15px; border: 1px solid #ccc; padding:20px; float:left;">
+                    <fieldset style="width:180px; margin-right:15px; border: 1px solid #ccc; padding:10px; float:left;">
                     	<legend class="legend"><?=ucwords(str_replace('_',' ',$type))?></legend>
 <?				
 				$header = $type;	

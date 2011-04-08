@@ -1,5 +1,5 @@
 <? 
-//	if ($_POST['page_path']) { 
+	if ($_POST['page_path']) { 
 		$p->title="SEO";
 		$p->template('skybox','top');
 		$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
@@ -30,7 +30,7 @@
 			else exit($_SERVER['SERVER_NAME']." must be added to the website table");
 		}	
 		$p->template('skybox','bottom');
-/*	}
+	}
 	else {
 ?>
 		<div style="width:700px; height:600px;">&nbsp;</div>
