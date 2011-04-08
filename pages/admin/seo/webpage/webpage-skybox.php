@@ -39,11 +39,13 @@
 			if (e.keyCode ==13) {
 				var f = $(this).attr('field')
 				var v = $(this).val()
-				$.post('/admin/seo/webpage/ajax/save-seo',{ field: f, value: v, website_page_id:<?=$page['website_page_id']?> },function (data){
-					if (data == 'success') {
-						$("#"+f).html(v)
-					}
-				})	
+				if (f == 'h1' || f == 'paragraph') {
+					$.post('/admin/seo/webpage/ajax/save-seo',{ field: f, value: v, website_page_id:<?=$page['website_page_id']?> },function (data){
+						if (data == 'success') {
+							$("#"+f).html(v)
+						}
+					})	
+				}
 			}
 		})
 	})
