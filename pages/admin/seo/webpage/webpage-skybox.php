@@ -36,8 +36,8 @@
 <script language="javascript">
 	$(function() {
 		
-		$('.seo-input').live('keyup', function(e) {
-			if (e.keyCode ==13) {
+		$('.seo-input').live('keyup focusout', function(e) {
+			if (e.keyCode == 13 || e.type == 'focusout') {
 				var f = $(this).attr('field')
 				var v = $(this).val()
 				if (f == 'h1' || f == 'paragraph') {
