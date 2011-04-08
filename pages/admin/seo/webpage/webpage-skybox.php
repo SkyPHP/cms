@@ -1,5 +1,6 @@
 <? 
 	if ($_POST['page_path']) { 
+		echo $_POST['page_path'];
 		$p->title="SEO";
 		$p->template('skybox','top');
 		$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
@@ -28,24 +29,26 @@
 				include('pages/admin/seo/webpage/webpage_form.php');
 			}
 			else exit($_SERVER['SERVER_NAME']." must be added to the website table");
-		}	
+		}
+		
 		$p->template('skybox','bottom');
 	
 ?>
 
 <script language="javascript">
-	$(function(){
-		$('.seo-input').live('keyup', function(e){
-			if (e.keyCode ==13) {
+	$(function() {
+		
+		$('.seo-input').live('keyup focusout', function(e) {
+			if (e.keyCode == 13 || e.type == 'focusout') {
 				var f = $(this).attr('field')
 				var v = $(this).val()
-				if (f == 'h1' || f == 'paragraph') {
-					$.post('/admin/seo/webpage/ajax/save-seo',{ field: f, value: v, website_page_id:<?=$page['website_page_id']?> },function (data){
-						if (data == 'success') {
-							$("#"+f).html(v)
-						}
-					})	
-				}
+				$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, website_page_ide:'<?=$page['website_page_ide']?>' }, function (data){
+					if (data == 'success') {
+						if (f == 'h1' || f == 'paragraph')) $("#"+f).html(v)
+					}
+					else alert(data)
+				})	
+				
 			}
 		})
 	})
@@ -53,7 +56,7 @@
 
 <? 	} else {
 ?>
-		<div style="width:700px; height:600px;">&nbsp;</div>
+		<div style="width:800px; height:600px;">&nbsp;</div>
 <?	
 	}
 ?>

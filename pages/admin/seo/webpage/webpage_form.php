@@ -1,5 +1,14 @@
-<div style="width:700px">
+<div style="width:800px">
 <? 
+	$aql="website_page_data { field, value where website_page_id = {$page['website_page_id']} }";
+	$rs = aql::select($aql);
+	print_a(aql::sql($aql));
+	
+	foreach($rs as $r) {
+		$fields[$r['field']]=$r['value'];
+			
+	}
+	
 	if (is_array($seo_field_array)) {
 		foreach($seo_field_array as $type => $array) {
 			
@@ -23,9 +32,19 @@
 ?>			
 			<div style="padding-bottom:10px;">
 				<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
-	    		<input type="text" class="seo-input" field="<?=$field?>" value="" />
-            </div>
 <?
+				if ($field == 'paragraph') {
+?>
+					<textarea rows="8" cols="25" class="seo-input" field="<?=$field?>"><?=$fields[$field]?></textarea>
+<?
+				} else {
+?>
+	    			<input type="text" class="seo-input" field="<?=$field?>" value="<?=$fields[$field]?>" size="24" />
+<?                    
+				}
+?>				 
+            </div>
+<?				
 			}
 		}
 	}
