@@ -44,7 +44,6 @@
 					$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, website_page_ide:'<?=$page['website_page_ide']?>' }, function (data){
 						if (data == 'success') {
 							$("#"+f).html(v)
-							alert('success')
 						}
 						else alert(data)
 					})	

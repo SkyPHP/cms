@@ -6,7 +6,7 @@
 			'mod__person_id' => PERSON_ID,
 			'update_time' => 'now()'
 		);	
-	if (is_array($rs)) {
+	if (isset($rs[0]['website_page_data_ide'])) {
 		$update=aql::update('website_page_data',$data,$rs[0]['website_page_data_ide']);
 		if ($update) exit('success');
 		else exit($update);
