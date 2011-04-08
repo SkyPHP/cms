@@ -41,7 +41,7 @@
 				var f = $(this).attr('field')
 				var v = $(this).val()
 				if (f == 'h1' || f == 'paragraph') {
-					$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, website_page_ide:<?=$page['website_page_ide']?> }, function (data){
+					$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, website_page_ide:'<?=$page['website_page_ide']?>' }, function (data){
 						if (data == 'success') {
 							$("#"+f).html(v)
 							alert('success')
