@@ -1,6 +1,6 @@
 <div style="width:700px">
 <? 
-	$rs = aql::select("website_page_data { field, value where website_page_id = {$page['website_page_id']}");
+	$rs = aql::select("website_page_data { field, value where website_page_id = {$page['website_page_id']} }");
 	foreach($rs as $r) {
 		$fields[$r['field']]=$r['value'];
 			
