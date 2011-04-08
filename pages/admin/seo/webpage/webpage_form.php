@@ -32,7 +32,7 @@
 <?
 				if ($field == 'paragraph') {
 ?>
-					<textarea rows="8" class="seo-input" field="<?=$field?>"><?=$fields[$field]?></textarea>
+					<textarea rows="8" cols="20" class="seo-input" field="<?=$field?>"><?=$fields[$field]?></textarea>
 <?
 				} else {
 ?>
