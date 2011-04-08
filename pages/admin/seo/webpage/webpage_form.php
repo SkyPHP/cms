@@ -1,7 +1,9 @@
 <div style="width:800px">
 <? 
-	$rs = aql::select("website_page_data { field, value where website_page_id = {$page['website_page_id']} }");
-	print_a($rs);
+	$aql="website_page_data { field, value where website_page_id = {$page['website_page_id']} }";
+	$rs = aql::select($aql);
+	print_a(aql::sql($aql));
+	
 	foreach($rs as $r) {
 		$fields[$r['field']]=$r['value'];
 			
