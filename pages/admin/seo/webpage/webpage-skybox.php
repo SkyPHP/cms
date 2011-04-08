@@ -55,7 +55,7 @@
 
 <? 	} else {
 ?>
-		<div style="width:700px; height:600px;">&nbsp;</div>
+		<div style="width:800px; height:600px;">&nbsp;</div>
 <?	
 	}
 ?>

@@ -1,4 +1,4 @@
-<div style="width:700px">
+<div style="width:800px">
 <? 
 	$rs = aql::select("website_page_data { field, value where website_page_id = {$page['website_page_id']} }");
 	foreach($rs as $r) {
@@ -36,7 +36,7 @@
 <?
 				} else {
 ?>
-	    			<input type="text" class="seo-input" field="<?=$field?>" value="<?=$fields[$field]?>" />
+	    			<input type="text" class="seo-input" field="<?=$field?>" value="<?=$fields[$field]?>" size="20" />
 <?                    
 				}
 ?>				 
