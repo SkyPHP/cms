@@ -29,9 +29,19 @@
 ?>			
 			<div style="padding-bottom:10px;">
 				<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
-	    		<input type="text" class="seo-input" field="<?=$field?>" value="<?=$fields[$field]?>" />
-            </div>
 <?
+				if ($field == 'paragraph') {
+?>
+					<textarea rows="8" class="seo-input" field="<?=$field?>"><?=$fields['field']?></textarea>
+<?
+				} else {
+?>
+	    			<input type="text" class="seo-input" field="<?=$field?>" value="<?=$fields[$field]?>" />
+<?                    
+				}
+?>				 
+            </div>
+<?				
 			}
 		}
 	}
