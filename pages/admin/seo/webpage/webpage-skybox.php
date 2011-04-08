@@ -1,5 +1,6 @@
 <? 
 	if ($_POST['page_path']) { 
+		echo $_POST['page_path'];
 		$p->title="SEO";
 		$p->template('skybox','top');
 		if (!$website_id) {
