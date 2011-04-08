@@ -1,5 +1,5 @@
 <?
-include_once( $sky_install_path . 'lib/functions/common.inc.php' );
+include_once( $sky_install_path . 'lib/core/functions.inc.php' );
 include_once( $sky_install_path . 'lib/adodb/adodb.inc.php' );
 @include_once( $sky_install_path . 'config.php' );
 
