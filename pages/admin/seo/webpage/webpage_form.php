@@ -1,5 +1,11 @@
 <div style="width:700px">
 <? 
+	$rs = aql::select("website_page_data { field, value where website_page_id = {$page['website_page_id']}");
+	foreach($rs as $r) {
+		$fields[$r['field']]=$r['value'];
+			
+	}
+	
 	if (is_array($seo_field_array)) {
 		foreach($seo_field_array as $type => $array) {
 			
@@ -23,7 +29,7 @@
 ?>			
 			<div style="padding-bottom:10px;">
 				<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
-	    		<input type="text" class="seo-input" field="<?=$field?>" value="" />
+	    		<input type="text" class="seo-input" field="<?=$field?>" value="<?=$fields[$field]?>" />
             </div>
 <?
 			}
