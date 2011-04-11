@@ -64,7 +64,7 @@ class media {
 			$rs = aql::select($aql);
 			if($rs){
 				$media_instance_ide = $rs[0]['media_instance_ide'];
-				$src = $src_beg.'/'.$media_instance_ide.'.'.$src_end;
+				$src = '/'.$media_instance_ide;
 				$media_host_id=0;
 				$command = 'hostname';
 				$hostname = trim(shell_exec($command));
@@ -87,7 +87,7 @@ class media {
 				$rs = aql::select($aql);
 				if($rs){
 					foreach($rs as $host) {
-						$img = "http://".$host['domain_name'].$src;
+						$img = "http://".$host['domain_name'].'/media'.$src;
 						if ($_GET['aql_debug']) echo 'copying ..'.$img.' to '.$local_path.'!!!!<br>';
 						@mkdir($dest_dir, 0777, true);
 						if(copy($img,$local_path)){
