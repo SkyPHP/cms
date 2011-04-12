@@ -9,9 +9,9 @@ if (is_array($folder)) {
 		foreach ($items as $item) : 
 			$i = media::get_item($item['media_item_ide']);
 		?>
-			<div class="mediaItem" ide="<?=$item['media_item_ide']?>" instance_ide="<?=$i['media_instance_ide']?>">
+			<li class="mediaItem" ide="<?=$item['media_item_ide']?>" instance_ide="<?=$i['media_instance_ide']?>">
 				<img src="/media/<?=$i['media_instance_ide']?>" width="<?=$w?>" <?=($h)?'height="'.$h.'"':''?> />
-			</div>
+			</li>
 		<? endforeach;
 	} else {
 		echo $empty;
