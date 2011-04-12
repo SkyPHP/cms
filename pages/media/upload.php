@@ -5,12 +5,10 @@
 //    }
 
 //    session_start();
-
 $errors = array();
 
     // Check the upload
     if (!isset($_FILES["Filedata"]) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) {
-        header("HTTP/1.1 500 Internal Server Error");
         $errors[] = 'Error: Invalid upload!';
     }
 
@@ -25,8 +23,6 @@ $errors = array();
         $errors[] = "Error: No file uploaded!";
     }
 
-?>
-<?
 $vfolder_path = $_POST['vfolder'];
 if ( !$vfolder_path ) $vfolder_path = $_SESSION['media_browse']['vfolder'];
 
@@ -35,7 +31,7 @@ if ($_POST['media_debug']) print_r($item);
 unlink($uploaded_file);
 
 // update the specified database field with the newly inserted media_item_id
-if ( $_POST['db_field'] && $_POST['db_row_id'] ):
+if ( $_POST['db_field'] != 'undefined' && $_POST['db_row_ide'] != 'undefined'):
 	$dot = strpos( $_POST['db_field'], '.' );
 	$table = substr( $_POST['db_field'], 0, $dot );
 	$field = substr( $_POST['db_field'], $dot + 1 );
@@ -58,7 +54,7 @@ if ($errors) {
     $re = array(
         'status' => 'OK',
         'data' => $item
-    )
+    );
 }
 json_headers();
 exit(json_encode($re));
