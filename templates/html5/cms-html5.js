@@ -1,3 +1,43 @@
+$(document).ready(function() {
+   
+    $('uploader').livequery(function(){
+        $(this).uploader();
+    });
+
+    $('.upload_file').livequery(function() {
+        $('.upload_file').each(function() {
+            var $input = $(this),
+                id = $input.attr('id'),
+                $up = $input.closest('uploader'),
+                data = {
+                    'vfolder' : $up.attr('vfolder'),
+                    'db_field' : $up.attr('db_field'),
+                    'db_row_ide' : $up.attr('db_row_ide')
+                };
+            $input.uploadify({
+                'uploader'      : '/lib/jquery.uploadify/uploadify.swf',
+                'script'        : '/media/upload',
+                'scriptData'    : data,
+                'multi'         : true,
+                'method'        : 'post',
+                'onComplete'    : function(event, ID, fileObj, response, data) {
+                    var r = $.parseJSON(response);
+                    console.log(r);
+                    if (r.status != 'OK') {
+                        $input.uploadifyClearQueue();
+                        alert(r.errors);
+                    }
+                },
+                'onAllComplete' : function(event, data) {
+                    $up.uploader();  
+                },
+                'auto'          : true
+            });
+        });
+    });
+    
+});
+
 (function($) {
 
     var settings = {
@@ -63,6 +103,7 @@
                  $(this).contextMenu(
                     { menu: 'mediaItemContextMenu' },
                     function(action, el, pos) {
+                       if ($('html').hasClass('ie7')) action = action.split('#')[1]; // otherwise the action is the full URL
                        var contextFunctions = {
                            'properties' : contextMenu_properties,
                            'view' : contextMenu_view,
