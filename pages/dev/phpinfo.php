@@ -1,6 +1,6 @@
 <?
-$title = 'Environment Info';
-template::inc('global','top');
+$p->title = 'Environment Info';
+$p->template('html5','top');
 
 include(INCPATH.'/../dev-nav.php');
 
@@ -13,5 +13,5 @@ print_a($_POST);
 
 echo phpinfo();
 
-template::inc('global','bottom');
+$p->template('html5','bottom');
 ?>
