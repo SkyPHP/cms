@@ -783,17 +783,15 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 	*/
 	Private Static Function _dump(&$data, $name='...') {
 
-		$is_array_object = (get_class($data) == 'ArrayObject') ? true : false;
-
 		// object ?
 		//
-		if (is_object($data) && !$is_array_object) {
+		if (is_object($data)) {
 			return krumo::_object($data, $name);
 			}
 
 		// array ?
 		//
-		if (is_array($data) || $is_array_object) {
+		if (is_array($data)) {
 
 			// PHP 4.x.x array reference bug...
 			//
@@ -943,13 +941,12 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 	Private Static Function _vars(&$data) {
 
 		$_is_object = is_object($data);
-		$is_array_object = (get_class($data) == 'ArrayObject') ? true : false;
 		
 		// test for references in order to
 		// prevent endless recursion loops
 		//
 		$_recursion_marker = krumo::_marker();
-		$_r = ($_is_object && !$is_array_object)
+		$_r = ($_is_object)
 			? @$data->$_recursion_marker
 			: @$data[$_recursion_marker] ;
 		$_r = (integer) $_r;
@@ -973,6 +970,10 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 
 	// keys ?
 	//
+	if (get_class($data) == 'ArrayObject') {
+		$data = $data->getArrayCopy();
+		$_is_object = false;
+	}
 	$keys = ($_is_object)
 		? array_keys(get_object_vars($data))
 		: array_keys($data);
@@ -989,7 +990,7 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 		
 		// get real value
 		//
-		if ($_is_object && !$is_array_object) {
+		if ($_is_object) {
 			$v =& $data->$k;
 			} else {
 			$v =& $data[$k];
@@ -1039,8 +1040,6 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 	* @static
 	*/
 	Private Static Function _array(&$data, $name) {
-		$is_array_object = (get_class($data) == 'ArrayObject') ? true : false;
-		$array_object = ($is_array_object) ? ' Object' : null;
 ?>
 <li class="krumo-child">
 	
@@ -1050,7 +1049,7 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 		onMouseOut="krumo.out(this);">
 		
 			<a class="krumo-name"><?php echo $name;?></a>
-			(<em class="krumo-type">Array<?php echo $array_object;?>, <strong class="krumo-array-length"><?php echo 
+			(<em class="krumo-type">Array, <strong class="krumo-array-length"><?php echo 
 				(count($data)==1)
 					?("1 element")
 					:(count($data)." elements");
