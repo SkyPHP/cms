@@ -173,3 +173,14 @@ form.standard_form .radio_field label {
 			margin-top:-2px;
 			width:16px;
 		}
+.loading {
+	background:#fff;
+	padding:20px;
+	float:left;
+	margin:10px;
+	border-radius: 10px;
+	border-color: #eee;
+}
+.loading:after {
+	clear:left;
+}

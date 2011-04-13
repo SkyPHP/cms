@@ -104,8 +104,9 @@ $(document).ready(function() {
                 var $this = $(this);
                 var opts = [];
                 // var attrs = this.attributes;
-                $this.html('<ul class="mediaItemGallery has-floats"><img src="/images/loading.gif" /></ul>');
+                $this.html('<ul class="mediaItemGallery has-floats"></ul>');
                 $gallery = $('.mediaItemGallery', $this);
+                replace_with_load($gallery);
                 opts['vfolder'] = $this.attr('vfolder');
                 opts['width'] = $this.attr('width');
                 opts['height'] = $this.attr('height');
@@ -159,7 +160,7 @@ $(document).ready(function() {
             }
         },
         bindContextMenu : function($uploader) {
-             $('.mediaItem[ide]', $uploader).each(function() {
+             $('.mediaItem[ide]:visible', $uploader).each(function() {
                  $(this).contextMenu(
                     { menu: 'mediaItemContextMenu' },
                     function(action, el, pos) {
@@ -218,4 +219,13 @@ function contextMenu_delete(el) {
             else alert(json.errors);
         });
     }
+}
+
+function replace_with_load($div, w, h) {
+    var id = Math.floor(Math.random()*101);
+    var id_attr = 'id="'+ id +'"';
+    if (w) w = ' width="' + w + '" ';
+    if (h) h = ' height="' + h + '" ';
+    $div.html('<div class="loading" ' + id_attr + '><img src="/images/loading.gif" ' + w + h + '/></div>');
+    return id;
 }
