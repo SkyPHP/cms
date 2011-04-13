@@ -20,4 +20,4 @@ $seo_field_array=array(
 	)
 	
 );
-?>
+$includes[] = 'lib/krumo/class.krumo.php';
