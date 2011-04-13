@@ -154,3 +154,22 @@ form.standard_form .radio_field label {
 	background: #ccc;
 	margin-bottom: 5px;
 }
+
+.upload_status {
+	padding-top:10px;
+}
+	.upload_status .pluploadUploadFile {
+		background: #fff;
+		border: 1px solid #ccc;
+		font-size: 10px;
+		margin-bottom:2px;
+		padding:10px;
+	}
+		.upload_status .pluploadUploadFile a {
+			cursor: pointer;
+			display:block;
+			height: 16px;
+			float:right;
+			margin-top:-2px;
+			width:16px;
+		}

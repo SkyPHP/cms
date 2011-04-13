@@ -4,34 +4,83 @@ $(document).ready(function() {
         $(this).uploader();
     });
 
+    $('.choose_file').livequery(function() {
+       $(this).button({
+          icons: {
+              primary: 'ui-icon-folder-open' 
+          }
+       });
+    });
+
     $('.upload_file').livequery(function() {
-        $('.upload_file').each(function() {
+       $(this).button({
+           icons: {
+               primary: 'ui-icon-transferthick-e-w'
+           } 
+       });
+    });
+
+    $('.choose_file').livequery(function() {
+        $('.choose_file').each(function() {
             var $input = $(this),
                 id = $input.attr('id'),
                 $up = $input.closest('uploader'),
+                $status = $('.upload_status', $up),
                 data = {
                     'vfolder' : $up.attr('vfolder'),
                     'db_field' : $up.attr('db_field'),
                     'db_row_ide' : $up.attr('db_row_ide')
-                };
-            $input.uploadify({
-                'uploader'      : '/lib/jquery.uploadify/uploadify.swf',
-                'script'        : '/media/upload',
-                'scriptData'    : data,
-                'multi'         : true,
-                'method'        : 'post',
-                'onComplete'    : function(event, ID, fileObj, response, data) {
-                    var r = $.parseJSON(response);
-                    console.log(r);
-                    if (r.status != 'OK') {
-                        $input.uploadifyClearQueue();
-                        alert(r.errors);
-                    }
                 },
-                'onAllComplete' : function(event, data) {
-                    $up.uploader();  
-                },
-                'auto'          : true
+                browse_button = id,
+                upload_button = 'upload_' + id.split('_')[1],
+                uploader = new plupload.Uploader({
+                    runtimes: 'html5,flash,html4',
+                    browse_button: browse_button,
+                    url: '/media/upload',
+                    flash_swf_url: '/lib/plupload/js/plupload.flash.swf'
+                });
+            uploader.bind('FilesAdded', function(up, files) {
+                $.each(files, function(i, file) {
+                    $status.append('<div id="' + file.id + '" class="pluploadUploadFile"><a class="ui-icon ui-icon-minus"></a>' + file.name + '</div>');
+                });
+            });
+            uploader.bind('FilesRemoved', function(up, files){
+                $.each(files, function(i, file) {
+                    $('#'+ file.id).remove();  
+                });
+            });
+            uploader.bind('UploadFile', function(up, files) {
+                up.settings.multipart_params = data;
+            });
+            uploader.bind('UploadProgress', function(up, file) {
+                $('#' + file.id + ' .ui-icon').removeClass('ui-icon-minus').addClass('ui-icon-transfer-e-w');
+            });
+            uploader.bind('FileUploaded', function(up, file, info) {
+                var r = $.parseJSON(info.response);
+                var $ic = $('#' + file.id + ' .ui-icon');
+                if (r.status != 'OK') {
+                    up.stop();
+                    alert(r.errors);
+                    $ic.removeClass('ui-icon-transfer-e-w').addClass('ui-icon-alert');
+                } else {
+                    $ic.removeClass('ui-icon-transfer-e-w').addClass('ui-icon-check');
+                }
+                $ic.closest('div').animateChange();
+            });
+            uploader.bind('UploadComplete', function(up) {
+                $up.uploader(); 
+            });
+            uploader.init();
+            $('.upload_file', $up).click(function(e){
+                uploader.start();
+                e.preventDefault();
+            });
+            $('.ui-icon').live('click', function() {
+                if ($(this).hasClass('ui-icon-minus')) {
+                    var id = $(this).closest('.pluploadUploadFile').attr('id');
+                    uploader.removeFile(uploader.getFile(id));
+                }
+                return false; 
             });
         });
     });
@@ -71,12 +120,13 @@ $(document).ready(function() {
                     return;
                 };
                 methods.setContextMenu();
-                $.post('/media-gallery', settings, function(data) {
+                $.post('/media/gallery', settings, function(data) {
                     $gallery.html(data);
                     methods.bindContextMenu($this);
                 });
                 var id = Math.floor(Math.random()*11);
-                $this.append('<input type="file" class="button upload_file" id="' + id + '" value="Upload Files" />');
+                $this.append('<button class="choose_file" id="choose_' + id + '">Choose Files</button><button class="upload_file" id="upload_' + id + '">Upload</button>');
+                $this.append('<div class="upload_status"></div>');
                 if (settings.sort) methods.doSort($this);
             });
         },
@@ -93,7 +143,17 @@ $(document).ready(function() {
         doSort : function($uploader) {
             if ($.isFunction($.ui.sortable)) {
                 $uploader.append('<p class="small"><strong>Sort Enabled:</strong> You can drag the image and re-order their them.</p>');
-                $('.mediaItemGallery', $uploader).sortable();
+                var $gallery =  $('.mediaItemGallery', $uploader);
+                $gallery.sortable({
+                    update: function() {
+                        var order = $gallery.sortable('serialize');
+                        $.post('/media/set-items', order, function(json) {
+                            if (json.status != 'OK') {
+                                alert(json.errors);
+                            }
+                        });
+                    }
+                });
             } else {
                 $.error('Sortable in jQuery UI not loaded. Sort disabled.');
             }
