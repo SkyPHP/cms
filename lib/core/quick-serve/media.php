@@ -62,9 +62,9 @@ default:
                 $dest_dir = $sky_media_local_path . $vfolder_path . $instance_folder;
 				$local_path = $dest_dir . '/' . $slug . '.' . $file_type;
 				if ( !file_exists($local_path) ) {
-					include('lib/core/class.aql.php');
-					include('lib/core/class.aql.php');
-					include('lib/core/class.media.php');
+					include_once('lib/core/class.aql2array.php');
+					include_once('lib/core/class.aql.php');
+					include_once('lib/core/class.media.php');
                     media::get_if_not_here($r->Fields('media_item_id'),$sky_media_src_path, $file_type,$local_path,$dest_dir);
                 }
                 if (file_exists($local_path)) {
