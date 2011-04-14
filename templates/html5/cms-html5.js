@@ -85,8 +85,11 @@ $(document).ready(function() {
         });
     });
 
-    $('.pagination-limit').live('change',function(){
-        location.href = removeParam($(this).attr('name')) + (location.search?'&':'?') + $(this).attr('name') + '=' + $(this).val();
+    $('.pagination-limit').live('change',function() {
+        qs = location.search;
+        qs = removeParam($(this).attr('name'),qs); // remove limit
+        qs = removeParam('page'+$(this).attr('i'),qs); // remove page
+        location.href = qs + (qs?'&':'?') + $(this).attr('name') + '=' + $(this).val();
     });
     
 });

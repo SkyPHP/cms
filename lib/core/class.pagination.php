@@ -9,6 +9,9 @@ class pagination {
         $this->clause = $clause;
         $GLOBALS['pagination_count'][] = true;
         $this->i = count($GLOBALS['pagination_count']);
+        if (!$_GET['page'.$this->i] || $_GET['page'.$this->i] < 1) {
+            $_GET['page'.$this->i] = 1;
+        }
         if ($aql) $this->rs = $this->select();
     }
 
@@ -18,9 +21,6 @@ class pagination {
         //pagination settings
         $default_limit = 25;
         if (!$_GET['limit'.$this->i]) $_GET['limit'.$this->i] = $default_limit;
-        if (!$_GET['page'.$this->i] || $_GET['page'.$this->i] < 1) {
-            $_GET['page'.$this->i] = 1;
-        }
         $this->offset = $_GET['page'.$this->i] * $_GET['limit'.$this->i] - $_GET['limit'.$this->i];
 
         $this->clause['limit'] = $_GET['limit'.$this->i];
@@ -40,10 +40,13 @@ class pagination {
     function showing() {
 ?>
             <div style="overflow:hidden;">
-                <div style="float:left;">Showing <?=$this->first_row?> - <?=$this->last_row?> of <?=$this->total_rows?></div>
+                <div style="float:left;">Showing <?=$this->first_row?> - <?=$this->last_row?> 
+                    of <?=$this->total_rows?>
+                    (page <?=$_GET['page'.$this->i]?> of <?=$this->num_pages?>)
+                </div>
                 <div style="float:right;">
                     Show
-                    <select name="limit<?=$this->i?>" class="pagination-limit">
+                    <select name="limit<?=$this->i?>" i="<?=$this->i?>" class="pagination-limit">
 <?
                     foreach ($this->limits as $limit) {
 ?>

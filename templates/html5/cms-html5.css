@@ -185,6 +185,9 @@ form.standard_form .radio_field label {
 	clear:left;
 }
 
+.pagination-limit {
+    
+}
 .pagination-links {
     margin: 10px 0;
     text-align: center;
