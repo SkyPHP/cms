@@ -184,3 +184,21 @@ form.standard_form .radio_field label {
 .loading:after {
 	clear:left;
 }
+
+.pagination-links {
+    margin: 10px 0;
+    text-align: center;
+}
+.pagination-link {
+    font-size: 20px;
+    display: block;
+    float: left;
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #eee;
+}
+.pagination-link.selected {
+    background-color: #fff;
+    color: #000;
+}

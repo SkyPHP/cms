@@ -86,7 +86,7 @@ $(document).ready(function() {
     });
 
     $('.pagination-limit').live('change',function(){
-        location.href = removeParam($(this).attr('name')) + '&' + $(this).attr('name') + '=' + $(this).val();
+        location.href = removeParam($(this).attr('name')) + (location.search?'&':'?') + $(this).attr('name') + '=' + $(this).val();
     });
     
 });
