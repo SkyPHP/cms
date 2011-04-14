@@ -20,4 +20,5 @@ $seo_field_array=array(
 	)
 	
 );
+$sky_media_src_path = '/media';
 $includes[] = 'lib/krumo/class.krumo.php';
