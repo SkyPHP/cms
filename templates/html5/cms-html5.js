@@ -146,6 +146,7 @@ $(document).ready(function() {
                 $uploader.append('<p class="small"><strong>Sort Enabled:</strong> You can drag the image and re-order their them.</p>');
                 var $gallery =  $('.mediaItemGallery', $uploader);
                 $gallery.sortable({
+                    items: 'li.mediaItem',
                     update: function() {
                         var order = $gallery.sortable('serialize');
                         $.post('/media/set-items', order, function(json) {
