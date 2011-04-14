@@ -8,10 +8,10 @@ if (is_array($folder)) {
 	$items = $folder['items'];
 	if ($items) {
 		foreach ($items as $item) : 
-			$i = media::get_item($item['media_item_ide']);
+			$i = media::get_item($item['media_item_ide'], $w, $h);
 		?>
 			<li class="mediaItem" id="order_<?=$item['media_item_ide']?>" ide="<?=$item['media_item_ide']?>" instance_ide="<?=$i['media_instance_ide']?>">
-				<img src="/media/<?=$i['media_instance_ide']?>" width="<?=$w?>" <?=($h)?'height="'.$h.'"':''?> />
+				<img src="<?=$i['src']?>" width="<?=$w?>" <?=($h)?'height="'.$h.'"':''?> />
 			</li>
 		<? endforeach;
 	} else {
