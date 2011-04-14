@@ -35,6 +35,10 @@ $(document).ready(function() {
             });
         });
     });
+
+    $('.pagination-limit').live('change',function(){
+        location.href = removeParam($(this).attr('name')) + '&' + $(this).attr('name') + '=' + $(this).val();
+    });
     
 });
 
@@ -101,7 +105,7 @@ $(document).ready(function() {
         bindContextMenu : function($uploader) {
              $('.mediaItem[ide]', $uploader).each(function() {
                  $(this).contextMenu(
-                    { menu: 'mediaItemContextMenu' },
+                    {menu: 'mediaItemContextMenu'},
                     function(action, el, pos) {
                        if ($('html').hasClass('ie7')) action = action.split('#')[1]; // otherwise the action is the full URL
                        var contextFunctions = {
