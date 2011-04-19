@@ -263,7 +263,7 @@ class snippet {
         $ytqs = 'fs=1&rel=0&showinfo=0&color1=0xffffff&color2=0xffffff&hd=0&hl=en_US';
 
 		if (!$width) $width = 560;
-		if (!$height) $height = 340;
+		if (!$height) $height = $width*3/4;
 		
 		if ($id) {
 			$embed = 	'<object width="'.$width.'" height="'.$height.'">'.
