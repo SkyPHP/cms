@@ -1,7 +1,9 @@
 $(document).ready(function() {
    
     $('uploader').livequery(function(){
-        $(this).uploader();
+        $('uploader').each(function() {
+            $(this).uploader();
+        });
     });
 
     $('.choose_file').livequery(function() {
@@ -96,99 +98,105 @@ $(document).ready(function() {
 
 (function($) {
 
-    var settings = {
-        'vfolder' : '',
-        'width' : 100,
-        'height' : '',
-        'limit' : 0,
-        'empty' : '',
-        'sort' : false
-    }
-
-    var methods = {
-        init : function(options) {
-            return this.each(function() {
-                var $this = $(this);
-                var opts = [];
-                // var attrs = this.attributes;
-                $this.html('<ul class="mediaItemGallery has-floats"></ul>');
-                $gallery = $('.mediaItemGallery', $this);
-                replace_with_load($gallery);
-                opts['vfolder'] = $this.attr('vfolder');
-                opts['width'] = $this.attr('width');
-                opts['height'] = $this.attr('height');
-                opts['limit'] = $this.attr('limit');
-                opts['empty'] = $this.attr('empty');
-                opts['sort'] = $this.attr('sort');
-                $.extend(settings, opts);
-                $.extend(settings, options);
-                if (settings.width == 'auto') settings.width = $gallery.width() - 8;
-                if (!settings.vfolder) {
-                    $gallery.html('<p><strong>Uploader Error: No vfolder set.</strong></p>');
-                    return;
-                };
-                methods.setContextMenu();
-                $.post('/media/gallery', settings, function(data) {
-                    $gallery.html(data);
-                    methods.bindContextMenu($this);
-                });
-                var id = Math.floor(Math.random()*11);
-                $this.append('<button class="choose_file" id="choose_' + id + '">Choose Files</button><button class="upload_file" id="upload_' + id + '">Upload</button>');
-                $this.append('<div class="upload_status"></div>');
-                if (settings.sort) methods.doSort($this);
-            });
-        },
-        setContextMenu : function() {
-            if (!$('#mediaItemContextMenu').length) {
-                var contextMenu = '<ul id="mediaItemContextMenu" class="contextMenu">';
-                contextMenu += '<li class="properties"><a href="#view">View Image</a></li>';
-                contextMenu += '<li class="edit"><a href="#properties">Properties</a></li>';
-                contextMenu += '<li class="delete"><a href="#delete">Delete Image</a></li>';
-                contextMenu += '</ul>';
-                $('body').append(contextMenu);
-            }
-        },
-        doSort : function($uploader) {
-            if ($.isFunction($.ui.sortable)) {
-                $uploader.append('<p class="small"><strong>Sort Enabled:</strong> You can drag the image and re-order their them.</p>');
-                var $gallery =  $('.mediaItemGallery', $uploader);
-                $gallery.sortable({
-                    items: 'li.mediaItem',
-                    update: function() {
-                        var order = $gallery.sortable('serialize');
-                        $.post('/media/set-items', order, function(json) {
-                            if (json.status != 'OK') {
-                                alert(json.errors);
-                            }
-                        });
-                    }
-                });
-            } else {
-                $.error('Sortable in jQuery UI not loaded. Sort disabled.');
-            }
-        },
-        bindContextMenu : function($uploader) {
-             $('.mediaItem[ide]:visible', $uploader).each(function() {
-                 $(this).contextMenu(
-                    {menu: 'mediaItemContextMenu'},
-                    function(action, el, pos) {
-                       if ($('html').hasClass('ie7')) action = action.split('#')[1]; // otherwise the action is the full URL
-                       var contextFunctions = {
-                           'properties' : contextMenu_properties,
-                           'view' : contextMenu_view,
-                           'delete' : contextMenu_delete
-                       };
-                       if (contextFunctions[action]) {
-                           var now = contextFunctions[action];
-                           now(el);
-                       }
-                    }
-                );
-             });
-        }
-    }
-
     $.fn.uploader = function ( method ) {
+        var settings = {
+            'vfolder' : '',
+            'width' : 100,
+            'height' : '',
+            'limit' : 0,
+            'empty' : '',
+            'sort' : false
+        }
+        var methods = {
+            init : function(options) {
+                return this.each(function() {
+                    var up = this;
+                    var $this = $(up);
+                    var opts = [];
+                    var curr_sets = settings;
+                    // var attrs = this.attributes;
+                    $this.html('<ul class="mediaItemGallery has-floats"></ul>');
+                    $gallery = $('.mediaItemGallery', $this);
+                    replace_with_load($gallery);
+                    opts['vfolder'] = $this.attr('vfolder');
+                    opts['width'] = $this.attr('width');
+                    opts['height'] = $this.attr('height');
+                    opts['limit'] = $this.attr('limit');
+                    opts['empty'] = $this.attr('empty');
+                    opts['sort'] = $this.attr('sort');
+                    $.extend(curr_sets, opts);
+                    $.extend(curr_sets, options);
+                    if (settings.width == 'auto') settings.width = $gallery.width() - 8;
+                    if (!settings.vfolder) {
+                        $gallery.html('<p><strong>Uploader Error: No vfolder set.</strong></p>');
+                        return;
+                    };
+                    methods.setContextMenu();
+                    $.ajax({
+                        type: 'POST', 
+                        url: '/media/gallery', 
+                        data: curr_sets, 
+                        context: up,
+                        success:function(data) {
+                            $('.mediaItemGallery', $(up)).html(data);
+                            methods.bindContextMenu($up);
+                        }
+                    });
+                    var id = Math.floor(Math.random()*11);
+                    $this.append('<button class="choose_file" id="choose_' + id + '">Choose Files</button><button class="upload_file" id="upload_' + id + '">Upload</button>');
+                    $this.append('<div class="upload_status"></div>');
+                    if (curr_sets.sort) methods.doSort($this);
+                });
+            },
+            setContextMenu : function() {
+                if (!$('#mediaItemContextMenu').length) {
+                    var contextMenu = '<ul id="mediaItemContextMenu" class="contextMenu">';
+                    contextMenu += '<li class="properties"><a href="#view">View Image</a></li>';
+                    contextMenu += '<li class="edit"><a href="#properties">Properties</a></li>';
+                    contextMenu += '<li class="delete"><a href="#delete">Delete Image</a></li>';
+                    contextMenu += '</ul>';
+                    $('body').append(contextMenu);
+                }
+            },
+            doSort : function($uploader) {
+                if ($.isFunction($.ui.sortable)) {
+                    $uploader.append('<p class="small"><strong>Sort Enabled:</strong> You can drag the image and re-order their them.</p>');
+                    var $gallery =  $('.mediaItemGallery', $uploader);
+                    $gallery.sortable({
+                        items: 'li.mediaItem',
+                        update: function() {
+                            var order = $gallery.sortable('serialize');
+                            $.post('/media/set-items', order, function(json) {
+                                if (json.status != 'OK') {
+                                    alert(json.errors);
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    $.error('Sortable in jQuery UI not loaded. Sort disabled.');
+                }
+            },
+            bindContextMenu : function($uploader) {
+                 $('.mediaItem[ide]:visible', $uploader).each(function() {
+                     $(this).contextMenu(
+                        {menu: 'mediaItemContextMenu'},
+                        function(action, el, pos) {
+                           if ($('html').hasClass('ie7')) action = action.split('#')[1]; // otherwise the action is the full URL
+                           var contextFunctions = {
+                               'properties' : contextMenu_properties,
+                               'view' : contextMenu_view,
+                               'delete' : contextMenu_delete
+                           };
+                           if (contextFunctions[action]) {
+                               var now = contextFunctions[action];
+                               now(el);
+                           }
+                        }
+                    );
+                 });
+            }
+        }
         if (methods[method]) {
             return methods[method].apply(Array.prototype.slice.call( arguments, 1));
         } else if (typeof method === 'object' || !method) {
