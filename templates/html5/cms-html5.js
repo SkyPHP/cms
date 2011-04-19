@@ -179,7 +179,7 @@ $(document).ready(function() {
                 }
             },
             bindContextMenu : function($uploader) {
-                 $('.mediaItem[ide]:visible', $uploader).each(function() {
+                 $('.mediaItem[ide]', $uploader).each(function() {
                      $(this).contextMenu(
                         {menu: 'mediaItemContextMenu'},
                         function(action, el, pos) {
