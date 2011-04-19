@@ -1,9 +1,7 @@
 $(document).ready(function() {
    
     $('uploader').livequery(function(){
-        $('uploader').each(function() {
-            $(this).uploader();
-        });
+        $(this).uploader();
     });
 
     $('.choose_file').livequery(function() {
