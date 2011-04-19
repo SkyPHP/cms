@@ -139,7 +139,7 @@ $(document).ready(function() {
                         context: up,
                         success:function(data) {
                             var $up = $(up);
-                            $('.mediaItemGallery', $up.html(data);
+                            $('.mediaItemGallery', $up).html(data);
                             methods.bindContextMenu($up);
                         }
                     });
