@@ -138,7 +138,8 @@ $(document).ready(function() {
                         data: curr_sets, 
                         context: up,
                         success:function(data) {
-                            $('.mediaItemGallery', $(up)).html(data);
+                            var $up = $(up);
+                            $('.mediaItemGallery', $up.html(data);
                             methods.bindContextMenu($up);
                         }
                     });
