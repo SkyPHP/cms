@@ -260,7 +260,7 @@ class snippet {
 		$params = parse_querystring($ar[1]);
 		$id = $params['v'];
 
-        $ytqs = 'fs=1&rel=0&showinfo=0&color1=0xffffff&color2=0xffffff&hd=0&hl=en_US';
+        $ytqs = 'fs=1&rel=0&showinfo=0&color1=0xffffff&color2=0xffffff&hd=0&hl=en_US&wmode=transparent';
 
 		if (!$width) $width = 560;
 		if (!$height) $height = $width*3/4;
@@ -269,8 +269,9 @@ class snippet {
 			$embed = 	'<object width="'.$width.'" height="'.$height.'">'.
 						'<param name="movie" value="http://www.youtube.com/v/'.$id.'?'.$ytqs.'"></param>'.
 						'<param name="allowFullScreen" value="true"></param>'.
+						'<param name="wmode" value="transparent"></param>'.
 						'<param name="allowscriptaccess" value="always"></param>'.
-						'<embed src="http://www.youtube.com/v/'.$id.'?'.$ytqs.'" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="'.$width.'" height="'.$height.'"></embed></object>';
+						'<embed src="http://www.youtube.com/v/'.$id.'?'.$ytqs.'" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="'.$width.'" height="'.$height.'" wmode="transparent"></embed></object>';
 			if ($silent) return $embed;
 			else echo $embed;
 		} else {
