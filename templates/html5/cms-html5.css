@@ -1,7 +1,7 @@
 table.listing {
-	border-width: 1px 1px 1px 1px;
+	border-width: 1px 0 1px;
 	border-spacing: 0px;
-	border-style: solid solid solid solid;
+	border-style: solid none solid;
 	border-color: #cccccc;
 	border-collapse: collapse;
 	width: 100%;
@@ -13,7 +13,6 @@ table.listing th {
 	padding: 5px 10px 5px 10px;
 	border-style: solid none solid none;
 	border-color: #cccccc;
-	background-color: #f6f6f6;
 	-moz-border-radius: 0px 0px 0px 0px;
 }
 table.listing td {
@@ -57,10 +56,10 @@ table.listing td {
 		padding-bottom:0;
 	}
 	.tabs ul .tab_on a {
-		background:#fff url("/templates/global/images/tab-star.jpg") no-repeat scroll left center;
-		font-weight:normal;
-		padding-left:24px;
+		font-weight:bold;
 		padding-bottom:5px;
+        background-color: #fff;
+        color: #000;
 	}
 
 .vertical-tabs ul {
