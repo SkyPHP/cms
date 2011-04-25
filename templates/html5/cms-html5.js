@@ -12,14 +12,6 @@ $(document).ready(function() {
        });
     });
 
-    $('.upload_file').livequery(function() {
-       $(this).button({
-           icons: {
-               primary: 'ui-icon-transferthick-e-w'
-           } 
-       });
-    });
-
     $('.choose_file').livequery(function() {
         var $input = $(this),
             id = $input.attr('id'),
@@ -65,10 +57,6 @@ $(document).ready(function() {
             $up.uploader(); 
         });
         uploader.init();
-        // $('.upload_file', $up).click(function(e){
-        //     uploader.start();
-        //     e.preventDefault();
-        // });
         uploader.bind('FilesAdded', function(up, files) {
             var do_upload = false;
             $.each(files, function(i, file) {
