@@ -38,14 +38,6 @@ $(document).ready(function() {
                 url: '/media/upload',
                 flash_swf_url: '/lib/plupload/js/plupload.flash.swf'
             });
-        uploader.bind('FilesAdded', function(up, files) {
-            var do_upload = false;
-            $.each(files, function(i, file) {
-                $status.append('<div id="' + file.id + '" class="pluploadUploadFile"><a class="ui-icon ui-icon-minus"></a>' + file.name + '</div>');
-                do_upload = true;
-            });
-            if (do_upload) uploader.start();
-        });
         uploader.bind('FilesRemoved', function(up, files){
             $.each(files, function(i, file) {
                 $('#'+ file.id).remove();  
@@ -77,6 +69,14 @@ $(document).ready(function() {
         //     uploader.start();
         //     e.preventDefault();
         // });
+        uploader.bind('FilesAdded', function(up, files) {
+            var do_upload = false;
+            $.each(files, function(i, file) {
+                $status.append('<div id="' + file.id + '" class="pluploadUploadFile"><a class="ui-icon ui-icon-minus"></a>' + file.name + '</div>');
+                do_upload = true;
+            });
+            if (do_upload) uploader.start();
+        });
         $('.ui-icon').live('click', function() {
             if ($(this).hasClass('ui-icon-minus')) {
                 var id = $(this).closest('.pluploadUploadFile').attr('id');
