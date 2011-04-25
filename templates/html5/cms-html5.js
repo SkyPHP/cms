@@ -39,9 +39,12 @@ $(document).ready(function() {
                 flash_swf_url: '/lib/plupload/js/plupload.flash.swf'
             });
         uploader.bind('FilesAdded', function(up, files) {
+            var do_upload = false;
             $.each(files, function(i, file) {
                 $status.append('<div id="' + file.id + '" class="pluploadUploadFile"><a class="ui-icon ui-icon-minus"></a>' + file.name + '</div>');
+                do_upload = true;
             });
+            if (do_upload) uploader.start();
         });
         uploader.bind('FilesRemoved', function(up, files){
             $.each(files, function(i, file) {
@@ -70,10 +73,10 @@ $(document).ready(function() {
             $up.uploader(); 
         });
         uploader.init();
-        $('.upload_file', $up).click(function(e){
-            uploader.start();
-            e.preventDefault();
-        });
+        // $('.upload_file', $up).click(function(e){
+        //     uploader.start();
+        //     e.preventDefault();
+        // });
         $('.ui-icon').live('click', function() {
             if ($(this).hasClass('ui-icon-minus')) {
                 var id = $(this).closest('.pluploadUploadFile').attr('id');
@@ -140,7 +143,7 @@ $(document).ready(function() {
                         }
                     });
                     var id = Math.floor(Math.random()*11);
-                    $this.append('<button class="choose_file" id="choose_' + id + '">Choose Files</button><button class="upload_file" id="upload_' + id + '">Upload</button>');
+                    $this.append('<button class="choose_file small" id="choose_' + id + '">Upload Files</button>');
                     $this.append('<div class="upload_status"></div>');
                     if (curr_sets.sort) methods.doSort($this);
                 });
