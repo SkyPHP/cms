@@ -14,7 +14,7 @@ if (!preg_match('/^[\w0-9]+$/', $model_name)) {
 	$m = model::get($model_name);
 	$response = $m->loadArray($_POST)->save();
 }
-if (is_ajax_request()) {
+if ($p->is_ajax_request) {
 	exit_json($response);
 } else {
 	$to = ($_GET['return_uri']) ? $_GET['return_uri'] : $_SERVER['HTTP_REFERER'];
