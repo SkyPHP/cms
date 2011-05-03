@@ -69,8 +69,8 @@ default:
                 }
                 if (file_exists($local_path)) {
 				
-					//header( 'Content-type: ' . $sky_content_type[$file_extension] );
-					header("Content-type: image/" . $file_type);
+					header( 'Content-type: ' . $sky_content_type[$file_type] );
+					//header("Content-type: image/" . $file_type);
 					//header( 'Cache-Control: public' );
 					// last modified header
 					//setlocale(LC_TIME, "C");
