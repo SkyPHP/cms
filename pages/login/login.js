@@ -15,8 +15,9 @@
             $(this).serialize(),
             function(data){
                 if (data=='true') {
-                    url = removeParam(window.location.href,'logout');
-                    url = removeParam(url,'skybox');
+                    url = window.location.href;
+                    url = removeParam('skybox',url);
+                    url = removeParam('logout',url);
                     window.location.href = url;
                 } else if (data=='false') {
                     $('#login_password').val('');
