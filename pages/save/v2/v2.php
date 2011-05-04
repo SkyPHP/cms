@@ -1,5 +1,5 @@
 <?
-$model_name = $_POST['sky_qs'][0];
+$model_name = $p->queryfolders[0];
 if (!preg_match('/^[\w0-9]+$/', $model_name)) {
 	$response = array(
 		'status' => 'Error',
