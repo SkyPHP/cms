@@ -27,7 +27,7 @@ $(document).ready(function() {
             uploader = new plupload.Uploader({
                 runtimes: 'html5,flash,html4',
                 browse_button: browse_button,
-                url: '/media/upload',
+                url: '/ajax/media/upload',
                 flash_swf_url: '/lib/plupload/js/plupload.flash.swf'
             });
         uploader.bind('FilesRemoved', function(up, files){
@@ -102,9 +102,7 @@ $(document).ready(function() {
                     var opts = [];
                     var curr_sets = settings;
                     // var attrs = this.attributes;
-                    $this.html('<ul class="mediaItemGallery has-floats"></ul>');
-                    $gallery = $('.mediaItemGallery', $this);
-                    replace_with_load($gallery);
+                    var load_id = replace_with_load($this);
                     opts['vfolder'] = $this.attr('vfolder');
                     opts['width'] = $this.attr('width');
                     opts['height'] = $this.attr('height');
@@ -113,20 +111,21 @@ $(document).ready(function() {
                     opts['sort'] = $this.attr('sort');
                     $.extend(curr_sets, opts);
                     $.extend(curr_sets, options);
-                    if (settings.width == 'auto') settings.width = $gallery.width() - 8;
+                    if (settings.width == 'auto') settings.width = $this.width() - 8;
                     if (!settings.vfolder) {
-                        $gallery.html('<p><strong>Uploader Error: No vfolder set.</strong></p>');
+                        $this.html('<p><strong>Uploader Error: No vfolder set.</strong></p>');
                         return;
                     };
                     methods.setContextMenu();
                     $.ajax({
                         type: 'POST', 
-                        url: '/media/gallery', 
+                        url: '/ajax/media/gallery', 
                         data: curr_sets, 
                         context: up,
                         success:function(data) {
                             var $up = $(up);
-                            $('.mediaItemGallery', $up).html(data);
+                            $('.loading', $up).remove();
+                            $up.prepend(data);
                             methods.bindContextMenu($up);
                         }
                     });
@@ -150,17 +149,19 @@ $(document).ready(function() {
                 if ($.isFunction($.ui.sortable)) {
                     $uploader.append('<p class="small"><strong>Sort Enabled:</strong> You can drag the image and re-order their them.</p>');
                     var $gallery =  $('.mediaItemGallery', $uploader);
-                    $gallery.sortable({
-                        items: 'li.mediaItem',
-                        update: function() {
-                            var order = $gallery.sortable('serialize');
-                            $.post('/media/set-items', order, function(json) {
-                                if (json.status != 'OK') {
-                                    alert(json.errors);
-                                }
-                            });
-                        }
-                    });
+                    if ($gallery.length) {
+                        $gallery.sortable({
+                            items: 'li.mediaItem',
+                            update: function() {
+                                var order = $gallery.sortable('serialize');
+                                $.post('/ajax/media/set-items', order, function(json) {
+                                    if (json.status != 'OK') {
+                                        alert(json.errors);
+                                    }
+                                });
+                            }
+                        });
+                    }
                 } else {
                     $.error('Sortable in jQuery UI not loaded. Sort disabled.');
                 }
@@ -212,7 +213,7 @@ function contextMenu_delete(el) {
     if (!$el.length) return;
     if (ide && confirm('Are you sure you want to delete this image?')) {
         var $up = $el.closest('uploader');
-        $.post('/ajax/delete-media-item/' + ide, function(json) {
+        $.post('/ajax/media/delete-media-item/' + ide, function(json) {
            if (json.status == 'OK') {
                if ($up.length) {
                    $up.uploader();
