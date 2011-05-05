@@ -111,7 +111,7 @@ $(document).ready(function() {
                     opts['sort'] = $this.attr('sort');
                     $.extend(curr_sets, opts);
                     $.extend(curr_sets, options);
-                    if (settings.width == 'auto') settings.width = $this.parent().width();
+                    if (settings.width == 'auto') settings.width = $this.parent().width() - 8; // border is 4px
                     if (!settings.vfolder) {
                         $this.html('<p><strong>Uploader Error: No vfolder set.</strong></p>');
                         return;
