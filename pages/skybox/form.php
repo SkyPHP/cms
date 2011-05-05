@@ -1,6 +1,6 @@
 <?
-$model = $_POST['sky_qs'][0];
-$ide = $_POST['sky_qs'][1];
+$model = $p->queryfolders[0];
+$ide = $p->queryfolders[1];
 $p->title = 'Edit';
 $p->template('skybox', 'top');
 ?><form model="<?=$model?>" method="post" class="aqlForm standard_form" action="/save/v2/<?=$model?>"><?

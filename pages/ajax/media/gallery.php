@@ -7,13 +7,15 @@ $folder = media::get_vfolder($_POST['vfolder'], $limit);
 if (is_array($folder)) {
 	$items = $folder['items'];
 	if ($items) {
+		?><ul class="mediaItemGallery has-floats"><?
 		foreach ($items as $item) : 
-		//	$i = media::get_item($item['media_item_ide'], $w, $h);
+			$i = media::get_item($item['media_item_ide'], $w, $h);
 		?>
 			<li class="mediaItem" id="order_<?=$item['media_item_ide']?>" ide="<?=$item['media_item_ide']?>" instance_ide="<?=$i['media_instance_ide']?>">
 				<?=$i['html']?>
 			</li>
 		<? endforeach;
+		?></ul><?
 	} else {
 		echo $empty;
 	}
