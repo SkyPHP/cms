@@ -51,7 +51,10 @@ class snippet {
 			//if ( ereg( $value . '.*', $_SERVER['REQUEST_URI'] ) ) return false;
 			//if ( ereg( str_replace('?','\?',$value) . '.*', $_SERVER['REQUEST_URI'] ) ) return false;
 		}//foreach
-		redirect($tabs[getArrayFirstIndex($tabs)],302);
+        $qs = explode('?',$_SERVER['REQUEST_URI']);
+        $qs = $qs[1];
+        if ( $qs ) $qs = '?' . $qs;
+		redirect($tabs[getArrayFirstIndex($tabs)] . $qs,302);
 	}//function
 
 
