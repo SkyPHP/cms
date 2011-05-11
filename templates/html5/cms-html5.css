@@ -87,6 +87,16 @@ table.listing td {
 form.standard_form {
 	margin-bottom: 15px;
 }
+
+form.standard_form .note {
+	background:#18A6E7;
+	color:#fff;
+	font-size: 12px;
+	line-height:16px;
+	padding:10px;
+	width: 140px;
+}
+
 form.standard_form fieldset {
 	border: solid 1px #CCCCCC;
 	padding: 15px;
