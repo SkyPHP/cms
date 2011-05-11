@@ -1,5 +1,5 @@
 <?
-if (!$_POST['skybox']) redirect('/?skybox=/login');
+if (!$p->is_ajax_request) redirect('/?skybox=/login');
 
 $p->title = 'Sign In';
 
