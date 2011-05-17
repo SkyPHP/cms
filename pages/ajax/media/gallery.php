@@ -1,7 +1,8 @@
 <?
 $w = ($_POST['width']) ? $_POST['width'] : 100;
 $h = ($_POST['height']) ? $_POST['height'] : null;
-$empty = ($_POST['empty']) ? $_POST['empty'] : 'There are no images.';
+$empty = ($_POST['empty']) ? strip_tags($_POST['empty']) : 'There are no images.';
+$empty = '<p class="emptyMediaGallery">'.$empty.'</empty>';
 $limit = (is_numeric($_POST['limit'])) ? $_POST['limit'] : null;
 $folder = media::get_vfolder($_POST['vfolder'], $limit);
 if (is_array($folder)) {
