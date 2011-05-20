@@ -19,7 +19,8 @@ function ps_callback(node, data){
 
 function refresh_ps_table(node, ps){
    var div = $('#ps_' + node);
-
+   var start = $('#ps_' + node + '_start');
+ 
    if(ps.length){
       div.html('<table id="ps_' + node + '_table" class="listing"></table>');
 
@@ -33,9 +34,13 @@ function refresh_ps_table(node, ps){
          table.append("<tr><td>" + ps[i]['pid'] + "</td><td>" + ps[i]['user'] + "</td><td>" + ps[i]['cmd'] + "</td><td>" + button + "</td></tr>");
       }
       
+      start.attr('disabled', 'disabled');
    }else{
       div.html('No repmgr processes running.');
+      start.removeAttr('disabled');
+
    }
+
 }
 
 function send_ajax(params, callback, method, url, type){

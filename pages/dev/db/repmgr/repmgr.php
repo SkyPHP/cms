@@ -61,7 +61,7 @@ if($repmgr && $repmgr->initialized){
          ?><fieldset class='ps' ><legend>repmgr Processes on <?=$standby_node['host']?></legend><?
          if(is_array($ps)){
             ?><div id='ps_<?=$standby_node['id']?>_error'></div><?
-            ?><input type='button' value='Start Daemon' onclick="repmgr_start(<?=$standby_node['id']?>);" /><br /><?
+            ?><input id='ps_<?=$standby_node['id']?>_start' type='button' value='Start Daemon' onclick="repmgr_start(<?=$standby_node['id']?>);" <?=count($ps)?'disabled="disabled" ':''?>/><br /><?
             ?><div id='ps_<?=$standby_node['id']?>' class='volitile'><?
             if(count($ps)){
                ?><table class='listing'><?
