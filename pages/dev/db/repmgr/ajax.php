@@ -37,6 +37,18 @@ switch($params['func']){
       echo json_encode($json);
 
       break;
+   case('promote'):
+      $new_primary_node = $params['a'];
+
+      $output = $repmgr->promote($new_primary_node);
+
+      $json = array(
+         'output' => $output
+      );
+
+      echo var_dump($json);
+
+      break;
    default:
       die('unrecognized function');
 }

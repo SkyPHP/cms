@@ -98,3 +98,7 @@ function repmgr_kill(node, pid){
 function repmgr_start(node){
    send_ajax({'func':'start', 'a':node}, function(data){ps_callback(node, data);});
 }
+
+function repmgr_promote(node){
+   send_ajax({'func':'promote', 'a':node});
+}

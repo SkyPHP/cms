@@ -7,7 +7,7 @@ $p->template('intranet','top');
 if($repmgr && $repmgr->initialized){
    ?><fieldset><legend>Stats for Cluster '<?=$repmgr_cluster_name?>'</legend><?
 
-      $nodes = $repmgr->get_nodes();
+      $nodes = $repmgr->get_nodes(true);
       $primary_nodes = &$nodes['primary'];
       $standby_nodes = &$nodes['standby'];
 
@@ -34,9 +34,13 @@ if($repmgr && $repmgr->initialized){
       if(count($standby_nodes)){
          ?><fieldset><legend>Standby Nodes</legend><?
          ?><table class='listing'><?
-         ?><tr><th>ID</th><th>Host</th><th>Connection String</th><th>Lag Time</th><th>Primary Node ID</th></tr><?
+         ?><tr><th>ID</th><th>Host</th><th>Connection String</th><th>Primary Node ID</th><th>Lag Time</th><th></th></tr><?
          foreach($standby_nodes as $id => $standby_node){
-            ?><tr><td><?=$id?></td><td><?=$standby_node['host']?></td><td><?=$standby_node['conninfo']?></td><td><?=$standby_node['time_lag']?></td><td><?=$standby_node['primary_node_id']?></td></tr><?
+            $promote_button = "<input type='button' value='Promote' onclick='repmgr_promote($id);' />";
+            ?><tr><td><?=$id?></td><td><?=$standby_node['host']?></td><td><?=$standby_node['conninfo']?></td><?
+            foreach($standby_node['roles'] as $i => $role){
+               ?><?=$i?'<tr><td></td><td></td><td></td>':''?><td><?=$role['primary_node_id']?></td><td><?=$role['time_lag']?></td><td><?=$i?'':$promote_button?></td></tr><?
+            }
          }
          ?></table><?
          ?></fieldset><?
@@ -55,28 +59,28 @@ if($repmgr && $repmgr->initialized){
 
       $ssh_user = 'postgres';
 
-      foreach($standby_nodes as $standby_node){
-         $ps = $repmgr->remote_ps($standby_node['id'], $ssh_user);
+      foreach($repmgr->get_nodes() as $node){
+         $ps = $repmgr->remote_ps($node['id'], $ssh_user);
 
-         ?><fieldset class='ps' ><legend>repmgr Processes on <?=$standby_node['host']?></legend><?
+         ?><fieldset class='ps' ><legend>repmgr Processes on <?=$node['host']?></legend><?
          if(is_array($ps)){
-            ?><div id='ps_<?=$standby_node['id']?>_error'></div><?
-            ?><input id='ps_<?=$standby_node['id']?>_start' type='button' value='Start Daemon' onclick="repmgr_start(<?=$standby_node['id']?>);" <?=count($ps)?'disabled="disabled" ':''?>/><br /><?
-            ?><div id='ps_<?=$standby_node['id']?>' class='volitile'><?
+            ?><div id='ps_<?=$node['id']?>_error'></div><?
+            ?><input id='ps_<?=$node['id']?>_start' type='button' value='Start Daemon' onclick="repmgr_start(<?=$node['id']?>);" <?=count($ps)?'disabled="disabled" ':''?>/><br /><?
+            ?><div id='ps_<?=$node['id']?>' class='volitile'><?
             if(count($ps)){
                ?><table class='listing'><?
                ?><tr><th>PID</th><th>User</th><th>Command</th><th></th></tr><?
                foreach($ps as $process){
-                  ?><tr><td><?=$process['pid']?></td><td><?=$process['user']?></td><td><?=$process['cmd']?></td><td><input type='button' value='Kill' onclick="repmgr_kill(<?=$standby_node['id']?>, <?=$process['pid']?>);" /></td></tr><?
+                  ?><tr><td><?=$process['pid']?></td><td><?=$process['user']?></td><td><?=$process['cmd']?></td><td><input type='button' value='Kill' onclick="repmgr_kill(<?=$node['id']?>, <?=$process['pid']?>);" /></td></tr><?
                }
                ?></table><?
             }else{
                ?>No repmgr processes running.<?
             }
+            ?></div><?
          }else{
             ?>Local user '<?=`whoami`?>' unable to SSH into <?=$ssh_user?>@<?=$standby_node['host']?><?
          }
-         ?></div><?
          ?></fieldset><?
 
       }
