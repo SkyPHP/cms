@@ -130,7 +130,7 @@ $(document).ready(function() {
                         }
                     });
                     var id = Math.floor(Math.random()*11);
-                    $this.append('<button class="choose_file small" id="choose_' + id + '">Upload Files</button>');
+                    $this.append('<div class="upload_button_cont"><button class="choose_file small" id="choose_' + id + '">Upload Files</button></div>');
                     $this.append('<div class="upload_status"></div>');
                     if (curr_sets.sort) methods.doSort($this);
                 });
