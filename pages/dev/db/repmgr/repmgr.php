@@ -62,7 +62,7 @@ if($repmgr && $repmgr->initialized){
       foreach($repmgr->get_nodes() as $node){
          $ps = $repmgr->remote_ps($node['id'], $ssh_user);
 
-         ?><fieldset class='ps' ><legend>repmgr Processes on <?=$node['host']?></legend><?
+         ?><fieldset class='ps' ><legend>repmgr Processes on <?=$node['host']?></legend><? /*  var_dump($ps); */
          if(is_array($ps)){
             ?><div id='ps_<?=$node['id']?>_error'></div><?
             ?><input id='ps_<?=$node['id']?>_start' type='button' value='Start Daemon' onclick="repmgr_start(<?=$node['id']?>);" <?=count($ps)?'disabled="disabled" ':''?>/><br /><?
@@ -79,7 +79,7 @@ if($repmgr && $repmgr->initialized){
             }
             ?></div><?
          }else{
-            ?>Local user '<?=`whoami`?>' unable to SSH into <?=$ssh_user?>@<?=$standby_node['host']?><?
+            ?>Local user '<?=`whoami`?>' unable to SSH into <?=$ssh_user?>@<?=$node['host']?><?
          }
          ?></fieldset><?
 
