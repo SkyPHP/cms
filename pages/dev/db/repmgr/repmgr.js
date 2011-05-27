@@ -102,3 +102,8 @@ function repmgr_start(node){
 function repmgr_promote(node){
    send_ajax({'func':'promote', 'a':node});
 }
+
+function repmgr_add_hard(node){
+   send_ajax({'func':'add_hard', 'a':node});
+}
+

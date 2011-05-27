@@ -49,6 +49,18 @@ switch($params['func']){
       echo var_dump($json);
 
       break;
+   case('add_hard'):
+      $node = $params['a'];
+
+      $output = $repmgr->add($node);
+
+      $json = array(
+         'output' => $output
+      );
+
+      echo var_dump($json);
+
+      break;
    default:
       die('unrecognized function');
 }
