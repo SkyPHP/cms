@@ -11,7 +11,7 @@ function ps_callback(node, data){
    $('#ps_' + node + '_error').html();
 
    if(!data['success']){
-      $('#ps_' + node + '_error').html('Command failed:<br />' + data['output']);
+   //   $('#ps_' + node + '_error').html('Command failed:<br />' + data['output']);
    }
 
    refresh_ps_table(node, data['ps']);
