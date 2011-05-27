@@ -10,6 +10,7 @@ if($repmgr && $repmgr->initialized){
       $nodes = $repmgr->get_nodes(true);
       $primary_nodes = &$nodes['primary'];
       $standby_nodes = &$nodes['standby'];
+      $unused_nodes = &$nodes['unused'];
 
  
       #output the primary nodes
@@ -45,12 +46,28 @@ if($repmgr && $repmgr->initialized){
          ?></table><?
          ?></fieldset><?
 
-         unset($id);
-         unset($standby_node); 
+         unset($id, $standby_node, $promote_button); 
       }else{ #this should be impossible, if it happens, it is more likely a failed sql statement than a slaveless cluster
          
       }
 
+      if(count($unused_nodes)){
+         ?><fieldset><legend>Unused Nodes</legend><?
+         ?><table class='listing'><?
+         ?><tr><th>ID</th><th>Host</th><th>Connection String</th><th></th></tr><?
+         foreach($unused_nodes as $id => $unused_node){
+            $add_button = "<input type='button' value='Add to Replication' onclick='repmgr_add_hard($id);' />";
+            ?><tr><td><?=$id?></td><td><?=$unused_node['host']?></td><td><?=$unused_node['conninfo']?></td><td><?=$add_button?></td></tr><?
+         }
+         ?></table><?
+         ?></fieldset><?
+
+         unset($id, $unused_node, $add_button);
+      }else{
+
+      }
+
+      ?><input type='button' value='Add node to Repmgr' onclick='repmgr_add_soft();' /><?
 
       #output ps findings on standby_nodes
       ?><fieldset><legend>Monitoring Daemon Status</legend><?
