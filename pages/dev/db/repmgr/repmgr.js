@@ -81,6 +81,10 @@ function send_ajax(params, callback, method, url, type){
    ajax_func(url, (typeof(params) == 'object'?array_to_param_string(params):params), callback, type);
 }
 
+function refresh(){
+   document.location = '/dev/db/repmgr';
+}
+
 function array_to_param_string(arr){
    var return_string = '';   
 
@@ -91,19 +95,44 @@ function array_to_param_string(arr){
    return(return_string);
 }
 
-function repmgr_kill(node, pid){
-   send_ajax({'func':'kill', 'a':node, 'b':pid}, function(data){ps_callback(node, data);});
+function repmgr_kill(node, pid, callback){
+   send_ajax({'func':'kill', 'a':node, 'b':pid}, callback || function(data){ps_callback(node, data);});
 }
 
-function repmgr_start(node){
-   send_ajax({'func':'start', 'a':node}, function(data){ps_callback(node, data);});
+function repmgr_start(node, callback){
+   send_ajax({'func':'start', 'a':node}, callback || function(data){ps_callback(node, data);});
 }
 
-function repmgr_promote(node){
-   send_ajax({'func':'promote', 'a':node});
+function repmgr_promote(node, callback){
+   send_ajax({'func':'promote', 'a':node}, callback || refresh);
 }
 
-function repmgr_add_hard(node){
-   send_ajax({'func':'add_hard', 'a':node});
+function repmgr_add_hard(node, callback){
+   send_ajax({'func':'add_hard', 'a':node}, callback || refresh);
 }
 
+function add_soft_callback(data, textStatus){
+   if(data['success']){
+      setTimeout(refresh, 2000);
+      return;
+   }
+
+   $('#skyform_error').html(data['error']);
+}
+
+function repmgr_add_soft(cluster, conninfo, id, callback){
+   send_ajax({'func':'add_soft', 'a':cluster, 'b':conninfo, 'c':id}, callback || add_soft_callback);
+}
+
+function drop_soft_callback(data, textStatus){
+   if(data['success']){
+      setTimeout(refresh, 2000);
+      return;
+   }
+
+   $('#unused_error').html(data['error']);
+}
+
+function repmgr_drop(node, callback){
+   send_ajax({'func':'drop', 'a':node}, callback || refresh);
+}

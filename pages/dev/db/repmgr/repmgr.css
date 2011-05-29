@@ -1,4 +1,27 @@
 fieldset.ps > input{
-   margin-bottom: 10px;
-   margin-top: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+form.skyform label{
+  display:block;
+}
+
+form.skyform fieldset{
+  border: 1px solid #CCCCCC;
+  margin-top: 25px;
+  padding: 20px;
+}
+
+form.skyform legend{
+  border: 1px solid #CCCCCC;
+  font-weight: bold;
+  padding: 3px 10px;
+}
+
+#skyform_error, #unused_error{
+  background-color: #ff6666;
+  color: #ffffff;
+  border: 1px solid #CCCCCC;
+  text-align: center;
 }

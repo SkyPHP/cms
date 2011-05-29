@@ -37,7 +37,7 @@ switch($params['func']){
       echo json_encode($json);
 
       break;
-   case('promote'):
+   case('promote'): #still experimental
       $new_primary_node = $params['a'];
 
       $output = $repmgr->promote($new_primary_node);
@@ -58,7 +58,53 @@ switch($params['func']){
          'output' => $output
       );
 
-      echo var_dump($json);
+      echo json_encode($json);
+
+      break;
+   case('add_soft'):
+      $cluster = $params['a'];
+      $conninfo = $params['b'];
+      $id = $params['c'];
+
+      $json = array();
+
+      #perform some sanity checks
+      if(!is_numeric($id)){
+         $json['error'] = "bad id";
+      }
+
+      $rs = $db->Execute("select count(*) as count from repmgr_$repmgr_cluster_name.repl_nodes where id = $id");
+
+      if($rs->Fields('count') > 0){
+         $json['error'] = 'that id already exists';
+      }
+
+      if(!$json['error']){
+         if($rs = $dbw->Execute("insert into repmgr_$repmgr_cluster_name.repl_nodes(cluster, conninfo, id) values('$cluster', '$conninfo', $id) returning *")){
+            if(!$rs->EOF){
+               $json['success'] = ($rs->Fields('cluster') == $cluster);
+            } 
+
+         }else{
+            $json['error'] = 'query Failed';
+         }
+      
+      }
+
+      echo json_encode($json);
+
+      break;
+   case('drop'):
+      $node = $params['a'];
+
+      $json = array();
+
+      if($rs = $dbw->Execute("delete from repmgr_$repmgr_cluster_name.repl_nodes where id = $node and cluster = '$repmgr_cluster_name' returning *")){
+         $json['success'] = ($rs->Fields('id') == $node);
+      }else{
+         $json['error'] = 'query Failed';
+      }
+      echo json_encode($json);
 
       break;
    default:

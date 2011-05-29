@@ -11,7 +11,6 @@ if($repmgr && $repmgr->initialized){
       $primary_nodes = &$nodes['primary'];
       $standby_nodes = &$nodes['standby'];
       $unused_nodes = &$nodes['unused'];
-
  
       #output the primary nodes
       if(count($primary_nodes)){
@@ -53,11 +52,13 @@ if($repmgr && $repmgr->initialized){
 
       if(count($unused_nodes)){
          ?><fieldset><legend>Unused Nodes</legend><?
+         ?><div id='unused_error'></div><?
          ?><table class='listing'><?
          ?><tr><th>ID</th><th>Host</th><th>Connection String</th><th></th></tr><?
          foreach($unused_nodes as $id => $unused_node){
             $add_button = "<input type='button' value='Add to Replication' onclick='repmgr_add_hard($id);' />";
-            ?><tr><td><?=$id?></td><td><?=$unused_node['host']?></td><td><?=$unused_node['conninfo']?></td><td><?=$add_button?></td></tr><?
+            $drop_button = "<input type='button' value='Drop from repmgr' onclick='repmgr_drop($id);' />";
+            ?><tr><td><?=$id?></td><td><?=$unused_node['host']?></td><td><?=$unused_node['conninfo']?></td><td><?=$add_button?><?=$drop_button?></td></tr><?
          }
          ?></table><?
          ?></fieldset><?
@@ -67,7 +68,7 @@ if($repmgr && $repmgr->initialized){
 
       }
 
-      ?><input type='button' value='Add node to Repmgr' onclick='repmgr_add_soft();' /><?
+      ?><input type='button' value='Add node to Repmgr' onclick='$.skyboxShow("/dev/db/repmgr/add");' /><?
 
       #output ps findings on standby_nodes
       ?><fieldset><legend>Monitoring Daemon Status</legend><?
