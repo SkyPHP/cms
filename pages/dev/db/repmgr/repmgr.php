@@ -96,17 +96,20 @@ if($repmgr && $repmgr->initialized){
       foreach($repmgr->get_nodes() as $node){
          $ps = $repmgr->remote_ps($node['id'], $ssh_user);
 
-         ?><fieldset class='ps' ><legend>repmgr Processes on <?=$node['host']?></legend><? /*  var_dump($ps); */
+         ?><fieldset class='ps' ><legend>repmgr Processes on <?=$node['host']?></legend><?
          if(is_array($ps)){
             ?><div id='ps_<?=$node['id']?>_error'></div><?
-            ?><input id='ps_<?=$node['id']?>_start' type='button' value='Start Daemon' onclick="repmgr_start(<?=$node['id']?>);" <?=count($ps)?'disabled="disabled" ':''?>/><br /><?
+            ?><input id='ps_<?=$node['id']?>_start' type='button' value='Start Daemon' onclick="repmgr_start(<?=$node['id']?>);" <?/*=count($ps)?'disabled="disabled" ':''*/?>/><br /><?
             ?><div id='ps_<?=$node['id']?>' class='volitile'><?
             if(count($ps)){
                ?><table class='listing'><?
                ?><tr><th>PID</th><th>User</th><th>Command</th><th></th></tr><?
                foreach($ps as $process){
-                  ?><tr><td><?=$process['pid']?></td><td><?=$process['user']?></td><td><?=$process['cmd']?></td><td><input type='button' value='Kill' onclick="repmgr_kill(<?=$node['id']?>, <?=$process['pid']?>);" /></td></tr><?
+                  $kill_button = "<input type='button' value='Kill' onclick='repmgr_kill({$node['id']}, {$process['pid']});' />";
+                  $hide_kill_button = preg_match('#^\s*postgres:#', $process['cmd']);
+                  ?><tr><td><?=$process['pid']?></td><td><?=$process['user']?></td><td><?=$process['cmd']?></td><td><?=$hide_kill_button?'':$kill_button?></td></tr><?
                }
+               unset($kill_button);
                ?></table><?
             }else{
                ?>No repmgr processes running.<?

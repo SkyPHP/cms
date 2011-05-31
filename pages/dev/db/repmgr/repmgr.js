@@ -30,12 +30,12 @@ function refresh_ps_table(node, ps){
       table.append("<tr><th>PID</th><th>User</th><th>Command</th><th></th></tr>");
 
       for(i in ps){
-         var button = '<input type="button" value="Kill" onclick="repmgr_kill(' + node + ', ' + ps[i]['pid'] + ');" />';
+         var button = ps[i]['cmd'].match(/^\s*postgres:/)?'':'<input type="button" value="Kill" onclick="repmgr_kill(' + node + ', ' + ps[i]['pid'] + ');" />';
 
          table.append("<tr><td>" + ps[i]['pid'] + "</td><td>" + ps[i]['user'] + "</td><td>" + ps[i]['cmd'] + "</td><td>" + button + "</td></tr>");
       }
       
-      start.attr('disabled', 'disabled');
+ //     start.attr('disabled', 'disabled');
    }else{
       div.html('No repmgr processes running.');
       start.removeAttr('disabled');
