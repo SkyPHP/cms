@@ -46,7 +46,7 @@ switch($params['func']){
          'output' => $output
       );
 
-      echo var_dump($json);
+      echo json_encode($json);
 
       break;
    case('add_hard'):
@@ -94,7 +94,7 @@ switch($params['func']){
       echo json_encode($json);
 
       break;
-   case('drop'):
+   case('drop_soft'):
       $node = $params['a'];
 
       $json = array();
@@ -104,9 +104,34 @@ switch($params['func']){
       }else{
          $json['error'] = 'query Failed';
       }
+
       echo json_encode($json);
 
       break;
+   case('drop_hard'):
+      $node = $params['a'];
+
+      $json = array('success' => $repmgr->stop_replication($node));
+
+      echo json_encode($json);
+      
+   break;
+   case('cleanup'):
+      $node = $params['a'];
+
+      $json = array('success' => 0, 'attempted' => 0);
+
+      foreach($repmgr->cleanup_repl_monitor($node) as $cleanup){
+         if($cleanup){
+            $json['success']++;
+         }
+
+         $json['attempted']++;
+      }
+
+      echo json_encode($json);
+  
+   break;
    default:
       die('unrecognized function');
 }

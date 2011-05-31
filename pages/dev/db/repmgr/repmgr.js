@@ -1,4 +1,5 @@
 var ajax_url = '/dev/db/repmgr/ajax';
+var timeout = 2000;
 
 function default_callback(data, textStatus){
    alert(data);
@@ -81,8 +82,9 @@ function send_ajax(params, callback, method, url, type){
    ajax_func(url, (typeof(params) == 'object'?array_to_param_string(params):params), callback, type);
 }
 
+//We use the delay to compensate for replication lag
 function refresh(){
-   document.location = '/dev/db/repmgr';
+   setTimeout(function(){document.location = '/dev/db/repmgr';}, timeout);
 }
 
 function array_to_param_string(arr){
@@ -95,6 +97,14 @@ function array_to_param_string(arr){
    return(return_string);
 }
 
+function loading(id){
+   $("<img id='" + id + "_loading' src='/images/loading.gif' />").insertBefore('#' + id);
+}
+
+function clear_loading(id){
+   $('#' + id + '_loading').remove();
+}
+
 function repmgr_kill(node, pid, callback){
    send_ajax({'func':'kill', 'a':node, 'b':pid}, callback || function(data){ps_callback(node, data);});
 }
@@ -104,16 +114,20 @@ function repmgr_start(node, callback){
 }
 
 function repmgr_promote(node, callback){
+   loading('standby_error');
    send_ajax({'func':'promote', 'a':node}, callback || refresh);
 }
 
 function repmgr_add_hard(node, callback){
+   loading('unused_error');
    send_ajax({'func':'add_hard', 'a':node}, callback || refresh);
 }
 
 function add_soft_callback(data, textStatus){
+   clear_loading('skybox_error');  
+
    if(data['success']){
-      setTimeout(refresh, 2000);
+      refresh();
       return;
    }
 
@@ -121,18 +135,45 @@ function add_soft_callback(data, textStatus){
 }
 
 function repmgr_add_soft(cluster, conninfo, id, callback){
+   loading('skybox_error');
    send_ajax({'func':'add_soft', 'a':cluster, 'b':conninfo, 'c':id}, callback || add_soft_callback);
 }
 
 function drop_soft_callback(data, textStatus){
+   clear_loading('unused_error');
+
    if(data['success']){
-      setTimeout(refresh, 2000);
+      refresh();
       return;
    }
 
    $('#unused_error').html(data['error']);
 }
 
-function repmgr_drop(node, callback){
-   send_ajax({'func':'drop', 'a':node}, callback || refresh);
+function repmgr_drop_soft(node, callback){
+   loading('unused_error');
+   send_ajax({'func':'drop_soft', 'a':node}, callback || drop_soft_callback);
 }
+
+function drop_hard_callback(data, textStatus){
+   clear_loading('standby_error');
+   if(data['success']){
+      refresh();
+      return;
+   }
+
+   $('#standby_error').html(data['error']);
+}
+
+function repmgr_drop_hard(node, callback){
+   loading('standby_error');
+   send_ajax({'func':'drop_hard', 'a':node}, callback || drop_hard_callback);
+}
+
+function repmgr_cleanup(node, callback){
+   loading('general_error');
+   send_ajax({'func':'cleanup', 'a':node}, callback || refresh);
+}
+
+
+

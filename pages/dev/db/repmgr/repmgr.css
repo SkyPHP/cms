@@ -19,9 +19,9 @@ form.skyform legend{
   padding: 3px 10px;
 }
 
-#skyform_error, #unused_error{
+#skyform_error, #unused_error, #standby_error, #primary_error, #general_error{
   background-color: #ff6666;
   color: #ffffff;
-  border: 1px solid #CCCCCC;
+/*  border: 1px solid #CCCCCC; */
   text-align: center;
 }
