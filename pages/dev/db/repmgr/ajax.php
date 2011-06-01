@@ -68,7 +68,9 @@ switch($params['func']){
 
       $json = array();
 
-      #perform some sanity checks
+      #$repmgr->add_soft has all these checks
+      #but it does not give detailed error output
+      #we need these details for our interface
       if(!is_numeric($id)){
          $json['error'] = "bad id";
       }
@@ -80,15 +82,7 @@ switch($params['func']){
       }
 
       if(!$json['error']){
-         if($rs = $dbw->Execute("insert into repmgr_$repmgr_cluster_name.repl_nodes(cluster, conninfo, id) values('$cluster', '$conninfo', $id) returning *")){
-            if(!$rs->EOF){
-               $json['success'] = ($rs->Fields('cluster') == $cluster);
-            } 
-
-         }else{
-            $json['error'] = 'query Failed';
-         }
-      
+         $json[$soft = $repmgr->add_soft($cluster, $conninfo, $id)?'success':'error'] = $soft?true:'query_failure';
       }
 
       echo json_encode($json);
@@ -99,11 +93,7 @@ switch($params['func']){
 
       $json = array();
 
-      if($rs = $dbw->Execute("delete from repmgr_$repmgr_cluster_name.repl_nodes where id = $node and cluster = '$repmgr_cluster_name' returning *")){
-         $json['success'] = ($rs->Fields('id') == $node);
-      }else{
-         $json['error'] = 'query Failed';
-      }
+      $json[$repmgr->drop_soft($node)?'success':'error'] = true;
 
       echo json_encode($json);
 
