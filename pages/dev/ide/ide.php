@@ -1,16 +1,16 @@
 <?
 ob_start();
-$title = 'Developer Dashboard / IDE';
-template::inc('intranet','top');
+$p->title = 'Developer Dashboard / IDE';
+$p->template('intranet','top');
 include('pages/dev/dev-nav.php');
 ?>
 <div id="idePage">
 	<?
-	if ($_POST["sky_ide"]) {
-		if ($_POST["sky_qs"][0] && $_POST["sky_qs"][1] && $_POST["sky_qs"][2]) {
-			$tablename = $_POST["sky_qs"][0];
-			$fieldname = $_POST["sky_qs"][1];
-			$value = $_POST["sky_qs"][2];
+	if (IDE) {
+		if ($p->queryfolders[0] && $p->queryfolders[1] && $p->queryfolders[2]) {
+			$tablename = $p->queryfolders[0];
+			$fieldname = $p->queryfolders[1];
+			$value = $p->queryfolders[2];
 			if (!is_numeric($value)) $value = "'$value'";
 			
 			$rs_records = aql::select("$tablename {id where $fieldname = $value ORDER BY id ASC}");
@@ -26,13 +26,13 @@ include('pages/dev/dev-nav.php');
 			else echo "No Records!";
 			exit();
 		}
-		else if ($_POST["sky_qs"][0] && $_POST["sky_qs"][1]) {
-			$tablename = $_POST["sky_qs"][0];
-			$id = $_POST["sky_qs"][1];
+		else if ($p->queryfolders[0] && $p->queryfolders[1]) {
+			$tablename = $p->queryfolders[0];
+			$id = $p->queryfolders[1];
 			if (!is_numeric($id)) exit("BAD ID");
 		}
 		else {
-			$ide = $_POST["sky_ide"];
+			$ide = IDE;
 			$id = decrypt($ide);
 			if (!is_numeric($id)) {
 				$sql_tables = "select tablename from pg_tables where schemaname = 'public' order by tablename asc";
@@ -85,6 +85,5 @@ include('pages/dev/dev-nav.php');
 	?>
 </div>
 <?
-template::inc('intranet','bottom');
+$p->template('intranet', 'bottom');
 ob_end_flush();
-?>
