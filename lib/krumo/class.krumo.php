@@ -970,7 +970,7 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 
 	// keys ?
 	//
-	if (is_object($v) && get_class($data) == 'ArrayObject') {
+	if (is_object($data) && get_class($data) == 'ArrayObject') {
 		$data = $data->getArrayCopy();
 		$_is_object = false;
 	}
