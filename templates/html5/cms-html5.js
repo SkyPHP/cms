@@ -147,7 +147,7 @@ $(document).ready(function() {
             },
             doSort : function($uploader) {
                 if ($.isFunction($.ui.sortable)) {
-                    $uploader.append('<p class="small"><strong>Sort Enabled:</strong> You can drag the image and re-order their them.</p>');
+                    $uploader.append('<p class="small mediaSortEnabled"><strong>Sort Enabled:</strong> You can drag the image and re-order their them.</p>');
                     var $gallery =  $('.mediaItemGallery', $uploader);
                     if ($gallery.length) {
                         $gallery.sortable({
