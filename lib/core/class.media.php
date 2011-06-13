@@ -1211,11 +1211,11 @@ class media {
 			$p->js[] = "/lib/js/jquery/jquery.easing.1.1.1.js";
 			$p->js[] = "/lib/js/jquery/jquery.cycle.all.js"; 
 			$p->js[] = "/pages/media/gallery/gallery.js";
-			if (!$settings['style_sheet'])
+			if (!$settings['style_sheet']) {
 				$p->css[] = "/pages/media/gallery/gallery.css";
-			else
+			} else {
 				$p->css[] = $settings['style_sheet'];
-			
+			}
 			
            $grid_margin=$settings['grid_margin']?$settings['grid_margin']:0;
            $edge_padding=$settings['edge_padding']?$settings['edge_padding']:0;
