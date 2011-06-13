@@ -32,7 +32,7 @@ default:
 
 			if ( $db_name && $db_host ) {
 				$db = &ADONewConnection( $db_platform );
-				$db->PConnect( $db_domain, $db_username, $db_password, $db_name );
+				$db->PConnect( $db_host, $db_username, $db_password, $db_name );
 			/*
 				if ( !$dbw_domain ) {
 					$dbw =& $db;
