@@ -1208,9 +1208,9 @@ class media {
 
 	function gallery($settings){
 			global $p;
-			$p->js[] = "/lib/js/jquery/jquery.easing.1.1.1.js";
-			$p->js[] = "/lib/js/jquery/jquery.cycle.all.js"; 
-			$p->js[] = "/pages/media/gallery/gallery.js";
+			$p->js[] = "/lib/js/jquery.easing.1.1.1.js";
+			$p->js[] = "/lib/js/jquery.cycle.all.js"; 
+			$p->js[] = "/lib/js/media/gallery.js";
 			//if (!$settings['style_sheet']) {
 				$p->css[] = "/pages/media/gallery/gallery.css";
 			//} else {
