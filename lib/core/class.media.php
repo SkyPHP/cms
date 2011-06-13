@@ -1207,7 +1207,10 @@ class media {
 
 
 	function gallery($settings){
-
+			global $p;
+			$p->js[] = "/lib/js/jquery/jquery.easing.1.1.1.js";
+			$p->js[] = "/lib/js/jquery/jquery.cycle.all.js"; 
+			$p->js[] = "/pages/media/gallery/gallery.js";
            $grid_margin=$settings['grid_margin']?$settings['grid_margin']:0;
            $edge_padding=$settings['edge_padding']?$settings['edge_padding']:0;
 
@@ -1298,9 +1301,7 @@ class media {
                     <?=$id ?>_galleryVars['easing']=<?$easing ?>;
                  <? } ?>
 
-                 add_js("/lib/js/jquery/jquery.easing.1.1.1.js");
-                 add_js("/lib/js/jquery/jquery.cycle.all.js");
-		 add_js("/pages/media/gallery/gallery.js");//.php?id=<?=$id ?>");
+              
                  <? if (!$settings['style_sheet']): ?> add_css("/pages/media/gallery/gallery.css");//.php?id=<?=$id ?>");
 				 <? else: ?> add_css("<?=$settings['style_sheet']?>");//.php?id=<?=$id ?>");
 				 <? endif; ?>
