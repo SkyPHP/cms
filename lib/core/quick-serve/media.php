@@ -109,6 +109,9 @@ default:
 	//die( 'problem.' );
 	header("HTTP/1.0 404 Not Found");
 	echo '404 Error: File Not Found.';
+    echo "<!--
+$SQL
+-->";
 	exit(0);
 
 endswitch;
