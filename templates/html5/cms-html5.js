@@ -75,10 +75,14 @@ $(document).ready(function() {
     });
 
     $('.pagination-limit').live('change',function() {
-        qs = location.search;
-        qs = removeParam($(this).attr('name'),qs); // remove limit
-        qs = removeParam('page'+$(this).attr('i'),qs); // remove page
-        location.href = qs + (qs?'&':'?') + $(this).attr('name') + '=' + $(this).val();
+        url1 = location.href.split('?');
+		url1 = url1[0];
+
+		url2 = location.href;
+        url2 = removeParam($(this).attr('name'),url2); // remove limit
+        url2 = removeParam('page'+$(this).attr('i'),url2); // remove page
+		url2 = removeParam('limit'+$(this).attr('i'),url2);
+        location.href = url2 + (url2==url1?'?':'&') + $(this).attr('name') + '=' + $(this).val();
     });
     
 });
