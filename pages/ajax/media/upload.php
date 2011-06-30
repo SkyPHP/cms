@@ -34,7 +34,7 @@ if ($_FILES["file"]["tmp_name"] && !$errors) {
     	$dot = strpos( $_POST['db_field'], '.' );
     	$table = substr( $_POST['db_field'], 0, $dot );
     	$field = substr( $_POST['db_field'], $dot + 1 );
-    	$update = array( $field => $item[0]['media_item_id'] );
+    	$update = array( $field => $item[-1][0]['media_item_id'] );
         $row_id = decrypt($_POST['db_row_ide'], $table);
     	$row_changed = aql::update($table,$update,$row_id);
         if ($row_changed) {
@@ -62,7 +62,7 @@ if ($errors) {
 } else {
     $re = array(
         'status' => 'OK',
-        'data' => $item[0],
+        'data' => $item,
         'row_changed' => $row_changed
     );
 }
