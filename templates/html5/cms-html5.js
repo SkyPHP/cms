@@ -98,7 +98,8 @@ $(document).ready(function() {
             'empty' : '',
             'sort' : false,
             'db_field' : '',
-            'db_row_ide' : ''
+            'db_row_ide' : '',
+            'media_item_ide' : ''
         }
         var methods = {
             init : function(options) {
