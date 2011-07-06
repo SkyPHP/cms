@@ -63,6 +63,8 @@ class pagination {
 
 
     function pages() {
+
+        global $p;
 ?>
         <div class="pagination-links">
 <?
@@ -72,7 +74,7 @@ class pagination {
             $qs = qs_remove('page'.$this->i);
             if ($i!=1) $qs .= '&page'.$this->i.'=' . $i;
 ?>
-            <a href="?<?=$qs?>" class="pagination-link <?=$selected?>"><?=$i?></a>
+            <a href="<? echo $p->urlpath; if ($qs) echo '?' . $qs; ?>" class="pagination-link <?=$selected?>"><?=$i?></a>
 <?
         }
 ?>
@@ -141,6 +143,8 @@ class array_pagination {
 
 
     function pages() {
+
+        global $p;
 ?>
         <div class="pagination-links">
 <?
@@ -150,7 +154,7 @@ class array_pagination {
             $qs = qs_remove('page'.$this->i);
             if ($i!=1) $qs .= '&page'.$this->i.'=' . $i;
 ?>
-            <a href="?<?=$qs?>" class="pagination-link <?=$selected?>"><?=$i?></a>
+            <a href="<? echo $p->urlpath; if ($qs) echo '?' . $qs; ?>" class="pagination-link <?=$selected?>"><?=$i?></a>
 <?
         }
 ?>
@@ -159,4 +163,4 @@ class array_pagination {
     }//pages
 
 
-}//pagination class
+}//array_pagination class
