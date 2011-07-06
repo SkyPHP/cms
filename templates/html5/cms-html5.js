@@ -20,7 +20,7 @@ $(document).ready(function() {
             data = {
                 'vfolder' : $up.attr('vfolder'),
                 'db_field' : $up.attr('db_field'),
-                'db_row_ide' : $up.attr('db_row_ide')
+                'db_row_ide' : $up.attr('db_row_ide'),
             },
             browse_button = id,
             upload_button = 'upload_' + id.split('_')[1],
@@ -75,10 +75,14 @@ $(document).ready(function() {
     });
 
     $('.pagination-limit').live('change',function() {
-        qs = location.search;
-        qs = removeParam($(this).attr('name'),qs); // remove limit
-        qs = removeParam('page'+$(this).attr('i'),qs); // remove page
-        location.href = qs + (qs?'&':'?') + $(this).attr('name') + '=' + $(this).val();
+        url1 = location.href.split('?');
+		url1 = url1[0];
+
+		url2 = location.href;
+        url2 = removeParam($(this).attr('name'),url2); // remove limit
+        url2 = removeParam('page'+$(this).attr('i'),url2); // remove page
+		url2 = removeParam('limit'+$(this).attr('i'),url2);
+        location.href = url2 + (url2==url1?'?':'&') + $(this).attr('name') + '=' + $(this).val();
     });
     
 });
@@ -92,25 +96,31 @@ $(document).ready(function() {
             'height' : '',
             'limit' : 0,
             'empty' : '',
-            'sort' : false
+            'sort' : false,
+            'db_field' : '',
+            'db_row_ide' : '',
+            'media_item_ide' : ''
         }
         var methods = {
             init : function(options) {
                 return this.each(function() {
-                    var up = this;
-                    var $this = $(up);
-                    var opts = [];
-                    var curr_sets = settings;
-                    // var attrs = this.attributes;
-                    var load_id = replace_with_load($this);
-                    opts['vfolder'] = $this.attr('vfolder');
-                    opts['width'] = $this.attr('width');
-                    opts['height'] = $this.attr('height');
-                    opts['limit'] = $this.attr('limit');
-                    opts['empty'] = $this.attr('empty');
-                    opts['sort'] = $this.attr('sort');
+                    var up = this,
+                        $this = $(up),
+                        opts = {},
+                        curr_sets = settings,
+                        attrs = $this[0].attributes,
+                        load_id = replace_with_load($this);
+                    
+                    var i = attrs.length - 1;
+                    while (i >= 0) {
+                        var name = attrs[i].nodeName,  val = attrs[i].nodeValue;
+                        opts[name] = val;
+                        i--;
+                    }
+
                     $.extend(curr_sets, opts);
                     $.extend(curr_sets, options);
+
                     if (settings.width == 'auto') settings.width = $this.parent().width() - 8; // border is 4px
                     if (!settings.vfolder) {
                         $this.html('<p><strong>Uploader Error: No vfolder set.</strong></p>');
@@ -130,7 +140,7 @@ $(document).ready(function() {
                         }
                     });
                     var id = Math.floor(Math.random()*11);
-                    $this.append('<div class="upload_button_cont"><button class="choose_file small" id="choose_' + id + '">Upload Files</button></div>');
+                    $this.append('<div class="upload_button_cont"><button class="choose_file small" type="button" id="choose_' + id + '">Upload Files</button></div>');
                     $this.append('<div class="upload_status"></div>');
                     if (curr_sets.sort) methods.doSort($this);
                 });
