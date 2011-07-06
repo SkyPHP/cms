@@ -1158,37 +1158,25 @@ class media {
 /**
  * display an uploader using SWF Uploader
  *	There is a single array parameter:
- *	REQUIRED: vfolder_path
- *	OPTIONAL:	thumb_width, thumb_height, thumb_crop,
- 				max_num_files, max_file_size (in kilobytes),
-				empty_message,
-				file_types, file_types_description,
- 				db_field, db_row_id,
-				on_success_js
+ *	REQUIRED: 	vfolder (the vfolder path)
+ *	OPTIONAL:	limit, crop, crop-gravity
+				empty (will display empty message),
+ 				db_field, db_row_ide, (will update this in db),
+ 				width, height, (for display)
+ 				sort (if true, will make the items sortable ,must have jquery ui sortable for this to work)
+				
  *
- * @param array $offset (optional) number of items to bypass before retrieving items, useful for pagination
+ * 
  */
 	function uploader($settings) {
-		$media_upload = $settings;
-
-                $context = $settings['context'];
-
-		$media_upload['delete'] = true;
-		if ( !isset($media_upload['gallery']) ) $media_upload['gallery'] = true;
-		$media_upload['unique_uploader_id'] = rand(0,999999999);
-		if (!$media_upload['no_js']) {
-			echo "<script type=\"text/javascript\">add_javascript('/pages/media/easyupload/easyupload.js');</script>";
-			echo "<script type=\"text/javascript\">add_css('/pages/media/easyupload/easyupload.css');</script>";
-			echo "\n\n";
+		echo '<uploader vfolder="'.$settings['vfolder'].'" ';
+		if ($settings['crop']) echo 'crop="true" ';
+		if ($settings['sort']) echo 'sort="true" ';
+		unset($settings['sort'], $settigns['crop'], $settings['vfolder']);
+		foreach ($settings as $k => $v) {
+			echo $k.'="'.$v.'" ';
 		}
-		echo "<div style=\"".$media_upload['gallery_style']."\" id=\"upload-items-".$media_upload['unique_uploader_id']."\">";
-		if ( $media_upload['gallery'] ) include('pages/media/easyupload/items.php');
-		echo "</div>";
-		echo "<div class=\"clear\"></div>";
-		if (!$media_upload['on_success_js']) $media_upload['on_success_js'] = "get_vfolder_items('{$media_upload['vfolder_path']}','{$media_upload['unique_uploader_id']}','{$media_upload['thumb_width']}','{$media_upload['thumb_height']}','{$media_upload['thumb_crop']}');";
-		if (!$media_upload['vfolder_js']) $media_upload['vfolder_js'] = "'".$media_upload['vfolder_path']."'";
-        if ($_GET['media_debug']) $media_upload['debug'] = true;
-		include('modules/media/upload/upload.php');
+		echo '></uploader>';
 	}//function uploader
 
 
