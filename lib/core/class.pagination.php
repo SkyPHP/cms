@@ -86,7 +86,7 @@ class pagination {
 
 
 
-class pagination2 {
+class array_pagination {
 
     private $limits = array(10,25,50,100,250,500);
 
