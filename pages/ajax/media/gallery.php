@@ -5,6 +5,8 @@ $empty = ($_POST['empty']) ? strip_tags($_POST['empty']) : 'There are no images.
 $empty = '<p class="emptyMediaGallery">'.$empty.'</empty>';
 $limit = (is_numeric($_POST['limit']) && $_POST['limit'] > 0) ? $_POST['limit'] : null;
 $folder = media::get_vfolder($_POST['vfolder'], $limit);
+$crop = (!empty($_POST['crop'])) ? true : false;
+$crop_gravity = $_POST['crop-gravity'];
 
 if ($_POST['db_field'] && $_POST['db_row_ide']) {
 	$inf = explode('.', $_POST['db_field']);
@@ -16,7 +18,7 @@ if ($_POST['db_field'] && $_POST['db_row_ide']) {
 		if (!$item['media_item_id']) {
 			echo $empty;
 		} else {
-			$i = media::get_item($item['media_item_ide'], $w, $h); 
+			$i = media::get_item($item['media_item_ide'], $w, $h, $crop, null, array('crop_gravity' => $crop_gravity)); 
 			?><ul class="mediaItemGallery has-floats">
 				<li class="mediaItem" id="order_<?=$item['media_item_ide']?>" ide="<?=$item['media_item_ide']?>" instance_ide="<?=$i['media_instance_ide']?>">
 					<?=$i['html']?>

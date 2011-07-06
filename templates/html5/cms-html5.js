@@ -99,7 +99,9 @@ $(document).ready(function() {
             'sort' : false,
             'db_field' : '',
             'db_row_ide' : '',
-            'media_item_ide' : ''
+            'media_item_ide' : '',
+            'crop' : '',
+            'crop-gravity' : ''
         }
         var methods = {
             init : function(options) {
