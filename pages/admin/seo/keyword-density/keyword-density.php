@@ -3,7 +3,7 @@
 	$p->template('crave','top');
 ?>
 <div><input type="text" id="word-search" style="width:200px;" /> <input type="button" id="search" value="Search"></div>
-<div><textarea id="density-area" style="width:800px; height:600px"></textarea></div>
+<div><textarea id="density-area" style="width:600px; height:300px"></textarea></div>
 <div>Total Words (<span id="total-words">0</span>)</div>
 <div id="density"></div>
 <?
