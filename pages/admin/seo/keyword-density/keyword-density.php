@@ -3,9 +3,9 @@
 	$p->template('skybox','top');
 ?>
 <div style="margin-bottom:5px"><input type="text" id="word-search" style="width:200px;" /> <input type="button" id="search" value="Search"></div>
-<div style="margin-bottom:5px"><textarea id="density-area" style="width:400px; height:150px"></textarea></div>
+<div style="margin-bottom:5px"><textarea id="density-area" style="width:500px; height:150px"></textarea></div>
 <div style="margin-bottom:5px; font-size:16px;">Total Words (<span id="total-words">0</span>)</div>
-<div style="font-size:16px;" id="density"></div>
+<div style="font-size:14px;" id="density"></div>
 <?
 	$p->template('skybox','bottom')
 ?>
