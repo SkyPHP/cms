@@ -37,7 +37,7 @@
 				density = (search_count / numWords) * 100
 				percent = density.toFixed(2)
 				
-				$('#density').html("'"+word+"' was found "+search_count+" times. It has a density of "+percent+"%")
+				$('#density').html("<strong>"+word+"</strong> was found "+search_count+" times.<br> It has a density of "+percent+"%")
 			}
 			else $('#density').html('')
 		})
