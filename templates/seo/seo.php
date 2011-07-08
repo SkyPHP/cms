@@ -24,9 +24,7 @@ if ($template_area=='top') {
         <div id="page-container">
 
             <div id="main">
-<?
-               if (!$new_system) template::breadcrumb();
-?>
+
                 <h1><?=$title?></h1>
 
                 <div id="content">
