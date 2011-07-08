@@ -23,7 +23,7 @@
 			if (numWords > 0) {
 				words = text.split(' ')
 				$.each(words,function(index,value) {
-					check = value.toLowercase()
+					check = value.toLowerCase()
 					if (check == word) search_count++
 				})
 				density = (search_count / numWords) * 100
