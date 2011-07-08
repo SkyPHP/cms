@@ -32,8 +32,8 @@
 				// remove the unwanted characters
 				newtext=''				
 				$.each(words,function(index,value) {
-					word = value.toLowerCase().replace("!","").replace("?","").replace(".","").replace(";","").replace(":","").replace(";","").replace(",","")
-					newtext = newtext+' '+word
+					rep_word = value.toLowerCase().replace("!","").replace("?","").replace(".","").replace(";","").replace(":","").replace(";","").replace(",","")
+					newtext = newtext+' '+rep_word
 				})
 				var count = newtext.split(word).length - 1;
 				density = (count / numWords) * 100
