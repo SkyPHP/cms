@@ -12,7 +12,7 @@
 <script language="javascript">
 	$(function() {
 		$('#density-area').live('keyup click focusout focusin change', function() {
-			word = $('#word-search').val()
+			word = $('#word-search').val().toLowerCase()
 			search_count = 0;
 			text = jQuery.trim($(this).val()).replace(/\s+/g," ")
 			if($(this).val() == '') {
@@ -23,7 +23,8 @@
 			if (numWords > 0) {
 				words = text.split(' ')
 				$.each(words,function(index,value) {
-					if (toLowerCase(value) == toLowerCase(word)) search_count++
+					check = value.toLowercase()
+					if (check == word) search_count++
 				})
 				density = (search_count / numWords) * 100
 				percent = density.toFixed(2)
