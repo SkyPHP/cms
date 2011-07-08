@@ -1,6 +1,6 @@
 <?
-	$title = "SEO Interface";
-	template::inc('seo','top');
+	$p->title = "SEO Interface";
+	$p->template('seo','top');
 
 	$rs = sql("SELECT DISTINCT name FROM website_group WHERE active = 1 ORDER BY name ASC");
 ?>
@@ -33,5 +33,5 @@
 </div>
 <div class="clear"></div>
 <? 
-	template::inc('seo','bottom');
+	$p->template('seo','bottom');
 ?>

@@ -1,6 +1,6 @@
 <?
-	$title = "SEO BY PAGE - ".$_SERVER['SERVER_NAME'];
-	template::inc('intranet','top');
+	$p->title = "SEO BY PAGE - ".$_SERVER['SERVER_NAME'];
+	$p->template('intranet','top');
 	$my = get_files();
 ?>
 <br />
@@ -45,5 +45,5 @@
 </div>
 <div class="clear"></div>
 <?
-	template::inc('intranet','bottom');
+	$p->template('intranet','bottom');
 ?>

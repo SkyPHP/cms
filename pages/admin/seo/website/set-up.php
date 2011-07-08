@@ -1,6 +1,6 @@
 <?
-	$title = "Website Setup";
-	template::inc('skybox','top');
+	$p->title = "Website Setup";
+	$p->template('skybox','top');
 ?>
 	<h2><?=$_SERVER['SERVER_NAME']?></h2>
 	<br>
@@ -8,7 +8,9 @@
 	<input type="text" id="website_name" size="40">
     <br><br>
     <button id="add-website">Add Website</button>
-    
+<?
+	$p->template('skybox','bottom');
+?>
 <script type="text/javascript">
 	$(function(){
 		$('#add-website').live('click',function() {

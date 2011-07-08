@@ -1,8 +1,8 @@
 <? 
 	if ($_POST['page_path']) { 
 		
-		$title="SEO - ".$_POST['page_path'];
-		template::inc('skybox','top');
+		$p->title="SEO - ".$_POST['page_path'];
+		$p->template('skybox','top');
 		$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
 		$website_id = $rs[0]['website_id'];
 		
@@ -46,7 +46,7 @@
 				else exit("There Was An Error Entering The Website Page Record.");
 			}
 		}
-		template::inc('skybox','bottom');
+		$p->template('skybox','bottom');
 	
 ?>
 
@@ -92,14 +92,7 @@
 				$('#skybox').html(data)
 			})
 		})
-		
-		$('#skybox_template_close a').live('click', function() {
-			$('#skybox').html('')
-            $(this).attr('href','')
-            window.reload()
-			//history.back()
-		})
-		
+				
 		$('#nickname_change').live('click', function() {
 			$('#nickname').fadeOut()
 			page_ide = $(this).attr('page_ide')
@@ -136,7 +129,7 @@
 
 <? 	} else { // maintain height and width of the skybox
 ?>
-		<div style="width:800px; height:600px;">&nbsp;</div>
+		<div style="width:800px; height:600px;">Something went wrong with the post of the page_path.</div>
 <?	
 	}
 ?>
