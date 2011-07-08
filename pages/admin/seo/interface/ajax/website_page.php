@@ -1,6 +1,7 @@
 <?
 	$page = aql::profile('website_page',$_POST['website_page_ide']);
 ?>
+<input type="button" value="Open Keyword Density Window" id="keyden" style="float:right;" />
 <div class="wp-field">
 	Page Nickname: <span id="nickname"><a title="Click to Change Nickname" id="name_change"><?=$page['nickname']?$page['nickname']:'undefined'?></a></span>
 </div>
@@ -99,5 +100,8 @@ Field List Type: <select id="field_type">
 			else $('#'+f+'_counter').css('color','#000')
 			$('#'+f+'_char_count').html(length)
 		});
+		$('#keyden').live('click',function(){
+			$.skybox('/admin/seo/keyword-density')
+		})
 	})
 </script>
