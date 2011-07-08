@@ -53,57 +53,48 @@ class media {
 	}//get_random_item
 
 	function get_if_not_here($media_item_id,$src_beg,$src_end,$local_path,$dest_dir){
-
-		if(!file_exists($local_path) || filesize($local_path) == 0){
-		#echo "TRYING TO GET IMAGE";
-			$aql = "media_instance	{
-										where media_item_id = $media_item_id
-										and instance is null
-										limit 1
-									}";
-			$rs = aql::select($aql);
-			if($rs){
-				$media_instance_ide = $rs[0]['media_instance_ide'];
-				$src = '/'.$media_instance_ide;
-				$media_host_id=0;
-				$command = 'hostname';
-				$hostname = trim(shell_exec($command));
-				$aql = "media_host{
-									where host_name = '$hostname'
-									limit 1
-								}";
-				$rs = aql::select($aql);
-				if($rs){
-					$media_host_id = $rs[0]['media_host_id'];
-				}
-				$aql = "media_distro {
-										where media_item_id = $media_item_id
-									 }
-
-						media_host	{
-										domain_name
-										where media_host.id <> $media_host_id
-									}";
-				$rs = aql::select($aql);
-				if($rs){
-					foreach($rs as $host) {
-						$img = "http://".$host['domain_name'].'/media'.$src;
-						if ($_GET['aql_debug']) echo 'copying ..'.$img.' to '.$local_path.'!!!!<br>';
-						@mkdir($dest_dir, 0777, true);
-						if(copy($img,$local_path)){
-							chmod($local_path,0777);
-							$fields = array	(
-												'media_host_id'=>$media_host_id,
-												'media_item_id'=>$media_item_id
-											);
-							aql::insert('media_distro',$fields);
-							return true;
-						}else{
-							//keep going
-						}
-					}
-				}
+		if (file_exists($local_path) && filesize($local_path) > 0) return;
+		$sql = "SELECT id 
+				FROM media_instance
+				WHERE media_item_id = {$media_item_id} 
+				and instance is null
+				and media_instance.active = 1
+				limit 1";
+		$r = sql($sql);
+		if (!$r->Fields('id')) return;
+		$media_instance_ide = encrypt($r->Fields('id'), 'media_instance');
+		$src = $src_beg.'/'.$media_instance_ide.'.'.$src_end;
+		$command = 'hostname';
+		$hostname = trim(shell_exec($command));
+		$sql = "SELECT id as media_host_id
+				FROM media_host
+				WHERE host_name = '{$hostname}' and media_host.active = 1
+				LIMIT 1";
+		$r = sql($sql);
+		$media_host_id = ($r->Fields('media_host_id')) ? $r->Fields('media_host_id') : 0;
+		$sql = "SELECT media_host.domain_name
+				FROM media_distro
+				LEFT JOIN media_host on media_distro.media_host_id = media_host.id and media_host.active = 1
+				WHERE media_distro.active = 1
+				AND media_distro.media_item_id = {$media_item_id}
+				AND media_host.id <> {$media_host_id}
+				";
+		$r = sql($sql);
+		while (!$r->EOF) {
+			$img = 'http://'.$r->Fields('domain_name').$src;
+			if ($_GET['aql_debug']) echo 'copying .. '.$img.' to '.$local_path.'!!!<br />';
+			@mkdir($dest_dir, 0777, true);
+			if (copy($img, $local_path)) {
+				chmod($local_path, 0777);
+				$fields = array(
+					'media_host_id' => $media_host_id,
+					'media_item_id' => $media_item_id
+				);
+				global $dbw;
+				$dbw->AutoExecute('media_distro', $fields, 'INSERT');
+				return true;
 			}
+			$r->MoveNext();
 		}
 		return false;
 	}
@@ -1167,37 +1158,25 @@ class media {
 /**
  * display an uploader using SWF Uploader
  *	There is a single array parameter:
- *	REQUIRED: vfolder_path
- *	OPTIONAL:	thumb_width, thumb_height, thumb_crop,
- 				max_num_files, max_file_size (in kilobytes),
-				empty_message,
-				file_types, file_types_description,
- 				db_field, db_row_id,
-				on_success_js
+ *	REQUIRED: 	vfolder (the vfolder path)
+ *	OPTIONAL:	limit, crop, crop-gravity
+				empty (will display empty message),
+ 				db_field, db_row_ide, (will update this in db),
+ 				width, height, (for display)
+ 				sort (if true, will make the items sortable ,must have jquery ui sortable for this to work)
+				
  *
- * @param array $offset (optional) number of items to bypass before retrieving items, useful for pagination
+ * 
  */
 	function uploader($settings) {
-		$media_upload = $settings;
-
-                $context = $settings['context'];
-
-		$media_upload['delete'] = true;
-		if ( !isset($media_upload['gallery']) ) $media_upload['gallery'] = true;
-		$media_upload['unique_uploader_id'] = rand(0,999999999);
-		if (!$media_upload['no_js']) {
-			echo "<script type=\"text/javascript\">add_javascript('/pages/media/easyupload/easyupload.js');</script>";
-			echo "<script type=\"text/javascript\">add_css('/pages/media/easyupload/easyupload.css');</script>";
-			echo "\n\n";
+		echo '<uploader vfolder="'.$settings['vfolder'].'" ';
+		if ($settings['crop']) echo 'crop="true" ';
+		if ($settings['sort']) echo 'sort="true" ';
+		unset($settings['sort'], $settigns['crop'], $settings['vfolder']);
+		foreach ($settings as $k => $v) {
+			echo $k.'="'.$v.'" ';
 		}
-		echo "<div style=\"".$media_upload['gallery_style']."\" id=\"upload-items-".$media_upload['unique_uploader_id']."\">";
-		if ( $media_upload['gallery'] ) include('pages/media/easyupload/items.php');
-		echo "</div>";
-		echo "<div class=\"clear\"></div>";
-		if (!$media_upload['on_success_js']) $media_upload['on_success_js'] = "get_vfolder_items('{$media_upload['vfolder_path']}','{$media_upload['unique_uploader_id']}','{$media_upload['thumb_width']}','{$media_upload['thumb_height']}','{$media_upload['thumb_crop']}');";
-		if (!$media_upload['vfolder_js']) $media_upload['vfolder_js'] = "'".$media_upload['vfolder_path']."'";
-        if ($_GET['media_debug']) $media_upload['debug'] = true;
-		include('modules/media/upload/upload.php');
+		echo '></uploader>';
 	}//function uploader
 
 
