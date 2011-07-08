@@ -12,7 +12,6 @@
 <script language="javascript">
 	$(function() {
 		$('#density-area').live('keyup click focusout focusin change', function() {
-			word = $('#word-search').val().toLowerCase()
 			search_count = 0;
 			text = jQuery.trim($(this).val()).replace(/\s+/g," ")
 			if($(this).val() == '') {
@@ -20,6 +19,15 @@
 			}
 			else numWords = text.split(' ').length;
 			$('#total-words').html(numWords)
+		})
+		
+		$('#search').live('click',function() {
+			word = $('#word-search').val().toLowerCase()
+			text = jQuery.trim($('#density-area').val()).replace(/\s+/g," ")
+			if($('#density-area').val() == '') {
+				numWords = 0
+			}
+			else numWords = text.split(' ').length;
 			if (numWords > 0) {
 				words = text.split(' ')
 				$.each(words,function(index,value) {
