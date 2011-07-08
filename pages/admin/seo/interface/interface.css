@@ -1,0 +1,119 @@
+#left-col {
+	width: 25%;
+	height:1500px;
+	float:left;
+	overflow:hidden;
+	padding-right: 10px;
+}
+#middle-col {
+	width: 40%;
+	height: 1500px;
+	float:left;
+	padding: 20px 10px;
+	background-color:#fff;
+}
+#right-col {
+	padding-left:10px;
+	width:25%;
+	height: 1500px;
+	float:left;
+}
+.divider {
+	float:left;
+	width:10px;
+	height: 1500px;
+	border-left: double #ccc;	
+}
+#name_change {
+	cursor:pointer;
+}
+#website_group_result {
+	margin-top:30px;	
+}
+#seo_fields {
+	margin-top:20px;	
+}
+.seo_field {
+	margin-bottom: 10px;	
+}
+.seo_field_name {
+	font-size:16px;	
+	font-weight:bold;
+}
+.seo_field_value {
+	width:100%;
+	font-weight:bold;
+}
+.wp-field {
+	padding-bottom:10px;
+}
+.edit_page {
+	cursor:pointer;
+}
+.website {
+	margin-top:10px;
+	font-weight:bold;
+	font-size:16px;	
+}
+.nickname {
+	width: 250px;
+	margin-left: 10px;
+}
+.page_path {
+	font-size:9px;
+	margin-left: 10px;
+}
+.header {
+	font-weight:bold;
+}
+.tab a { 
+	cursor:pointer;
+	margin-right: 1px;
+	float: left;
+	font-weight:bold;
+	padding: 3px 0 2px 0;
+	width:84px;
+	text-align:center;
+	background:url(/images/tabs/tab.png);
+	border-bottom: 1px #000 solid;
+}
+.tab a:hover { 
+	background:url(/images/tabs/tab_on.png);
+	text-decoration:none;
+}
+.tab_on a {
+	cursor:pointer;
+	width:84px;
+	margin-right: 1px;
+	float:left;
+	font-weight:bold;
+	text-align:center;
+	padding: 3px 0 2px 0;
+	background:url(/images/tabs/tab_on.png);
+}
+.tab_on a:hover {
+	text-decoration:none;
+}
+
+.draft_edit {
+	width:100%;
+}
+.area_edit {
+	width:100%;
+}
+.draft {
+	padding-bottom: 5px;	
+}
+.edit_actual {
+	cursor:pointer;
+}
+.field_result {
+	padding-left: 10px;
+	font-size:10px;
+	color:#060;	
+}
+.website_name {
+	padding-top: 20px;
+	font-size: 16px;
+	font-weight:bold;	
+}

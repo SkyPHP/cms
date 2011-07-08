@@ -1,0 +1,12 @@
+.directory {
+	cursor:pointer;
+}
+.file {
+	cursor:pointer;
+}
+#change_site {
+	cursor:pointer;
+}
+#nickname {
+	color:#2589B4;
+}
