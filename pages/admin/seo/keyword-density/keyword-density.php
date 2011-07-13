@@ -4,13 +4,14 @@
 
 	for ($x=1; $x<=5; $x++) {
 ?>
-	<div style="margin-bottom:20px;">
+	<div style="margin:20px 0;">
 		<div style="margin-bottom:5px"><input type="text" id="word-search<?=$x?>" style="width:200px;" /> <input type="button" class="search" x="<?=$x?>" value="Search"></div>
 		<div style="margin-bottom:5px"><textarea x="<?=$x?>" class="area" id="density-area<?=$x?>" style="width:800px; height:400px"></textarea></div>
 		<div style="margin-bottom:5px; font-size:16px;">Total Words (<span id="total-words<?=$x?>">0</span>)</div>
 		<div style="font-size:14px;" id="density<?=$x?>"></div>
 	</div>
-<?
+<?	
+	if ($x != 5) echo "<hr/>";
 	}
 	$p->template('intranet','bottom')
 ?>
