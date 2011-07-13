@@ -45,12 +45,16 @@ class media {
  * @return array returns an array containing information about the desired image
  */
 	function get_random_item($vfolder_identifier, $desired_w = NULL, $desired_h = NULL, $crop = NULL, $media_overlay_id = NULL, $parameters=NULL) {
-		$vfolder = media::get_vfolder($vfolder_identifier,NULL,NULL,NULL,$parameters);
-		$num_items = count($vfolder['items']);
-		$random_index = rand( 0, $num_items - 1 );
-		$media_item_id = $vfolder['items'][$random_index]['media_item_id'];
+		$media_item_id = media::get_random_item_id($vfolder_identifier, $parameters);
 		return media::get_item( $media_item_id, $desired_w, $desired_h, $crop, $media_overlay_id, $parameters);
 	}//get_random_item
+
+	function get_random_item_id($vfolder_identifier, $parameters = null) {
+		$vfolder = media::get_vfolder($vfolder_identifier, null, null, null, $parameters);
+		$num_items = count($vfolder['items']);
+		$random_index = rand( 0 , $num_items - 1 );
+		return $vfolder['items'][$random_index]['media_item_id'];
+	}
 
 	function get_if_not_here($media_item_id,$src_beg,$src_end,$local_path,$dest_dir){
 		if (file_exists($local_path) && filesize($local_path) > 0) return;
