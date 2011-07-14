@@ -50,10 +50,28 @@ class media {
 	}//get_random_item
 
 	function get_random_item_id($vfolder_identifier, $parameters = null) {
-		$vfolder = media::get_vfolder($vfolder_identifier, null, null, null, $parameters);
-		$num_items = count($vfolder['items']);
-		$random_index = rand( 0 , $num_items - 1 );
-		return $vfolder['items'][$random_index]['media_item_id'];
+		if (is_numeric($vfolder_identifier)) {
+			$where = 'media_vfolder.id = '.$vfolder_identifier;
+		} else if (strpos($vfolder_identifier, '/') !== false) {
+			$where = "media_vfolder.vfolder_path = '{$vfolder_identifier}'";
+		} else {
+			$where = 'media_vfolder.id = '.decrypt($vfolder_identifier, 'media_vfolder');
+		}
+
+		$sql = "SELECT media_item.id as media_item_id
+				FROM media_item
+				LEFT JOIN media_vfolder on media_item.media_vfolder_id = media_vfolder.id and media_vfolder.active = 1
+				WHERE media_item.active = 1 and
+					media_vfolder.id is not null and
+					{$where}
+				ORDER BY random()
+				LIMIT 1";
+		$r = sql($sql);
+		return $r->Fields('media_item_id');
+		// $vfolder = media::get_vfolder($vfolder_identifier, null, null, null, $parameters);
+		// $num_items = count($vfolder['items']);
+		// $random_index = rand( 0 , $num_items - 1 );
+		// return $vfolder['items'][$random_index]['media_item_id'];
 	}
 
 	function get_if_not_here($media_item_id,$src_beg,$src_end,$local_path,$dest_dir){
