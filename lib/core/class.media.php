@@ -57,13 +57,25 @@ class media {
 		} else {
 			$where = 'media_vfolder.id = '.decrypt($vfolder_identifier, 'media_vfolder');
 		}
-
+		if ($parameters['not_in']) {
+			if (!is_array($parameters['not_in'])) {
+				$not_in = array($parameters['not_in']);
+			} else {
+				$not_in = $parameters['not_in'];
+			}
+			$n = '(';
+			foreach ($not_in as $id) {
+				$n .= $id.', ';
+			}
+			if ($n != '(') $n = 'and media_item.id not in '.substr($n, 0, -2).')';
+			else $n = '';
+		}
 		$sql = "SELECT media_item.id as media_item_id
 				FROM media_item
 				LEFT JOIN media_vfolder on media_item.media_vfolder_id = media_vfolder.id and media_vfolder.active = 1
 				WHERE media_item.active = 1 and
 					media_vfolder.id is not null and
-					{$where}
+					{$where} {$n}
 				ORDER BY random()
 				LIMIT 1";
 		$r = sql($sql);
