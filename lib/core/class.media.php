@@ -385,7 +385,7 @@ class media {
 		//die("media::get_item error: '$identifier' is not a valid media_item_id or media_item_ide.");
 
 		if ($_GET['debug_media']) echo $media_item_id . '<br />';
-
+        // 
 		// get the media_item data
 		$SQL = "select  media_item.slug,
 						media_item.caption,
