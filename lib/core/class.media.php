@@ -345,7 +345,7 @@ class media {
 
         // memcache the request -- if already cached return the cached $img array
         $args = func_get_args();
-        $args_key = 'get_item:' . serialize($args);
+        $args_key = 'media:get_item:' . serialize($args);
         $mem_result = mem($args_key);
         if ( $mem_result ) return $mem_result;
 
