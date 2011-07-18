@@ -330,6 +330,13 @@ class media {
  */
 	function get_item($identifier, $desired_w = NULL, $desired_h = NULL, $crop = NULL, $media_overlay_id = NULL, $parameters=NULL) {
 		global $default_image_quality,$db, $imagetype, $sky_media_local_path, $sky_media_src_path, $media_hosts, $sky_icon_path;
+
+        // memcache the request -- if already cached return the cached $img array
+        $args = func_get_args();
+        $args_key = 'get_item:' . serialize($args);
+        $mem_result = mem($args_key);
+        if ( $mem_result ) return $mem_result;
+
 		if (!$default_image_quality) $default_image_quality = 80;
 		self::$error = NULL;
 
@@ -621,6 +628,7 @@ class media {
 				$img['img'] = '<img src="'.$img['src'].'" width="'.$img['width'].'" height="'.$img['height'].'" alt="'.$caption.'" border="0" />';
 				$img['html'] = $img['img'];
 				$img['local_path'] = $instance_file_path;
+                mem($args_key,$img);
 				return $img;
 			}//if
 		} else {
