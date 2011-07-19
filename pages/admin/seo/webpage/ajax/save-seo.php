@@ -4,7 +4,8 @@
 		$website_id = $rs2[0]['website_id'];
 		$page_path = $rs2[0]['page_path'];
 		$mem_key = "seo:".$website_id.":".$page_path;
-		mem($mem_key, '');
+		$data = mem($mem_key);
+		if ($data) mem($mem_key, '');
 		$data = array(
 			'field' => $_POST['field'],
 			'value' => $_POST['value'],
