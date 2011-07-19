@@ -1,5 +1,6 @@
 <?
 	global $seo_field_array;
+	global $p;
 	elapsed('before website table query');
 	$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']."'");
 	$website_id = $rs->Fields('id');
@@ -27,9 +28,9 @@
 		
 		if (is_array($page_data)) {
 			foreach ($page_data as $field => $value)  {
-				$p->title = 'Nothing';
 				if ($field == 'title') {
-					eval('$p->title = stripslashes("'.addslashes($value).'");');
+					eval('$title = stripslashes("'.addslashes($value).'");');
+					$p->title = $title;
 				}
 				else $p->seo[$field] = $value;	
 			}
