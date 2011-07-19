@@ -28,7 +28,9 @@
 		if (is_array($page_data)) {
 			foreach ($page_data as $field => $value)  {
 				$p->title = 'Nothing';
-				if ($field == 'title') eval('$title = stripslashes("'.addslashes($value).'");');
+				if ($field == 'title') {
+					eval('$p->title = stripslashes("'.addslashes($value).'");');
+				}
 				else $p->seo[$field] = $value;	
 			}
 		
