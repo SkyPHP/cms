@@ -24,34 +24,36 @@
 			}
 		}
 		
-		foreach ($page_data as $field => $value)  {
-			$p->var[$field] = $value;	
-		}
+		if (is_array($page_data)) {
+			foreach ($page_data as $field => $value)  {
+				$p->var[$field] = $value;	
+			}
 		
-		if ($page_data['url_specific']) {
-			$mem_key = "seo:".$website_id.":".$_SERVER['PATH_INFO'];
-			$uri_data = mem($mem_key);
-			if (!$uri_data) {
-				$ud = aql::select("website_uri_data { field, value where website_id = ".$website_id." and uri = '".$_SERVER['PATH_INFO']." }");
-			 	
-				if (is_array($ud)) {
-					foreach($ud as $u) {
-						$uri_data[$u['field']] = $u['value'];
+			if ($page_data['url_specific']) {
+				$mem_key = "seo:".$website_id.":".$_SERVER['PATH_INFO'];
+				$uri_data = mem($mem_key);
+				if (!$uri_data) {
+					$ud = aql::select("website_uri_data { field, value where website_id = ".$website_id." and uri = '".$_SERVER['PATH_INFO']." }");
+					
+					if (is_array($ud)) {
+						foreach($ud as $u) {
+							$uri_data[$u['field']] = $u['value'];
+						}
+						mem($mem_key, $uri_data);
 					}
-					mem($mem_key, $uri_data);
+				}
+				
+				foreach($uri_data as $field => $value) {
+					$p->var[$field]=$value;	
 				}
 			}
 			
-			foreach($uri_data as $field => $value) {
-				$p->var[$field]=$value;	
+			foreach($seo_field_array as $type => $ar) {
+				foreach ($ar as $field => $max) {
+					 $val = $p->var[$field];
+					 eval('$p->var["'.$field.'"] = stripslashes("'.addslashes($val).'");'); 
+				}			
 			}
-		}
-		
-		foreach($seo_field_array as $type => $ar) {
-			foreach ($ar as $field => $max) {
-				 $val = $p->var[$field];
-				 eval('$p->var["'.$field.'"] = stripslashes("'.addslashes($val).'");'); 
-			}			
 		}
 		
 	}
