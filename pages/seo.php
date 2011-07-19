@@ -1,6 +1,5 @@
 <?
 	global $seo_field_array;
-	global $p;
 	elapsed('before website table query');
 	$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']."'");
 	$website_id = $rs->Fields('id');
@@ -16,8 +15,8 @@
 			if (is_numeric($rs[0]['website_page_id'])) {
 				$pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]['website_page_id']} } ");
 				if (is_array($pd)) {			
-					foreach ($pd as $p) {
-						$page_data[$p['field']] = $p['value'];	
+					foreach ($pd as $page) {
+						$page_data[$page['field']] = $page['value'];	
 					}
 					if ($rs[0]['url_specific'] == 1) $page_data['url_specific']=true;
 					mem($mem_key, $page_data);
@@ -28,10 +27,7 @@
 		
 		if (is_array($page_data)) {
 			foreach ($page_data as $field => $value)  {
-				if ($field == 'title') {
-					eval('$title = stripslashes("'.addslashes($value).'");');
-					$p->title = $title;
-				}
+				if ($field == 'title') eval('$p->title = stripslashes("'.addslashes($value).'");');
 				else $p->seo[$field] = $value;	
 			}
 		
