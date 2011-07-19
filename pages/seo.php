@@ -1,10 +1,9 @@
 <?
 	global $seo_field_array;
 	elapsed('before website table query');
-	if (!$website_id) {
-		$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']."'");
-		$website_id = $rs->Fields('id');
-	}
+	$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']."'");
+	$website_id = $rs->Fields('id');
+
 	elapsed('after website table query');
 	if (is_array($seo_field_array)) {
 		
@@ -13,13 +12,16 @@
 		if (!$page_data) {
 			$rs = aql::select("website_page { url_specific where page_path = '".$p->page_path."' and website_id = ".$website_id."}");
 			
-			if ($rs) $pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]['website_page_id']} } ");
-			if (is_array($pd)) {			
-				foreach ($pd as $p) {
-					$page_data[$p['field']] = $p['value'];	
+			if (is_numeric($rs[0]['website_page_id'])) {
+				$pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]['website_page_id']} } ");
+				if (is_array($pd)) {			
+					foreach ($pd as $p) {
+						$page_data[$p['field']] = $p['value'];	
+					}
+					if ($rs[0]['url_specific'] == 1) $page_data['url_specific']=true;
+					mem($mem_key, $page_data);
+					
 				}
-				if ($rs[0]['url_specific'] == 1) $page_data['url_specific']=true;
-				mem($mem_key, $page_data);
 			}
 		}
 		
