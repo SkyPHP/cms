@@ -2,7 +2,7 @@
 	global $seo_field_array;
 	elapsed('before website table query');
 	//if (!$website_id) {
-		$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']);
+		$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']."'");
 		$website_id = $rs->Fields('id');
 	//}
 	elapsed('after website table query');
