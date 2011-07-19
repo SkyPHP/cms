@@ -1175,7 +1175,7 @@ class media {
 
 		$clause['where'][] = 'media_item.media_vfolder_id = '.$vf[0]['id'];
 		$vf[0]['items'] = aql::select($media_aql, $clause);
-	//	$vf[0]['sql'] = aql::sql($media_aql, $clause);
+		$vf[0]['sql'] = aql::sql($media_aql, $clause);
 
 		//if ($_GET['d']) echo exec_time();
 		// get all the subvfolders in this vfolder
