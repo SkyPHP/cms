@@ -1137,18 +1137,18 @@ class media {
 		if ($where) {
 			$vf = aql::select($vfolder_aqlarray, array('where' => $where));
 		}
+
 		//if ($_GET['d']) echo exec_time();
 		if (!$vf[0]['id']) {
 			self::$error = "media::get_vfolder() error: invalid identifier specified";
 			return false;
 		}//if
-
 		// count the number of items in this vfolder
 		// TODO: this can be removed when the num_items field is up to date
 		$vf[0]['num_items'] = media::get_vfolder_num_items($vf[0]['id']);
 
 		// allow extreme offsets to "wrap"
-		$media_aql = aql2array::get('media::get_vfolder:item', ' media_item { * } media_instance { id } ');
+		$media_aql = aql2array::get('media::get_vfolder:item', ' media_item { * } media_instance { id as media_instance_id} ');
 		$clause = array('where' => array());
 		if ($num_items) {
 			$offset = $offset % $num_items;
@@ -1174,12 +1174,10 @@ class media {
 		}
 
 		$clause['where'][] = 'media_item.media_vfolder_id = '.$vf[0]['id'];
-
 		$vf[0]['items'] = aql::select($media_aql, $clause);
-		$vf[0]['sql'] = aql::sql($media_aql, $claues);
+		$vf[0]['sql'] = aql::sql($media_aql, $clause);
 
 		//if ($_GET['d']) echo exec_time();
-
 		// get all the subvfolders in this vfolder
 		$vf[0]['vfolders'] = aql::select($vfolder_aqlarray, array(
 			'where' => 'parent__media_vfolder_id = '.$vf[0]['id']
@@ -1496,6 +1494,3 @@ $imagetype[14] = 'iff';
 $imagetype[15] = 'wbmp';
 $imagetype[16] = 'xbm';
 $imagetype[17] = 'jpeg';
-
-
-?>
