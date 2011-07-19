@@ -15,8 +15,8 @@
 			if (is_numeric($rs[0]['website_page_id'])) {
 				$pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]['website_page_id']} } ");
 				if (is_array($pd)) {			
-					foreach ($pd as $page) {
-						$page_data[$page['field']] = $page['value'];	
+					foreach ($pd as $data) {
+						$page_data[$data['field']] = $data['value'];	
 					}
 					if ($rs[0]['url_specific'] == 1) $page_data['url_specific']=true;
 					mem($mem_key, $page_data);
