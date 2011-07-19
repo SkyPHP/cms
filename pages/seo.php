@@ -1,6 +1,6 @@
 <?
 	global $seo_field_array;
-	
+	krumo ($p);
 	elapsed('before website table query');
 	if (!$website_id) {
 		$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']);
@@ -13,12 +13,15 @@
 		$page_data = mem($mem_key);
 		if (!$page_data) {
 			$rs = aql::select("website_page { url_specific where page_path = '".$p->page_path."' and website_id = ".$website_id."}");
-			$pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]['website_page_id']} } ");
-			foreach ($pd as $p) {
-				$page_data[$p['field']] = $p['value'];	
+			
+			if ($rs) $pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]['website_page_id']} } ");
+			if (is_array($pd)) {			
+				foreach ($pd as $p) {
+					$page_data[$p['field']] = $p['value'];	
+				}
+				if ($rs[0]['url_specific'] == 1) $page_data['url_specific']=true;
+				mem($mem_key, $page_data);
 			}
-			if ($rs[0]['url_specific'] == 1) $page_data['url_specific']=true;
-			mem($mem_key, $page_data);
 		}
 		
 		foreach ($page_data as $field => $value)  {
@@ -30,10 +33,13 @@
 			$uri_data = mem($mem_key);
 			if (!$uri_data) {
 				$ud = aql::select("website_uri_data { field, value where website_id = ".$website_id." and uri = '".$_SERVER['PATH_INFO']." }");
-				foreach($ud as $u) {
-					$uri_data[$u['field']] = $u['value'];
+			 	
+				if (is_array($ud)) {
+					foreach($ud as $u) {
+						$uri_data[$u['field']] = $u['value'];
+					}
+					mem($mem_key, $uri_data);
 				}
-				mem($mem_key, $uri_data);
 			}
 			
 			foreach($uri_data as $field => $value) {
