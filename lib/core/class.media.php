@@ -1089,30 +1089,6 @@ class media {
 		return $parent;
 	}//function new_vfolder
 
-	function get_vfolder_num_items($identifier) {
-		$where = media::_vfolder_where($identifier);
-		if (!$where) return 0;
-		$count_arr = aql2array::get('media::get_vfolder_num_items', ' media_item { count(*) as count } ');
-		$rs = aql::select($count_arr, array(
-			'where' => $where
-		));
-		return $rs[0]['count'];
-	}
-
-	function _vfolder_where($identifier) {
-		$where = false;
-		if (is_numeric($identifier)) {
-			$where = "media_vfolder.id = {$identifier}";
-		} else if (substr($identifier,0,1)=='/') {
-			$where = "vfolder_path = '{$identifier}'";
-		} else {
-			$identifier = decrypt($identifier,'media_vfolder');
-			if (is_numeric($identifier)) {
-				$where = "media_vfolder.id = {$identifier}";
-			}//if
-		}//if
-		return $where;
-	}
 
 /**
  * retrieve all the information for a given vfolder and all of the items add/or subvfolders based on
@@ -1129,12 +1105,31 @@ class media {
 
 		//if ($_GET['d']) echo exec_time();
 
-		$vfolder_aqlarray = aql2array::get('media::get_vfolder:all', 'media_vfolder { * } '); // to only generate this once
-		$where = media::_vfolder_where($identifier);
-		if ($where) {
-			$vf = aql::select($vfolder_aqlarray, array('where' => $where));
-		}
+		if (is_numeric($identifier)) {
+			$aql = "media_vfolder {
+						*
+						where media_vfolder.id = {$identifier}
+					}";
+			$vf = aql::select($aql);
+		} else if (substr($identifier,0,1)=='/') {
+			$aql = "media_vfolder {
+						*
+						where vfolder_path = '{$identifier}'
+					}";
+			$vf = aql::select($aql);
+		} else {
+			$identifier = decrypt($identifier,'media_vfolder');
+			if (is_numeric($identifier)) {
+				$aql = "media_vfolder {
+							*
+							where media_vfolder.id = {$identifier}
+						}";
+				$vf = aql::select($aql);
+			}//if
+		}//if
+
 		//if ($_GET['d']) echo exec_time();
+
 		if (!$vf[0]['id']) {
 			self::$error = "media::get_vfolder() error: invalid identifier specified";
 			return false;
@@ -1142,43 +1137,62 @@ class media {
 
 		// count the number of items in this vfolder
 		// TODO: this can be removed when the num_items field is up to date
-		$vf[0]['num_items'] = media::get_vfolder_num_items($vf[0]['id']);
+		$aql = "media_item {
+					count(*) as count
+					where media_vfolder_id = {$vf[0]['id']}
+				}";
+		$rs = aql::select($aql);
+		$num_items = $rs[0]['count'];
+		$vf[0]['num_items'] = $num_items;
 
 		// allow extreme offsets to "wrap"
-		$media_aql = aql2array::get('media::get_vfolder:item', ' media_item { * } media_instance { id } ');
-		$clause = array('where' => array());
-		if ($num_items) {
+		if ($num_items):
 			$offset = $offset % $num_items;
-			if ( $offset < 0 ) {
-				$offset = $num_items + $offset;
-				$clause['offset'] = $offset;
-			}
-		}
+			if ( $offset < 0 ) $offset = $num_items + $offset;
+		endif;
 
-		if (is_numeric($max_items)) $clause['limit'] = $max_items;
+		if (is_numeric($max_items)) $limit = "limit $max_items";
 		#else if ( !$order_by ) $order_by = 'iorder asc, views desc'; // don't auto-orderby if we're selecting with a limit, postgres is kinda retarded here
 		if ( !$order_by ) $order_by = 'iorder asc, views desc';
-		if ($order_by) $clause['order by'] = $order_by;
+
+		if ($order_by) $order_by = 'order by ' . $order_by;
 
 		// if we are only looking for images larger than the specified dimensions
 		if ($parameters['min_width'] || $parameters['min_height']) {
 			$min_criteria = '';
 			if ($parameters['min_width']) $min_criteria .= " and media_instance.width >= {$parameters['min_width']} ";
 			if ($parameters['min_height']) $min_criteria .= " and media_instance.height >= {$parameters['min_height']} ";
-			$clause['where'][] = 'media_instance.instance is null '.$min_criteria;
-		} else {
-			unset($media_aql['media_instance']);
-		}
+			$media_instance_aql = "
+				media_instance {
+					id
+					where media_instance.instance is null
+					{$min_criteria}
+				}
+			";
+		}//if
 
-		$vf[0]['items'] = aql::select($media_aql, $clause);
-		$vf[0]['sql'] = aql::sql($media_aql, $claues);
+		// get all the items in this vfolder
+		$aql = "media_item {
+					*
+					where media_vfolder_id = {$vf[0]['id']}
+					$order_by
+					offset $offset
+					$limit
+				}
+				{$media_instance_aql}";
+// 					order by media_item.iorder asc, media_item.views desc
+		$vf[0]['items'] = aql::select($aql);
+		$vf[0]['sql'] = aql::sql($aql);
 
 		//if ($_GET['d']) echo exec_time();
 
 		// get all the subvfolders in this vfolder
-		$vf[0]['vfolders'] = aql::select($vfolder_aqlarray, array(
-			'where' => 'parent__media_vfolder_id = '.$vf[0]['id']
-		));
+		$aql = "media_vfolder {
+					*
+					where parent__media_vfolder_id = {$vf[0]['id']}
+				}";
+		$vf[0]['vfolders'] = aql::select($aql);
+
 		return $vf[0];
 	}//function get_vfolder
 
