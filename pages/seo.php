@@ -13,7 +13,7 @@
 		if (!$page_data) {
 			$rs = aql::select("website_page { url_specific where page_path = '".$p->page_path."' and website_id = ".$website_id."}");
 			
-			$pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]['website_page_id']} } ");
+			if ($rs) $pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]['website_page_id']} } ");
 			if (is_array($pd)) {			
 				foreach ($pd as $p) {
 					$page_data[$p['field']] = $p['value'];	
