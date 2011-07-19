@@ -25,7 +25,8 @@
 		
 		if (is_array($page_data)) {
 			foreach ($page_data as $field => $value)  {
-				$p->var[$field] = $value;	
+				if ($field == 'title') eval('$p->title = stripslashes("'.addslashes($value).'");');
+				else $p->seo[$field] = $value;	
 			}
 		
 			if ($page_data['url_specific']) {
@@ -43,14 +44,17 @@
 				}
 				
 				foreach($uri_data as $field => $value) {
-					$p->var[$field]=$value;	
+					if ($field == 'title') eval('$p->title = stripslashes("'.addslashes($value).'");');
+					else $p->seo[$field]=$value;	
 				}
 			}
 			
 			foreach($seo_field_array as $type => $ar) {
 				foreach ($ar as $field => $max) {
-					 $val = $p->var[$field];
-					 eval('$p->var["'.$field.'"] = stripslashes("'.addslashes($val).'");'); 
+					if ($field != 'title') {
+						 $val = $p->seo[$field];
+						 eval('$p->var["'.$field.'"] = stripslashes("'.addslashes($val).'");');
+					}
 				}			
 			}
 		}
