@@ -1090,16 +1090,16 @@ class media {
 	}//function new_vfolder
 
 	function get_vfolder_num_items($identifier) {
-		$where = media::_vfolder_where($identifier);
-		if (!$where) return 0;
+		if (!is_numeric($vfolder_id)) $vfolder_id = media::_vfolder_where($identifier);
+		if (!$vfolder_id) return 0;
 		$count_arr = aql2array::get('media::get_vfolder_num_items', ' media_item { count(*) as count } ');
 		$rs = aql::select($count_arr, array(
-			'where' => $where
+			'where' => 'media_vfolder_id = '.$vfolder_id
 		));
 		return $rs[0]['count'];
 	}
 
-	function _vfolder_where($identifier) {
+	function _vfolder_where($identifier, $abort = false) {
 		$where = false;
 		if (is_numeric($identifier)) {
 			$where = "media_vfolder.id = {$identifier}";
@@ -1111,7 +1111,10 @@ class media {
 				$where = "media_vfolder.id = {$identifier}";
 			}//if
 		}//if
-		return $where;
+		if ($abort) return $where;
+		$sql =  "SELECT id FROM media_vfolder WHERE media_vfolder.active = 1 AND {$where}";
+		$r = sql($sql);
+		return $r->Fields('id');
 	}
 
 /**
@@ -1130,7 +1133,7 @@ class media {
 		//if ($_GET['d']) echo exec_time();
 
 		$vfolder_aqlarray = aql2array::get('media::get_vfolder:all', 'media_vfolder { * } '); // to only generate this once
-		$where = media::_vfolder_where($identifier);
+		$where = media::_vfolder_where($identifier, true);
 		if ($where) {
 			$vf = aql::select($vfolder_aqlarray, array('where' => $where));
 		}
@@ -1169,6 +1172,8 @@ class media {
 		} else {
 			unset($media_aql['media_instance']);
 		}
+
+		$clause['where'][] = 'media_item.media_vfolder_id = '.$vf[0]['id'];
 
 		$vf[0]['items'] = aql::select($media_aql, $clause);
 		$vf[0]['sql'] = aql::sql($media_aql, $claues);
