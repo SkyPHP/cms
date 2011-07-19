@@ -1,5 +1,6 @@
 <?
 	global $seo_field_array;
+	echo $p->page_path;
 	elapsed('before website table query');
 	if (!$website_id) {
 		$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']);
