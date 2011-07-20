@@ -4,7 +4,7 @@
 	$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']."'");
 	$website_id = $rs->Fields('id');
 
-	if (is_array($seo_field_array) && $website_id) {
+	if ($website_id) {
 		
 		$mem_key = "seo:".$website_id.":".$p->page_path;
 		$page_data = mem($mem_key);
