@@ -1,11 +1,10 @@
 <?
+	$page_data = NULL;
 	global $seo_field_array;
-	elapsed('before website table query');
 	$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']."'");
 	$website_id = $rs->Fields('id');
 
-	elapsed('after website table query');
-	if (is_array($seo_field_array)) {
+	if (is_array($seo_field_array) && $website_id) {
 		
 		$mem_key = "seo:".$website_id.":".$p->page_path;
 		$page_data = mem($mem_key);
@@ -28,7 +27,7 @@
 		if (is_array($page_data)) {
 			foreach ($page_data as $field => $value)  {
 				if ($field == 'title') eval('$p->title = stripslashes("'.addslashes($value).'");');
-				else $p->seo[$field] = $value;	
+				else eval('$p->seo[$field] = stripslashes("'.addslashes($value).'");');
 			}
 		
 			if ($page_data['url_specific']) {
@@ -47,18 +46,10 @@
 				
 				foreach($uri_data as $field => $value) {
 					if ($field == 'title') eval('$p->title = stripslashes("'.addslashes($value).'");');
-					else $p->seo[$field]=$value;	
+					else eval('$p->seo[$field]=stripslashes("'.addslashes($value).'");');	
 				}
 			}
 			
-			foreach($seo_field_array as $type => $ar) {
-				foreach ($ar as $field => $max) {
-					if ($field != 'title') {
-						 $val = $p->seo[$field];
-						 eval('$p->var["'.$field.'"] = stripslashes("'.addslashes($val).'");');
-					}
-				}			
-			}
 		}
 		
 	}
