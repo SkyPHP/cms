@@ -14,7 +14,10 @@ if ($_POST['db_field'] && $_POST['db_row_ide']) {
 	$field = $inf[1];
 	$db_row_id = decrypt($_POST['db_row_ide'], $table);
 	if ($db_row_id) {
-		$item = aql::value( " {$table} { {$field} as media_item_id } ", $db_row_id);
+		$item = aql::value( " 
+			{$table} { {$field} as media_item_id } 
+			media_item on {$table}.{$field} = media_item.id { where id is not null } ", 
+		$db_row_id);
 		if (!$item['media_item_id']) {
 			echo $empty;
 		} else {
