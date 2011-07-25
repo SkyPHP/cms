@@ -65,6 +65,7 @@ class pagination {
     function pages() {
 
         global $p;
+		$url = explode('?',$p->uri);
 ?>
         <div class="pagination-links">
 <?
@@ -74,7 +75,7 @@ class pagination {
             $qs = qs_remove('page'.$this->i);
             if ($i!=1) $qs .= '&page'.$this->i.'=' . $i;
 ?>
-            <a href="<? echo $p->urlpath; if ($qs) echo '?' . $qs; ?>" class="pagination-link <?=$selected?>"><?=$i?></a>
+            <a href="<? echo $url[0]; if ($qs) echo '?' . $qs; ?>" class="pagination-link <?=$selected?>"><?=$i?></a>
 <?
         }
 ?>
@@ -145,6 +146,7 @@ class array_pagination {
     function pages() {
 
         global $p;
+		$url = explode('?',$p->uri);
 ?>
         <div class="pagination-links">
 <?
@@ -154,7 +156,7 @@ class array_pagination {
             $qs = qs_remove('page'.$this->i);
             if ($i!=1) $qs .= '&page'.$this->i.'=' . $i;
 ?>
-            <a href="<? echo $p->urlpath; if ($qs) echo '?' . $qs; ?>" class="pagination-link <?=$selected?>"><?=$i?></a>
+            <a href="<? echo $url[0]; if ($qs) echo '?' . $qs; ?>" class="pagination-link <?=$selected?>"><?=$i?></a>
 <?
         }
 ?>
