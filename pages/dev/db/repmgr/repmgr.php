@@ -5,6 +5,8 @@ $p->template('intranet','top');
 <div>
 <?
 if($repmgr && $repmgr->initialized){
+   $repmgr->get_time_lags();
+
    ?><fieldset><legend>Stats for Cluster '<?=$repmgr_cluster_name?>'</legend><?
 
       $nodes = $repmgr->get_nodes(true);
