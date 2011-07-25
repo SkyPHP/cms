@@ -2,7 +2,7 @@
 	include_once( $sky_install_path . 'lib/core/functions.inc.php' );
 	include_once( $sky_install_path . 'lib/adodb/adodb.inc.php' );
 	@include_once( $sky_install_path . 'config.php' );
-	
+
 	$needle = '/media-zip/';
 	$start = strlen($needle);
 	$end = strpos($_SERVER['REQUEST_URI'],'/', $start);

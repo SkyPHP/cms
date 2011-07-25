@@ -20,7 +20,7 @@ $(document).ready(function() {
             data = {
                 'vfolder' : $up.attr('vfolder'),
                 'db_field' : $up.attr('db_field'),
-                'db_row_ide' : $up.attr('db_row_ide')
+                'db_row_ide' : $up.attr('db_row_ide'),
             },
             browse_button = id,
             upload_button = 'upload_' + id.split('_')[1],
@@ -75,10 +75,14 @@ $(document).ready(function() {
     });
 
     $('.pagination-limit').live('change',function() {
-        qs = location.search;
-        qs = removeParam($(this).attr('name'),qs); // remove limit
-        qs = removeParam('page'+$(this).attr('i'),qs); // remove page
-        location.href = qs + (qs?'&':'?') + $(this).attr('name') + '=' + $(this).val();
+        url1 = location.href.split('?');
+		url1 = url1[0];
+
+		url2 = location.href;
+        url2 = removeParam($(this).attr('name'),url2); // remove limit
+        url2 = removeParam('page'+$(this).attr('i'),url2); // remove page
+		url2 = removeParam('limit'+$(this).attr('i'),url2);
+        location.href = url2 + (url2==url1?'?':'&') + $(this).attr('name') + '=' + $(this).val();
     });
     
 });
@@ -92,25 +96,33 @@ $(document).ready(function() {
             'height' : '',
             'limit' : 0,
             'empty' : '',
-            'sort' : false
+            'sort' : false,
+            'db_field' : '',
+            'db_row_ide' : '',
+            'media_item_ide' : '',
+            'crop' : '',
+            'crop-gravity' : ''
         }
         var methods = {
             init : function(options) {
                 return this.each(function() {
-                    var up = this;
-                    var $this = $(up);
-                    var opts = [];
-                    var curr_sets = settings;
-                    // var attrs = this.attributes;
-                    var load_id = replace_with_load($this);
-                    opts['vfolder'] = $this.attr('vfolder');
-                    opts['width'] = $this.attr('width');
-                    opts['height'] = $this.attr('height');
-                    opts['limit'] = $this.attr('limit');
-                    opts['empty'] = $this.attr('empty');
-                    opts['sort'] = $this.attr('sort');
+                    var up = this,
+                        $this = $(up),
+                        opts = {},
+                        curr_sets = settings,
+                        attrs = $this[0].attributes,
+                        load_id = replace_with_load($this);
+                    
+                    var i = attrs.length - 1;
+                    while (i >= 0) {
+                        var name = attrs[i].nodeName,  val = attrs[i].nodeValue;
+                        opts[name] = val;
+                        i--;
+                    }
+
                     $.extend(curr_sets, opts);
                     $.extend(curr_sets, options);
+
                     if (settings.width == 'auto') settings.width = $this.parent().width() - 8; // border is 4px
                     if (!settings.vfolder) {
                         $this.html('<p><strong>Uploader Error: No vfolder set.</strong></p>');
@@ -130,7 +142,7 @@ $(document).ready(function() {
                         }
                     });
                     var id = Math.floor(Math.random()*11);
-                    $this.append('<div class="upload_button_cont"><button class="choose_file small" id="choose_' + id + '">Upload Files</button></div>');
+                    $this.append('<div class="upload_button_cont"><button class="choose_file small" type="button" id="choose_' + id + '">Upload Files</button></div>');
                     $this.append('<div class="upload_status"></div>');
                     if (curr_sets.sort) methods.doSort($this);
                 });
@@ -147,7 +159,7 @@ $(document).ready(function() {
             },
             doSort : function($uploader) {
                 if ($.isFunction($.ui.sortable)) {
-                    $uploader.append('<p class="small"><strong>Sort Enabled:</strong> You can drag the image and re-order their them.</p>');
+                    $uploader.append('<p class="small mediaSortEnabled"><strong>Sort Enabled:</strong> You can drag the image and re-order their them.</p>');
                     var $gallery =  $('.mediaItemGallery', $uploader);
                     if ($gallery.length) {
                         $gallery.sortable({
@@ -166,26 +178,48 @@ $(document).ready(function() {
                     $.error('Sortable in jQuery UI not loaded. Sort disabled.');
                 }
             },
-            bindContextMenu : function($uploader) {
-                 $('.mediaItem[ide]', $uploader).each(function() {
-                     $(this).contextMenu(
-                        {menu: 'mediaItemContextMenu'},
-                        function(action, el, pos) {
-                           if ($('html').hasClass('ie7')) action = action.split('#')[1]; // otherwise the action is the full URL
-                           var contextFunctions = {
-                               'properties' : contextMenu_properties,
-                               'view' : contextMenu_view,
-                               'delete' : contextMenu_delete
-                           };
-                           if (contextFunctions[action]) {
-                               var now = contextFunctions[action];
-                               now(el);
-                           }
+        bindContextMenu : function($uploader) {
+            $('.mediaItem[ide]', $uploader).contextMenu( {menu: 'mediaItemContextMenu'}, 
+                function(action, el, pos) {
+                    if ($('html').hasClass('ie7')) action = action.split('#')[1]; // otherwise the action is the full URL
+                    var contextFunctions = {
+                        'properties' : function(el) {
+                            $.skybox('/skybox/form/media_item/' + $(el).attr('ide'));
+                            return false;
+                        },
+                        'view' : function(el) {
+                            var ide = $(el).attr('instance_ide');
+                            if (!!ide) {
+                                window.open('/media/' + ide, 'new-window');
+                            } else {
+                                alert('Currently unavailable. The image is on a different server.');
+                            }
+                        },
+                        'delete' : function(el) {
+                            var ide = $(el).attr('ide'),
+                                $el = $('.mediaItem[ide=' + ide + ']:visible');
+                            if (!ide || !$el.length) return;
+                            if (!confirm('Are you sure you want to delete this image?')) return;
+                            var $up = $el.closest('uploader'),
+                                data = {
+                                    'db_row_ide' : $up.attr('db_row_ide'),
+                                    'db_field' : $up.attr('db_field')
+                                };
+                            $.post('/ajax/media/delete-media-item/' + ide, data, function(json) {
+                                if (json.status != 'OK') {
+                                    alert(json.errors);
+                                } else {
+                                    if ($up.length) $up.uploader();
+                                    else $el.remove();
+                                }
+                            });
                         }
-                    );
-                 });
+                    };
+                    if (!!contextFunctions[action]) contextFunctions[action](el);
+                });
             }
         }
+
         if (methods[method]) {
             return methods[method].apply(Array.prototype.slice.call( arguments, 1));
         } else if (typeof method === 'object' || !method) {
@@ -196,35 +230,6 @@ $(document).ready(function() {
     }
 
 }) (jQuery);
-
-function contextMenu_properties(el) {
-    var ide = $(el).attr('ide');
-    $.skybox('/skybox/form/media_item/' + ide);
-}
-
-function contextMenu_view(el) {
-    var ide = $(el).attr('instance_ide');
-    window.location = '/media/' + ide;
-}
-
-function contextMenu_delete(el) {
-    var ide = $(el).attr('ide');
-    var $el = $('.mediaItem[ide=' + ide + ']:visible');
-    if (!$el.length) return;
-    if (ide && confirm('Are you sure you want to delete this image?')) {
-        var $up = $el.closest('uploader');
-        $.post('/ajax/media/delete-media-item/' + ide, function(json) {
-           if (json.status == 'OK') {
-               if ($up.length) {
-                   $up.uploader();
-               } else {
-                   $el.remove();
-               }
-            }
-            else alert(json.errors);
-        });
-    }
-}
 
 function replace_with_load($div, w, h) {
     var id = Math.floor(Math.random()*101);

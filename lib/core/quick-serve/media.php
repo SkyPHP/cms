@@ -3,6 +3,8 @@ include_once( $sky_install_path . 'lib/core/functions.inc.php' );
 include_once( $sky_install_path . 'lib/adodb/adodb.inc.php' );
 @include_once( $sky_install_path . 'config.php' );
 
+if ( !$db_host ) $db_host = $db_domain; // for backwards compatibility
+
 $needle = '/media/';
 $start = strlen($needle);
 $end = strpos($_SERVER['REQUEST_URI'],'/', $start);
@@ -28,9 +30,9 @@ default:
 
 		} else {
 
-			if ( $db_name && $db_domain ) {
+			if ( $db_name && $db_host ) {
 				$db = &ADONewConnection( $db_platform );
-				$db->PConnect( $db_domain, $db_username, $db_password, $db_name );
+				$db->PConnect( $db_host, $db_username, $db_password, $db_name );
 			/*
 				if ( !$dbw_domain ) {
 					$dbw =& $db;
@@ -62,8 +64,6 @@ default:
                 $dest_dir = $sky_media_local_path . $vfolder_path . $instance_folder;
 				$local_path = $dest_dir . '/' . $slug . '.' . $file_type;
 				if ( !file_exists($local_path) ) {
-					include_once('lib/core/class.aql2array.php');
-					include_once('lib/core/class.aql.php');
 					include_once('lib/core/class.media.php');
                     media::get_if_not_here($r->Fields('media_item_id'),$sky_media_src_path, $file_type,$local_path,$dest_dir);
                 }
@@ -107,6 +107,9 @@ default:
 	//die( 'problem.' );
 	header("HTTP/1.0 404 Not Found");
 	echo '404 Error: File Not Found.';
+    echo "<!--
+$SQL
+-->";
 	exit(0);
 
 endswitch;

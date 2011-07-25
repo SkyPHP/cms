@@ -45,65 +45,90 @@ class media {
  * @return array returns an array containing information about the desired image
  */
 	function get_random_item($vfolder_identifier, $desired_w = NULL, $desired_h = NULL, $crop = NULL, $media_overlay_id = NULL, $parameters=NULL) {
-		$vfolder = media::get_vfolder($vfolder_identifier,NULL,NULL,NULL,$parameters);
-		$num_items = count($vfolder['items']);
-		$random_index = rand( 0, $num_items - 1 );
-		$media_item_id = $vfolder['items'][$random_index]['media_item_id'];
+		$media_item_id = media::get_random_item_id($vfolder_identifier, $parameters);
 		return media::get_item( $media_item_id, $desired_w, $desired_h, $crop, $media_overlay_id, $parameters);
 	}//get_random_item
 
-	function get_if_not_here($media_item_id,$src_beg,$src_end,$local_path,$dest_dir){
-
-		if(!file_exists($local_path) || filesize($local_path) == 0){
-		#echo "TRYING TO GET IMAGE";
-			$aql = "media_instance	{
-										where media_item_id = $media_item_id
-										and instance is null
-										limit 1
-									}";
-			$rs = aql::select($aql);
-			if($rs){
-				$media_instance_ide = $rs[0]['media_instance_ide'];
-				$src = '/'.$media_instance_ide;
-				$media_host_id=0;
-				$command = 'hostname';
-				$hostname = trim(shell_exec($command));
-				$aql = "media_host{
-									where host_name = '$hostname'
-									limit 1
-								}";
-				$rs = aql::select($aql);
-				if($rs){
-					$media_host_id = $rs[0]['media_host_id'];
-				}
-				$aql = "media_distro {
-										where media_item_id = $media_item_id
-									 }
-
-						media_host	{
-										domain_name
-										where media_host.id <> $media_host_id
-									}";
-				$rs = aql::select($aql);
-				if($rs){
-					foreach($rs as $host) {
-						$img = "http://".$host['domain_name'].'/media'.$src;
-						if ($_GET['aql_debug']) echo 'copying ..'.$img.' to '.$local_path.'!!!!<br>';
-						@mkdir($dest_dir, 0777, true);
-						if(copy($img,$local_path)){
-							chmod($local_path,0777);
-							$fields = array	(
-												'media_host_id'=>$media_host_id,
-												'media_item_id'=>$media_item_id
-											);
-							aql::insert('media_distro',$fields);
-							return true;
-						}else{
-							//keep going
-						}
-					}
-				}
+	function get_random_item_id($vfolder_identifier, $parameters = null) {
+		if (is_numeric($vfolder_identifier)) {
+			$where = 'media_vfolder.id = '.$vfolder_identifier;
+		} else if (strpos($vfolder_identifier, '/') !== false) {
+			$where = "media_vfolder.vfolder_path = '{$vfolder_identifier}'";
+		} else {
+			$where = 'media_vfolder.id = '.decrypt($vfolder_identifier, 'media_vfolder');
+		}
+		if ($parameters['not_in']) {
+			if (!is_array($parameters['not_in'])) {
+				$not_in = array($parameters['not_in']);
+			} else {
+				$not_in = $parameters['not_in'];
 			}
+			$n = '(';
+			foreach ($not_in as $id) {
+				$n .= $id.', ';
+			}
+			if ($n != '(') $n = 'and media_item.id not in '.substr($n, 0, -2).')';
+			else $n = '';
+		}
+		$sql = "SELECT media_item.id as media_item_id
+				FROM media_item
+				LEFT JOIN media_vfolder on media_item.media_vfolder_id = media_vfolder.id and media_vfolder.active = 1
+				WHERE media_item.active = 1 and
+					media_vfolder.id is not null and
+					{$where} {$n}
+				ORDER BY random()
+				LIMIT 1";
+		$r = sql($sql);
+		return $r->Fields('media_item_id');
+		// $vfolder = media::get_vfolder($vfolder_identifier, null, null, null, $parameters);
+		// $num_items = count($vfolder['items']);
+		// $random_index = rand( 0 , $num_items - 1 );
+		// return $vfolder['items'][$random_index]['media_item_id'];
+	}
+
+	function get_if_not_here($media_item_id,$src_beg,$src_end,$local_path,$dest_dir){
+		if (file_exists($local_path) && filesize($local_path) > 0) return;
+		$sql = "SELECT id 
+				FROM media_instance
+				WHERE media_item_id = {$media_item_id} 
+				and instance is null
+				and media_instance.active = 1
+				limit 1";
+		$r = sql($sql);
+		if (!$r->Fields('id')) return;
+		$media_instance_ide = encrypt($r->Fields('id'), 'media_instance');
+		$src = $src_beg.'/'.$media_instance_ide.'.'.$src_end;
+		$command = 'hostname';
+		$hostname = trim(shell_exec($command));
+		$sql = "SELECT id as media_host_id
+				FROM media_host
+				WHERE host_name = '{$hostname}' and media_host.active = 1
+				LIMIT 1";
+		$r = sql($sql);
+		$media_host_id = ($r->Fields('media_host_id')) ? $r->Fields('media_host_id') : 0;
+		$sql = "SELECT media_host.domain_name
+				FROM media_distro
+				LEFT JOIN media_host on media_distro.media_host_id = media_host.id and media_host.active = 1
+				WHERE media_distro.active = 1
+				AND media_distro.media_item_id = {$media_item_id}
+				AND media_host.id <> {$media_host_id}
+				";
+		$r = sql($sql);
+		while (!$r->EOF) {
+			$img = 'http://'.$r->Fields('domain_name').$src;
+			if ($_GET['aql_debug']) echo 'copying .. '.$img.' to '.$local_path.'!!!<br />';
+			@mkdir($dest_dir, 0777, true);
+			if (copy($img, $local_path)) {
+				chmod($local_path, 0777);
+				$fields = array(
+					'media_host_id' => $media_host_id,
+					'media_item_id' => $media_item_id
+				);
+				global $dbw;
+				$dbw->AutoExecute('media_distro', $fields, 'INSERT');
+				return true;
+			}
+			$r->MoveNext();
 		}
 		return false;
 	}
@@ -317,6 +342,13 @@ class media {
  */
 	function get_item($identifier, $desired_w = NULL, $desired_h = NULL, $crop = NULL, $media_overlay_id = NULL, $parameters=NULL) {
 		global $default_image_quality,$db, $imagetype, $sky_media_local_path, $sky_media_src_path, $media_hosts, $sky_icon_path;
+
+        // memcache the request -- if already cached return the cached $img array
+        $args = func_get_args();
+        $args_key = 'media:get_item:' . serialize($args);
+        $mem_result = mem($args_key);
+        if ( $mem_result ) return $mem_result;
+
 		if (!$default_image_quality) $default_image_quality = 80;
 		self::$error = NULL;
 
@@ -353,7 +385,7 @@ class media {
 		//die("media::get_item error: '$identifier' is not a valid media_item_id or media_item_ide.");
 
 		if ($_GET['debug_media']) echo $media_item_id . '<br />';
-
+        // 
 		// get the media_item data
 		$SQL = "select  media_item.slug,
 						media_item.caption,
@@ -608,6 +640,7 @@ class media {
 				$img['img'] = '<img src="'.$img['src'].'" width="'.$img['width'].'" height="'.$img['height'].'" alt="'.$caption.'" border="0" />';
 				$img['html'] = $img['img'];
 				$img['local_path'] = $instance_file_path;
+                mem($args_key,$img);
 				return $img;
 			}//if
 		} else {
@@ -1056,6 +1089,33 @@ class media {
 		return $parent;
 	}//function new_vfolder
 
+	function get_vfolder_num_items($identifier) {
+		if (!is_numeric($vfolder_id)) $vfolder_id = media::_vfolder_where($identifier);
+		if (!$vfolder_id) return 0;
+		$count_arr = aql2array::get('media::get_vfolder_num_items', ' media_item { count(*) as count } ');
+		$rs = aql::select($count_arr, array(
+			'where' => 'media_vfolder_id = '.$vfolder_id
+		));
+		return $rs[0]['count'];
+	}
+
+	function _vfolder_where($identifier, $abort = false) {
+		$where = false;
+		if (is_numeric($identifier)) {
+			$where = "media_vfolder.id = {$identifier}";
+		} else if (substr($identifier,0,1)=='/') {
+			$where = "vfolder_path = '{$identifier}'";
+		} else {
+			$identifier = decrypt($identifier,'media_vfolder');
+			if (is_numeric($identifier)) {
+				$where = "media_vfolder.id = {$identifier}";
+			}//if
+		}//if
+		if ($abort) return $where;
+		$sql =  "SELECT id FROM media_vfolder WHERE media_vfolder.active = 1 AND {$where}";
+		$r = sql($sql);
+		return $r->Fields('id');
+	}
 
 /**
  * retrieve all the information for a given vfolder and all of the items add/or subvfolders based on
@@ -1072,94 +1132,56 @@ class media {
 
 		//if ($_GET['d']) echo exec_time();
 
-		if (is_numeric($identifier)) {
-			$aql = "media_vfolder {
-						*
-						where media_vfolder.id = {$identifier}
-					}";
-			$vf = aql::select($aql);
-		} else if (substr($identifier,0,1)=='/') {
-			$aql = "media_vfolder {
-						*
-						where vfolder_path = '{$identifier}'
-					}";
-			$vf = aql::select($aql);
-		} else {
-			$identifier = decrypt($identifier,'media_vfolder');
-			if (is_numeric($identifier)) {
-				$aql = "media_vfolder {
-							*
-							where media_vfolder.id = {$identifier}
-						}";
-				$vf = aql::select($aql);
-			}//if
-		}//if
+		$vfolder_aqlarray = aql2array::get('media::get_vfolder:all', 'media_vfolder { * } '); // to only generate this once
+		$where = media::_vfolder_where($identifier, true);
+		if ($where) {
+			$vf = aql::select($vfolder_aqlarray, array('where' => $where));
+		}
 
 		//if ($_GET['d']) echo exec_time();
-
 		if (!$vf[0]['id']) {
 			self::$error = "media::get_vfolder() error: invalid identifier specified";
 			return false;
 		}//if
-
 		// count the number of items in this vfolder
 		// TODO: this can be removed when the num_items field is up to date
-		$aql = "media_item {
-					count(*) as count
-					where media_vfolder_id = {$vf[0]['id']}
-				}";
-		$rs = aql::select($aql);
-		$num_items = $rs[0]['count'];
-		$vf[0]['num_items'] = $num_items;
+		$vf[0]['num_items'] = media::get_vfolder_num_items($vf[0]['id']);
 
 		// allow extreme offsets to "wrap"
-		if ($num_items):
+		$media_aql = aql2array::get('media::get_vfolder:item', ' media_item { * } media_instance { id as media_instance_id} ');
+		$clause = array('where' => array());
+		if ($num_items) {
 			$offset = $offset % $num_items;
-			if ( $offset < 0 ) $offset = $num_items + $offset;
-		endif;
+			if ( $offset < 0 ) {
+				$offset = $num_items + $offset;
+				$clause['offset'] = $offset;
+			}
+		}
 
-		if (is_numeric($max_items)) $limit = "limit $max_items";
+		if (is_numeric($max_items)) $clause['limit'] = $max_items;
 		#else if ( !$order_by ) $order_by = 'iorder asc, views desc'; // don't auto-orderby if we're selecting with a limit, postgres is kinda retarded here
 		if ( !$order_by ) $order_by = 'iorder asc, views desc';
-
-		if ($order_by) $order_by = 'order by ' . $order_by;
+		if ($order_by) $clause['order by'] = $order_by;
 
 		// if we are only looking for images larger than the specified dimensions
 		if ($parameters['min_width'] || $parameters['min_height']) {
 			$min_criteria = '';
 			if ($parameters['min_width']) $min_criteria .= " and media_instance.width >= {$parameters['min_width']} ";
 			if ($parameters['min_height']) $min_criteria .= " and media_instance.height >= {$parameters['min_height']} ";
-			$media_instance_aql = "
-				media_instance {
-					id
-					where media_instance.instance is null
-					{$min_criteria}
-				}
-			";
-		}//if
+			$clause['where'][] = 'media_instance.instance is null '.$min_criteria;
+		} else {
+			unset($media_aql['media_instance']);
+		}
 
-		// get all the items in this vfolder
-		$aql = "media_item {
-					*
-					where media_vfolder_id = {$vf[0]['id']}
-					$order_by
-					offset $offset
-					$limit
-				}
-				{$media_instance_aql}";
-// 					order by media_item.iorder asc, media_item.views desc
-		$vf[0]['items'] = aql::select($aql);
-		$vf[0]['sql'] = aql::sql($aql);
+		$clause['where'][] = 'media_item.media_vfolder_id = '.$vf[0]['id'];
+		$vf[0]['items'] = aql::select($media_aql, $clause);
+		$vf[0]['sql'] = aql::sql($media_aql, $clause);
 
 		//if ($_GET['d']) echo exec_time();
-
 		// get all the subvfolders in this vfolder
-		$aql = "media_vfolder {
-					*
-					where parent__media_vfolder_id = {$vf[0]['id']}
-				}";
-		$vf[0]['vfolders'] = aql::select($aql);
-
+		$vf[0]['vfolders'] = aql::select($vfolder_aqlarray, array(
+			'where' => 'parent__media_vfolder_id = '.$vf[0]['id']
+		));
 		return $vf[0];
 	}//function get_vfolder
 
@@ -1167,37 +1189,25 @@ class media {
 /**
  * display an uploader using SWF Uploader
  *	There is a single array parameter:
- *	REQUIRED: vfolder_path
- *	OPTIONAL:	thumb_width, thumb_height, thumb_crop,
- 				max_num_files, max_file_size (in kilobytes),
-				empty_message,
-				file_types, file_types_description,
- 				db_field, db_row_id,
-				on_success_js
+ *	REQUIRED: 	vfolder (the vfolder path)
+ *	OPTIONAL:	limit, crop, crop-gravity
+				empty (will display empty message),
+ 				db_field, db_row_ide, (will update this in db),
+ 				width, height, (for display)
+ 				sort (if true, will make the items sortable ,must have jquery ui sortable for this to work)
+				
  *
- * @param array $offset (optional) number of items to bypass before retrieving items, useful for pagination
+ * 
  */
 	function uploader($settings) {
-		$media_upload = $settings;
-
-                $context = $settings['context'];
-
-		$media_upload['delete'] = true;
-		if ( !isset($media_upload['gallery']) ) $media_upload['gallery'] = true;
-		$media_upload['unique_uploader_id'] = rand(0,999999999);
-		if (!$media_upload['no_js']) {
-			echo "<script type=\"text/javascript\">add_javascript('/pages/media/easyupload/easyupload.js');</script>";
-			echo "<script type=\"text/javascript\">add_css('/pages/media/easyupload/easyupload.css');</script>";
-			echo "\n\n";
+		echo '<uploader vfolder="'.$settings['vfolder'].'" ';
+		if ($settings['crop']) echo 'crop="true" ';
+		if ($settings['sort']) echo 'sort="true" ';
+		unset($settings['sort'], $settigns['crop'], $settings['vfolder']);
+		foreach ($settings as $k => $v) {
+			echo $k.'="'.$v.'" ';
 		}
-		echo "<div style=\"".$media_upload['gallery_style']."\" id=\"upload-items-".$media_upload['unique_uploader_id']."\">";
-		if ( $media_upload['gallery'] ) include('pages/media/easyupload/items.php');
-		echo "</div>";
-		echo "<div class=\"clear\"></div>";
-		if (!$media_upload['on_success_js']) $media_upload['on_success_js'] = "get_vfolder_items('{$media_upload['vfolder_path']}','{$media_upload['unique_uploader_id']}','{$media_upload['thumb_width']}','{$media_upload['thumb_height']}','{$media_upload['thumb_crop']}');";
-		if (!$media_upload['vfolder_js']) $media_upload['vfolder_js'] = "'".$media_upload['vfolder_path']."'";
-        if ($_GET['media_debug']) $media_upload['debug'] = true;
-		include('modules/media/upload/upload.php');
+		echo '></uploader>';
 	}//function uploader
 
 
@@ -1207,7 +1217,16 @@ class media {
 
 
 	function gallery($settings){
-
+			global $p;
+			$p->js[] = "/lib/js/jquery.easing.1.1.1.js";
+			$p->js[] = "/lib/js/jquery.cycle.all.js"; 
+			$p->js[] = "/lib/js/media/gallery.js";
+			//if (!$settings['style_sheet']) {
+				$p->css[] = "/pages/media/gallery/gallery.css";
+			//} else {
+			//	$p->css[] = $settings['style_sheet'];
+			//}
+			
            $grid_margin=$settings['grid_margin']?$settings['grid_margin']:0;
            $edge_padding=$settings['edge_padding']?$settings['edge_padding']:0;
 
@@ -1297,13 +1316,6 @@ class media {
                  <? if($easing!='null'){ ?>
                     <?=$id ?>_galleryVars['easing']=<?$easing ?>;
                  <? } ?>
-
-                 add_js("/lib/js/jquery/jquery.easing.1.1.1.js");
-                 add_js("/lib/js/jquery/jquery.cycle.all.js");
-		 add_js("/pages/media/gallery/gallery.js");//.php?id=<?=$id ?>");
-                 <? if (!$settings['style_sheet']): ?> add_css("/pages/media/gallery/gallery.css");//.php?id=<?=$id ?>");
-				 <? else: ?> add_css("<?=$settings['style_sheet']?>");//.php?id=<?=$id ?>");
-				 <? endif; ?>
               </script>
               <style type='text/css'>
                  /*dimensions*/
@@ -1477,6 +1489,3 @@ $imagetype[14] = 'iff';
 $imagetype[15] = 'wbmp';
 $imagetype[16] = 'xbm';
 $imagetype[17] = 'jpeg';
-
-
-?>

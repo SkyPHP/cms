@@ -1,0 +1,401 @@
+body {
+	background: #f1eff0;
+	font-size: 0.75em;
+	color: #444444;
+}
+
+h1, h2, h3, h4, h5, p {
+	margin:0;
+	padding:0;
+}
+h1 {
+	font-size:1.7em;
+    margin-bottom: 1em;
+}
+h2 {
+	font-size:1.5em;
+}
+h3 {
+	font-size:1.1em;
+}
+h3 {
+	font-size:1.1em;
+}
+h5 {
+	font-size:1.1em;
+}
+a {
+	color: #2589b4;
+	text-decoration:none;
+}
+a:hover {
+	color: #2589b4;
+	text-decoration:underline;
+}
+ul {
+	text-align:justify;
+}
+p {
+	line-height:1.4em;
+	text-align:justify;
+}
+.col {
+	float: left;
+	margin-right: 25px;
+}
+
+.breadcrumb {
+	margin-bottom: 10px;
+}
+
+#filter_nav {
+	margin: 10px 0 10px 0;
+	border: #CCCCCC 1px solid;
+	padding: 10px;
+}
+
+.filter_nav {
+	margin: 10px 0 10px 0;
+	border: #CCCCCC 1px solid;
+	padding: 10px;
+}
+
+.wide {
+	width: 200px;
+}
+
+.wider {
+	width: 300px;
+}
+
+.edit_category {
+	font-size: 10px;
+	padding-top: 3px;
+}
+
+.city {
+	width: 90px;
+	margin-right: 10px;
+}
+
+fieldset {
+	border: 1px solid #CCCCCC;
+	margin-top: 25px;
+	padding: 20px;
+}
+
+legend {
+	border: 1px solid #CCCCCC;
+	padding: 3px 10px 3px 10px;
+	font-weight: bold;
+}
+
+form.standard_form label.checkbox_label {
+	display: inline;
+	cursor:pointer;
+}
+
+.tips {
+	background-color:#E9F7FE;
+}
+.tips-header {
+	font-size:10px;
+	color:#003399;
+}
+
+/*--------------------------------------------------*/
+
+#container {
+	position: relative; /* needed for footer positioning*/
+	width: 100%;
+
+	height: auto !important; /* real browsers */
+	height: 100%; /* IE6: treaded as min-height*/
+
+	min-height: 100%; /* real browsers */
+	background: url('/images/page_border.png') top center repeat-y;
+}
+
+#wrapper-top{
+	background-color: #333;
+	width: 100%;
+	margin: 0 auto;
+}
+
+#wrapper-page{
+	width: 100%;
+	margin: 0 auto;
+	padding-bottom: 150px;
+	background: #FFFFFF;
+}
+
+/*--------------------------HEADER-----------------------------*/
+
+#header{
+	position: relative;
+	width: 100%;
+	margin: 0 auto;
+}
+#header-main{
+	position: relative;
+	width: 90%;
+	padding: 0 50px;
+	height: 100px;
+	background: url('/images/header_main_bg.jpg') no-repeat;
+}
+#header-right {
+	float: right;
+	margin: 15px;
+	padding: 10px;
+	color:#FFFFFF;
+	font-size:14px;
+	font-weight:bold;
+}
+
+#header-right a.logout {
+	display: block;
+	color: #FFF;
+	text-decoration: underline;
+	font-size: 12px;
+}
+
+#home-link {
+	position: relative;
+	display: inline;
+	float: left;
+	width: 50px;
+	height: 48px;
+	padding: 26px 0;
+}
+#home-link a{
+	display: inline;
+	width: 50px;
+	height: 48px;
+}
+#header-text {
+	position: relative;
+	display: inline;
+	float: left;
+	height: 38px;
+	padding: 28px 15px;
+	font-size: 32px;
+	font-weight: bold;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+.nav {
+	background: url('/images/header_intranet_bg.jpg') 0 0 no-repeat;
+}
+.nav , .nav ul {
+	float: left;
+	position: relative;
+	width: 100%;
+	list-style: none;
+	line-height: 1.5;
+	font-weight: bold;
+	padding: 0;
+	margin: 0;
+	background-color: #000000;
+	color: #FFFFFF;
+}
+.nav a {
+	font-size: 13px;
+	display: block;
+	color: #FFFFFF;
+	text-decoration: none;
+	padding: 0.25em 0.5em;
+}
+.nav li {
+	float: left;
+	padding: 0;
+	margin-right: 15px;
+}
+.nav li ul {
+	position: absolute;
+	left: -999em;
+	height: auto;
+	width: 14.4em;
+	w\idth: 13.9em;
+	font-weight: normal;
+	border-width: 0.25em;
+	margin: 0;
+}
+.nav li li {
+	width: 13em
+}
+.nav li ul a {
+	width: 150px;
+	color: #FFFFFF;
+}
+.nav li ul a:hover {
+	color: #2589b4;
+	text-decoration: none;
+}
+.nav li ul ul {
+}
+.nav li:hover ul ul, .nav li:hover ul ul ul, .nav li.sfhover ul ul, .nav li.sfhover ul ul ul {
+	left: -999em;
+}
+.nav li:hover ul, .nav li li:hover ul, .nav li li li:hover ul, .nav li.sfhover ul, .nav li li.sfhover ul, .nav li li li.sfhover ul {
+	left: auto;
+}
+.nav li:hover, .nav li.sfhover {
+	background: #000000;
+}
+
+/* Support for the "iehover-fix.js" */
+ul.nav iframe {
+	position: absolute;
+	/* account for the border */
+	left: -0.25em;
+	top: -0.25em;
+	z-index: -1;
+	/*filter: progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0);*/
+}
+* html ul.nav li { z-index: 201; }
+
+/*------------------------------------------------------------*/
+
+#page-container{
+	margin: 0 auto;
+	text-align: left;
+	width: 100%;
+	background-color: #FFFFFF;
+}
+#main{
+	width: 100%;
+	padding: 10px 50px;
+	margin: 0 auto;
+}
+#content {
+	width: 100%;
+}
+
+.title-bar {
+	padding: 5px 15px 12px 15px;
+	margin-bottom: 20px;
+	color: #FFFFFF;
+
+	background: url('/images/title-bar.gif') bottom left no-repeat;
+	background-color: #990000;
+}
+.title-bar.blue {
+	background-color: #2589b4;
+}
+
+.module-bar {
+	height: 22px;
+	background: url('/images/bg_42px.jpg') top left repeat-x;
+	padding: 10px 15px;
+	font-weight: bold;
+	margin: 0;
+	color: #444444;
+}
+.module-body {
+	padding: 10px;
+	margin-bottom: 15px;
+	background: url('/images/grey_150px.jpg') top left repeat-x;
+}
+.module-container {
+	padding: 10px;
+	background: #FFFFFF;
+}
+
+.module-bar a#change-city {
+	margin: 0 10px;
+	padding: 0 16px;
+	font-size: 12px;
+	background: url('/images/down_arrow.gif') top left no-repeat;
+}
+
+a.close {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	font-size: 12px;
+}
+
+.view-more {
+	float: right;
+	display: inline;
+	position: relative;
+	font-weight: bold;
+	font-size: 11px;
+}
+
+.jb-button {
+	width: 120px;
+	height: 18px;
+	margin: 0 auto;
+	text-align: center;
+	margin: 3px 0;
+}
+.jb-button.grey a {
+	background: url('/images/grey_18px.jpg') top left repeat-x;
+}
+.jb-button.yellow a {
+	background: url('/images/yellow_18px.jpg') top left repeat-x;
+}
+.jb-button.red a {
+	background: url('/images/red_18px.jpg') top left repeat-x;
+}
+.jb-button a {
+	height: 16px;
+	padding: 1px 0;
+	font-weight: bold;
+	color: #FFFFFF;
+	display: block;
+}
+.jb-button a:hover {
+	text-decoration: none;
+	background-position: 0 -18px;
+}
+
+/*--------------------FOOTER----------------*/
+
+#footer {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+
+#footer-container {
+	position: relative;
+	width: 978px;
+	margin: 0 auto;
+	height: 82px;
+	background: url('/images/footer_bg.jpg') no-repeat;
+}
+
+#footer-top{
+	height: 50px;
+	margin: 0;
+	font-size: 12px;
+	color: #ffffff;
+}
+#footer-bottom{
+	height: 16px;
+	font-size: 12px;
+	color: #999999;
+	padding: 8px 18px;
+	margin: 0;
+}
+#footer-bottom a{
+	color: #999999;
+}
+#footer-bottom a:hover{
+	text-decoration: underline;
+}
+#copyright{
+	float: left;
+	display: inline;
+	padding: 0;
+	margin: 0;
+}
+#terms{
+	float: right;
+	display: inline;
+	padding: 0;
+	margin: 0;
+}

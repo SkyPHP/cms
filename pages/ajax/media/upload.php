@@ -34,8 +34,17 @@ if ($_FILES["file"]["tmp_name"] && !$errors) {
     	$dot = strpos( $_POST['db_field'], '.' );
     	$table = substr( $_POST['db_field'], 0, $dot );
     	$field = substr( $_POST['db_field'], $dot + 1 );
-    	$update = array( $field => $item[0]['media_item_id'] );
-    	aql::update($table,$update,$_POST['db_row_id']);
+    	$update = array( $field => $item[-1][0]['media_item_id'] );
+        $row_id = decrypt($_POST['db_row_ide'], $table);
+    	$row_changed = aql::update($table,$update,$row_id);
+        if ($row_changed) {
+            $row_changed = array(
+                'table' => $table,
+                'field' => $field,
+                'update' => $update,
+                'row_id' => $row_id
+            );
+        }
     endif;
 
     $_SESSION['media']['upload']['media_item_id'] = $item[0]['media_item_id'];
@@ -53,7 +62,8 @@ if ($errors) {
 } else {
     $re = array(
         'status' => 'OK',
-        'data' => $item
+        'data' => $item,
+        'row_changed' => $row_changed
     );
 }
 json_headers();
