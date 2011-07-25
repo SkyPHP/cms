@@ -5,7 +5,6 @@
 	$website_id = $rs->Fields('id');
 
 	if ($website_id) {
-		
 		$mem_key = "seo:".$website_id.":".$p->page_path;
 		$page_data = mem($mem_key);
 		if (!$page_data) {
@@ -19,7 +18,6 @@
 					}
 					if ($rs[0]['url_specific'] == 1) $page_data['url_specific']=true;
 					mem($mem_key, $page_data);
-					
 				}
 			}
 		}
@@ -49,8 +47,6 @@
 					else eval('$p->seo[$field]=stripslashes("'.addslashes($value).'");');	
 				}
 			}
-			
-		}
-		
+		}		
 	}
 ?>

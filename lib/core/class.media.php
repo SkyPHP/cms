@@ -1316,11 +1316,6 @@ class media {
                  <? if($easing!='null'){ ?>
                     <?=$id ?>_galleryVars['easing']=<?$easing ?>;
                  <? } ?>
-
-              
-                 <? if (!$settings['style_sheet']): ?> add_css("/pages/media/gallery/gallery.css");//.php?id=<?=$id ?>");
-				 <? else: ?> add_css("<?=$settings['style_sheet']?>");//.php?id=<?=$id ?>");
-				 <? endif; ?>
               </script>
               <style type='text/css'>
                  /*dimensions*/

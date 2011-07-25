@@ -9,12 +9,16 @@ $crop = (!empty($_POST['crop'])) ? true : false;
 $crop_gravity = $_POST['crop-gravity'];
 
 if ($_POST['db_field'] && $_POST['db_row_ide']) {
+	$media_vfolder_id = ($folder['id']) ? ' and media_vfolder_id = '.$folder['id'] : '';
 	$inf = explode('.', $_POST['db_field']);
 	$table = $inf[0];
 	$field = $inf[1];
 	$db_row_id = decrypt($_POST['db_row_ide'], $table);
 	if ($db_row_id) {
-		$item = aql::value( " {$table} { {$field} as media_item_id } ", $db_row_id);
+		$item = aql::value( " 
+			{$table} { {$field} as media_item_id } 
+			media_item on {$table}.{$field} = media_item.id { where id is not null {$media_vfolder_id} } ", 
+		$db_row_id);
 		if (!$item['media_item_id']) {
 			echo $empty;
 		} else {
