@@ -4,9 +4,11 @@ $p->template('intranet','top');
 
 <div>
 <?
-if($repmgr && $repmgr->initialized){
-   $repmgr->get_time_lags();
 
+unset($repmgr);
+$repmgr = new repmgr($db_host, true);
+
+if($repmgr && $repmgr->initialized){
    ?><fieldset><legend>Stats for Cluster '<?=$repmgr_cluster_name?>'</legend><?
 
       $nodes = $repmgr->get_nodes(true);
