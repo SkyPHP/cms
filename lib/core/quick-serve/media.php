@@ -5,6 +5,8 @@ include_once( $sky_install_path . 'lib/adodb/adodb.inc.php' );
 
 if ( !$db_host ) $db_host = $db_domain; // for backwards compatibility
 
+date_default_timezone_set('America/New_York');
+
 $needle = '/media/';
 $start = strlen($needle);
 $end = strpos($_SERVER['REQUEST_URI'],'/', $start);
@@ -68,37 +70,16 @@ default:
                     media::get_if_not_here($r->Fields('media_item_id'),$sky_media_src_path, $file_type,$local_path,$dest_dir);
                 }
                 if (file_exists($local_path)) {
-				
-					header( 'Content-type: ' . $sky_content_type[$file_type] );
-					//header("Content-type: image/" . $file_type);
-					//header( 'Cache-Control: public' );
-					// last modified header
-					//setlocale(LC_TIME, "C");
-					//$ft = filemtime ($local_path);
-					//$localt = mktime ();
-					//$gmtt = gmmktime ();
-					//$ft = $ft - $gmtt + $localt;
-					//$modified = strftime ("%a, %d %b %Y %T GMT", $ft);
-					//header( 'Last-Modified: ' . $modified );
-                    $ft = filemtime ($local_path);
-                    $modified = strftime ("%a, %d %b %Y %T GMT", $ft);
-                    header( 'Last-Modified: ' . $modified );
-                    $t = strtotime("+35 days");
-                    $expires = strftime ("%a, %d %b %Y %T GMT", $t);
-                    header( 'Expires: ' . $expires );
+					$content = $sky_content_type[$file_type];
+					header( "Content-type: $content");
+					$ft = filemtime ($local_path);
+					$modified = strftime ("%a, %d %b %Y %T GMT", $ft);
+					header( 'Last-Modified: ' . $modified );
+					$t = strtotime("+35 days");
+					$expires = strftime ("%a, %d %b %Y %T GMT", $t);
+					header( 'Expires: ' . $expires );
 					header( 'Content-Length: ' . filesize($local_path) );
 					readfile($local_path);
-				/*
-					//output the image
-					header( 'Cache-Control: public' );
-					header("Last-Modified: " . date('D, d M Y H:i:s',filemtime($local_path)) . " GMT"); // Sat, 19 Jun 2004 15:25:21 GMT
-					//header("Expires: " . date('D, d M Y H:i:s', strtotime('+30 days') ) . " GMT"); // Sat, 19 Jun 2004 15:25:21 GMT
-					header("Content-Type: image/" . $file_type);
-					//header("Cache-Control: max-age=2592000, must-revalidate");
-					//header( 'Cache-Control: private, max-age=0' );
-					header("Content-Length: " . filesize($local_path));
-					readfile($local_path);
-				*/
 					exit(0);
                 }
 			}//if
@@ -113,5 +94,3 @@ $SQL
 	exit(0);
 
 endswitch;
-
-?>
