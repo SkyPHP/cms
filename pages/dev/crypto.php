@@ -1,7 +1,7 @@
 <?
 //if ($_GET['value'] && !is_numeric($_GET['value'])) redirect("/dev/ide/$_GET[value]");
 $title = 'Developer Dashboard';
-template::inc('intranet','top');
+$p->template('intranet','top');
 include('dev-nav.php');
 ?>
 
@@ -18,5 +18,5 @@ encrypt: <a href="/dev/ide/<?=encrypt($_GET['value'],$_GET['key'])?>"><?=encrypt
 
 
 <?
-template::inc('intranet','bottom');
+$p->template('intranet','bottom');
 ?>
