@@ -1,6 +1,6 @@
 <?
 
-template::inc('intranet','top');
+$p->template('intranet','top');
 
 ?>
 
@@ -14,6 +14,6 @@ template::inc('intranet','top');
 
 <?
 
-template::inc('intranet','bottom');
+$p->template('intranet','bottom');
 
 ?>

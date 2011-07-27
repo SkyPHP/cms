@@ -11,7 +11,7 @@
     $('#login_form').live('submit',function(){
         $('#login_box').html('<img src="/images/loading.gif" />');
         $.post(
-            '/login/authenticate',
+            '/ajax/login-skybox/authenticate',
             $(this).serialize(),
             function(data){
                 if (data=='true') {
