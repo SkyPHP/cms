@@ -1137,7 +1137,6 @@ class media {
 		if ($where) {
 			$vf = aql::select($vfolder_aqlarray, array('where' => $where));
 		}
-
 		//if ($_GET['d']) echo exec_time();
 		if (!$vf[0]['id']) {
 			self::$error = "media::get_vfolder() error: invalid identifier specified";
@@ -1145,7 +1144,7 @@ class media {
 		}//if
 		// count the number of items in this vfolder
 		// TODO: this can be removed when the num_items field is up to date
-		$vf[0]['num_items'] = media::get_vfolder_num_items($vf[0]['id']);
+		$num_items = $vf[0]['num_items'] = media::get_vfolder_num_items($vf[0]['id']);
 
 		// allow extreme offsets to "wrap"
 		$media_aql = aql2array::get('media::get_vfolder:item', ' media_item { * } media_instance { id as media_instance_id} ');
