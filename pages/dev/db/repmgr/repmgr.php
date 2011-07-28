@@ -4,6 +4,10 @@ $p->template('intranet','top');
 
 <div>
 <?
+
+unset($repmgr);
+$repmgr = new repmgr($db_host, true);
+
 if($repmgr && $repmgr->initialized){
    ?><fieldset><legend>Stats for Cluster '<?=$repmgr_cluster_name?>'</legend><?
 

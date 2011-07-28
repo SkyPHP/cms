@@ -9,9 +9,10 @@
         }
     });
     $('#login_form').live('submit',function(){
+        var button = $('#login_box').html();
         $('#login_box').html('<img src="/images/loading.gif" />');
         $.post(
-            '/login/authenticate',
+            '/ajax/login-skybox/authenticate',
             $(this).serialize(),
             function(data){
                 if (data=='true') {
@@ -20,11 +21,13 @@
                     url = removeParam('logout',url);
                     window.location.href = url;
                 } else if (data=='false') {
+                    $('#login_box').html(button);
                     $('#login_password').val('');
                     $('#login_message').html('Incorrect login.  Try again.');
                 } else {
                     $('#login_password').val('');
                     $('#login_message').html(data);
+                    $('#login_box').html(button);
                 }
             }
         );
