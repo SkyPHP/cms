@@ -4,8 +4,7 @@
 		$p->title="SEO - ".$_POST['page_path'];
 		$p->template('skybox','top');
 		if ($_POST['website_ide']) {
-			$website_id = decrypt($_POST['website_ide'],'website');
-			$_POST['website_id'] = $website_id;
+			$_POST['website_id'] = decrypt($_POST['website_ide'],'website');
 			print_a($_POST);
 		}
 		
