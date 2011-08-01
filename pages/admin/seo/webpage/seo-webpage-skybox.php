@@ -3,8 +3,11 @@
 		
 		$p->title="SEO - ".$_POST['page_path'];
 		$p->template('skybox','top');
-		$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
-		$website_id = $rs[0]['website_id'];
+		if ($_POST['website_ide']) $website_id = decrypt($_POST['website_ide'],'website');
+		else {
+			$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
+			$website_id = $rs[0]['website_id'];
+		}
 		
 		// Check if the webiste exists in the database and prompt a question to add it if not
 		if (!$website_id) { 
