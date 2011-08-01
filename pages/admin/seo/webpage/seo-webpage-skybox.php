@@ -3,6 +3,7 @@
 		
 		$p->title="SEO - ".$_POST['page_path'];
 		$p->template('skybox','top');
+		print_a($_POST);
 		if ($_POST['website_ide']) $website_id = decrypt($_POST['website_ide'],'website');
 		else {
 			$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
