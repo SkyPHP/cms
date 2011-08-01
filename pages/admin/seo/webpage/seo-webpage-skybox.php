@@ -26,11 +26,12 @@
 			$aql="website_page { nickname where page_path = '{$_POST['page_path']}' and website_id = {$website_id} }";
 			$rs = aql::select($aql);
 			$page = $rs[0];
-			if (is_numeric($page['website_page_id']) && $page['website_page_id'] != 0) {
+			if ($page['website_page_id']) {
 				// We have a website_page_record so load the form 
 				include('pages/admin/seo/webpage/seo-webpage-form.php');		
 			}
 			else {
+				echo ("No Record Found");
 				// We don't have the page record so we have to make it
 				$rs = aql::select("website { where  domain = '{$_SERVER['SERVER_NAME']}' }");
 				$data = array(
