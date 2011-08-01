@@ -133,9 +133,4 @@
 	})
 </script>
 
-<? 	} else { // maintain height and width of the skybox
-?>
-		<div style="width:800px; height:600px;">Something went wrong with the post of the page_path.</div>
-<?	
-	}
-?>
+<? } ?>
