@@ -3,17 +3,17 @@
 		
 		$p->title="SEO - ".$_POST['page_path'];
 		$p->template('skybox','top');
-		if ($_POST['website_ide']) $website_id = decrypt($_POST['website_ide'],'website');
-		
+		if ($_POST['website_ide']) 
+		$website_id = decrypt($_POST['website_ide'],'website');		
 		else {
 			$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
 			$website_id = $rs[0]['website_id'];
 		}
-		
+		echo $website_id;
+
 		// Check if the webiste exists in the database and prompt a question to add it if not
 		if (!$website_id) { 
-		
-?>		
+?>					
 			<h2><?=$_SERVER['SERVER_NAME']?></h2>
             <br>
             This Website Cannot Be Optimized Until it is Set Up in the System
