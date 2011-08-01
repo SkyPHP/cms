@@ -55,74 +55,76 @@
 
 <script language="javascript">
 	$(function() {
-		
+		$('#close').live('click',function() {
+			History.back();
+		});
 		$('.seo-input').each(function(index, element) {
-           	f = $(this).attr('field')
-			var max_length = $(this).attr('max')
-			var length = $(this).val().length
-			$('#'+f+'_char_count').html(length)
-			if (length > max_length) $('#'+f+'_counter').css('color','#F00')
-			else $('#'+f+'_counter').css('color','#000')
-			$('#'+f+'_char_count').html(length)
+           	f = $(this).attr('field');
+			var max_length = $(this).attr('max');
+			var length = $(this).val().length;
+			$('#'+f+'_char_count').html(length);
+			if (length > max_length) $('#'+f+'_counter').css('color','#F00');
+			else $('#'+f+'_counter').css('color','#000');
+			$('#'+f+'_char_count').html(length);
         });
 		
 		
 		$('.seo-input').live('keyup focusout', function(e) {
-			f = $(this).attr('field')
-			var max_length = $(this).attr('max')
-			var length = $(this).val().length
-			$('#'+f+'_char_count').html(length)
-			if (length > max_length) $('#'+f+'_counter').css('color','#F00')
-			else $('#'+f+'_counter').css('color','#000')
+			f = $(this).attr('field');
+			var max_length = $(this).attr('max');
+			var length = $(this).val().length;
+			$('#'+f+'_char_count').html(length);
+			if (length > max_length) $('#'+f+'_counter').css('color','#F00');
+			else $('#'+f+'_counter').css('color','#000');
 			
 			if (e.keyCode == 13 || e.type == 'focusout') {
 				
-				v = $(this).val()
-				w = $(this).attr('wp_id')
-                s = $(this).attr('saved_id')
-				$('#'+s).html('saving')
+				v = $(this).val();
+				w = $(this).attr('wp_id');
+                s = $(this).attr('saved_id');
+				$('#'+s).html('saving');
 				$('#'+s).fadeOut('slow',function() {
 					$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, wp_id: w }, function (data){
-						$('#'+s).html(data)
-						$('#'+s).fadeIn('slow')
-					})				
-				})
+						$('#'+s).html(data);
+						$('#'+s).fadeIn('slow');
+					});
+				});
 			}
-		})
+		});
 		
 		$('#set-up-website').live('click',function(){
 			$.post('/admin/seo/website/set-up', function (data) {
-				$('#skybox').html(data)
+				$('#skybox').html(data);
 			})
 		})
 				
 		$('#nickname_change').live('click', function() {
-			$('#nickname').fadeOut()
-			page_ide = $(this).attr('page_ide')
+			$('#nickname').fadeOut();
+			page_ide = $(this).attr('page_ide');
 			$.post('/admin/seo/webpage/ajax/input', { field: 'nickname', website_page_ide: page_ide }, function(data) {
-				$('#nickname').html(data)
-				$('#nickname').fadeIn(800)
+				$('#nickname').html(data);
+				$('#nickname').fadeIn(800);
 			})
 		})
 		
 		$('#opt_phrase_change').live('click', function() {
-			$('#opt_phrase').fadeOut()
-			page_ide = $(this).attr('page_ide')
+			$('#opt_phrase').fadeOut();
+			page_ide = $(this).attr('page_ide');
 			$.post('/admin/seo/webpage/ajax/input', { field: 'opt_phrase', website_page_ide: page_ide }, function(data) {
-				$('#opt_phrase').html(data)
-				$('#opt_phrase').fadeIn(800)
+				$('#opt_phrase').html(data);
+				$('#opt_phrase').fadeIn(800);
 			})
 		})
 		
 		$('#input_field').live('focusout keyup',function(e) {
 			if (e.keyCode == 13 || e.type == 'focusout') {
-				f = $(this).attr('field')
-				$('#'+f).fadeOut()
-				val = $(this).val()
-				page_ide = $(this).attr('page_ide')
+				f = $(this).attr('field');
+				$('#'+f).fadeOut();
+				val = $(this).val();
+				page_ide = $(this).attr('page_ide');
 				$.post('/admin/seo/webpage/ajax/change_field', { value: val, field: f, website_page_ide: page_ide }, function(data) {
-					$('#'+f).html(data)
-					$('#'+f).fadeIn(800)
+					$('#'+f).html(data);
+					$('#'+f).fadeIn(800);
 				})	
 			}
 		})
