@@ -35,6 +35,7 @@
 				<div id="url_cb" style="margin-bottom:10px;">
 <?				
 				if ($page['url_specific']) { 
+					$uri_enabled = true;
 ?>
 					This page is set as URL SPECIFIC. The URL is <?=$_SERVER['HTTP_HOST'].$uri?>
 					<input type="hidden" id="uri_enabled" value="<?=$uri?>" /> 
