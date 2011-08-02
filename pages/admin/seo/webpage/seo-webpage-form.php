@@ -2,7 +2,9 @@
 <div style="width:900px">
 <? 	if (is_numeric($page['website_page_id'])) {
 		$page['website_page_ide'] = encrypt($page['website_page_id'],'website_page');
-		$aql="website_page_data { field, value where website_page_id = {$page['website_page_id']} }";
+		
+		if ($uri) $aql = "website_uri_data { field, value where webiste_id = {$_POST['website_id']} and uri = '{$uri}' }";
+		else $aql="website_page_data { field, value where website_page_id = {$page['website_page_id']} }";
 		$rs = aql::select($aql);
 		if (is_array($rs))	
 		foreach($rs as $r) {
@@ -36,12 +38,13 @@
 					
 				</fieldset>
 	<?
+			// Insert the blank field records in the db for website_page fields that don't already exist
 			$y=0;	
 			foreach($seo_field_array as $type => $field_array) {
 				
 				foreach($field_array as $field => $max) {
 					$rs2 = aql::select("website_page_data { value where field = '{$field}' and website_page_id = {$page['website_page_id']} }");
-					if (!is_array($rs2)) {
+					if (!$rs2[0]['value']) {
 						$data = array(
 							'field'=>$field,
 							'website_page_id'=>$page['website_page_id'],

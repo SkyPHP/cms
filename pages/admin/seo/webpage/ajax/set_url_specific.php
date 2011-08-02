@@ -1,0 +1,1 @@
+<? $update = aql::update('website_page',array('url_specific'=>1),$_POST['website_page_ide']); if ($update === true) { ?><input type="hidden" id="uri_enabled" value="<?=$_POST['uri']?>" /><? } ?>
