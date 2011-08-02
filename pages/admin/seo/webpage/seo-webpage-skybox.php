@@ -159,7 +159,7 @@
 			}
 		});
 		
-		$('#url_specific').live('click',function() {
+		$('#url_specific').die().live('click',function() {
 			if ($(this).attr('checked')) val = 1;
 			else val = 0;
 			uri = $(this).attr('uri');
