@@ -35,7 +35,7 @@
 				$mem_key = "seo:".$website_id.":".$_SERVER['PATH_INFO'];
 				$uri_data = mem($mem_key);
 				if (!$uri_data) {
-					$ud = aql::select("website_uri_data { field, value where website_id = ".$website_id." and uri = '".$_SERVER['PATH_INFO']." }");
+					$ud = aql::select("website_uri_data { field, value where website_id = ".$website_id." and uri = '".$_SERVER['PATH_INFO']."' }");
 					
 					if (is_array($ud)) {
 						foreach($ud as $u) {
