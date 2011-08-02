@@ -44,7 +44,7 @@
 				
 				foreach($field_array as $field => $max) {
 					$rs2 = aql::select("website_page_data { value where field = '{$field}' and website_page_id = {$page['website_page_id']} }");
-					if (!$rs2[0]['value']) {
+					if (!is_array($rs2)) {
 						$data = array(
 							'field'=>$field,
 							'website_page_id'=>$page['website_page_id'],

@@ -3,8 +3,8 @@
 		
 		$p->title="SEO - ".$_POST['page_path'];
 		$p->template('skybox','top');
-		if ($_POST['website_ide']) 
-		$website_id = decrypt($_POST['website_ide'],'website');		
+		$uri =  $_POST['uri'];
+		if ($_POST['website_ide']) $website_id = decrypt($_POST['website_ide'],'website');		
 		else {
 			$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
 			$website_id = $rs[0]['website_id'];
@@ -33,10 +33,10 @@
 <?
 				if (!$page['url_specific']) {
 ?>
-					<input type="checkbox" id="url_specific" website_page_ide="<?=$page['website_page_ide']?>" uri="<?=$_SERVER['PATH_INFO']?>" /> Make this page URL specific (cannot undo)
+					<input type="checkbox" id="url_specific" website_page_ide="<?=$page['website_page_ide']?>" uri="<?=$uri?>" /> Make this page URL specific (cannot undo)
 <?
 				} else {
-					echo $uri = $_SERVER['PATH_INFO'];
+					echo $uri;
 ?>
 					<input type="hidden" id="uri_enabled" value="<?=$uri?>" /> 
 <?	
@@ -62,7 +62,7 @@
 				// Check if the record was entered correctly and display the form 
 				if ($page['website_page_id']) {
 ?>
-					<div id="url_cb" style="margin-bottom:10px;"><input type="checkbox" id="url_specific" website_page_ide="" /> Make this page URL specific (cannot undo)</div>
+					<div id="url_cb" style="margin-bottom:10px;"><input type="checkbox" id="url_specific" website_page_ide="<?=encrypt($page['website_page_id'],'website_page')?>" /> Make this page URL specific (cannot undo)</div>
 <?
 					include('pages/admin/seo/webpage/seo-webpage-form.php');
 				}
