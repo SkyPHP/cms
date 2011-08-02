@@ -3,14 +3,8 @@
 <?
 	global $website_id;
 	if (!$website_id) $website_id=$_POST['website_id'];
-	echo $website_id?$website_id:'website_id';
-	echo "<br>";
 	if (!$page['website_page_id']) $page['website_page_id'] = $_POST['website_page_id'];
-	echo $page['website_page_id']?$page['website_page_id']:'website_page_id';
-	echo "<br>";
 	if (!$uri) $uri = $_POST['uri'];	
-	echo $uri?$uri:'uri';
-	echo "<br>";
 	if ($_POST['val'] == 1) $uri_enabled = true;
 	
  	if (is_numeric($page['website_page_id'])) {
@@ -19,7 +13,6 @@
 		else $aql="website_page_data { field, value where website_page_id = {$page['website_page_id']} }";
 		echo $aql;
 		$rs = aql::select($aql);
-		if (is_array($rs)) krumo($rs);	
 		foreach($rs as $r) {
 			$fields[$r['field']]=$r['value'];
 		}
