@@ -28,6 +28,7 @@
 		$data = array(
 			'field' => $_POST['field'],
 			'value' => $_POST['value'],
+			'website_id' => $rs[0]['website_id'],
 			'mod__person_id' => PERSON_ID,
 			'update_time' => 'now()'
 		);	
