@@ -22,7 +22,9 @@
 			
 <?		// The website exists... move forward to the check if website_page record is entered	
 		} else {
-			
+?>
+			<input type="hidden" id="website_id" value="<?=$website_id?>" /> 
+<?
 			$aql="website_page { url_specific, nickname where page_path = '{$_POST['page_path']}' and website_id = {$website_id} }";
 			$rs = aql::select($aql);
 			$page = $rs[0];
@@ -112,9 +114,10 @@
 				v = $(this).val();
 				w = $(this).attr('wp_id');
                 s = $(this).attr('saved_id');
+				website_id = $('#website_id').val();
 				$('#'+s).html('saving');
 				$('#'+s).fadeOut('slow',function() {
-					$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, wp_id: w, uri: uri }, function (data){
+					$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, wp_id: w, uri: uri, webiste_id: website_id }, function (data){
 						$('#'+s).html(data);
 						$('#'+s).fadeIn('slow');
 					});

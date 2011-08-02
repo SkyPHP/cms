@@ -28,11 +28,11 @@
 			else exit($insert);
 		}	
 	} else {
-		$rs = aql::select("website_uri_data { where uri = '{$_POST['uri']}' and field = '{$_POST['field']}' }");
+		$rs = aql::select("website_uri_data { where website_id = {$_POST['website_id']} and uri = '{$_POST['uri']}' and field = '{$_POST['field']}' }");
 		$data = array(
 			'field' => $_POST['field'],
 			'value' => $_POST['value'],
-			'website_id' => $rs[0]['website_id'],
+			'website_id' => $_POST['website_id'],
 			'mod__person_id' => PERSON_ID,
 			'update_time' => 'now()'
 		);	
