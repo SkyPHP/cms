@@ -3,7 +3,7 @@
 	global $seo_field_array;
 	if (!$website_id) {
 		$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']."'");
-		$website_id = $rs->Fields('id');
+		if ($rs) $website_id = $rs->Fields('id');
 	}
 
 	if ($website_id) {
@@ -32,7 +32,8 @@
 			}
 			//print_a($_SERVER);
 			if ($page_data['url_specific']) {
-				$mem_key = "seo:".$website_id.":".$_SERVER['PATH_INFO'];
+				$mem_key = "seo:".$website_id.":".$p->urlpath;
+				mem($mem_key,'');
 				$uri_data = mem($mem_key);
 				if (!$uri_data) {
 					$ud = aql::select("website_uri_data { field, value where website_id = ".$website_id." and uri = '".$p->urlpath."' }");
