@@ -33,7 +33,7 @@
 <?
 				if (!$page['url_specific']) {
 ?>
-					<input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" /> Make this page URL specific (cannot undo)
+					<input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" style="margin-left:10px;" /> <label for="url_specific">Make this page URL specific (cannot undo)</label>
 <?
 				} else {
 					$uri_enabled = true;
