@@ -63,7 +63,7 @@
 				// Check if the record was entered correctly and display the form 
 				if ($page['website_page_id']) {
 ?>
-					<div id="url_cb" style="margin-bottom:10px;"><input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" /> Make this page URL specific (cannot undo)</div>
+					<div id="url_cb" style="margin-bottom:10px;"><input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" /> Make this page URL specific (cannot undo)</div>
 <?
 					include('pages/admin/seo/webpage/seo-webpage-form.php');
 				}
