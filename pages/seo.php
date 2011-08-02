@@ -45,7 +45,7 @@
 					}
 				}
 				
-				foreach($uri_data as $field => $value) {
+				if (is_array($uri_data)) foreach($uri_data as $field => $value) {
 					if ($field == 'title') eval('$p->title = stripslashes("'.addslashes($value).'");');
 					else eval('$p->seo[$field]=stripslashes("'.addslashes($value).'");');	
 				}
