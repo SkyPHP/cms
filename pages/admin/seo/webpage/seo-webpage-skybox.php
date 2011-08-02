@@ -3,7 +3,7 @@
 		
 		$p->title="SEO - ".$_POST['page_path'];
 		$p->template('skybox','top');
-		$uri =  $_POST['uri'];
+		$uri = $_POST['uri'];
 		if ($_POST['website_ide']) $website_id = decrypt($_POST['website_ide'],'website');		
 		else {
 			$rs = aql::select("website { where domain = '{$_SERVER['SERVER_NAME']}' }");
@@ -44,7 +44,7 @@
 ?>
 				</div>
 <?
-				include('pages/admin/seo/webpage/seo-webpage-form.php');
+				//include('pages/admin/seo/webpage/seo-webpage-form.php');
 			}
 			else {
 				echo ("No Record Found");
@@ -64,7 +64,7 @@
 ?>
 					<div id="url_cb" style="margin-bottom:10px;"><input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" /> Make this page URL specific (cannot undo)</div>
 <?
-					include('pages/admin/seo/webpage/seo-webpage-form.php');
+					// include('pages/admin/seo/webpage/seo-webpage-form.php');
 				}
 				else exit("There Was An Error Entering The Website Page Record.");
 			}
