@@ -30,12 +30,12 @@
 				if ($field == 'title') eval('$p->title = stripslashes("'.addslashes($value).'");');
 				else eval('$p->seo[$field] = stripslashes("'.addslashes($value).'");');
 			}
-			print_a($_SERVER);
+			//print_a($_SERVER);
 			if ($page_data['url_specific']) {
 				$mem_key = "seo:".$website_id.":".$_SERVER['PATH_INFO'];
 				$uri_data = mem($mem_key);
 				if (!$uri_data) {
-					$ud = aql::select("website_uri_data { field, value where website_id = ".$website_id." and uri = '".$_SERVER['PATH_INFO']."' }");
+					$ud = aql::select("website_uri_data { field, value where website_id = ".$website_id." and uri = '".$p->urlpath."' }");
 					
 					if (is_array($ud)) {
 						foreach($ud as $u) {
