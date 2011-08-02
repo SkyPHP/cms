@@ -24,7 +24,7 @@
 			else exit($insert);
 		}	
 	} else {
-		$rs = aql::select("website_uri_data { where uri = {$_POST['uri']} and field = '{$_POST['field']}' }");
+		$rs = aql::select("website_uri_data { where uri = '{$_POST['uri']}' and field = '{$_POST['field']}' }");
 		$data = array(
 			'field' => $_POST['field'],
 			'value' => $_POST['value'],
