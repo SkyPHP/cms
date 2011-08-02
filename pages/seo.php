@@ -30,7 +30,7 @@
 				if ($field == 'title') eval('$p->title = stripslashes("'.addslashes($value).'");');
 				else eval('$p->seo[$field] = stripslashes("'.addslashes($value).'");');
 			}
-		
+			print_a($_SERVER);
 			if ($page_data['url_specific']) {
 				$mem_key = "seo:".$website_id.":".$_SERVER['PATH_INFO'];
 				$uri_data = mem($mem_key);

@@ -36,7 +36,7 @@
 					<input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" /> Make this page URL specific (cannot undo)
 <?
 				} else {
-					echo $uri;
+					echo $_SERVER['HTTP_HOST'].$uri;
 					$uri_enabled = true;
 ?>
 					<input type="hidden" id="uri_enabled" value="<?=$uri?>" /> 
