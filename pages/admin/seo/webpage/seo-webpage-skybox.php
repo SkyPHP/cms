@@ -30,7 +30,7 @@
 				// We have a website_page_record so load the form 
 ?>
 				<div style="margin-bottom:10px;">
-					<input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" style="margin-left:10px;" <?=$page['url_specific']?'checked="checked"':''?> /> <label for="url_specific">URL Specific</label>
+					<input type="checkbox" id="url_specific" website_id="<?=$website_id?>" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" style="margin-left:10px;" <?=$page['url_specific']?'checked="checked"':''?> /> <label for="url_specific">URL Specific</label>
 				</div>
 				<div id="url_cb" style="margin-bottom:10px;">
 <?				
@@ -41,8 +41,12 @@
 					<input type="hidden" id="uri_enabled" value="<?=$uri?>" /> 
 <?				} ?>
 				</div>
+				<div id="seo_page">
 <?
-				include('pages/admin/seo/webpage/seo-webpage-form.php');
+					include('pages/admin/seo/webpage/seo-webpage-form.php');
+?>
+				</div>
+<?
 			}
 			else {
 				echo ("No Record Found");
@@ -61,11 +65,15 @@
 				if ($page['website_page_id']) {
 ?>
 					<div style="margin-bottom:10px;">
-						<input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" style="margin-left:10px;" /> URL Specific (cannot undo)
+						<input type="checkbox" id="url_specific" website_id="<?=$website_id?>" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" style="margin-left:10px;" /> <label for="url_specific">URL Specific</label>
 					</div>
 					<div id="url_cb" style="margin-bottom:10px;"></div>
+					<div id="seo_page">
 <?
-					include('pages/admin/seo/webpage/seo-webpage-form.php');
+						include('pages/admin/seo/webpage/seo-webpage-form.php');
+?>
+					</div>
+<?
 				}
 				else exit("There Was An Error Entering The Website Page Record.");
 			}
@@ -156,9 +164,13 @@
 			else val = 0;
 			uri = $(this).attr('uri');
 			website_page_id = $(this).attr('website_page_id');
+			website_id = $(this).attr('website_id');
 			$.post('/admin/seo/webpage/ajax/set_url_specific',{ website_page_id: website_page_id, uri: uri, val: val }, function(data) {
 				$('#url_cb').html(data);	
 			});
+			$.post('/admin/seo/webpage/seo-webpage-form', {website_id: website_id, website_page_id: website_page_id, uri: uri, val: val}, function(data) {
+				$('#seo_page').html(data);	
+			})
 		});
 		
 	});
