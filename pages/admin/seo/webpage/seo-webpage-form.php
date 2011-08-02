@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/admin/seo/webpage/seo-webpage-skybox.css">
 <div style="width:900px">
 <?
+	global $website_id;
 	if (!$website_id) $website_id=$_POST['website_id'];
 	if (!$page['website_page_id']) $page['website_page_id'] = $_POST['website_page_id'];
 	if (!$uri) $uri = $_POST['uri'];	
@@ -9,7 +10,6 @@
 	
  	if (is_numeric($page['website_page_id'])) {
 		$page['website_page_ide'] = encrypt($page['website_page_id'],'website_page');
-		global $website_id;
 		if ($uri_enabled) $aql = "website_uri_data { field, value where website_id = {$website_id} and uri = '{$uri}' }";
 		else $aql="website_page_data { field, value where website_page_id = {$page['website_page_id']} }";
 		$rs = aql::select($aql);
