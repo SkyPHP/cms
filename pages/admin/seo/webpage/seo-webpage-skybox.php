@@ -29,20 +29,16 @@
 			if ($page['website_page_id']) {
 				// We have a website_page_record so load the form 
 ?>
+				<div style="margin-bottom:10px;">
+					<input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" style="margin-left:10px;" <?=$page['url_specific']?'checked="checked"':''?> /> <label for="url_specific">URL Specific</label>
+				</div>
 				<div id="url_cb" style="margin-bottom:10px;">
-<?
-				if (!$page['url_specific']) {
+<?				
+				if ($page['url_specific']) { 
 ?>
-					<input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" style="margin-left:10px;" /> <label for="url_specific">Make this page URL specific (cannot undo)</label>
-<?
-				} else {
-					$uri_enabled = true;
-?>					
 					This page is set as URL SPECIFIC. The URL is <?=$_SERVER['HTTP_HOST'].$uri?>
 					<input type="hidden" id="uri_enabled" value="<?=$uri?>" /> 
-<?	
-				}
-?>
+<?				} ?>
 				</div>
 <?
 				include('pages/admin/seo/webpage/seo-webpage-form.php');
@@ -63,7 +59,10 @@
 				// Check if the record was entered correctly and display the form 
 				if ($page['website_page_id']) {
 ?>
-					<div id="url_cb" style="margin-bottom:10px;"><input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" /> Make this page URL specific (cannot undo)</div>
+					<div style="margin-bottom:10px;">
+						<input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" style="margin-left:10px;" /> URL Specific (cannot undo)
+					</div>
+					<div id="url_cb" style="margin-bottom:10px;"></div>
 <?
 					include('pages/admin/seo/webpage/seo-webpage-form.php');
 				}
@@ -152,9 +151,11 @@
 		});
 		
 		$('#url_specific').live('click',function() {
+			if ($(this).attr('checked')) val = 1;
+			else val = 0;
 			uri = $(this).attr('uri');
 			website_page_id = $(this).attr('website_page_id');
-			$.post('/admin/seo/webpage/ajax/set_url_specific',{ website_page_id: website_page_id, uri: uri }, function(data) {
+			$.post('/admin/seo/webpage/ajax/set_url_specific',{ website_page_id: website_page_id, uri: uri, val: val }, function(data) {
 				$('#url_cb').html(data);	
 			});
 		});
