@@ -3,8 +3,8 @@
 <? 	if (is_numeric($page['website_page_id'])) {
 		$page['website_page_ide'] = encrypt($page['website_page_id'],'website_page');
 		
-		if ($uri) $aql = "website_uri_data { field, value where website_id = {$_POST['website_id']} and uri = '{$uri}' }";
-		else $aql="website_page_data { field, value where website_page_id = {$page['website_page_id']} }";
+		//if ($uri) $aql = "website_uri_data { field, value where website_id = {$_POST['website_id']} and uri = '{$uri}' }";
+		$aql="website_page_data { field, value where website_page_id = {$page['website_page_id']} }";
 		$rs = aql::select($aql);
 		if (is_array($rs))	
 		foreach($rs as $r) {
