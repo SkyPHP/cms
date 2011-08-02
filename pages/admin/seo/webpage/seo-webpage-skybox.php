@@ -154,7 +154,7 @@
 		$('#url_specific').live('click',function() {
 			uri = $(this).attr('uri');
 			website_page_id = $(this).attr('website_page_id');
-			$.post('/admin/seo/webpage/ajax/set_url_specific',{ website_page_ide: website_page_id, uri: uri }, function(data) {
+			$.post('/admin/seo/webpage/ajax/set_url_specific',{ website_page_id: website_page_id, uri: uri }, function(data) {
 				$('#url_cb').html(data);	
 			});
 		});
