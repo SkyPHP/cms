@@ -12,7 +12,6 @@
 	echo $uri?$uri:'uri';
 	echo "<br>";
 	if ($_POST['val'] == 1) $uri_enabled = true;
-	else $uri_enabled = false;
 	
  	if (is_numeric($page['website_page_id'])) {
 		$page['website_page_ide'] = encrypt($page['website_page_id'],'website_page');
