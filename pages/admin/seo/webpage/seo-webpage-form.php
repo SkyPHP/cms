@@ -2,7 +2,7 @@
 <div style="width:900px">
 <? 	if (is_numeric($page['website_page_id'])) {
 		$page['website_page_ide'] = encrypt($page['website_page_id'],'website_page');
-		
+		global $website_id;
 		if ($uri_enabled) $aql = "website_uri_data { field, value where website_id = {$website_id} and uri = '{$uri}' }";
 		else $aql="website_page_data { field, value where website_page_id = {$page['website_page_id']} }";
 		$rs = aql::select($aql);
