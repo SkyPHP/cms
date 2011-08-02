@@ -13,12 +13,12 @@
 	echo "<br>";
 	if ($_POST['val'] == 1) $uri_enabled = true;
 	else $uri_enabled = false;
-	echo $val;
 	
  	if (is_numeric($page['website_page_id'])) {
 		$page['website_page_ide'] = encrypt($page['website_page_id'],'website_page');
 		if ($uri_enabled) $aql = "website_uri_data { field, value where website_id = {$website_id} and uri = '{$uri}' }";
 		else $aql="website_page_data { field, value where website_page_id = {$page['website_page_id']} }";
+		echo $aql;
 		$rs = aql::select($aql);
 		if (is_array($rs)) krumo($rs);	
 		foreach($rs as $r) {
