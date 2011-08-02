@@ -2,7 +2,11 @@
 	$rs = aql::select("website_page { page_path, website_id where website_page.id = {$_POST['wp_id']} }");
 	$mem_key = "seo:".$rs[0]['website_id'].":".$rs[0]['page_path'];
 	$data = mem($mem_key);
-	if ($data) mem($mem_key, '');
+	if ($data) mem($mem_key,'');
+	
+	$mem_key = "seo:".$rs[0]['website_id'].":".$_POST['uri'];
+	$data = mem($mem_key);
+	if ($data) mem($mem_key,'');
 
 	if (!$_POST['uri']) {
 		$rs = aql::select("website_page_data { where website_page_id = {$_POST['wp_id']} and field = '{$_POST['field']}' }");
