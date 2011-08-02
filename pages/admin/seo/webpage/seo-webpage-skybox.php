@@ -37,6 +37,7 @@
 <?
 				} else {
 					echo $uri;
+					$uri_enabled = true;
 ?>
 					<input type="hidden" id="uri_enabled" value="<?=$uri?>" /> 
 <?	
