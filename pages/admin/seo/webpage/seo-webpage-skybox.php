@@ -33,7 +33,7 @@
 <?
 				if (!$page['url_specific']) {
 ?>
-					<input type="checkbox" id="url_specific" website_page_ide="<?=$page['website_page_ide']?>" uri="<?=$uri?>" /> Make this page URL specific (cannot undo)
+					<input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" /> Make this page URL specific (cannot undo)
 <?
 				} else {
 					echo $uri;
@@ -62,7 +62,7 @@
 				// Check if the record was entered correctly and display the form 
 				if ($page['website_page_id']) {
 ?>
-					<div id="url_cb" style="margin-bottom:10px;"><input type="checkbox" id="url_specific" website_page_ide="<?=encrypt($page['website_page_id'],'website_page')?>" /> Make this page URL specific (cannot undo)</div>
+					<div id="url_cb" style="margin-bottom:10px;"><input type="checkbox" id="url_specific" website_page_id="<?=$page['website_page_id']?>" /> Make this page URL specific (cannot undo)</div>
 <?
 					include('pages/admin/seo/webpage/seo-webpage-form.php');
 				}
@@ -152,8 +152,8 @@
 		
 		$('#url_specific').live('click',function() {
 			uri = $(this).attr('uri');
-			website_page_ide = $(this).attr('website_page_ide');
-			$.post('/admin/seo/webpage/ajax/set_url_specific',{ website_page_ide: website_page_ide, uri: uri }, function(data) {
+			website_page_id = $(this).attr('website_page_id');
+			$.post('/admin/seo/webpage/ajax/set_url_specific',{ website_page_ide: website_page_id, uri: uri }, function(data) {
 				$('#url_cb').html(data);	
 			});
 		});
