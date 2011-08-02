@@ -22,17 +22,14 @@
 			
 <?		// The website exists... move forward to the check if website_page record is entered	
 		} else {
-?>
-			<input type="hidden" id="website_id" value="<?=$website_id?>" /> 
-<?
 			$aql="website_page { url_specific, nickname where page_path = '{$_POST['page_path']}' and website_id = {$website_id} }";
 			$rs = aql::select($aql);
 			$page = $rs[0];
 			if ($page['website_page_id']) {
-				// We have a website_page_record so load the form 
-?>
+				
+				// We have a website_page_record so load the form ?>
 				<div style="margin-bottom:10px;">
-					<input type="checkbox" id="url_specific" website_id="<?=$website_id?>" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" style="margin-left:10px;" <?=$page['url_specific']?'checked="checked"':''?> /> <label for="url_specific">URL Specific</label>
+				<input type="checkbox" id="url_specific" website_id="<?=$website_id?>" website_page_id="<?=$page['website_page_id']?>" uri="<?=$uri?>" style="margin-left:10px;" <?=$page['url_specific']?'checked="checked"':''?> /> <label for="url_specific">URL Specific</label>
 				</div>
 				<div id="url_cb" style="margin-bottom:10px;">
 <?				
@@ -114,10 +111,10 @@
 				v = $(this).val();
 				w = $(this).attr('wp_id');
                 s = $(this).attr('saved_id');
-				website_id = $('#website_id').val();
+				website_id = $('#url_specific').attr('website_id');
 				$('#'+s).html('saving');
 				$('#'+s).fadeOut('slow',function() {
-					$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, wp_id: w, uri: uri, webiste_id: website_id }, function (data){
+					$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, wp_id: w, uri: uri, website_id: website_id }, function (data){
 						$('#'+s).html(data);
 						$('#'+s).fadeIn('slow');
 					});
