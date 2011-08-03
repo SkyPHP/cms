@@ -16,6 +16,7 @@ if ( $template_area == 'top' ) {
 	
 	// SEO INCLUDE
 	include ('pages/seo.php');
+	$p->title="Hello";
 }
 $skyphp_codebase_path = end($GLOBALS['codebase_path_arr']);
 include( $skyphp_codebase_path . 'templates/html5/html5.php' );
