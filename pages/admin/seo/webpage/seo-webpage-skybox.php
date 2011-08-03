@@ -160,8 +160,14 @@
 		});
 		
 		$('#url_specific').die().live('click',function() {
-			if ($(this).attr('checked')) val = 1;
-			else val = 0;
+			if ($(this).attr('checked')) {
+				val = 1;
+				$('.uri_field_cb').show();
+			}
+			else {
+				val = 0;
+				$('.uri_field_cb').hide();
+			}
 			uri = $(this).attr('uri');
 			website_page_id = $(this).attr('website_page_id');
 			website_id = $(this).attr('website_id');

@@ -84,8 +84,9 @@
 					
 	?>			
 					<div style="float:left; padding:10px;">
-						<label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace(':',' ',str_replace('_',' ',$field)))?></label>
+						<label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
 						<span style="font-size:10px;	color:#060;	margin-left:10px;" id="saved_<?=$y?>"></span><br>
+                        <input type="checkbox" id="uri_cb_<?=$field?>" class="uri_field_cb" <? if ($fields[$field]) echo 'checked="checked"'; if (!$uri_enabled) echo 'style="display:none;"'; ?> />
 	<?
 						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' )  {
 							$width = 410;
