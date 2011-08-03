@@ -168,8 +168,9 @@
 			$.post('/admin/seo/webpage/ajax/set_url_specific',{ website_page_id: website_page_id, uri: uri, val: val }, function(data) {
 				$('#url_cb').html(data);	
 			});
-			if (val == 1) $('.uri_field_cb').show();
-			else $('.uri_field_cb').hide();	
+			$.post('/admin/seo/webpage/seo-webpage-form', {website_id: website_id, website_page_id: website_page_id, uri: uri, val: val}, function(data) {
+				$('#seo_page').html(data);	
+			})
 		});
 		
 		$('.url_cb_click').live('click',function() {
