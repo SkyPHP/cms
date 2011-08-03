@@ -172,6 +172,16 @@
 			else $('.uri_field_cb').hide();	
 		});
 		
+		$('.url_cb_click').live('click',function() {
+			field = $(this).attr('field');
+			website_page_id = $('#url_specific').attr('website_page_id')
+			website_id = $('#url_specific').attr('website_id')
+			if ($(this).attr('checked')) url = 1;
+			else url = 0;
+			$.post('/admin/seo/webpage/ajax/show-input-data',{field:field, url:url},function(data) {
+				$('#field_'+field).val(data)
+			});
+		})
 	});
 </script>
 

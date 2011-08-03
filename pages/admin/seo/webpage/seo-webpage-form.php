@@ -83,18 +83,18 @@
 					
 	?>			
 					<div style="float:left; padding:10px;">
-                    	<span class="uri_field_cb" <?=!$uri_enabled?'style="display:none;"':''?>><input type="checkbox" id="uri_cb_<?=$field?>" style="margin-bottom:2px;" <?=($fields2[$field])?'checked="checked"':'' ?> /> URL SPECIFIC</span> <label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
+                    	<span class="uri_field_cb" <?=!$uri_enabled?'style="display:none;"':''?>><input class="url_cb_click" field="<?=$field?>" type="checkbox" id="uri_cb_<?=$field?>" style="margin-bottom:2px;" <?=($fields2[$field])?'checked="checked"':'' ?> /> URL SPECIFIC</span> <label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
 						<span style="font-size:10px;	color:#060;	margin-left:10px;" id="saved_<?=$y?>"></span><br>
 	<?
 						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' )  {
 							$width = 410;
 	?>	
-							<textarea style="width:410px; height:150px;" max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$fields2[$field] && $uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
+							<textarea id="field_<?=$field?>" style="width:410px; height:150px;" max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$fields2[$field] && $uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
 	<?
 						} else {
 							$width = 850;
 	?>					
-							<input type="text" class="seo-input" max="<?=$char_max?>" field="<?=$field?>" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" value="<?=$fields2[$field] && $uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?>" style="width:850px;" />
+							<input id="field_<?=$field?>" type="text" class="seo-input" max="<?=$char_max?>" field="<?=$field?>" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" value="<?=$fields2[$field] && $uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?>" style="width:850px;" />
 	<?                    
 						}
 	?>					
