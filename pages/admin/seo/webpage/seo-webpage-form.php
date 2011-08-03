@@ -9,19 +9,16 @@
 	
  	if (is_numeric($page['website_page_id'])) {
 		$page['website_page_ide'] = encrypt($page['website_page_id'],'website_page');
-		$aql="website_page_data { field, value where website_page_id = {$page['website_page_id']} }";
-		$rs = aql::select($aql);
-		if ($uri_enabled) { 
-			$aql2 = "website_uri_data { field, value where website_id = {$website_id} and uri = '{$uri}' }";
-			$rs2 = aql::select($aql2);
-			if ($rs2) 
-				foreach($rs2 as $r) {
-					$fields2[$r['field']] = $r['value'];
-				}
-		}
+		$rs = aql::select("website_page_data { field, value where website_page_id = {$page['website_page_id']} }");
 		if ($rs) 
 			foreach($rs as $r) {
 			$fields[$r['field']]=$r['value'];
+		}
+
+		$rs2 = aql::select("website_uri_data { field, value where website_id = {$website_id} and uri = '{$uri}' }");
+
+		foreach($rs2 as $r) {
+			$fields2[$r['field']] = $r['value'];
 		}
 	
 		if (is_array($seo_field_array)) {
