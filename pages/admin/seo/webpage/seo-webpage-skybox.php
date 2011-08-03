@@ -107,7 +107,7 @@
 			
 			if (e.keyCode == 13 || e.type == 'focusout') {
 				uri = $('#url_specific').attr('uri');
-				enabled = $(this).attr('uri_enabled');
+				uri_enabled = $(this).attr('uri_enabled');
 				v = $(this).val();
 				w = $(this).attr('wp_id');
                 s = $(this).attr('saved_id');
