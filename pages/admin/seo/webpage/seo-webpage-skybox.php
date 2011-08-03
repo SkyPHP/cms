@@ -1,4 +1,4 @@
-<? 	$website_id = 6; // REMOVE AFTER TESTING
+<? 	
 	if ($_POST['page_path']) { 
 		
 		$p->title="SEO - ".$_POST['page_path'];

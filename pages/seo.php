@@ -8,7 +8,6 @@
 
 	if ($website_id) {
 		$mem_key = "seo:".$website_id.":".$p->page_path;
-		mem($mem_key,'');
 		$page_data = mem($mem_key);
 		if (!$page_data) {
 			$rs = aql::select("website_page { url_specific where page_path = '".$p->page_path."' and website_id = ".$website_id."}");
@@ -33,8 +32,8 @@
 			//print_a($_SERVER);
 			if ($page_data['url_specific']) {
 				$mem_key = "seo:".$website_id.":".$p->urlpath;
-				mem($mem_key,'');
 				$uri_data = mem($mem_key);
+				$uri_data = false;
 				if (!$uri_data) {
 					$ud = aql::select("website_uri_data { field, value where website_id = ".$website_id." and uri = '".$p->urlpath."' }");
 					
