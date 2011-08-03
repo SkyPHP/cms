@@ -179,7 +179,7 @@
 			uri = $('#url_specific').attr('uri');
 			if ($(this).attr('checked')) url = 1;
 			else url = 0;
-			$.post('/admin/seo/webpage/ajax/show-input-data',{field:field, uri:uri, website_page_id: website_page_id},function(data) {
+			$.post('/admin/seo/webpage/ajax/show-input-data',{field:field, uri:uri, website_id: website_id, website_page_id: website_page_id},function(data) {
 				$('#field_'+field).val(data)
 			});
 		})
