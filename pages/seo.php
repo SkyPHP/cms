@@ -35,7 +35,7 @@
 				$uri_data = false;
 				if (!$uri_data) {
 					$ud = aql::select("website_uri_data { field, value where website_id = {$website_id} and uri = '{$p->urlpath}' }");
-				
+					print_a($ud);
 					foreach($ud as $u) {
 						$uri_data[$u['field']] = $u['value'];
 					}
