@@ -106,15 +106,15 @@
 			else $('#'+f+'_counter').css('color','#000');
 			
 			if (e.keyCode == 13 || e.type == 'focusout') {
-				
-				uri = $(this).attr('uri_enabled')
+				uri = $('#url_specific').attr('uri');
+				enabled = $(this).attr('uri_enabled');
 				v = $(this).val();
 				w = $(this).attr('wp_id');
                 s = $(this).attr('saved_id');
 				website_id = $('#url_specific').attr('website_id');
 				$('#'+s).html('saving');
 				$('#'+s).fadeOut('slow',function() {
-					$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, wp_id: w, uri: uri, website_id: website_id }, function (data){
+					$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, wp_id: w, uri: uri, uri_enabled: uri_enabled, website_id: website_id }, function (data){
 						$('#'+s).html(data);
 						$('#'+s).fadeIn('slow');
 					});
