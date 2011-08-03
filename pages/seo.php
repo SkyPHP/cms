@@ -1,10 +1,7 @@
 <?
 	$page_data = NULL;
 	global $seo_field_array;
-	if (!$website_id) {
-		$rs = sql("SELECT id FROM website where domain = '".$_SERVER['SERVER_NAME']."'");
-		if ($rs) $website_id = $rs->Fields('id');
-	}
+	global $website_id;
 
 	if ($website_id) {
 		$mem_key = "seo:".$website_id.":".$p->page_path;
