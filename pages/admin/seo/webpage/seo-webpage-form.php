@@ -83,7 +83,7 @@
 					
 	?>			
 					<div style="float:left; padding:10px;">
-						<input type="checkbox" id="uri_cb_<?=$field?>" class="uri_field_cb" style="margin-bottom:4px; <?=!$uri_enabled?'display:none;':''?>" <?=($fields2[$field])?'checked="checked"':'' ?> /> <label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
+						<input type="checkbox" id="uri_cb_<?=$field?>" class="uri_field_cb" style="margin-bottom:2px; <?=!$uri_enabled?'display:none;':''?>" <?=($fields2[$field])?'checked="checked"':'' ?> /> <label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
 						<span style="font-size:10px;	color:#060;	margin-left:10px;" id="saved_<?=$y?>"></span><br>
 	<?
 						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' )  {
