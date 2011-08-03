@@ -107,7 +107,7 @@
 			
 			if (e.keyCode == 13 || e.type == 'focusout') {
 				
-				uri = $('#uri_enabled').val()
+				uri = $(this).attr('uri_enabled')
 				v = $(this).val();
 				w = $(this).attr('wp_id');
                 s = $(this).attr('saved_id');
@@ -179,6 +179,7 @@
 			uri = $('#url_specific').attr('uri');
 			if ($(this).attr('checked')) url_specific = 1;
 			else url_specific = 0;
+			$('#field_'+field).attr('uri_enabled',url_specific)
 			$.post('/admin/seo/webpage/ajax/show-input-data',{field:field, url_specific: url_specific, uri: uri, website_id: website_id, website_page_id: website_page_id},function(data) {
 				$('#field_'+field).val(data)
 			});
