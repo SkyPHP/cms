@@ -10,16 +10,10 @@
  	if (is_numeric($page['website_page_id'])) {
 		$page['website_page_ide'] = encrypt($page['website_page_id'],'website_page');
 		$rs = aql::select("website_page_data { field, value where website_page_id = {$page['website_page_id']} }");
-		if ($rs) 
-			foreach($rs as $r) {
-			$fields[$r['field']]=$r['value'];
-		}
+		foreach($rs as $r) $fields[$r['field']]=$r['value'];
 
 		$rs2 = aql::select("website_uri_data { field, value where website_id = {$website_id} and uri = '{$uri}' }");
-
-		foreach($rs2 as $r) {
-			$fields2[$r['field']] = $r['value'];
-		}
+		foreach($rs2 as $r) $fields2[$r['field']] = $r['value'];
 	
 		if (is_array($seo_field_array)) {
 	?>
@@ -89,9 +83,8 @@
 					
 	?>			
 					<div style="float:left; padding:10px;">
-						<label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
+						<input type="checkbox" id="uri_cb_<?=$field?>" class="uri_field_cb" <? if ($fields2[$field]) echo 'checked="checked"'; if (!$uri_enabled) echo 'style="display:none;"'; ?> /> <label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
 						<span style="font-size:10px;	color:#060;	margin-left:10px;" id="saved_<?=$y?>"></span><br>
-                        <input type="checkbox" id="uri_cb_<?=$field?>" class="uri_field_cb" <? if ($fields2[$field]) echo 'checked="checked"'; if (!$uri_enabled) echo 'style="display:none;"'; ?> />
 	<?
 						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' )  {
 							$width = 410;
