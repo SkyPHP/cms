@@ -89,12 +89,12 @@
 						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' )  {
 							$width = 410;
 	?>	
-							<textarea style="width:410px; height:150px;" max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=htmlspecialchars($fields[$field])?></textarea>
+							<textarea style="width:410px; height:150px;" max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$fields2[$field] && $uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
 	<?
 						} else {
 							$width = 850;
 	?>					
-							<input type="text" class="seo-input" max="<?=$char_max?>" field="<?=$field?>" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" value="<?=htmlspecialchars($fields[$field])?>" style="width:850px;" />
+							<input type="text" class="seo-input" max="<?=$char_max?>" field="<?=$field?>" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" value="<?=$fields2[$field] && $uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?>" style="width:850px;" />
 	<?                    
 						}
 	?>					
