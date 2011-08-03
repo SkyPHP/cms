@@ -86,7 +86,7 @@
 					
 	?>			
 					<div style="float:left; padding:10px;">
-                    	<span class="uri_field_cb" <?=!$uri_enabled?'style="display:none;"':''?>><input class="url_cb_click" field="<?=$field?>" type="checkbox" id="uri_cb_<?=$field?>" style="margin-bottom:2px;" <?=($fields2[$field] && $on_website[$field])?'checked="checked"':'' ?> /> URL SPECIFIC</span> <label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
+                    	<span class="uri_field_cb" <?=!$uri_enabled?'style="display:none;"':''?>><input class="url_cb_click" field="<?=$field?>" type="checkbox" id="uri_cb_<?=$field?>" style="margin-bottom:2px;" <?=($fields2[$field] && $on_website[$field])?'checked="checked"':'' ?> /> URL Specific</span> <label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
 						<span style="font-size:10px;	color:#060;	margin-left:10px;" id="saved_<?=$y?>"></span><br>
 	<?
 						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' )  {
