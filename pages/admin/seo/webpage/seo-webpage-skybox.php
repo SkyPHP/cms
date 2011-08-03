@@ -160,14 +160,8 @@
 		});
 		
 		$('#url_specific').die().live('click',function() {
-			if ($(this).attr('checked')) {
-				val = 1;
-				$('.uri_field_cb').show();
-			}
-			else {
-				val = 0;
-				$('.uri_field_cb').hide();
-			}
+			if ($(this).attr('checked')) val = 1;
+			else val = 0;
 			uri = $(this).attr('uri');
 			website_page_id = $(this).attr('website_page_id');
 			website_id = $(this).attr('website_id');
@@ -175,7 +169,9 @@
 				$('#url_cb').html(data);	
 			});
 			$.post('/admin/seo/webpage/seo-webpage-form', {website_id: website_id, website_page_id: website_page_id, uri: uri, val: val}, function(data) {
-				$('#seo_page').html(data);	
+				$('#seo_page').html(data);
+				if (val == 1) $('.uri_field_cb').show();
+				else $('.uri_field_cb').hide();	
 			})
 		});
 		
