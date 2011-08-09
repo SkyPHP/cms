@@ -20,7 +20,7 @@ $(document).ready(function() {
             data = {
                 'vfolder' : $up.attr('vfolder'),
                 'db_field' : $up.attr('db_field'),
-                'db_row_ide' : $up.attr('db_row_ide'),
+                'db_row_ide' : $up.attr('db_row_ide')
             },
             browse_button = id,
             upload_button = 'upload_' + id.split('_')[1],
