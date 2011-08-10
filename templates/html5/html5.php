@@ -13,7 +13,6 @@ if ( $template_area == 'top' ) {
     $this->template_js[] = '/lib/js/save_form.js';
     //plupload
     $this->template_js[] = '/lib/plupload/js/plupload.full.js';
-	$this->template_js[] = '/lib/js/jquery.number_format.js';
 
 	// SEO INCLUDE
 	include ('pages/seo.php');
