@@ -4,7 +4,7 @@
 <?  
 	$vfolder = media::get_vfolder($_POST['vfolder']);
 	if ($vfolder['items']) foreach ($vfolder['items'] as $item) {
-		$img = media::get_item($item['media_item_id'], $_POST['image_width'],$_POST['image_height'],true);
+		$img = media::get_item($item['media_item_id'], $_POST['imageWidth'],$_POST['imageHeight'],true);
 ?>
 		<div class="slide"><?=$img['html']?></div>
 <?		
@@ -20,7 +20,7 @@
         <li class="fbar">&nbsp;</li>
 <?
 	foreach($vfolder['items'] as $item) {
-		$img = media::get_item($item['media_item_id'],$_POST['thumb_width'],$_POST['thumb_height'],true);
+		$img = media::get_item($item['media_item_id'],$_POST['thumbWidth'],$_POST['thumbHeight'],true);
 ?>	
 		<li class="menuItem"><a href=""><?=$img['html']?></a></li>
 <?
