@@ -1,4 +1,4 @@
-  <div class="gallery">  
+  <div class="gallery" style="width:<?=$_POST['imageWidth']?>">  
 	
     <div class="slides">
 <?  
