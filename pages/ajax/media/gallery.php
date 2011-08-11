@@ -1,4 +1,4 @@
-  <div class="gallery" style="width:<?=$_POST['imageWidth']?>px; height:<?=$_POST['imageHeight']?>px;">  
+  <div class="gallery" style="width:<?=$_POST['imageWidth']?>px; height:<?=$_POST['imageHeight']?>px; overflow:hidden;">  
 	
     <div class="slides">
 <?  
