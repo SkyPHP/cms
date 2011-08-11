@@ -9,6 +9,7 @@
 		<div class="slide"><?=$img['html']?></div>
 <?		
 	}
+	else exit('No Images');
 ?>
  
     </div>
