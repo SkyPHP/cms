@@ -1,0 +1,76 @@
+/* Gallery styles */
+
+.gallery{
+	/* CSS3 Box Shadow */
+	-moz-box-shadow:0 0 3px #AAAAAA;
+	-webkit-box-shadow:0 0 3px #AAAAAA;
+	box-shadow:0 0 3px #AAAAAA;
+	
+	/* CSS3 Rounded Corners */
+	
+	-moz-border-radius-bottomleft:4px;
+	-webkit-border-bottom-left-radius:4px;
+	border-bottom-left-radius:4px;
+	
+	-moz-border-radius-bottomright:4px;
+	-webkit-border-bottom-right-radius:4px;
+	border-bottom-right-radius:4px;
+	
+	border:1px solid white;
+	
+	background:url(/images/gallery/panel.jpg) repeat-x bottom center #ffffff;
+	
+	/* The width of the gallery */
+	overflow:hidden;
+}
+
+.gallery .slides{
+	overflow:hidden;
+}
+
+.gallery .slides .slide{
+	float:left;
+}
+
+.gallery .gallery-menu ul{
+	margin:0px;
+	padding:0px;
+}
+
+.gallery .gallery-menu ul li{
+	/* Every thumbnail is a li element */
+	display:inline-block;
+	list-style:none;
+	overflow:hidden;
+}
+
+.gallery .gallery-menu ul li.inact:hover{
+	/* The inactive state, highlighted on mouse over */
+	/*background:url(/images/gallery/pic_bg.png) repeat; */
+}
+
+.gallery .gallery-menu ul li.act,li.act:hover{
+	/* The active state of the thumb */
+	background:url(/images/gallery/active_bg.png) no-repeat;
+}
+
+.gallery .gallery-menu ul li.act a{
+	cursor:default;
+}
+
+.gallery .gallery-menu ul .fbar{
+	/* The left-most vertical bar, next to the first thumbnail */
+	width:2px;
+	background:url(/images/gallery/divider.png) no-repeat right; */
+}
+
+.gallery .gallery-menu ul li a{
+	display:block;
+	background:url(/images/gallery/divider.png) no-repeat right;
+	height:60px;
+	padding-top:10px;
+}
+
+.gallery .gallery-menu ul li a img{
+	border:none;
+}

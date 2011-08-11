@@ -89,6 +89,7 @@ $(document).ready(function() {
 
 (function($) {
 
+	// UPLOADER
     $.fn.uploader = function ( method ) {
         var settings = {
             'vfolder' : '',
@@ -131,7 +132,7 @@ $(document).ready(function() {
                     methods.setContextMenu();
                     $.ajax({
                         type: 'POST', 
-                        url: '/ajax/media/gallery', 
+                        url: '/ajax/media/uploader-gallery', 
                         data: curr_sets, 
                         context: up,
                         success:function(data) {
