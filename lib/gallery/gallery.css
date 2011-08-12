@@ -20,6 +20,11 @@
 	
 	background:url(/images/gallery/panel.jpg) repeat-x bottom center #ffffff;
 
+	overflow:hidden;
+}
+
+.slides{
+	overflow:hidden;
 }
 
 .slide{
