@@ -62,7 +62,6 @@
 .gallery .gallery-menu ul li a{
 	display:block;
 	background:url(/images/gallery/divider.png) no-repeat right;
-	height:60px;
 	padding-top:10px;
 }
 
