@@ -6,7 +6,7 @@
 	if ($vfolder['items']) foreach ($vfolder['items'] as $item) {
 		$img = media::get_item($item['media_item_id'],$_POST['image_width'],$_POST['image_height'],true);
 ?>
-		<div class="slide"><img src="<?=$img['html']?>" width="<?=$_POST['image_width']?>" height="<?=$_POST['image_height']?>" /></div>
+		<div class="slide"><img src="<?=$img['src']?>" width="<?=$_POST['image_width']?>" height="<?=$_POST['image_height']?>" /></div>
 <?		
 	}
 	else exit('No Images');
