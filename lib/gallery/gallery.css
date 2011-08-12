@@ -48,7 +48,7 @@ body{
 	overflow:hidden;
 }
 
-.gallery .slides .slide {
+.slide {
 	float:left;
 }
 
