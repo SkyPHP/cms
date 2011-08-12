@@ -1,10 +1,11 @@
+<? print_a($_POST); ?>
   <div class="gallery" style="width:<?=$_POST['image_width']?>px; ">  
 	
     <div class="slides" style="height:<?=$_POST['image_height']?>px;">
 <?  
 	$vfolder = media::get_vfolder($_POST['vfolder']);
 	if ($vfolder['items']) foreach ($vfolder['items'] as $item) {
-		$img = media::get_item($item['media_item_id'], $_POST['image_width'],$_POST['image_height'],true);
+		$img = media::get_item($item['media_item_id'],$_POST['image_width'],$_POST['image_height'],true);
 ?>
 		<div class="slide"><?=$img['html']?></div>
 <?		
