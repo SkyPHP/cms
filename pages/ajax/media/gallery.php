@@ -1,7 +1,7 @@
 <? print_a($_POST); ?>
-  <div class="gallery" style="width:<?=$_POST['image_width']?>px; ">  
+  <div class="gallery" style="width:<?=$_POST['image_width']?>px; overflow:hidden; ">  
 	
-    <div class="slides" style="height:<?=$_POST['image_height']?>px;">
+    <div class="slides">
 <?  
 	$vfolder = media::get_vfolder($_POST['vfolder']);
 	if ($vfolder['items']) foreach ($vfolder['items'] as $item) {
