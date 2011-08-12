@@ -14,7 +14,7 @@ body{
 
 /* Gallery styles */
 
-.gallery{
+.gallery {
 	/* CSS3 Box Shadow */
 	-moz-box-shadow:0 0 3px #AAAAAA;
 	-webkit-box-shadow:0 0 3px #AAAAAA;
@@ -35,18 +35,26 @@ body{
 	background:url(/images/gallery/panel.jpg) repeat-x bottom center #ffffff;
 
 	/* The width of the gallery */
+	width:950px;
 	overflow:hidden;
 }
 
-.slides{
+.gallery .slides{
 	/* This is the slide area */
-	/* jQuery changes the width later on to the sum of the widths of all the slides. */
+	height:400px;
 
+	/* jQuery changes the width later on to the sum of the widths of all the slides. */
+	width:950px;
 	overflow:hidden;
 }
 
-.slide{
+.gallery .slides .slide {
 	float:left;
+}
+
+.gallery-menu {
+	/* This is the container for the thumbnails */
+	height:45px;
 }
 
 .gallery-menu ul {
@@ -54,8 +62,9 @@ body{
 	padding:0px;
 }
 
-.gallery-menu ul li{
+.gallery-menu ul li {
 	/* Every thumbnail is a li element */
+	
 	display:inline-block;
 	list-style:none;
 	overflow:hidden;
