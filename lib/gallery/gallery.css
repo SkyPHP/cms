@@ -43,6 +43,12 @@
 	text-align:center;
 }
 
+.first {
+	padding-left:0;	
+}
+.last {
+	padding-right:0;	
+}
 .gallery-menu ul {
 	margin:0px;
 	padding:0px;

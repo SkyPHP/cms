@@ -16,11 +16,13 @@
     		<li class="fbar">&nbsp;</li>
 <?
 			$conuter = 0;
+			if ($_POST['num_thumbs']) $stop = $_POST['num_thumbs'];
+			else $stop = count($vfolder['items']);
 			foreach($vfolder['items'] as $item) {
 				$counter++;
 				$img = media::get_item($item['media_item_id'],$_POST['thumb_width'],$_POST['thumb_height'],true);
 ?>		
-				<li class="menuItem"><a href=""><?=$img['html']?></a></li>
+				<li class="menuItem <? if ($counter==1) echo 'first'; else if ($counter = $stop) echo 'last'?>"><a href=""><?=$img['html']?></a></li>
 <?
 				if ($_POST['num_thumbs'] == $counter) break;
 			}
