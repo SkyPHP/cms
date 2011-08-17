@@ -62,7 +62,7 @@
 
 .gallery-menu ul li.act, .gallery-menu ul li.act:hover{
 	/* The active state of the thumb */
-	background:url(/images/gallery/active_bg.png) center;
+	background:url(/images/gallery/active_bg.png) top center;
 }
 
 .gallery-menu ul li.act a{
