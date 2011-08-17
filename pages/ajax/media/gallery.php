@@ -22,9 +22,9 @@
 				$counter++;
 				$img = media::get_item($item['media_item_id'],$_POST['thumb_width'],$_POST['thumb_height'],true);
 ?>		
-				<li class="menuItem <? if ($counter==1) echo 'first'; else if ($counter = $stop) echo 'last'?>"><a href=""><?=$img['html']?></a></li>
+				<li class="menuItem <? if ($counter==1) echo 'first'; else if ($counter == $stop) echo 'last'?>"><a href=""><?=$img['html']?></a></li>
 <?
-				if ($_POST['num_thumbs'] == $counter) break;
+				if ($counter == $stop) break;
 			}
 ?>
 		</ul>	
