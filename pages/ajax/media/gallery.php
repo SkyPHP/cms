@@ -11,7 +11,7 @@
 	else exit('No Images');
 ?>
 	   	</div>    
-	<div class="gallery-menu">    
+	<div class="gallery-menu" <? if ($_POST['center_thumbs']) echo 'style="text-align: center"'?>>    
 			<ul>
     		<li class="fbar">&nbsp;</li>
 <?

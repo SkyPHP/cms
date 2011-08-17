@@ -42,12 +42,6 @@
 	/* This is the container for the thumbnails */
 }
 
-.gallery-menu ul .first {
-	margin-left:0;	
-}
-.gallery-menu ul .last {
-	margin-right:0;	
-}
 .gallery-menu ul {
 	margin:0px;
 	padding:0px;
