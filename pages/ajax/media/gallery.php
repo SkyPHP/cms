@@ -15,11 +15,14 @@
 			<ul>
     		<li class="fbar">&nbsp;</li>
 <?
+			$conuter = 0;
 			foreach($vfolder['items'] as $item) {
+				$counter++;
 				$img = media::get_item($item['media_item_id'],$_POST['thumb_width'],$_POST['thumb_height'],true);
 ?>		
 				<li class="menuItem"><a href=""><?=$img['html']?></a></li>
 <?
+				if ($_POST['num_thumbs'] == $counter) break;
 			}
 ?>
 		</ul>	
