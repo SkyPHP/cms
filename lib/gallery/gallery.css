@@ -44,10 +44,10 @@
 }
 
 .first {
-	padding-left:0;	
+	margin-left:0;	
 }
 .last {
-	padding-right:0;	
+	margin-right:0;	
 }
 .gallery-menu ul {
 	margin:0px;
