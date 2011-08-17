@@ -2,13 +2,13 @@
     $('#login_username').livequery(function(){
         $(this).focus();
     });
-    $('#login_password').live('keyup',function(e){
+    $('#login_password').die().live('keyup',function(e){
         if(e.which == 13){
             $('#login_form').submit();
             return false;
         }
     });
-    $('#login_form').live('submit',function(){
+    $('#login_form').die().live('submit',function(){
         $('#login_button').val('Authenticating...').css('color','gray');
         if ($('#login_message').is(":visible")) $('#login_message').fadeTo('fast',0.01);
         $.post(
