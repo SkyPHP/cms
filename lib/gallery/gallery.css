@@ -42,10 +42,10 @@
 	/* This is the container for the thumbnails */
 }
 
-.first {
+.gallery-menu ul .first {
 	margin-left:0;	
 }
-.last {
+.gallery-menu ul .last {
 	margin-right:0;	
 }
 .gallery-menu ul {
