@@ -68,7 +68,7 @@
 	</div>
     <fieldset style="width:90%">
     	<legend class="legend">Final Phrase</legend>
-        <input type="text" id="final-phrase" style="width:90%;" readonly  />
+        <input type="text" id="final-phrase" style="width:50%;" readonly  /> <input type="button" value="save" id="save-final" />
     </fieldset>
     <div id="listing">
         <input type="hidden" id="or" value="" />
