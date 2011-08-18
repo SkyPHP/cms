@@ -66,13 +66,9 @@
 ?>
 		<div class="clear"></div>
 	</div>
-    <fieldset style="width:80%">
-    	<legend class="legend">Final Phrase</legend>
-        <input type="text" id="final-phrase" style="width:93%;" readonly  /> <input type="button" value="save" id="save-final" />
-    </fieldset>
-    
+     
     <div style="margin: 5px 0;">
-     	<input type="radio" id="auto-switch-on" checked value="listing" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Manual Permetations</label><br>
+     	<input type="radio" id="auto-switch-on" checked value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Manual Permetations</label><br>
         <input type="radio" id="auto-switch-on" value="auto" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Auto Permetations</label><br>
   	</div>
     
@@ -80,14 +76,18 @@
         <h2>Auto</h2>
     </div>
     
-    
-    <div id="listing" class="a-or-m-on">
-    	<h2>Manual</h2>
+    <div id="manual" class="a-or-m-on">
+        <fieldset style="width:80%">
+            <legend class="legend">Final Phrase</legend>
+            <input type="text" id="final-phrase" style="width:93%;" readonly  /> <input type="button" value="save" id="save-final" />
+        </fieldset>   
+        <div id="listing">
 <? 		
-		include ('pages/admin/seo/duplicate-data/ajax/filter-listing.php'); 
+			include ('pages/admin/seo/duplicate-data/ajax/filter-listing.php'); 
 ?>
-    </div>
-    <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+	</div>
 <?	
 	$p->template('seo','bottom');	
 ?>
