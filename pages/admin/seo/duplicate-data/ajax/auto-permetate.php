@@ -42,8 +42,7 @@
 				for ($y=0;$y<$count;$y++) {
 					for ($z=0;$z<$count;$z++) {
 						if ($x != $y && $x != $z && $y != $z) {
-							echo $auto_data[$x].' '.$auto_data[$y].' '.$auto_data[$z];
-							$phrases[] = $phrase;
+							$phrases[] = $auto_data[$x].' '.$auto_data[$y].' '.$auto_data[$z];
 							$p1[] = $auto_data[$x];
 							$p2[] = $auto_data[$y];
 							$p3[] = $auto_data[$z];
@@ -52,9 +51,9 @@
 					}
 				}
 			}
-			foreach ($phrases as $key => $phrase) {
+			for($key=0; $key<count($phrases);$key++) {
 ?>
-				<div style="width:80px; margin-right:5px; float:left">(<?=$count_data[$key]?>)</div><div style="float:left"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrase?>"> <?=$phrase?></div>
+				<div style="width:80px; margin-right:5px; float:left">(<?=$count_data[$key]?>)</div><div style="float:left"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrases[$key]?>"> <?=$phrases[$key]?></div>
                 <div class="clear"></div>
 <?	
 			}
