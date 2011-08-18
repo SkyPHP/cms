@@ -66,7 +66,7 @@
 ?>
 		<div class="clear"></div>
 	</div>
-    <fieldset style="width:70%">
+    <fieldset style="width:65%">
     	<legend class="legend">Final Phrase</legend>
         <input type="text" id="final-phrase" style="width:90%;" readonly  /> <input type="button" value="save" id="save-final" />
     </fieldset>
