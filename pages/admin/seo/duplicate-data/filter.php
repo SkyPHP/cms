@@ -1,4 +1,4 @@
-<div style="padding-top:5px;" class="filter-list">
+<div style="padding-top:5px;">
 <?
 	if ($filter['name'] == 'volume') $DESC = 'desc';
 	else $DESC = '';
