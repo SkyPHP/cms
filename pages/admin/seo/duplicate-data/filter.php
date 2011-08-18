@@ -8,7 +8,9 @@
 <?
 	if($rs) while (!$rs->EOF) {
 ?>
-		<input type="checkbox" value="<?=$rs->Fields($filter['name'])?>" filter="<?=$filter['name']?>" class="filter_cb" /> <label style="cursor:pointer;" for="<?=$rs->Fields($filter['name'])?>"><?=strtolower($rs->Fields($filter['name']))?></label><br>
+		<div style="margin-bottom:5px;">
+		<input type="checkbox" value="<?=$rs->Fields($filter['name'])?>" filter="<?=$filter['name']?>" class="filter_cb" /> <label style="cursor:pointer;" for="<?=$rs->Fields($filter['name'])?>"><?=strtolower($rs->Fields($filter['name']))?></label>
+       	</div>
 <?		
 		$rs->MoveNext();
 	}
