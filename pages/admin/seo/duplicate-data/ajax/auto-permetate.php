@@ -36,13 +36,14 @@
 				$phrase = $data[$field];
 				$p1 = $phrase.' ';
 				foreach ($listing as $data2) {
-					$phrase .= $data[$field];
+					$phrase .= $data2[$field];
 					$p2 = $data2[$field];
 					foreach($listing as $data3) {
-						$phase .= ' '.$data[$field];
-						$p3 = $data[$field];
+						$phrase .= ' '.$data3[$field];
+						$p3 = $data3[$field];
 					}
 				}
+				echo '<input type="checkbox" id="{$counter}" phrase="{$phrase}" class="auto-phrase" /> '.$phrase.'<br>';
 			}
 ?>
     </fieldset>
