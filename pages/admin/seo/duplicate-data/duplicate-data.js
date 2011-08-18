@@ -11,6 +11,7 @@ $(function() {
 	});
 	
 	$('.filter-on').die().live('click',function() {
+		return false;
 		$this = $(this);
 		filter = $this.attr('filter');
 		$('#'+filter).slideUp('fast',function() {
@@ -42,7 +43,7 @@ $(function() {
 		$('#final-phrase').val(val);
 	});
 	
-	$('#container').not('.filter-on').live('click',function () {
+	$('#container').live('click',function () {
 		alert('clicked');
 	});
 	
