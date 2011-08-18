@@ -89,6 +89,7 @@
 		include ('pages/admin/seo/duplicate-data/ajax/filter-listing.php'); 
 ?>
     </div>
+    <div class="clear"></div>
 <?	
 	$p->template('seo','bottom');	
 ?>
