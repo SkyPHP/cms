@@ -32,13 +32,15 @@
     	<legend class="legend">Auto Permetation</legend>
 <?
 			foreach ($listing as $data) {
+				$phrase = '';
 				$phrase = $data[$field];
-				$p1 = $phrase;
+				$p1 = $phrase.' ';
 				foreach ($listing as $data2) {
 					$phrase .= $data[$field];
 					$p2 = $data2[$field];
 					foreach($listing as $data3) {
-						$phase .= $data[$field];
+						$phase .= ' '.$data[$field];
+						$p3 = $data[$field];
 					}
 				}
 			}
