@@ -72,9 +72,8 @@
     </fieldset>
     
     
-     	<label for="auto-switch-dd">Auto Permetation</label><br>
-    	<select id="auto-switch-dd">
-        	<option value="listing"> - Off (manual) -</option>
+     	<label for="auto-switch-on">Manual Permetation</label> <input type="radio" id="auto-switch-on" value="auto" class="a-or-m-switch" />
+        <label for="auto-switch-on">Auto Permetation</label> <input type="radio" id="auto-switch-on" value="listing" class="a-or-m-switch" />
             <option value="auto">- On (auto)-</option>
     	</select>
   

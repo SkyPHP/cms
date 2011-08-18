@@ -55,7 +55,7 @@ $(function() {
 		$('#final-phrase').val(val);
 	});
 	
-	$('#auto-switch-dd').live('change',function() {
+	$('.a-or-m-switch').live('change',function() {
 		val = $(this).val();
 		$('.a-or-m').slideUp('fast',function() {
 			$('#'+val).slideDown('fast');
