@@ -1,6 +1,6 @@
 <?
-	$title = 'Duplicate Data System ';
-	$tabs = array(
+	$p->title = 'Duplicate Data System ';
+	$p->tabs = array(
 		'Title' => '/admin/seo/duplicate-data/title',
 		'H1' => '/admin/seo/duplicate-data/h1',
 		'H1 Blurb' => '/admin/seo/duplicate-data/h1-blurb',
@@ -36,9 +36,9 @@
 	}
 	snippet::tab_redirect($tabs);
 	
-	template::inc('seo','top');	
+	$p->template('seo','top');	
 	
-	snippet::tabs($tabs);
+	snippet::tabs($p->tabs);
 	
 	if ($type == 'phrase') {
 		$table = 'dup_phrase_data';
@@ -123,5 +123,5 @@
 <?	} ?>
     </div>
 <?	
-	template::inc('seo','bottom');	
+	$p->template('seo','bottom');	
 ?>
