@@ -45,7 +45,7 @@ $(function() {
 	
 	$('#container').live('click',function () {
 		$('.filter-list').slideUp('fast',function() {
-			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');
+			$('.filter-on').removeClass('filter-on').addClass('filter').css('border-bottom', '2px solid #999');
 		});
 	});
 	$('.filter-list').live('click', function(e) {
