@@ -26,8 +26,6 @@
 			$listing = aql::select("dup_phrase_data { lower(phrase) as lower_phrase, phrase, volume where market != '' and base != '' and volume > 0 {$where} order by volume DESC, phrase asc }");
 		}
 	}
-	$count = count($listing);
-	$count = 2;
 	$phrases = array();
 ?>
     <input type="hidden" id="or" value="<?=$or?>" />
@@ -39,7 +37,7 @@
 				$count_data[] = $data['volume'];
 			}
 			
-			$count = count($listing);
+			$count = 10;
 			for ($x=0;$x<$count;$x++) {
 				for ($y=0;$y<$count;$y++) {
 					for ($z=0;$z<$count;$z++) {
