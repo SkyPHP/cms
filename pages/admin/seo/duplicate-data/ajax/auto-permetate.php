@@ -45,7 +45,9 @@
 				
 			}
 			foreach ($full_phrase as $choice => $phrase) {
-				echo "[".$choice."] ".$phrase."<br>";
+				for ($x = 0; $x <= 5; $x++) {
+					echo "[".$choice."] ".$phrase[$x]."<br>";
+				}
 			}
 ?>
     </fieldset>
