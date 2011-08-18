@@ -74,13 +74,15 @@
 	</div>
     
     <div id="auto" style="display:none;">
-        <h2>Auto</h2>
+<?
+		include ('pages/admin/seo/duplicate-data/ajax/auto-permetate');
+?>
     </div>
     
     <div id="manual" class="a-or-m-on">
         <fieldset style="width:80%">
             <legend class="legend">Final Phrase</legend>
-            <input type="text" id="final-phrase" style="width:93%;" readonly  /> <input type="button" value="save" id="save-final" />
+            <input type="button" value="save" id="save-final" /> <input type="text" id="final-phrase" style="width:93%;" readonly  />
         </fieldset>   
         <div id="listing">
 <? 		
