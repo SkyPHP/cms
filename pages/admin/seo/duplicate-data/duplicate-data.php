@@ -72,7 +72,7 @@
     </fieldset>
     
     <div style="margin: 5px 0;">
-     	<label for="auto-switch-on">Manual Permetation</label> <input type="radio" id="auto-switch-on" value="listing" class="a-or-m-switch" name="auto-switch" />&nbsp;&nbsp;
+     	<label for="auto-switch-on">Manual Permetation</label> <input type="radio" id="auto-switch-on" checked value="listing" class="a-or-m-switch" name="auto-switch" />&nbsp;&nbsp;
         <label for="auto-switch-on">Auto Permetation</label> <input type="radio" id="auto-switch-on" value="auto" class="a-or-m-switch" name="auto-switch" />
             <option value="auto">- On (auto)-</option>
     	</select>
