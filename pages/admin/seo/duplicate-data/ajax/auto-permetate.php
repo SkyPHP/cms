@@ -45,8 +45,8 @@
 				
 			}
 			foreach ($full_phrase as $choice => $phrase) {
-				for ($x = 0; $x <= 5; $x++) {
-					echo "[".$choice."] ".$phrase[$x]."<br>";
+				foreach ($phrase as $ph) {
+					echo "[".$choice."] ".$ph."<br>";
 				}
 			}
 ?>
