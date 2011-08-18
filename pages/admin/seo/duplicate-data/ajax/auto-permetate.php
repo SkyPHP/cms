@@ -53,7 +53,7 @@
 			}
 			for($key=0; $key<count($phrases);$key++) {
 ?>
-				<div style="width:80px; margin-right:5px; float:left">(<?=$count_data[$key]?>)</div><div style="float:left"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrases[$key]?>"> <?=$phrases[$key]?></div>
+				<div style="width:80px; margin-right:5px; float:left">(<?=$counts[$key]?>)</div><div style="float:left"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrases[$key]?>"> <?=$phrases[$key]?></div>
                 <div class="clear"></div>
 <?	
 			}
