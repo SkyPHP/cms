@@ -9,7 +9,6 @@ $(function() {
 		$('#'+filter).slideDown('fast',function() {
 			$(this).removeClass('filter').addClass('filter-on');
 		});
-		e.stopImmediatePropagation();
 	});
 	
 	$('.filter-on').die().live('click',function(e) {
@@ -19,8 +18,6 @@ $(function() {
 			$this.css('border-bottom', '2px solid #999');
 		});
 		$(this).removeClass('filter-on').addClass('filter');
-		e.stopImmediatePropagation();
-		
 	});
 	
 	$('.filter_cb').die().live('click',function() {
@@ -49,8 +46,5 @@ $(function() {
 		$('.filter-list').slideUp('fast',function() {
 			$('.filter-on').removeClass('filter-on').addClass('filter').css('border-bottom', '2px solid #999');
 		});
-	});
-	$('.filter-list').live('click', function(e) {
-		e.stopPropagation();	
 	});
 });
