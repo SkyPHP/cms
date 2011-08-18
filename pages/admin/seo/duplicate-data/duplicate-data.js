@@ -9,7 +9,7 @@ $(function() {
 		$('#'+filter).slideDown('fast',function() {
 			$(this).removeClass('filter').addClass('filter-on');
 		});
-		e.stopPropagation();
+		e.stopImmediatePropagation();
 	});
 	
 	$('.filter-on').die().live('click',function(e) {
@@ -19,7 +19,7 @@ $(function() {
 			$this.css('border-bottom', '2px solid #999');
 		});
 		$(this).removeClass('filter-on').addClass('filter');
-		e.stopPropagation();
+		e.stopImmediatePropagation();
 		
 	});
 	
