@@ -44,7 +44,7 @@
 				for ($y=0;$y<$count;$y++) {
 					for ($z=0;$z<$count;$z++) {
 						if ($x != $y && $x != $z && $y != $z) {
-							$phrases = $auto_data[$x].' '.$auto_data[$y].' '.$auto_data[$z];
+							$phrase = $auto_data[$x].' '.$auto_data[$y].' '.$auto_data[$z];
 							$phrases[] = $phrase;
 							$p1[] = $auto_data[$x];
 							$p2[] = $auto_data[$y];
