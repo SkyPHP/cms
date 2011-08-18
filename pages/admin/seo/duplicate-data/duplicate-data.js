@@ -20,23 +20,16 @@ $(function() {
 		
 	});
 	
-	$('.filter_cb').die().live('click focusout',function(e) {
-		if (e.type == 'focusout') {
-			$('.filter-area').slideUp('fast',function() {
-				$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');
-			});
-		}
-		else {
-			value = $(this).val()
-			filter = $(this).attr('filter');
-			or = $('#or').val();
-			type = $(this).attr('type');
-			if ($(this).attr('checked')) sw = 'on';
-			else sw = 'off';
-			$.post('/admin/seo/duplicate-data/ajax/filter-listing',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
-				$('#listing').html(data);
-			});
-		}
+	$('.filter_cb').die().live('click',function(e) {
+		value = $(this).val();
+		filter = $(this).attr('filter');
+		or = $('#or').val();
+		type = $(this).attr('type');
+		if ($(this).attr('checked')) sw = 'on';
+		else sw = 'off';
+		$.post('/admin/seo/duplicate-data/ajax/filter-listing',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
+			$('#listing').html(data);
+		});
 	});
 	
 	$('.listing_radio').die().live('click',function() {
