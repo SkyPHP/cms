@@ -49,10 +49,4 @@ $(function() {
 		$('#final-phrase').val(val);
 	});
 	
-	$().live('click',function(){
-		$('#'+filter).slideUp('fast',function() {
-			$this.css('border-bottom', '2px solid #999');
-		});
-	});
-	
 });
