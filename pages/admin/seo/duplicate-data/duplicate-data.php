@@ -73,14 +73,14 @@
     
     
     <div id="auto-switch" style="margin-top:10px;">
-    	<label for="auto-switch-dd">Auto On/Off</label>
+    	<label for="auto-switch-dd">Auto Permetation</label>
     	<select id="auto-switch-dd">
-        	<option>Manual</option>
-            <option>Auto</option>
+        	<option value="listing">Off</option>
+            <option value="auto">On</option>
     	</select>
     </div>
     
-    <div id="auto" class="a-or-m">
+    <div id="auto" class="a-or-m" style="display:none;">
         <h2>Auto</h2>
     </div>
     
