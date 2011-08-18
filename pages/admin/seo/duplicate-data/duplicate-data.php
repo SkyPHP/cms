@@ -78,7 +78,7 @@
     	</select>
   	</div>
     
-    <div id="auto" class="a-or-m" style="display:none;">
+    <div id="auto" style="display:none;">
         <h2>Auto</h2>
     </div>
     
