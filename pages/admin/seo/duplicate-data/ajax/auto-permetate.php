@@ -29,11 +29,11 @@
     	<legend class="legend">Auto Permetation</legend>
 <?
 			foreach ($listing as $data) {
-				$p1 = $data[$field].' ';
+				$p1 = $data[$field];
 				foreach ($listing as $data2) {
-					if ($data2[$table.'_id'] != $data[$table.'_id']) $p2 .= $data2['field'];
+					if ($data2[$table.'_id'] != $data[$table.'_id']) $p2 = $data2[$field];
 					foreach ($listing as $data3) {
-						if ($data2[$table.'_id'] != $data[$table.'_id'] && $data2[$table.'_id'] != $data3[$table.'_id'] && $data3[$table.'_id'] != $data[$table.'_id'] ) $p3 .= $data3['field'];
+						if ($data2[$table.'_id'] != $data[$table.'_id'] && $data2[$table.'_id'] != $data3[$table.'_id'] && $data3[$table.'_id'] != $data[$table.'_id'] ) $p3 = $data3[$field];
 					}
 				}
 				$full_phrase[1][] = $p1.' '.$p2.' '.$p3;
