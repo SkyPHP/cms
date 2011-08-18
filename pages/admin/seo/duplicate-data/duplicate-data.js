@@ -39,12 +39,21 @@ $(function() {
 		}
 	});
 	
+	vals = new array();
 	$('.listing_radio').die().live('click',function() {
+		phrase = $(this).attr('phrase');
 		val = '';
+		vals = new array();
 		$('.listing_radio').each(function() {
 			if ($(this).attr('checked')) {
+				for (var i = 0; i < vals.length; i++) {
+					if (vals[i] == phrase) alert('Already Selected');
+					else vals.push($(this).attr('phrase'));
+				}
 				val += ' '+$(this).attr('phrase');	
-			}
+			} else {
+				vals.remove($(this).attr('phrase'));
+			}	
 		});
 		
 		$('#final-phrase').val(val);
