@@ -57,7 +57,7 @@ $(function() {
 	
 	$('.a-or-m-switch').live('change',function() {
 		val = $(this).val();
-		$('#'+val+' .on').removeClass('on').slideUp('fast',function() {
+		$('.a-or-m .on').removeClass('on').slideUp('fast',function() {
 			$('#'+val).addClass('on').slideDown('slow');
 		});
 	})
