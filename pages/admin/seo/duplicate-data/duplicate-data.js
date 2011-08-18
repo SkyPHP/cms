@@ -20,7 +20,7 @@ $(function() {
 		
 	});
 	
-	$('.filter_cb').die().live('click',function(e) {
+	$('.filter_cb').die().live('click',function() {
 		value = $(this).val();
 		filter = $(this).attr('filter');
 		or = $('#or').val();
@@ -40,6 +40,12 @@ $(function() {
 			}
 		});		
 		$('#final-phrase').val(val);
+	});
+	
+	$('.list').not('.filter').die().live('click',function () {
+		$('.filter_on').slideUp('fast',function() {
+			$('.filter_on').css('border-bottom', '2px solid #999').removeClass('filter_on').addClass('filter');
+		});
 	});
 	
 });
