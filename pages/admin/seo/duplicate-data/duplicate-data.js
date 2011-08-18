@@ -2,7 +2,8 @@ $(function() {
 	
 	table = $('#table').val();
 	
-	$('.filter').die().live('click',function() {
+	$('.filter').die().live('click',function(e) {
+		e.stopPropagation();
 		$this = $(this);
 		filter = $this.attr('filter');
 		$this.css('border-bottom', 'none');
@@ -11,7 +12,6 @@ $(function() {
 	});
 	
 	$('.filter-on').die().live('click',function() {
-		return false;
 		$this = $(this);
 		filter = $this.attr('filter');
 		$('#'+filter).slideUp('fast',function() {
@@ -48,9 +48,5 @@ $(function() {
 			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');
 		});
 	});
-	
-	$('.filter-list').live('click',function() {
-		return false;	
-	})
 	
 });
