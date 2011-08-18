@@ -72,13 +72,12 @@
     </fieldset>
     
     
-    <div id="auto-switch" style="margin-top:10px;">
-    	<label for="auto-switch-dd">Auto Permetation</label>
+     	<label for="auto-switch-dd">Auto Permetation</label><br>
     	<select id="auto-switch-dd">
-        	<option value="listing">Off</option>
-            <option value="auto">On</option>
+        	<option value="listing"> - Off (manual) -</option>
+            <option value="auto">- On (auto)-</option>
     	</select>
-    </div>
+  
     
     <div id="auto" class="a-or-m" style="display:none;">
         <h2>Auto</h2>
