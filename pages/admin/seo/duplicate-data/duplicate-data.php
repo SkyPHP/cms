@@ -42,11 +42,13 @@
 	
 	if ($type == 'phrase') {
 		$table = 'dup_phrase_data';
+		$field = 'phrase';
 		$width = 310;
 		$listing = aql::select($table." { lower(phrase) as lower_phrase, phrase, volume where market != '' and base != '' and volume > 0 order by volume DESC, phrase asc }"); 
 	}
 	else if ($type == 'paragraph') {
 		$table = 'dup_sentence';
+		$field = 'sentence';
 		$listing = aql::select($table." { sentence, volume where market is not null order by sentence asc }");
 	}
 	
@@ -75,7 +77,7 @@
     
     <div id="auto" style="display:none;">
 <?
-		include ('pages/admin/seo/duplicate-data/ajax/auto-permetate');
+		include ('pages/admin/seo/duplicate-data/ajax/auto-permetate.php');
 ?>
     </div>
     

@@ -11,7 +11,7 @@
 			}
 		}
 		$or = implode(' OR ',$o);
-		if ($type == 'sentence') 
+		if ($type == 'paragraph') 
 			$listing = aql::select("dup_sentence { sentence, volume order by sentence asc }",array('dup_sentence'=>array('where'=>$w)));
 		else {
 			$width = 310;
