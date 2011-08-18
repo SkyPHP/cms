@@ -42,9 +42,9 @@ $(function() {
 		$('#final-phrase').val(val);
 	});
 	
-	$('#container').not('.filter_on').live('click',function () {
-		$('.filter_on').slideUp('fast',function() {
-			$('.filter_on').css('border-bottom', '2px solid #999').removeClass('filter_on').addClass('filter');
+	$('#container').not('.filter-on').live('click',function () {
+		$('.filter-on').slideUp('fast',function() {
+			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');
 		});
 	});
 	
