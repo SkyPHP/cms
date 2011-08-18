@@ -42,7 +42,7 @@ $(function() {
 		$('#final-phrase').val(val);
 	});
 	
-	$('#container').live('click',function () {
+	$('#container').not('.filter-on').live('click',function () {
 		alert('clicked');
 	});
 	
