@@ -1,5 +1,0 @@
-<?
-
-$model = 'blog_article';
-
-?>
