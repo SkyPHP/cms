@@ -6,9 +6,10 @@ $(function() {
 		$this = $(this);
 		filter = $this.attr('filter');
 		$this.css('border-bottom', 'none');
-		$('#'+filter).slideDown('fast');
-		$(this).removeClass('filter').addClass('filter-on');
-		e.stopPropagation();
+		$('#'+filter).slideDown('fast',function() {
+			$(this).removeClass('filter').addClass('filter-on');
+			e.stopPropagation();
+		});
 	});
 	
 	$('.filter-on').die().live('click',function() {
