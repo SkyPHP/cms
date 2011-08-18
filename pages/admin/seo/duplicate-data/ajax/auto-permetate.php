@@ -27,7 +27,7 @@
 		}
 	}
 	$count = count($listing);
-	$count = 10;
+	$count = 2;
 	$phrases = array();
 ?>
     <input type="hidden" id="or" value="<?=$or?>" />
