@@ -2,8 +2,7 @@ $(function() {
 	
 	table = $('#table').val();
 	
-	$('.filter').die().live('click',function(e) {
-		e.stopPropagation();
+	$('.filter').die().live('click',function() {
 		$this = $(this);
 		filter = $this.attr('filter');
 		$this.css('border-bottom', 'none');
@@ -48,5 +47,7 @@ $(function() {
 			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');
 		});
 	});
-	
+	$('.filter-list').live('click', function(e) {
+		e.stopPropagation();	
+	});
 });
