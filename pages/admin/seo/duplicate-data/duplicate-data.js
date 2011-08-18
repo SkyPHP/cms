@@ -2,7 +2,7 @@ var mouse_is_inside = false;
 
 $(function() {
 
-    $('.filter-area').hover(function(){ 
+    $('.filter-area, .filter').hover(function(){ 
         mouse_is_inside=true; 
     }, function(){ 
         mouse_is_inside=false; 
