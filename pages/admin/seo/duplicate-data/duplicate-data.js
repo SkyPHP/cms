@@ -39,22 +39,11 @@ $(function() {
 		}
 	});
 	
-	vals = new Array();
 	$('.listing_radio').die().live('click',function() {
-		checked = $(this).attr('checked');
-		phrase = $(this).attr('phrase');
 		val = '';
 		$('.listing_radio').each(function() {
-			for (var i = 0; i < vals.length; i++) {
-				if (checked) {
-					if (vals[i] == phrase) alert('Already Selected');
-					else { 
-						vals.push($(this).attr('phrase'));
-						val += ' '+$(this).attr('phrase');
-					}
-				} else {
-					if (vals[i] == phrase) vals.splice(i,1);
-				}
+			if ($(this).attr('checked')) {
+				val += ' '+$(this).attr('phrase');	
 			}
 		});
 		
