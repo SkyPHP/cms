@@ -2,6 +2,8 @@
 
 class Login {
 	
+	const ALGO = 'sha512';
+
 	public static $session;
 	public static $session_key;
 
@@ -69,6 +71,7 @@ class Login {
 	public function _checkLogin($password) {
 		$salt = $this->person->generateUserSalt();
 		$pw = Login::generateHash($password, $salt);
+		return ($password == $this->person->password); // temp fix while new hash algo
 		return ($pw == $this->person->password_hash) ? true : false;
 	}
 
@@ -111,6 +114,7 @@ class Login {
 		Login::$session = array();
 		$o = person_cookie::getByCookie();
 		if ($o) $o->delete();
+		self::unsetConstants();
 		unset($_SESSION['login'], $_SESSION[self::$session_key], $_SESSION['remember_uri'], $_COOKIE['cookie'], $_COOKIE['person_ide'], $_COOKIE['token']);
 		foreach (array('cookie', 'person_ide', 'token') as $c) {
 			person_cookie::unsetCookie($c);	
@@ -135,8 +139,10 @@ class Login {
 	}
 
 	public static function generateHash($password, $salt) {
-		$prefix = '$2a$08$';	$suffix = '$';
-		return crypt($password.$salt, $prefix.$salt.Login::getGlobalSalt().$suffix);
+		return hash(self::ALGO, 
+			hash(self::ALGO, $salt.$password).
+			hash(self::ALGO, Login::getGlobalSalt())
+		);
 	}
 
 	public function getGlobalSalt() {
@@ -165,6 +171,11 @@ class Login {
 	public static function setConstants() {
 		define('PERSON_ID', self::get('person_id'));
 		define('PERSON_IDE', self::get('person_ide'));
+	}
+
+	public static function unsetConstants() {
+		define('PERSON_ID', null);
+		define('PERSON_IDE', null);
 	}
 
 	public static function update() {
