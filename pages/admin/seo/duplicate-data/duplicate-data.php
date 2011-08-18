@@ -68,7 +68,7 @@
 	</div>
      
     <div style="margin: 15px 0 0 0;">
-     	<input type="radio" id="auto-switch-on" checked value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Manual Permetations</label><br>
+     	<input type="radio" id="auto-switch-off" checked value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-off">Manual Permetations</label><br>
         <input type="radio" id="auto-switch-on" value="auto" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Auto Permetations</label><br>
   	</div>
     
