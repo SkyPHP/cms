@@ -39,7 +39,7 @@ $(function() {
 		}
 	});
 	
-	vals = new array();
+	vals = new Array();
 	$('.listing_radio').die().live('click',function() {
 		phrase = $(this).attr('phrase');
 		val = '';
