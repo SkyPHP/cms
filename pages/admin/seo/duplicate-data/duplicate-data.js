@@ -56,8 +56,9 @@ $(function() {
 	});
 	
 	$('#auto-switch-dd').live('change',function() {
+		val = $(this).val();
 		$('.a-or-m').slideUp('fast',function() {
-			$('#'+$(this).val()).slideDown('fast');
+			$('#'+val).slideDown('fast');
 		});
 	})
 	
