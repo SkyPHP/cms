@@ -27,6 +27,7 @@
 		}
 	}
 	$count = count($listing);
+	$count = 10;
 ?>
     <input type="hidden" id="or" value="<?=$or?>" />
 	<fieldset>
