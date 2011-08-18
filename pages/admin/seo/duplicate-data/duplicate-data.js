@@ -43,7 +43,6 @@ $(function() {
 	$('.listing_radio').die().live('click',function() {
 		phrase = $(this).attr('phrase');
 		val = '';
-		vals = new array();
 		$('.listing_radio').each(function() {
 			if ($(this).attr('checked')) {
 				for (var i = 0; i < vals.length; i++) {
