@@ -43,9 +43,7 @@ $(function() {
 	});
 	
 	$('#container').not('.filter-on').live('click',function () {
-		$('.filter-on').slideUp('fast',function() {
-			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');
-		});
+		alert('clicked');
 	});
 	
 });
