@@ -71,56 +71,7 @@
         <input type="text" id="final-phrase" style="width:93%;" readonly  /> <input type="button" value="save" id="save-final" />
     </fieldset>
     <div id="listing">
-        <input type="hidden" id="or" value="" />
-   		<fieldset class="list" style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
-    		<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>1 (<?=$count?> Phrases)</legend>
-<?
-			foreach($listing as $data) {
-?>
-				<div style="width:50px; float:left; margin-right:5px">(<?=$data['volume']?>)</div><div style="float:left;"> <input type="radio" name="phrase1" part="1" phrase="<?=$data['phrase']?>" ide="<?=$data['dup_phrase_data_ide']?>" class="listing_radio" id="<?=$data['lower_phrase']?>" /> <label for="<?=$data['lower_phrase']?>"><?=$data['lower_phrase']?></label></div>
-                <div class="clear"></div>
-<?	
-			}
-?>
-    	</fieldset>
-        
-        <fieldset class="list" style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
-    		<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>2 (<?=$count?> Phrases)</legend>
-<?
-			foreach($listing as $data) {
-?>
-				<div style="width:50px; float:left; margin-right:5px">(<?=$data['volume']?>)</div><div style="float:left;"> <input type="radio" name="phrase2" part="2" phrase="<?=$data['phrase']?>" ide="<?=$data['dup_phrase_data_ide']?>" class="listing_radio" id="<?=$data['lower_phrase']?>2" /> <label for="<?=$data['lower_phrase']?>2"><?=$data['lower_phrase']?></label></div>
-                <div class="clear"></div>
-<?	
-			}
-?>
-    	</fieldset>
-        
-        <fieldset class="list" style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
-    		<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>3 (<?=$count?> Phrases)</legend>
-<?
-			foreach($listing as $data) {
-?>
-				<div style="width:50px; float:left; margin-right:5px">(<?=$data['volume']?>)</div><div style="float:left;"> <input type="radio" name="phrase3" part="3" phrase="<?=$data['phrase']?>" ide="<?=$data['dup_phrase_data_ide']?>" class="listing_radio" id="<?=$data['lower_phrase']?>3" /> <label for="<?=$data['lower_phrase']?>3"><?=$data['lower_phrase']?></label></div>
-                <div class="clear"></div>
-<?	
-			}
-?>
-    	</fieldset>
-        
-<? if ($type == 'paragraph') { ?>
-		<fieldset class="list" style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
-    		<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>4 (<?=$count?> Phrases)</legend>
-<?
-			foreach($listing as $data) {
-?>
-				<div style="width:50px; float:left; margin-right:5px">(<?=$data['volume']?>)</div><div style="float:left;"> <input type="radio" name="phrase4" part="4" phrase="<?=$data['phrase']?>" ide="<?=$data['dup_phrase_data_ide']?>" class="listing_radio" id="<?=$data['lower_phrase']?>4" /> <label for="<?=$data['lower_phrase']?>4"><?=$data['lower_phrase']?></label></div>
-                <div class="clear"></div>
-<?	
-			}
-?>
-    	</fieldset>
-<?	} ?>
+       <? include ('pages/admin/seo/duplicate-data/ajax/filter-listing.php'); ?>
     </div>
 <?	
 	$p->template('seo','bottom');	

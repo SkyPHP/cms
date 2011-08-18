@@ -1,26 +1,29 @@
 <?
-	$or = $_POST['or'];
-	$o = explode(' OR ',$or);
-	if ($_POST['sw'] == 'on') $o[] = $_POST['filter']." = '".addslashes($_POST['value'])."'";
-	else if ($_POST['sw'] == 'off') {
-		foreach($o as $key => $statement) {
-			//echo $wh.' --- '.$_POST['filter']." = '".addslashes($_POST['value'])."'<br>";
-			if ($statement == $_POST['filter']." = '".addslashes($_POST['value'])."'") unset($o[$key]); 
+	if (!$listing) {
+		$or = $_POST['or'];
+		$type == $_POST['type'];
+		$o = explode(' OR ',$or);
+		if ($_POST['sw'] == 'on') $o[] = $_POST['filter']." = '".addslashes($_POST['value'])."'";
+		else if ($_POST['sw'] == 'off') {
+			foreach($o as $key => $statement) {
+				//echo $wh.' --- '.$_POST['filter']." = '".addslashes($_POST['value'])."'<br>";
+				if ($statement == $_POST['filter']." = '".addslashes($_POST['value'])."'") unset($o[$key]); 
+			}
 		}
-	}
-	$or = implode(' OR ',$o);
-	if ($_POST['type'] == 'sentence') 
-		$listing = aql::select("dup_sentence { sentence, volume order by sentence asc }",array('dup_sentence'=>array('where'=>$w)));
-	else {
-		$width = 310;
-		if ($or) {
-		    if (strpos($or,'OR') < 5) $or = preg_replace('/ OR /','',$or,1);
-			$where = ' and ( '.$or.' ) ';
+		$or = implode(' OR ',$o);
+		if ($type == 'sentence') 
+			$listing = aql::select("dup_sentence { sentence, volume order by sentence asc }",array('dup_sentence'=>array('where'=>$w)));
+		else {
+			$width = 310;
+			if ($or) {
+				if (strpos($or,'OR') < 5) $or = preg_replace('/ OR /','',$or,1);
+				$where = ' and ( '.$or.' ) ';
+			}
+			//echo $where;
+			$listing = aql::select("dup_phrase_data { lower(phrase) as lower_phrase, phrase, volume where market != '' and base != '' and volume > 0 {$where} order by volume DESC, phrase asc }");
 		}
-		//echo $where;
-		$listing = aql::select("dup_phrase_data { lower(phrase) as lower_phrase, phrase, volume where market != '' and base != '' and volume > 0 {$where} order by volume DESC, phrase asc }");
+		$count = count($listing);
 	}
-	$count = count($listing);
 ?>
     <input type="hidden" id="or" value="<?=$or?>" />
     <fieldset style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
