@@ -29,7 +29,7 @@
 	$phrases = array();
 ?>
     <input type="hidden" id="or" value="<?=$or?>" />
-	<fieldset>
+	<fieldset style="width:90%;">
     	<legend class="legend">Auto Permetation</legend>
 <?
 			foreach ($listing as $data) {
@@ -51,12 +51,21 @@
 					}
 				}
 			}
-			for($key=0; $key<count($phrases);$key++) {
+			$count = count($phrases);
 ?>
-				<div style="width:80px; margin-right:5px; float:left">(<?=$counts[$key]?>)</div><div style="float:left"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrases[$key]?>"> <?=$phrases[$key]?></div>
-                <div class="clear"></div>
+			<div style="float:left; margin-right:20px;">
+<?
+				for($key=0; $key<$count;$key++) {
+?>
+					<div style="width:70px; margin-right:5px; float:left">(<?=$counts[$key]?>)</div><div style="float:left"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrases[$key]?>"> <?=$phrases[$key]?></div>
+					<div class="clear"></div>
 <?	
-			}
-		
+					if (inval($count /2) == $key) {
 ?>
+						</div><div style="float:left;">
+<?
+					}
+				}
+?>
+			</div>
     </fieldset>
