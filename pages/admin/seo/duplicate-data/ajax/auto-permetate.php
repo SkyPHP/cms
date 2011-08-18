@@ -32,18 +32,30 @@
     	<legend class="legend">Auto Permetation</legend>
 <?
 			foreach ($listing as $data) {
-				$phrase = '';
-				$phrase = $data[$field];
-				$p1 = $phrase.' ';
-				foreach ($listing as $data2) {
-					$phrase .= $data2[$field];
-					$p2 = $data2[$field];
-					foreach($listing as $data3) {
-						$phrase .= ' '.$data3[$field];
-						$p3 = $data3[$field];
+				$auto_data[]=$data[$field]; // get the phrase or sentence
+				$count_data[] = $data['volume'];
+			}
+			
+			$count = count($listing);
+			for ($x=0;$x<$count;$x++) {
+				for ($y=0;$y<$count;$y++) {
+					for ($z=0;$z<$count;$z++) {
+						if ($x != $y && $x != $z && $y != $z) {
+							$phrases[] = $auto_data[$x].' '.$auto_data[$y].' '.$auto_data[$z];
+							$p1[] = $auto_data[$x];
+							$p2[] = $auto_data[$y];
+							$p3[] = $auto_data[$z];
+							$counts[] = $count_data[$x] + $count_data[$y] + $count_data[$z];
+						}
 					}
 				}
-				echo '<input type="checkbox" id="{$counter}" phrase="{$phrase}" class="auto-phrase" /> '.$phrase.'<br>';
 			}
+			foreach ($phrases as $key => $phrase) {
+?>
+				<div style="width:80px; margin-right:5px; float:left">(<?=$count_data[$key]?>)</div><div style="float:left"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrase?>"> <?=$phrase?></div>
+                <div class="clear"></div>
+<?	
+			}
+		
 ?>
     </fieldset>
