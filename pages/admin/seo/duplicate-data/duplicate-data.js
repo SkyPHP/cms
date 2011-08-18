@@ -2,7 +2,7 @@ $(function() {
 	
 	table = $('#table').val();
 	
-	$('.filter').live('click',function(e) {
+	$('.filter').live('click',function() {
 		$this = $(this);
 		filter = $this.attr('filter');
 		$this.css('border-bottom', 'none');
@@ -11,7 +11,7 @@ $(function() {
 		});
 	});
 	
-	$('.filter-on').die().live('click',function(e) {
+	$('.filter-on').live('click',function() {
 		$this = $(this);
 		filter = $this.attr('filter');
 		$('#'+filter).slideUp('fast',function() {
