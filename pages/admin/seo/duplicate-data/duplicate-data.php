@@ -34,7 +34,7 @@
 			$title .= '- Meta Description';
 		break;
 	}
-	snippet::tab_redirect($tabs);
+	snippet::tab_redirect($p->tabs);
 	
 	$p->template('seo','top');	
 	
