@@ -44,7 +44,13 @@ $(function() {
 	});
 	
 	$('#container').live('click',function () {
-		alert('clicked');
+		$('.filter-on').slideUp('fast',function() {
+			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');
+		});
 	});
+	
+	$('.filter-list').live('click',function() {
+		return false;	
+	})
 	
 });
