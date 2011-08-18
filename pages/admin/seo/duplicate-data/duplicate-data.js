@@ -1,5 +1,19 @@
+var mouse_is_inside = false;
+
 $(function() {
-	
+
+    $('.filter-area').hover(function(){ 
+        mouse_is_inside=true; 
+    }, function(){ 
+        mouse_is_inside=false; 
+    });
+
+    $("#container").mouseup(function(){ 
+        if(! mouse_is_inside) $('.filter-on').slideUp('fast',function() {
+			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');	
+		});
+    });
+
 	table = $('#table').val();
 	
 	$('.filter').live('click',function() {
