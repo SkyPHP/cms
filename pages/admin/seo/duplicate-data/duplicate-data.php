@@ -71,12 +71,12 @@
         <input type="text" id="final-phrase" style="width:93%;" readonly  /> <input type="button" value="save" id="save-final" />
     </fieldset>
     
-    
+    <div style="margin: 5px 0;">
      	<label for="auto-switch-on">Manual Permetation</label> <input type="radio" id="auto-switch-on" value="listing" class="a-or-m-switch" name="auto-switch" />&nbsp;&nbsp;
         <label for="auto-switch-on">Auto Permetation</label> <input type="radio" id="auto-switch-on" value="auto" class="a-or-m-switch" name="auto-switch" />
             <option value="auto">- On (auto)-</option>
     	</select>
-  
+  	</div>
     
     <div id="auto" class="a-or-m" style="display:none;">
         <h2>Auto</h2>
