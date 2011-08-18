@@ -2,7 +2,7 @@ $(function() {
 	
 	table = $('#table').val();
 	
-	$('.filter').die().live('click',function(e) {
+	$('.filter').live('click',function(e) {
 		$this = $(this);
 		filter = $this.attr('filter');
 		$this.css('border-bottom', 'none');
