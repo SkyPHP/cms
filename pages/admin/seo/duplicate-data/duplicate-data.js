@@ -55,4 +55,10 @@ $(function() {
 		$('#final-phrase').val(val);
 	});
 	
+	$('#auto-switch-dd').live('change',function() {
+		$('.a-or-m').slideUp('fast',function() {
+			$('#'+$(this).val()).slideDown('fast');
+		});
+	})
+	
 });

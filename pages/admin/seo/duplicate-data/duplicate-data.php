@@ -70,7 +70,22 @@
     	<legend class="legend">Final Phrase</legend>
         <input type="text" id="final-phrase" style="width:93%;" readonly  /> <input type="button" value="save" id="save-final" />
     </fieldset>
-    <div id="listing">
+    
+    
+    <div id="auto-switch" class="a-or-m">
+    	<label for="auto-switch-dd">Auto On/Off</label>
+    	<select id="auto-switch-dd">
+        	<option>Manual</option>
+            <option>Auto</option>
+    	</select>
+    </div>
+    
+    <div id="auto">
+        	
+    </div>
+    
+    
+    <div id="listing" class="a-or-m">
        <? include ('pages/admin/seo/duplicate-data/ajax/filter-listing.php'); ?>
     </div>
 <?	
