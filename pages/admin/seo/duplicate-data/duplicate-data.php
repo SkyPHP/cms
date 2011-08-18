@@ -72,7 +72,7 @@
     </fieldset>
     
     
-    <div id="auto-switch" class="a-or-m">
+    <div id="auto-switch" style="margin-top:10px;">
     	<label for="auto-switch-dd">Auto On/Off</label>
     	<select id="auto-switch-dd">
         	<option>Manual</option>
@@ -80,13 +80,16 @@
     	</select>
     </div>
     
-    <div id="auto">
-        	
+    <div id="auto" class="a-or-m">
+        <h2>Auto</h2>
     </div>
     
     
     <div id="listing" class="a-or-m">
-       <? include ('pages/admin/seo/duplicate-data/ajax/filter-listing.php'); ?>
+    	<h2>Manual</h2>
+<? 		
+		include ('pages/admin/seo/duplicate-data/ajax/filter-listing.php'); 
+?>
     </div>
 <?	
 	$p->template('seo','bottom');	
