@@ -9,8 +9,8 @@ $(function() {
     });
 
     $("#container").mouseup(function(){ 
-        if(! mouse_is_inside) $('.filter-on').slideUp('fast',function() {
-			$('.filter-area').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');	
+        if(! mouse_is_inside) $('.filter-area').slideUp('fast',function() {
+			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');	
 		});
     });
 
