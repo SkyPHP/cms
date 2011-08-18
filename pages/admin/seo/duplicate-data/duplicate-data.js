@@ -42,9 +42,4 @@ $(function() {
 		$('#final-phrase').val(val);
 	});
 	
-	$('#container').live('click',function () {
-		$('.filter-list').slideUp('fast',function() {
-			$('.filter-on').removeClass('filter-on').addClass('filter').css('border-bottom', '2px solid #999');
-		});
-	});
 });
