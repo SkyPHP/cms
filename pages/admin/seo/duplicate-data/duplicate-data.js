@@ -8,17 +8,18 @@ $(function() {
 		$this.css('border-bottom', 'none');
 		$('#'+filter).slideDown('fast',function() {
 			$(this).removeClass('filter').addClass('filter-on');
-			e.stopPropagation();
 		});
+		e.stopPropagation();
 	});
 	
-	$('.filter-on').die().live('click',function() {
+	$('.filter-on').die().live('click',function(e) {
 		$this = $(this);
 		filter = $this.attr('filter');
 		$('#'+filter).slideUp('fast',function() {
 			$this.css('border-bottom', '2px solid #999');
 		});
 		$(this).removeClass('filter-on').addClass('filter');
+		e.stopPropagation();
 		
 	});
 	
