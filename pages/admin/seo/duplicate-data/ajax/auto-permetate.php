@@ -11,9 +11,12 @@
 			}
 		}
 		$or = implode(' OR ',$o);
-		if ($type == 'paragraph') 
+		if ($type == 'paragraph') {
+			$field = 'sentence';
 			$listing = aql::select("dup_sentence { sentence, volume order by sentence asc }",array('dup_sentence'=>array('where'=>$w)));
+		}
 		else {
+			$field = 'phrase';
 			$width = 310;
 			if ($or) {
 				if (strpos($or,'OR') < 5) $or = preg_replace('/ OR /','',$or,1);
@@ -29,24 +32,14 @@
     	<legend class="legend">Auto Permetation</legend>
 <?
 			foreach ($listing as $data) {
-				$p1 = $data[$field];
+				$phrase = $data[$field];
+				$p1 = $phrase;
 				foreach ($listing as $data2) {
-					if ($data2[$table.'_id'] != $data[$table.'_id']) $p2 = $data2[$field];
-					foreach ($listing as $data3) {
-						if ($data2[$table.'_id'] != $data[$table.'_id'] && $data2[$table.'_id'] != $data3[$table.'_id'] && $data3[$table.'_id'] != $data[$table.'_id'] ) $p3 = $data3[$field];
+					$phrase .= $data[$field];
+					$p2 = $data2[$field];
+					foreach($listing as $data3) {
+						$phase .= $data[$field];
 					}
-				}
-				$full_phrase[1][] = $p1.' '.$p2.' '.$p3;
-				$full_phrase[2][] = $p1.' '.$p3.' '.$p2;
-				$full_phrase[3][] = $p2.' '.$p3.' '.$p1;
-				$full_phrase[4][] = $p2.' '.$p1.' '.$p3;
-				$full_phrase[5][] = $p3.' '.$p2.' '.$p1;
-				$full_phrase[6][] = $p3.' '.$p1.' '.$p2;
-				
-			}
-			foreach ($full_phrase as $choice => $phrase) {
-				foreach ($phrase as $ph) {
-					echo "[".$choice."] ".$ph."<br>";
 				}
 			}
 ?>
