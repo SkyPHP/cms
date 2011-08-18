@@ -1214,8 +1214,20 @@ class media {
 //		return $sky_media_path . $vfolder_path . $instance . $slug . '.' . $file_type;
 //	}//function local_path
 
-
 	function gallery($settings){
+		echo '<gallery vfolder="'.$settings['vfolder'].'" ';
+		if ($settings['image_width']) echo 'image_width="'.$settings['image_width'].'" '; 
+		else if ($settings['width']) echo 'image_width="'.$settings['width'].'" '; 
+		if ($settings['image_height']) echo 'image_height="'.$settings['image_height'].'" ';
+		else if ($settings['height']) echo 'image_height="'.$settings['height'].'" ';
+		if ($settings['thumb_width']) echo 'thumb_width="'.$settings['thumb_width'].'" ';
+		if ($settings['thumb_height']) echo 'thumb_width="'.$settings['thumb_height'].'" ';
+		if ($settings['num_thumbs']) echo 'num_thumbs="'.$settings['num_thumbs'].'" ';
+		if ($settings['autoscroll']) echo 'autoscroll="true" ';
+		echo '></gallery>';
+	}
+
+	function gallery_old($settings){
 			global $p;
 			$p->js[] = "/lib/js/jquery.easing.1.1.1.js";
 			$p->js[] = "/lib/js/jquery.cycle.all.js"; 

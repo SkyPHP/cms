@@ -1,0 +1,5 @@
+person_cookie {
+	person_id,
+	cookie,
+	token
+}
