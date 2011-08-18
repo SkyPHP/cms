@@ -23,7 +23,7 @@ $(function() {
 	$('.filter_cb').die().live('click focusout',function(e) {
 		if (e.type == 'focusout') {
 			$('.filter-area').slideUp('fast',function() {
-				('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');
+				$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');
 			});
 		}
 		else {
@@ -45,9 +45,14 @@ $(function() {
 			if ($(this).attr('checked')) {
 				val += ' '+$(this).attr('phrase');	
 			}
-		});
-		
+		});		
 		$('#final-phrase').val(val);
-	})
+	});
+	
+	$().live('click',function(){
+		$('#'+filter).slideUp('fast',function() {
+			$this.css('border-bottom', '2px solid #999');
+		});
+	});
 	
 });

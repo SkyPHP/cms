@@ -72,7 +72,7 @@
     </fieldset>
     <div id="listing">
         <input type="hidden" id="or" value="" />
-   		<fieldset style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
+   		<fieldset class="list" style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
     		<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>1 (<?=$count?> Phrases)</legend>
 <?
 			foreach($listing as $data) {
@@ -84,7 +84,7 @@
 ?>
     	</fieldset>
         
-        <fieldset style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
+        <fieldset class="list" style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
     		<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>2 (<?=$count?> Phrases)</legend>
 <?
 			foreach($listing as $data) {
@@ -96,7 +96,7 @@
 ?>
     	</fieldset>
         
-        <fieldset style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
+        <fieldset class="list" style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
     		<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>3 (<?=$count?> Phrases)</legend>
 <?
 			foreach($listing as $data) {
@@ -109,7 +109,7 @@
     	</fieldset>
         
 <? if ($type == 'paragraph') { ?>
-		<fieldset style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
+		<fieldset class="list" style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
     		<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>4 (<?=$count?> Phrases)</legend>
 <?
 			foreach($listing as $data) {
