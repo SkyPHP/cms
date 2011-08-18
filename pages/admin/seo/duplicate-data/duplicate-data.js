@@ -2,12 +2,13 @@ $(function() {
 	
 	table = $('#table').val();
 	
-	$('.filter').die().live('click',function() {
+	$('.filter').die().live('click',function(e) {
 		$this = $(this);
 		filter = $this.attr('filter');
 		$this.css('border-bottom', 'none');
 		$('#'+filter).slideDown('fast');
 		$(this).removeClass('filter').addClass('filter-on');
+		e.stopPropagation();
 	});
 	
 	$('.filter-on').die().live('click',function() {
