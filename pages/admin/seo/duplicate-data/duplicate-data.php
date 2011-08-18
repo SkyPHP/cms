@@ -83,7 +83,7 @@
     </div>
     
     
-    <div id="listing" class="a-or-m on">
+    <div id="listing" class="a-or-m-on">
     	<h2>Manual</h2>
 <? 		
 		include ('pages/admin/seo/duplicate-data/ajax/filter-listing.php'); 
