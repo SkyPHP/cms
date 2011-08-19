@@ -72,11 +72,11 @@ $(function() {
 	})
 	
 	$('#save-final').live('click',function() {
-		var val = $('#final_phrase').val();
-		var p1 = $('#final_phrase').attr('p1');
-		var p2 = $('#final_phrase').attr('p2');
-		var p3 = $('#final_phrase').attr('p3');
-		var p4 = $('#final_phrase').attr('p4');
+		var val = $('#final-phrase').val();
+		var p1 = $('#final-phrase').attr('p1');
+		var p2 = $('#final-phrase').attr('p2');
+		var p3 = $('#final-phrase').attr('p3');
+		var p4 = $('#final-phrase').attr('p4');
 		if (val) {
 			var data = {
 				'phrase': val,
