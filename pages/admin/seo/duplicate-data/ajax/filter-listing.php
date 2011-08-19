@@ -35,7 +35,7 @@
 				
 				$x++;
 				if ($x == 1) print_pre($data);
-				if ($x == 1) echo aql::sql("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume where market != '' and base != '' and volume > 0 {$where} order by volume DESC, phrase asc }");
+				if ($x == 1) print_pre(aql::sql("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume where market != '' and base != '' and volume > 0 {$where} order by volume DESC, phrase asc }"));
 ?>
 				<div style="width:50px; float:left; margin-right:5px">(<?=$data['volume']?>)</div><div style="float:left;"> <input type="radio" name="phrase1" part="1" phrase="<?=$data['phrase']?>" phrase_id="<?=$data['phrase_id']?>" class="listing_radio" id="<?=$data['lower_phrase']?>" /> <label for="<?=$data['lower_phrase']?>"><?=$data['lower_phrase']?></label></div>
                 <div class="clear"></div>
