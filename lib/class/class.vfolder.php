@@ -17,16 +17,17 @@ class vfolder{
 
    public $func_boilerplate = NULL;
 
+   public $MAX_FILE_SIZE = NULL;
+
+   public $default_gravity = NULL;
+
    public $initialized = NULL;
 
    public function __construct($params = NULL){
       $this->log = array();
       $this->errors = array();
 
-      #this should be in a config
-      global $vfolder_max_log_size;
-      $vfolder_max_log_size || ($vfolder_max_log_size = 50);
-      $this->max_log_size = $vfolder_max_log_size;
+      $this->max_log_size = 50;
  
       if(func_num_args() > 1){
          $args = func_get_args(); 
@@ -40,12 +41,19 @@ class vfolder{
          $username || ($username = $params['accounts_id']);
 
          $password = $params['password'];
-         $server_url = $params['server_url'];
+
+         ($server_url = $params['server_url']) || ($server_url = 'vfolder.net/v1');
+
          $secure = $params['secure'];
          $files_domain = $params['files_domain'];
-         if($params['max_log_size']){
-            $this->max_log_size = $params['max_log_size'];
-         }
+
+         ($this->max_log_size = $params['max_log_size']) || ($this->max_log_size = 50);
+
+         ($this->MAX_FILE_SIZE = $params['MAX_FILE_SIZE']) || ($this->MAX_FILE_SIZE = 300000000);
+
+         ($this->default_gravity = $params['default_gravity']) || ($this->default_gravity = 'Center');
+
+         $skip_request = $params['skip_request'];
       }
 
       if(!($username && $password)){
@@ -60,15 +68,6 @@ class vfolder{
          $this->func_boilerplate['items'] = $this->func_boilerplate['items/edit'] = array(
             'files_domain' => $files_domain
          );
-      }
-
-      if(!$server_url){
-         #this should be in a config
-         global $vfolder_url;
-
-         if(!($server_url = $vfolder_url)){
-            $server_url = 'vfolder.net/v1';
-         }
       }
 
       if($secure){
@@ -101,11 +100,8 @@ class vfolder{
       $this->password = $password;
 
       $this->initialized = true;
-
-      #this should be in a config
-      global $vfolder_skip_request;
   
-      if(!$vfolder_skip_request){ 
+      if(!$skip_request){ 
          $request = $this->make_request();
     
          if(!(is_array($request) && $request['authenticated'])){
@@ -256,12 +252,8 @@ class vfolder{
          return(NULL);
       }
 
-      #this should be in a config
-      global $vfolder_MAX_FILE_SIZE;
-      $vfolder_MAX_FILE_SIZE || ($vfolder_MAX_FILE_SIZE = 300000);
-
-      if(filesize($file) > $vfolder_MAX_FILE_SIZE){
-         $this->write_log("File '$file' exceeds MAX_FILE_SIZE of $vfolder_MAX_FILE_SIZE, will not upload to server", true);
+      if(filesize($file) > $this->MAX_FILE_SIZE){
+         $this->write_log("File '$file' exceeds MAX_FILE_SIZE of {$this->MAX_FILE_SIZE}, will not upload to server", true);
 
          return(NULL);
       }
@@ -312,6 +304,19 @@ class vfolder{
 
          unset($extra_params);
 
+         $_args = array_reverse($args);
+
+         while(count($_args) && !($element = array_shift($_args))){
+         }
+
+         if($element){
+            array_unshift($_args, $element);
+         }
+
+         $args = array_reverse($_args);
+
+         unset($element, $_args);
+
          switch(count($args)){
             case(1):
                if(!($args[0] = (int) $args[0])){
@@ -327,7 +332,7 @@ class vfolder{
                );
                break;
             case(2):
-               if(!(($args[0] = (int) $args[0]) && ($args[1] = (int) $args[1]))){
+               if(!(($args[0] === NULL || ( $args[0] = (int) $args[0])) && ($args[1] === NULL || ($args[1] = (int) $args[1])))){
                   $this->write_log('Invalid parameters given, will not get item', true);
                   return(NULL);
                }
@@ -364,10 +369,7 @@ class vfolder{
                }
 
                if($args[2] === true){
-                  #this should be defined in a config
-                  global $vfolder_default_gravity;
-                  $vfolder_default_gravity || ($vfolder_default_gravity = 'Center');
-                  $params[0]['gravity'] = $vfolder_default_gravity;
+                  $params[0]['gravity'] = $this->default_gravity;
                }elseif(is_string($args[2])){
                   $params[0]['gravity'] = $args[2];
                }elseif(is_array($args[2])){
