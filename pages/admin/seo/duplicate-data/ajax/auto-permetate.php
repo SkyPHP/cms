@@ -11,9 +11,12 @@
 			}
 		}
 		$or = implode(' OR ',$o);
-		if ($type == 'paragraph') 
+		if ($type == 'paragraph') {
+			$field = 'sentence';
 			$listing = aql::select("dup_sentence { sentence, volume order by sentence asc }",array('dup_sentence'=>array('where'=>$w)));
+		}
 		else {
+			$field = 'phrase';
 			$width = 310;
 			if ($or) {
 				if (strpos($or,'OR') < 5) $or = preg_replace('/ OR /','',$or,1);
@@ -23,31 +26,47 @@
 			$listing = aql::select("dup_phrase_data { lower(phrase) as lower_phrase, phrase, volume where market != '' and base != '' and volume > 0 {$where} order by volume DESC, phrase asc }");
 		}
 	}
+	$phrases = array();
 ?>
     <input type="hidden" id="or" value="<?=$or?>" />
-	<fieldset>
-    	<legend class="legend">Auto Permetation</legend>
+	<fieldset style="width:70%;">
+    	<legend class="legend">Auto Permetation List</legend>
 <?
 			foreach ($listing as $data) {
-				$p1 = $data[$field];
-				foreach ($listing as $data2) {
-					if ($data2[$table.'_id'] != $data[$table.'_id']) $p2 = $data2[$field];
-					foreach ($listing as $data3) {
-						if ($data2[$table.'_id'] != $data[$table.'_id'] && $data2[$table.'_id'] != $data3[$table.'_id'] && $data3[$table.'_id'] != $data[$table.'_id'] ) $p3 = $data3[$field];
+				$auto_data[]=$data[$field]; // get the phrase or sentence
+				$count_data[] = $data['volume'];
+			}
+			
+			$count = count($listing);
+			if (count($listing) > 20 )$count = 20;
+			
+			for ($x=0;$x<$count;$x++) {
+				for ($y=0;$y<$count;$y++) {
+					for ($z=0;$z<$count;$z++) {
+						if ($x != $y && $x != $z && $y != $z) {
+							$p1[] = $auto_data[$x];
+							$p2[] = $auto_data[$y];
+							$p3[] = $auto_data[$z];
+							$counts[] = $count_data[$x] + $count_data[$y] + $count_data[$z];
+						}
 					}
 				}
-				$full_phrase[1][] = $p1.' '.$p2.' '.$p3;
-				$full_phrase[2][] = $p1.' '.$p3.' '.$p2;
-				$full_phrase[3][] = $p2.' '.$p3.' '.$p1;
-				$full_phrase[4][] = $p2.' '.$p1.' '.$p3;
-				$full_phrase[5][] = $p3.' '.$p2.' '.$p1;
-				$full_phrase[6][] = $p3.' '.$p1.' '.$p2;
-				
 			}
-			foreach ($full_phrase as $choice => $phrase) {
-				foreach ($phrase as $ph) {
-					echo "[".$choice."] ".$ph."<br>";
-				}
-			}
+			$count = count($counts);
 ?>
+			<div style="float:left; margin-right:20px;">
+<?
+				for($key=0; $key<$count;$key++) {
+?>
+					<div style="width:70px; margin-top:3px; margin-right:5px; float:left">(<?=number_format($counts[$key])?>)</div><div style="float:left; margin-top:3px;"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrases[$key]?>"> <?=$p1[$key]?> <strong><?=$p2[$key]?></strong> <?=$p3[$key]?></div>
+					<div class="clear"></div>
+<?	
+					if (intval($count /2) == $key) {
+?>
+						</div><div style="float:right;">
+<?
+					}
+				}
+?>
+			</div>
     </fieldset>
