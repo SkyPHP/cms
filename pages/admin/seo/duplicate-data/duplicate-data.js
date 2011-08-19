@@ -50,20 +50,18 @@ $(function() {
 	
 	$('.listing_radio').die().live('click',function() {
 		val = '';
+		vals = new Array();
 		$('.listing_radio').each(function(index) {
 			if ($(this).attr('checked')) {
 				val += ' '+$(this).attr('phrase');
-				if (index == 0) p1 = $(this).attr('phrase');
-				else if (index == 1) p2 = $(this).attr('phrase_id');
-				else if (index == 2) p3 = $(this).attr('phrase_id');
-				else if (index == 3) p4 = $(this).attr('phrase_id');
+				vals.push($(this).attr('phrase_id'));
 			}
-		});		
+		});	
 		$('#final-phrase').val(val);
-		$('#final-phrase').attr('p1',p1);
-		$('#final-phrase').attr('p2',p1);
-		$('#final-phrase').attr('p3',p1);
-		if (p4) $('#final-phrase').attr('p4',p1);
+		$('#final-phrase').attr('p1',vals[0]);
+		$('#final-phrase').attr('p2',vals[1]);
+		$('#final-phrase').attr('p3',vals[2]);
+		if (vals[3]) $('#final-phrase').attr('p4',vals[3]);
 	});
 	
 	$('.a-or-m-switch').die().live('change',function() {
