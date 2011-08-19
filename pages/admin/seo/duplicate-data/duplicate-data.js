@@ -66,11 +66,14 @@ $(function() {
 	})
 	
 	$('#save-final').live('click',function() {
-		$this = $(this);
-		var data = {
-			'phrase': $this.val()	
-		};
-		aql.save('dup_data',data);
+		val = $('#final_phrase').val();
+		if (val) {
+			var data = {
+				'phrase': val
+			};
+			aql.save('dup_data',data);
+		}
+		else alert('Please select your choices from the lists below.');
 	});
 	
 });
