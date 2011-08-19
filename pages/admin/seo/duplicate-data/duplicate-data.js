@@ -65,4 +65,12 @@ $(function() {
 		}).removeClass('a-or-m-on');
 	})
 	
+	$('#save-final').live('click',function() {
+		$this = $(this);
+		var data = {
+			'phrase': $this.val()	
+		};
+		aql.save('dup_data',data);
+	});
+	
 });
