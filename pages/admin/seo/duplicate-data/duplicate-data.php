@@ -84,7 +84,7 @@
     <div id="manual" <? if ($_GET['area'] == 'auto') echo 'style="display:none;"'; else echo 'class="a-or-m-on"'; ?>>
         <fieldset style="width:80%">
             <legend class="legend">Final Phrase</legend>
-            <input type="button" value="save" id="save-final" /> <input type="text" id="final-phrase" style="width:93%;" readonly  />
+            <input type="button" value="save" id="save-final" /> <input type="text" id="final-phrase" style="width:93%; font-size:16px;" readonly  />
         </fieldset>   
         <div id="listing">
 <? 		

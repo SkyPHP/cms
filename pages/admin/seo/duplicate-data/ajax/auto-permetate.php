@@ -58,7 +58,7 @@
 <?
 				for($key=0; $key<$count;$key++) {
 ?>
-					<div style="width:70px; margin-right:5px; float:left">(<?=number_format($counts[$key])?>)</div><div style="float:left"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrases[$key]?>"> <?=$p1[$key]?> <strong><?=$p2[$key]?></strong> <?=$p3[$key]?></div>
+					<div style="width:70px; margin-top:3px; margin-right:5px; float:left">(<?=number_format($counts[$key])?>)</div><div style="float:left; margin-top:3px;"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrases[$key]?>"> <?=$p1[$key]?> <strong><?=$p2[$key]?></strong> <?=$p3[$key]?></div>
 					<div class="clear"></div>
 <?	
 					if (intval($count /2) == $key) {
