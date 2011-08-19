@@ -50,12 +50,20 @@ $(function() {
 	
 	$('.listing_radio').die().live('click',function() {
 		val = '';
-		$('.listing_radio').each(function() {
+		$('.listing_radio').each(function(index) {
 			if ($(this).attr('checked')) {
-				val += ' '+$(this).attr('phrase');	
+				val += ' '+$(this).attr('phrase');
+				if (index == 0) p1 = $(this).attr('phrase');
+				else if (index == 1) p2 = $(this).attr('phrase_id');
+				else if (index == 2) p3 = $(this).attr('phrase_id');
+				else if (index == 3) p4 = $(this).attr('phrase_id');
 			}
 		});		
 		$('#final-phrase').val(val);
+		$('#final-phrase').attr('p1',p1);
+		$('#final-phrase').attr('p2',p1);
+		$('#final-phrase').attr('p3',p1);
+		if (p4) $('#final-phrase').attr('p4',p1);
 	});
 	
 	$('.a-or-m-switch').die().live('change',function() {
@@ -66,10 +74,18 @@ $(function() {
 	})
 	
 	$('#save-final').live('click',function() {
-		val = $('#final_phrase').val();
+		var val = $('#final_phrase').val();
+		var p1 = $('#final_phrase').attr('p1');
+		var p2 = $('#final_phrase').attr('p2');
+		var p3 = $('#final_phrase').attr('p3');
+		var p4 = $('#final_phrase').attr('p4');
 		if (val) {
 			var data = {
-				'phrase': val
+				'phrase': val,
+				'phrase1__dup_phrase_data_id' : p1,
+				'phrase2__dup_phrase_data_id' : p2,
+				'phrase3__dup_phrase_data_id' : p3,
+				'phrase4__dup_phrase_data_id' : p4
 			};
 			aql.save('dup_data',data); 
 		}
