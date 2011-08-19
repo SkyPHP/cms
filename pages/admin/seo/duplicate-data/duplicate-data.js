@@ -61,7 +61,7 @@ $(function() {
 	$('.a-or-m-switch').die().live('change',function() {
 		val = $(this).val();
 		$('.a-or-m-on').slideUp('fast',function() {
-			$('#'+val).addClass('a-or-m-on').slideDown('slow');
+			$('#'+val).addClass('a-or-m-on').slideDown('fast');
 		}).removeClass('a-or-m-on');
 	})
 	
