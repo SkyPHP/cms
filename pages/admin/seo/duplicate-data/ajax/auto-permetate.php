@@ -38,7 +38,7 @@
 			}
 			
 			$count = count($listing);
-			if (count($listing) > 50 )$count = 50;
+			if (count($listing) > 20 )$count = 20;
 			
 			for ($x=0;$x<$count;$x++) {
 				for ($y=0;$y<$count;$y++) {
