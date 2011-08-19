@@ -37,7 +37,9 @@
 				$count_data[] = $data['volume'];
 			}
 			
-			$count = 100;
+			$count = count($listing);
+			if (count($listing) > 50 )$count = 50;
+			
 			for ($x=0;$x<$count;$x++) {
 				for ($y=0;$y<$count;$y++) {
 					for ($z=0;$z<$count;$z++) {
