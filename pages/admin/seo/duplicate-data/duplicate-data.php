@@ -85,7 +85,7 @@
         <fieldset style="width:80%">
             <legend class="legend">Final Phrase</legend>
             <input type="text" id="final-phrase" style="width:93%; font-size:16px;" readonly  /><br>
-			<input type="button" value="save" id="save-final" /> <input type="button" value="clear" id="clear-all" />
+			<div style="margin-top:5px"><input type="button" value="save" id="save-final" /> <input type="button" value="clear" id="clear-all" /></div>
         </fieldset>   
         <div id="listing">
 <? 		
