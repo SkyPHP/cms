@@ -60,7 +60,7 @@
 					<div style="width:70px; margin-right:5px; float:left">(<?=$counts[$key]?>)</div><div style="float:left"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrases[$key]?>"> <?=$phrases[$key]?></div>
 					<div class="clear"></div>
 <?	
-					if (inval($count /2) == $key) {
+					if (intval($count /2) == $key) {
 ?>
 						</div><div style="float:left;">
 <?
