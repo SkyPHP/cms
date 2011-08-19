@@ -43,6 +43,9 @@ $(function() {
 		$.post('/admin/seo/duplicate-data/ajax/filter-listing',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
 			$('#listing').html(data);
 		});
+		$.post('/admin/seo/duplicate-data/ajax/auto-permetate',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
+			$('#auto').html(data);
+		});
 	});
 	
 	$('.listing_radio').die().live('click',function() {
