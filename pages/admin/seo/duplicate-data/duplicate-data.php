@@ -56,8 +56,8 @@
 	$rs = aql::select("dup_filters { name where type = '{$type}' order by id ASC }");
 ?>	
 	<div style="margin: 15px 0 0 0;">
-     	<input type="radio" id="auto-switch-off" checked value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-off">Manual Permetations</label><br>
-        <input type="radio" id="auto-switch-on" value="auto" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Auto Permetations</label><br>
+     	<input type="radio" id="auto-switch-off" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-off">Manual Permetations</label><br>
+        <input type="radio" id="auto-switch-on" <? if ($_GET['area'] == 'auto') echo 'checked' ?> value="auto" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Auto Permetations</label><br>
   	</div>
     
 	<div style="padding-top:10px;">
@@ -75,13 +75,13 @@
 		<div class="clear"></div>
 	</div>
     
-    <div id="auto" style="display:none;">
+    <div id="auto" <? if ($_GET['area'] != 'auto') echo 'style="display:none;"'; else echo 'class="a-or-m-on"'; ?>>
 <?
 		include ('pages/admin/seo/duplicate-data/ajax/auto-permetate.php');
 ?>
     </div>
     
-    <div id="manual" class="a-or-m-on">
+    <div id="manual" <? if ($_GET['area'] == 'auto') echo 'style="display:none;"'; else echo 'class="a-or-m-on"'; ?>>
         <fieldset style="width:80%">
             <legend class="legend">Final Phrase</legend>
             <input type="button" value="save" id="save-final" /> <input type="text" id="final-phrase" style="width:93%;" readonly  />
