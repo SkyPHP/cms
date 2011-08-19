@@ -30,7 +30,10 @@
     <fieldset style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
     		<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>1 (<?=$count?> Phrases)</legend>
 <?
+			$x=0;
 			if ($listing) foreach($listing as $data) {
+				$x++;
+				if ($x == 1) print_pre($data);
 ?>
 				<div style="width:50px; float:left; margin-right:5px">(<?=$data['volume']?>)</div><div style="float:left;"> <input type="radio" name="phrase1" part="1" phrase="<?=$data['phrase']?>" phrase_id="<?=$data['phrase_id']?>" class="listing_radio" id="<?=$data['lower_phrase']?>" /> <label for="<?=$data['lower_phrase']?>"><?=$data['lower_phrase']?></label></div>
                 <div class="clear"></div>
