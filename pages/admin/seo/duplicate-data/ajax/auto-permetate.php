@@ -29,7 +29,7 @@
 	$phrases = array();
 ?>
     <input type="hidden" id="or" value="<?=$or?>" />
-	<fieldset style="width:90%;">
+	<fieldset style="width:70%;">
     	<legend class="legend">Auto Permetation List</legend>
 <?
 			foreach ($listing as $data) {
