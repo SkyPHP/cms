@@ -85,7 +85,7 @@ $(function() {
 				'phrase3__dup_phrase_data_id' : p3,
 				'phrase4__dup_phrase_data_id' : p4
 			};
-			aql.save('dup_data',data); 
+			aql.save('dup_phrase',data); 
 		}
 		else alert('Please select your choices from the lists below.');
 	});
