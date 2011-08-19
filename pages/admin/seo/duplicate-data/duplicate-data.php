@@ -44,7 +44,7 @@
 		$table = 'dup_phrase_data';
 		$field = 'phrase';
 		$width = 310;
-		$listing = aql::select($table." { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume where market != '' and base != '' and volume > 0 order by volume DESC, phrase asc }"); 
+		$listing = aql::select($table." { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume where market != '' and market is not null and base != '' and base is not null and volume > 0 order by volume DESC, phrase asc }"); 
 	}
 	else if ($type == 'paragraph') {
 		$table = 'dup_sentence';

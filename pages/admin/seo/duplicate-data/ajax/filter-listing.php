@@ -20,7 +20,7 @@
 				$where = ' and ( '.$or.' ) ';
 			}
 			//echo $where;
-			$listing = aql::select("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume where market != '' and base != '' and volume > 0 {$where} order by volume DESC, phrase asc }");
+			$listing = aql::select("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume where market != '' and market is not null and base != '' and base is not null and volume > 0 {$where} order by volume DESC, phrase asc }");
 		}
 	}
 	$count = count($listing);
