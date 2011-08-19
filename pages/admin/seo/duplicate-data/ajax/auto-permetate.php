@@ -42,7 +42,6 @@
 				for ($y=0;$y<$count;$y++) {
 					for ($z=0;$z<$count;$z++) {
 						if ($x != $y && $x != $z && $y != $z) {
-							$phrases[] = $auto_data[$x].' '.$auto_data[$y].' '.$auto_data[$z];
 							$p1[] = $auto_data[$x];
 							$p2[] = $auto_data[$y];
 							$p3[] = $auto_data[$z];
@@ -57,7 +56,7 @@
 <?
 				for($key=0; $key<$count;$key++) {
 ?>
-					<div style="width:70px; margin-right:5px; float:left">(<?=number_format($counts[$key])?>)</div><div style="float:left"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrases[$key]?>"> <?=$phrases[$key]?></div>
+					<div style="width:70px; margin-right:5px; float:left">(<?=number_format($counts[$key])?>)</div><div style="float:left"><input type="checkbox" p1="<?=$p1[$key]?>" p2="<?=$p2[$key]?>" p3="<?=$p3[$key]?>" value="<?=$phrases[$key]?>"> <?=$p1[$key]?> <strong><?=$p2[$key]?></strong> <?=$p3[$key]?></div>
 					<div class="clear"></div>
 <?	
 					if (intval($count /2) == $key) {
