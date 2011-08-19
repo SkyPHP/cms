@@ -62,7 +62,7 @@
 <?	
 					if (intval($count /2) == $key) {
 ?>
-						</div><div style="float:left;">
+						</div><div style="float:right;">
 <?
 					}
 				}
