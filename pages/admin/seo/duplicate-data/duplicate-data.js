@@ -77,17 +77,26 @@ $(function() {
 		var p2 = $('#final-phrase').attr('p2');
 		var p3 = $('#final-phrase').attr('p3');
 		var p4 = $('#final-phrase').attr('p4');
+		var person_id = $('#person_id').val();
 		if (val) {
 			var data = {
 				'phrase': val,
 				'phrase1__dup_phrase_data_id' : p1,
 				'phrase2__dup_phrase_data_id' : p2,
 				'phrase3__dup_phrase_data_id' : p3,
-				'phrase4__dup_phrase_data_id' : p4
+				'phrase4__dup_phrase_data_id' : p4,
+				'mod__person_id' : person_id
 			};
 			aql.save('dup_phrase',data); 
 		}
 		else alert('Please select your choices from the lists below.');
+	});
+	
+	$('#clear-all').live('click',function() {
+		$('#final-phrase').val('');
+		$('.listing_radio').each(function(index) {
+			if ($(this).attr('checked')) $(this).attr('checked','');
+		});
 	});
 	
 });

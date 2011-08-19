@@ -27,6 +27,7 @@
 ?>
     <input type="hidden" id="or" value="<?=$or?>" />
     <input type="hidden" id="type" value="<?=$type?>" />
+	<input type="hidden" id="person_id" value="<?=PERSON_ID?>" />
     <fieldset style="width:<?=$width?>px; border: solid 1px #CCCCCC; padding: 15px; float:left; margin-right:10px;">
     		<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>1 (<?=$count?> Phrases)</legend>
 <?
