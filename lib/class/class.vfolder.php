@@ -354,9 +354,9 @@ class vfolder{
                   )
                );
  
-               if(($height && !is_int($height)) || ($width && !is_int($width)) || (!$height && !$width)){
-                  $params = false;
-                  break;
+               if(($height && !is_int($height = (int) $height)) || ($width && !is_int($width = (int) $width)) || (!$height && !$width)){
+                  $this->write_log('Invalid parameters given, will not get item', true);
+                  return(NULL);
                }
 
                if(!is_array($args[2]) && !$args[2]){
