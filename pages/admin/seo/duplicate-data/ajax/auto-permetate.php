@@ -50,7 +50,7 @@
 					}
 				}
 			}
-			$count = count($phrases);
+			$count = count($counts);
 ?>
 			<div style="float:left; margin-right:20px;">
 <?
