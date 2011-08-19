@@ -71,7 +71,7 @@ $(function() {
 			var data = {
 				'phrase': val
 			};
-			aql.save('dup_data',data);
+			aql.save('dup_data',data); 
 		}
 		else alert('Please select your choices from the lists below.');
 	});
