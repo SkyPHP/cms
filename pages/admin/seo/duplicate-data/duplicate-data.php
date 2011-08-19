@@ -56,8 +56,8 @@
 	$rs = aql::select("dup_filters { name where type = '{$type}' order by id ASC }");
 ?>	
 	<div style="margin: 15px 0 0 0;">
-     	<input type="radio" id="auto-switch-off" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-off">Manual Permetations</label><br>
-        <input type="radio" id="auto-switch-on" <? if ($_GET['area'] == 'auto') echo 'checked' ?> value="auto" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Auto Permetations</label><br>
+     	<input type="radio" id="auto-switch-off" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-off">Manual Permutations</label><br>
+        <input type="radio" id="auto-switch-on" <? if ($_GET['area'] == 'auto') echo 'checked' ?> value="auto" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Auto Permutations</label><br>
   	</div>
     
 	<div style="padding-top:10px;">
@@ -77,7 +77,7 @@
     
     <div id="auto" <? if ($_GET['area'] != 'auto') echo 'style="display:none;"'; else echo 'class="a-or-m-on"'; ?>>
 <?
-		include ('pages/admin/seo/duplicate-data/ajax/auto-permetate.php');
+		//include ('pages/admin/seo/duplicate-data/ajax/auto-permutate.php');
 ?>
     </div>
     
