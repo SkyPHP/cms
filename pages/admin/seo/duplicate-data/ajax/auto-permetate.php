@@ -30,7 +30,7 @@
 ?>
     <input type="hidden" id="or" value="<?=$or?>" />
 	<fieldset style="width:90%;">
-    	<legend class="legend">Auto Permetation</legend>
+    	<legend class="legend">Auto Permetation List</legend>
 <?
 			foreach ($listing as $data) {
 				$auto_data[]=$data[$field]; // get the phrase or sentence
