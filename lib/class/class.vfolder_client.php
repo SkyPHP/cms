@@ -1,5 +1,12 @@
 <?
 
+/* Warning about using memcache features!
+ *
+ * if you are using this client from more than one location
+ * all clients *should* be using the same memcached server
+ * otherwise there is no guarantee that cached vfolder server responses are up-to-date
+ */
+
 #vfolder client class
 class vfolder_client{
    public $username = NULL;
@@ -415,7 +422,7 @@ class vfolder_client{
          );
       }
 
-      if($this->memcache){
+      if($this->memcache && $decoded){
          $this->memcache_after_request($func, $id, $_post, $decoded);
       }
 
