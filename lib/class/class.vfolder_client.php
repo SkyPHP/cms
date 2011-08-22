@@ -310,7 +310,7 @@ class vfolder_client{
       }
 
       if(func_num_args() > 1){
-         $_args = $func_get_args; #array_reverse($args);
+         $_args = func_get_args(); #array_reverse($args);
 
          while(count($_args) && !($element = array_pop($_args))){
          }
