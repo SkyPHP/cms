@@ -12,6 +12,84 @@ class person extends model {
         'fields' => array('password')
     );
 
+    public function construct(){
+      //virtual properties
+      $this->addProperty("password1"); //password field 1 and 2 (validate same)
+      $this->addProperty("password2");
+      $this->addProperty("current_password"); //current_password (user change own password)
+
+
+    }
+
+    public function preValidate(){
+      //partial data update is allowed for existing accounts
+      if ($this->person_id) {
+        $this->preFetchRequiredFields( $this->person_id );
+      }
+      
+      //password validation
+      //we don't give direct access to the person's password field
+      //we take password1/password2 (and current password if it's person) 
+
+      if ($this->password1){ //is there a password request?
+        if ($this->password1 != $this->password2) { 
+          $this->_errors[] = "Passwords do not match";
+          return;
+        }
+        //error_log(json_encode($this->_data));
+        //        error_log("person id: " . $this->person_id);
+        //error_log("PERSON_ID: " . PERSON_ID);
+
+        if (PERSON_ID == $this->person_id){ //is this a user trying to change his own pw?
+          if ( Login::generateHash($this->current_password, $this->generateUserSalt() ) 
+               !=  aql::value( 'person.password_hash', PERSON_ID )  ) {
+            $this->_errors[] = "Incorrect password";
+            return;
+          }
+          //otherwise, self password change is valid
+          $this->password = $this->password1;
+
+        } else { //user trying to change someone else's password
+
+        //does this person have the rights to change the other person's password?
+        $aql = "ct_promoter_user {
+count(*)
+where person_id = ".PERSON_ID." and access_group ilike '%admin%'
+}
+ct_promoter_user as u on ct_promoter_user.ct_promoter_id = u.ct_promoter_id {
+where person_id = {$this->person_id} and access_group not ilike '%admin%'
+}
+";
+
+        $rs = aql::select( $aql );
+        if ($rs[0]['count'] == "0"){
+          error_log("count == 0");
+        } else {
+          error_log("count != 0");
+        }
+
+        }
+        
+
+      }
+      //for passwords we'll have virtual attributes current_password
+      // aql.value the password_hash. generate the one from current_password.
+      //compare. . see generateHash below
+
+      //check for current password. if not, then check that users has access to change password
+      //person logged in either a ct_admin (auth('ct_admin:*'))
+      //or that this person shares a ct_promoter with the user 
+      //
+
+      //same password
+      
+      //$this->password = password1
+
+      //if original password is not set, return
+      //
+
+    }
+
     public function generateUserSalt() {
         if (!$this->person_ide) return;
         return Login::generateUserSalt($this->person_ide);
