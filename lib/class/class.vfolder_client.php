@@ -30,6 +30,7 @@ class vfolder_client{
 
    public $memcache = NULL;
    public $memcache_key_prefix = NULL;
+   public $memcache_refresh = NULL;
 
    public $initialized = NULL;
 
@@ -66,6 +67,8 @@ class vfolder_client{
          if($params['memcache']){
             $this->memcache = $params['memcache'];
             ($this->memcache_key_prefix = $params['memcache_key_prefix']) || ($this->memcache_key_prefix = 'vfolder:');
+            ($this->memcache_refresh = $params['memcache_refresh']) || ($this->memcache_refresh = NULL);
+            ($this->memcache_debug = $params['memcache_debug']) || ($this->memcache_debug = NULL);
          }
 
          $skip_request = $params['skip_request'];
@@ -178,14 +181,26 @@ class vfolder_client{
          $this->write_log('No keys given, can not delete keys', true);
       }
 
+      if($this->memcache_debug){
+         ?>read: <?=$keys_key?> <?     
+      }
+
       $keys = $memcache->get($keys_key);
 
       foreach(explode("\n", $keys) as $count=>$key){
          if(!$key){
             continue;
          }
- 
+
+         if($this->memcache_debug){
+            ?>delete: <?=$key?> <?     
+         }
+
          $memcache->delete($key);      
+      }
+
+      if($this->memcache_debug){
+         ?>delete: <?=$keys_key?> <?     
       }
 
       $memcache->delete($keys_key);
@@ -206,6 +221,10 @@ class vfolder_client{
          return(NULL);
       }
 
+      if($this->memcache_debug){
+         ?>read: <?=$keys_key?> <?      
+      }
+
       $keys = $memcache->get($keys_key);
 
       $keys_arr = explode("\n", $keys);
@@ -223,8 +242,13 @@ class vfolder_client{
          $keys .= ($keys?"\n":'') . $key;
       }
 
-      $memcache->replace($keys_key, $keys) || ($memcache->set($keys_key, $keys));
-      $memcache->replace($key, $obj) || ($memcache->set($key, $obj));
+      ($memcache->replace($keys_key, $keys)) || ($memcache->set($keys_key, $keys));
+      ($memcache->replace($key, $obj)) || ($memcache->set($key, $obj));
+
+      if($this->memcache_debug){
+         ?>write: <?=$keys_key?> <?
+         ?>write: <?=$key?> <?
+      }
 
       return;
    }
@@ -251,7 +275,15 @@ class vfolder_client{
       switch($func){
          case('folders'):
          case('items'):
-            ($value = $memcache->get($key)) || ($value = NULL);
+            if(!$this->memcache_refresh){
+               if($this->memcache_debug){
+                  ?>read: <?=$key?> <?     
+               }
+
+               ($value = $memcache->get($key)) || ($value = NULL);
+            }else{
+               $value = NULL;
+            }
             break;
          default:
             return(NULL);
