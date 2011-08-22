@@ -69,9 +69,6 @@ class vf{
          $extra_params = array('files_domain' => self::$filesDomain);
       }
 
-      var_dump($items_id);
-      var_dump($params);
-
       return(self::$client->get_item($items_id, $params));
    }
 
