@@ -69,18 +69,21 @@ class vf{
          $extra_params = array('files_domain' => self::$filesDomain);
       }
 
-      return(self::$client->get_item($items_id, $params));
+      return((object)self::$client->get_item($items_id, $params));
    }
 
    public static function getFolder($folders_id = NULL, $params = NULL){
-      return(self::$client->get_folder($folders_id, $params));
+      return((object)self::$client->get_folder($folders_id, $params));
+   }
+
+   public static function getRandomItemId($folders_id = NULL){
+      $folder = self::$client->get_folder($folders_id, array('random' => 1));
+      $items_id = $folder['items'][0]['_id'];
+      return($items_id);
    }
 
    public static function getRandomItem($folders_id = NULL, $width = NULL, $height = NULL, $crop = NULL){
-      $folder = self::$client->get_folder($folders_id, array('random' => 1));
-      $items_id = $folder['items'][0]['_id'];
-
-      return(self::$client->get_item($items_id, $width, $height, $crop));
+      return((object)self::$client->get_item(self::getRandomItemId($folders_id), $width, $height, $crop));
    }
 }
 
