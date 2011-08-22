@@ -22,6 +22,7 @@ class person extends model {
     }
 
     public function preValidate(){
+      error_log("in prevalidate");
       //partial data update is allowed for existing accounts
       if ($this->person_id) {
         $this->preFetchRequiredFields( $this->person_id );
@@ -47,9 +48,12 @@ class person extends model {
             return;
           }
           //otherwise, self password change is valid
+          //set it up for the set_password() method below
           $this->password = $this->password1;
 
         } else { //user trying to change someone else's password
+
+          error_log("promoter changing for user");
 
         //does this person have the rights to change the other person's password?
         $aql = "ct_promoter_user {
@@ -62,19 +66,16 @@ where person_id = {$this->person_id} and access_group not ilike '%admin%'
 ";
 
         $rs = aql::select( $aql );
-        if ($rs[0]['count'] == "0"){
-          error_log("count == 0");
+        if ($rs[0]['count'] != "0" or auth('ct_admin:*')  ){
+          $this->password = $this->password1;
         } else {
-          error_log("count != 0");
+          $this->_errors[] = "Access to change password denied";
         }
 
         }
         
 
       }
-      //for passwords we'll have virtual attributes current_password
-      // aql.value the password_hash. generate the one from current_password.
-      //compare. . see generateHash below
 
       //check for current password. if not, then check that users has access to change password
       //person logged in either a ct_admin (auth('ct_admin:*'))
