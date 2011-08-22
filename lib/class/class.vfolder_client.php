@@ -1,7 +1,7 @@
 <?
 
 #vfolder client class
-class vfolder{
+class vfolder_client{
    public $username = NULL;
    protected $password = NULL;
 
@@ -126,19 +126,16 @@ class vfolder{
       return(md5("$time $password"));
    }
 
-   public function make_request($func = NULL, $id = NULL, $json = NULL, $return_text = NULL, $CURLOPT_HTTPHEADER = NULL){
-      if(!(($this->username || $this->accounts_id) && $this->password)){
-         $this->write_log('Username or password not given, can not authenticate', true);
-
+   #only generates the command parameter portion of the post, authentication and 'func' and 'id' fields not set
+   protected function generate_post($json = NULL){
+      if(!$json){
          return(NULL);
       }
-
-      $this->write_log('Attempting to make request');
 
       $post = array();
 
       if(is_array($json) && $json['json']){
-         $post = $json;      
+         $post = $json;
       }else{
          $post['json'] = $json;
       }
@@ -151,6 +148,21 @@ class vfolder{
          }
          unset($key, $value);
       }
+
+      return($post);
+
+   }
+
+   public function make_request($func = NULL, $id = NULL, $json = NULL, $return_text = NULL, $CURLOPT_HTTPHEADER = NULL){
+      if(!(($this->username || $this->accounts_id) && $this->password)){
+         $this->write_log('Username or password not given, can not authenticate', true);
+
+         return(NULL);
+      }
+
+      $this->write_log('Attempting to make request');
+
+      $post = $this->generate_post($json);
 
       $func && ($post['func'] = $func);
       $id && ($post['id'] = $id);
@@ -297,23 +309,25 @@ class vfolder{
          return(NULL);
       }
 
-      #this is to account for the short-hand syntaxes for this function
-      if(func_num_args() > 1 && !is_array($params) && !is_array($extra_params)){
-         $args = func_get_args();
-         array_shift($args);
+      if(func_num_args() > 1){
+         $_args = $func_get_args; #array_reverse($args);
 
-         unset($extra_params);
-
-         $_args = array_reverse($args);
-
-         while(count($_args) && !($element = array_shift($_args))){
+         while(count($_args) && !($element = array_pop($_args))){
          }
 
          if($element){
-            array_unshift($_args, $element);
+            $_args[] = $element;
          }
 
-         $args = array_reverse($_args);
+         $args = $_args;
+
+         unset($element, $_args);
+      }
+ 
+      #this is to account for the short-hand syntaxes for this function
+      if($args && count($args) > 1 && !is_array($params) && !is_array($extra_params)){
+         $args = func_get_args();
+         array_shift($args);
 
          unset($element, $_args);
 
