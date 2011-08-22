@@ -22,6 +22,7 @@ class vfolder_client{
    public $default_gravity = NULL;
 
    public $memcache = NULL;
+   public $memcache_key_prefix = NULL;
 
    public $initialized = NULL;
 
@@ -57,6 +58,7 @@ class vfolder_client{
 
          if($params['memcache']){
             $this->memcache = $params['memcache'];
+            ($this->memcache_key_prefix = $params['memcache_key_prefix']) || ($this->memcache_key_prefix = 'vfolder:');
          }
 
          $skip_request = $params['skip_request'];
@@ -169,11 +171,13 @@ class vfolder_client{
          $this->write_log('No keys given, can not delete keys', true);
       }
 
-      foreach(explode("\n", $keys_key) as $count=>$key){
+      $keys = $memcache->get($keys_key);
+
+      foreach(explode("\n", $keys) as $count=>$key){
          if(!$key){
             continue;
          }
-    
+ 
          $memcache->delete($key);      
       }
 
@@ -231,7 +235,7 @@ class vfolder_client{
          return(NULL);
       }
 
-      $key_prefix = $id;
+      $key_prefix = $this->memcache_key_prefix . $id;
       $key_suffix = "_" . md5(var_export($post, true));
       $key = $key_prefix . $key_suffix;
 
@@ -256,8 +260,8 @@ class vfolder_client{
          return(NULL);
       }
 
-      if(!$func || !$id){
-         $this->write_log('No function or id given, will not interface with memcached', true);
+      if(!($func && ($func == 'items/add' || $func == 'folders/add' || $id))){
+         $this->write_log('No function given, will not interface with memcached', true);
 
          return(NULL);
       }
@@ -272,7 +276,7 @@ class vfolder_client{
          $this->write_log('Response given indicated failure, will not interface with memcached', true);
       }
 
-      $key_prefix = $id;
+      $key_prefix = $this->memcache_key_prefix . $id;
       $key_suffix = "_" . md5(var_export($post, true));
       $key = $key_prefix . $key_suffix;
 
@@ -287,12 +291,12 @@ class vfolder_client{
          case('items/edit'):
             $this->memcache_delete_keys($keys_key);
             break;
-         case('items/new'):
-            $this->memcache_delete_keys($response['folders_id'] . "_keys");
+         case('items/add'):
+            $this->memcache_delete_keys($this->memcache_key_prefix . $response['folders_id'] . "_keys");
             break;
-         case('folders/new'):
+         case('folders/add'):
             if($response['parent_folder']){
-               $this->memcache_delete_keys($response['parent_folder']['_id'] . "_keys");
+               $this->memcache_delete_keys($this->memcache_key_prefix . $response['parent_folder']['_id'] . "_keys");
             }
             break;
          default:
