@@ -73,7 +73,7 @@ class vf{
    }
 
    public static function getFolder($folders_id = NULL, $params = NULL){
-      return(self::$client->get_folder($items_id, $params));
+      return(self::$client->get_folder($folders_id, $params));
    }
 
    public static function getRandomItem($folders_id = NULL, $width = NULL, $height = NULL, $crop = NULL){
