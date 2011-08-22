@@ -221,6 +221,12 @@ class vfolder_client{
          return(NULL);
       }
 
+      if(is_array($obj) && !$obj['_id']){
+         $this->write_log('Return object doesn\'t appear to be useful (no _id set), will not store item in memcached');
+
+         return(NULL);
+      }
+
       if($this->memcache_debug){
          ?>read: <?=$keys_key?> <?      
       }
