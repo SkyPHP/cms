@@ -21,6 +21,8 @@ class vfolder_client{
 
    public $default_gravity = NULL;
 
+   public $memcache = NULL;
+
    public $initialized = NULL;
 
    public function __construct($params = NULL){
@@ -52,6 +54,10 @@ class vfolder_client{
          ($this->MAX_FILE_SIZE = $params['MAX_FILE_SIZE']) || ($this->MAX_FILE_SIZE = 300000000);
 
          ($this->default_gravity = $params['default_gravity']) || ($this->default_gravity = 'Center');
+
+         if($params['memcache']){
+            $this->memcache = $params['memcache'];
+         }
 
          $skip_request = $params['skip_request'];
       }
@@ -126,7 +132,7 @@ class vfolder_client{
       return(md5("$time $password"));
    }
 
-   #only generates the command parameter portion of the post, authentication and 'func' and 'id' fields not set
+   #only generates the 'json' parameter portion of the post, authentication and 'func' and 'id' fields not set
    protected function generate_post($json = NULL){
       if(!$json){
          return(NULL);
@@ -150,7 +156,150 @@ class vfolder_client{
       }
 
       return($post);
+   }
 
+   protected function memcache_delete_keys($keys_key = NULL){
+      if(!($memcache = $this->memcache)){
+         $this->write_log('No memcache object defined, can not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!$keys_key){
+         $this->write_log('No keys given, can not delete keys', true);
+      }
+
+      foreach(explode("\n", $keys_key) as $count=>$key){
+         if(!$key){
+            continue;
+         }
+    
+         $memcache->delete($key);      
+      }
+
+      $memcache->delete($keys_key);
+
+      return($count);
+   }
+
+   protected function memcache_add_key($keys_key = NULL, $key = NULL, $obj = NULL){
+      if(!($memcache = $this->memcache)){
+         $this->write_log('No memcache object defined, can not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!($keys_key && $key && $obj)){
+         $this->write_log('Missing parameters, will not add memcached key', true);
+
+         return(NULL);
+      }
+
+      $keys = $memcache->get($keys_key);
+
+      $keys_arr = explode("\n", $keys);
+
+      $found_key = false;
+      foreach($keys_arr as $_key){
+         if($key == $_key){
+            $found_key = true;
+            break;
+         }
+      }
+      unset($_key);
+
+      if(!$found_key){
+         $keys .= ($keys?"\n":'') . $key;
+      }
+
+      $memcache->replace($keys_key, $keys) || ($memcache->set($keys_key, $keys));
+      $memcache->replace($key, $obj) || ($memcache->set($key, $obj));
+
+      return;
+   }
+
+   protected function memcache_before_request($func = NULL, $id = NULL, $post = NULL){
+      if(!($memcache = $this->memcache)){
+         $this->write_log('No memcache object defined, can not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!$func || !$id){
+         $this->write_log('No function or id given, will not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      $key_prefix = $id;
+      $key_suffix = "_" . md5(var_export($post, true));
+      $key = $key_prefix . $key_suffix;
+
+      $keys_key = $key_prefix . "_keys";
+
+      switch($func){
+         case('folders'):
+         case('items'):
+            ($value = $memcache->get($key)) || ($value = NULL);
+            break;
+         default:
+            return(NULL);
+      }
+
+      return($value);
+   }
+
+   protected function memcache_after_request($func = NULL, $id = NULL, $post = NULL, $response = NULL){
+      if(!($memcache = $this->memcache)){
+         $this->write_log('No memcache object defined, can not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!$func || !$id){
+         $this->write_log('No function or id given, will not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!$response){
+         $this->write_log('No response given, will not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!$response['success']){
+         $this->write_log('Response given indicated failure, will not interface with memcached', true);
+      }
+
+      $key_prefix = $id;
+      $key_suffix = "_" . md5(var_export($post, true));
+      $key = $key_prefix . $key_suffix;
+
+      $keys_key = $key_prefix . "_keys";
+
+      switch($func){
+         case('items'):
+         case('folders'):
+            $this->memcache_add_key($keys_key, $key, $response);
+            break;
+         case('folders/edit'):
+         case('items/edit'):
+            $this->memcache_delete_keys($keys_key);
+            break;
+         case('items/new'):
+            $this->memcache_delete_keys($response['folders_id'] . "_keys");
+            break;
+         case('folders/new'):
+            if($response['parent_folder']){
+               $this->memcache_delete_keys($response['parent_folder']['_id'] . "_keys");
+            }
+            break;
+         default:
+            return(NULL);
+      }
+
+      return(true);
    }
 
    public function make_request($func = NULL, $id = NULL, $json = NULL, $return_text = NULL, $CURLOPT_HTTPHEADER = NULL){
@@ -162,7 +311,21 @@ class vfolder_client{
 
       $this->write_log('Attempting to make request');
 
-      $post = $this->generate_post($json);
+      $_post = $post = $this->generate_post($json);
+
+      if($this->memcache){
+         if($cache = $this->memcache_before_request($func, $id, $post)){
+            if(is_array($cache)){
+               if(!is_array($cache['_client'])){
+                  $cache['_client'] = array();
+               }
+ 
+               $cache['_client']['memcached'] = true;
+            }
+
+            return($cache);
+         }
+      }
 
       $func && ($post['func'] = $func);
       $id && ($post['id'] = $id);
@@ -246,6 +409,10 @@ class vfolder_client{
                'duration' => $end_time - $start_time
             )
          );
+      }
+
+      if($this->memcache){
+         $this->memcache_after_request($func, $id, $_post, $decoded);
       }
 
       return($return_text?$response:($decoded?$decoded:$response));	
