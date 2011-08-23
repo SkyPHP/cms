@@ -1,7 +1,25 @@
 <?
 
+/*
+ * Warning about using memcache features!
+ *
+ * if you are using this client from more than one location
+ * all clients *should* be using the same memcached server
+ * otherwise there is no guarantee that cached vfolder server responses are up-to-date
+ *
+ * Note about memcache features
+ *
+ * get_item and get_folder store to memcache differently than make_request
+ * this is optimize speed for common requests
+ * in order to use different key nomenclature with this class, in a class extension or otherwise
+ * you must pass the custom key to as a the 'memcache_key' parameter to make_request 
+ * it is advised that you also pass 'skip_memcache_before' as true, although this is not required
+ * setting 'skip_memcache_after' to true will cause keys to not be deleted when they become out of date, this is not advised
+ *
+ */
+
 #vfolder client class
-class vfolder{
+class vfolder_client{
    public $username = NULL;
    protected $password = NULL;
 
@@ -20,6 +38,10 @@ class vfolder{
    public $MAX_FILE_SIZE = NULL;
 
    public $default_gravity = NULL;
+
+   public $memcache = NULL;
+   public $memcache_key_prefix = NULL;
+   public $memcache_refresh = NULL;
 
    public $initialized = NULL;
 
@@ -52,6 +74,13 @@ class vfolder{
          ($this->MAX_FILE_SIZE = $params['MAX_FILE_SIZE']) || ($this->MAX_FILE_SIZE = 300000000);
 
          ($this->default_gravity = $params['default_gravity']) || ($this->default_gravity = 'Center');
+
+         if($params['memcache']){
+            $this->memcache = $params['memcache'];
+            ($this->memcache_key_prefix = $params['memcache_key_prefix']) || ($this->memcache_key_prefix = 'vfolder:');
+            ($this->memcache_refresh = $params['memcache_refresh']) || ($this->memcache_refresh = NULL);
+            ($this->memcache_debug = $params['memcache_debug']) || ($this->memcache_debug = NULL);
+         }
 
          $skip_request = $params['skip_request'];
       }
@@ -126,19 +155,16 @@ class vfolder{
       return(md5("$time $password"));
    }
 
-   public function make_request($func = NULL, $id = NULL, $json = NULL, $return_text = NULL, $CURLOPT_HTTPHEADER = NULL){
-      if(!(($this->username || $this->accounts_id) && $this->password)){
-         $this->write_log('Username or password not given, can not authenticate', true);
-
+   #only generates the 'json' parameter portion of the post, authentication and 'func' and 'id' fields not set
+   protected function generate_post($json = NULL){
+      if(!$json){
          return(NULL);
       }
-
-      $this->write_log('Attempting to make request');
 
       $post = array();
 
       if(is_array($json) && $json['json']){
-         $post = $json;      
+         $post = $json;
       }else{
          $post['json'] = $json;
       }
@@ -150,6 +176,225 @@ class vfolder{
             !$post['json'][$key] && ($post['json'][$key] = $value);
          }
          unset($key, $value);
+      }
+
+      return($post);
+   }
+
+   protected function memcache_delete_keys($keys_key = NULL){
+      if(!($memcache = $this->memcache)){
+         $this->write_log('No memcache object defined, can not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!$keys_key){
+         $this->write_log('No keys given, can not delete keys', true);
+      }
+
+      if($this->memcache_debug){
+         ?>read: <?=$keys_key?> <?     
+      }
+
+      $keys = $memcache->get($keys_key);
+
+      foreach(explode("\n", $keys) as $count=>$key){
+         if(!$key){
+            continue;
+         }
+
+         if($this->memcache_debug){
+            ?>delete: <?=$key?> <?     
+         }
+
+         $memcache->delete($key);      
+      }
+
+      if($this->memcache_debug){
+         ?>delete: <?=$keys_key?> <?     
+      }
+
+      $memcache->delete($keys_key);
+
+      return($count);
+   }
+
+   protected function memcache_add_key($keys_key = NULL, $key = NULL, $obj = NULL){
+      if(!($memcache = $this->memcache)){
+         $this->write_log('No memcache object defined, can not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!($keys_key && $key && $obj)){
+         $this->write_log('Missing parameters, will not add memcached key', true);
+
+         return(NULL);
+      }
+
+#      if(is_array($obj) && !$obj['_id']){
+#         $this->write_log('Return object doesn\'t appear to be useful (no _id set), will not store item in memcached');
+
+#         return(NULL);
+#      }
+
+      if($this->memcache_debug){
+         ?>read: <?=$keys_key?> <?      
+      }
+
+      $keys = $memcache->get($keys_key);
+
+      $keys_arr = explode("\n", $keys);
+
+      $found_key = false;
+      foreach($keys_arr as $_key){
+         if($key == $_key){
+            $found_key = true;
+            break;
+         }
+      }
+      unset($_key);
+
+      if(!$found_key){
+         $keys .= ($keys?"\n":'') . $key;
+      }
+
+      ($memcache->replace($keys_key, $keys)) || ($memcache->set($keys_key, $keys));
+      ($memcache->replace($key, $obj)) || ($memcache->set($key, $obj));
+
+      if($this->memcache_debug){
+         ?>write: <?=$keys_key?> <?
+         ?>write: <?=$key?> <?
+      }
+
+      return;
+   }
+
+   protected function memcache_before_request($func = NULL, $id = NULL, $post = NULL){
+      if(!($memcache = $this->memcache)){
+         $this->write_log('No memcache object defined, can not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!$func || !$id){
+         $this->write_log('No function or id given, will not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      $key_prefix = $this->memcache_key_prefix . $id;
+      $key_suffix = "_" . md5(var_export($post, true));
+      $key = $key_prefix . $key_suffix;
+
+      $keys_key = $key_prefix . "_keys";
+
+      switch($func){
+         case('folders'):
+         case('items'):
+            if(!$this->memcache_refresh){
+               if($this->memcache_debug){
+                  ?>read: <?=$key?> <?     
+               }
+
+               ($value = $memcache->get($key)) || ($value = NULL);
+            }else{
+               $value = NULL;
+            }
+            break;
+         default:
+            return(NULL);
+      }
+
+      return($value);
+   }
+
+   protected function memcache_after_request($func = NULL, $id = NULL, $post = NULL, $response = NULL, $key = NULL){
+      if(!($memcache = $this->memcache)){
+         $this->write_log('No memcache object defined, can not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!($func && ($func == 'items/add' || $func == 'folders/add' || $id))){
+         $this->write_log('No function given, will not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!$response){
+         $this->write_log('No response given, will not interface with memcached', true);
+
+         return(NULL);
+      }
+
+      if(!$response['success']){
+         $this->write_log('Response given indicated failure, will not interface with memcached', true);
+      }
+
+      $key_prefix = $this->memcache_key_prefix . $id;
+      $key_suffix = "_" . md5(var_export($post, true));
+      $key || ($key = $key_prefix . $key_suffix);
+
+      $keys_key = $key_prefix . "_keys";
+
+      switch($func){
+         case('items'):
+         case('folders'):
+            $this->memcache_add_key($keys_key, $key, $response);
+            break;
+         case('folders/edit'):
+         case('items/edit'):
+            $this->memcache_delete_keys($keys_key);
+            break;
+         case('items/add'):
+            $this->memcache_delete_keys($this->memcache_key_prefix . $response['folders_id'] . "_keys");
+            break;
+         case('folders/add'):
+            if($response['parent_folder']){
+               $this->memcache_delete_keys($this->memcache_key_prefix . $response['parent_folder']['_id'] . "_keys");
+            }
+            break;
+         default:
+            return(NULL);
+      }
+
+      return(true);
+   }
+
+   #$params are params to the make_request call, not to the server
+   public function make_request($func = NULL, $id = NULL, $json = NULL, $params = NULL){
+      if(!(($this->username || $this->accounts_id) && $this->password)){
+         $this->write_log('Username or password not given, can not authenticate', true);
+
+         return(NULL);
+      }
+
+      $this->write_log('Attempting to make request');
+
+      if(is_array($params)){
+         $return_text = $params['return_text'];
+         $CURLOPT_HTTPHEADER = $params['CURLOPT_HTTPHEADER'];
+         $skip_memcache = $params['skip_memcache'];
+         $skip_memcache_before = ($params['skip_memcache_before'] || $params['refresh_memcached']);
+         $skip_memcache_after = $params['skip_memcache_after']; #this is not recomended
+         $memcache_key = $params['memcache_key'];
+      }
+
+      $_post = $post = $this->generate_post($json);
+
+      if($this->memcache && !($skip_memcache || $skip_memcache_before)){
+         if($cache = $this->memcache_before_request($func, $id, $post)){
+            if(is_array($cache)){
+               if(!is_array($cache['_client'])){
+                  $cache['_client'] = array();
+               }
+ 
+               $cache['_client']['memcached'] = true;
+            }
+
+            return($cache);
+         }
       }
 
       $func && ($post['func'] = $func);
@@ -236,6 +481,10 @@ class vfolder{
          );
       }
 
+      if($this->memcache && $decoded && !($skip_memcache || $skip_memcache_after)){
+         $this->memcache_after_request($func, $id, $_post, $decoded, $memcache_key);
+      }
+
       return($return_text?$response:($decoded?$decoded:$response));	
    }
 
@@ -269,7 +518,7 @@ class vfolder{
 
       $this->write_log("Attempting to upload file '$file'");
 
-      return($this->make_request('items/add', NULL, $post, NULL, array('Content-type: multipart/form-data')));
+      return($this->make_request('items/add', NULL, $post, array('CURLOPT_HTTPHEADER' => array('Content-type: multipart/form-data', 'skip_memcache_before'))));
    }
 
    public function add_item($source = NULL, $json = NULL){
@@ -287,7 +536,7 @@ class vfolder{
          return($this->make_request('items/add', NULL, $json));
       }
 
-      return($this->upload_to_server($source, $json));      
+      return($this->upload_to_server($source, $json, array('skip_memcache_before' => true)));      
    }
 
    public function get_item($items_id = NULL, $params = NULL, $extra_params = NULL){
@@ -297,23 +546,40 @@ class vfolder{
          return(NULL);
       }
 
-      #this is to account for the short-hand syntaxes for this function
-      if(func_num_args() > 1 && !is_array($params) && !is_array($extra_params)){
-         $args = func_get_args();
-         array_shift($args);
+      if(($memcache = $this->memcache) && !(is_array($extra_params) && $extra_params['refresh_memcached'])){ 
+         $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));     
 
-         unset($extra_params);
+         if($this->memcache_debug){
+            ?>read: <?=$memcache_key?> <?
+         }
 
-         $_args = array_reverse($args);
+         if($response = $memcache->get($memcache_key)){
+            is_array($response['_client']) || ($response['_client'] = array());
+            $response['_client']['memcached'] = true;
+            return($response);
+         }
+      }
 
-         while(count($_args) && !($element = array_shift($_args))){
+      #this is to account for the alternate syntaxes for this function
+      if(func_num_args() > 1){
+         $_args = func_get_args();
+
+         while(count($_args) && !($element = array_pop($_args))){
          }
 
          if($element){
-            array_unshift($_args, $element);
+            $_args[] = $element;
          }
 
-         $args = array_reverse($_args);
+         $args = $_args;
+
+         unset($element, $_args);
+      }
+ 
+      #this is to account for the alternate syntaxes for this function
+      if($args && count($args) > 1 && !is_array($params) && !is_array($extra_params)){
+         $args = func_get_args();
+         array_shift($args);
 
          unset($element, $_args);
 
@@ -435,7 +701,7 @@ class vfolder{
          }
       }
 
-      return($this->make_request('items', $items_id, $query?$query:NULL));
+      return($this->make_request('items', $items_id, ($query?$query:NULL), array('skip_memcache_before' => true, 'memcache_key' => $memcache_key)));
    }
 
    public function edit_item($items_id = NULL, $params = NULL){
@@ -457,14 +723,28 @@ class vfolder{
          return(NULL);
       }
 
-      return($this->make_request('items/edit', $items_id, json_encode($params)));
+      return($this->make_request('items/edit', $items_id, json_encode($params), array('skip_memcache_before' => true)));
    }
 
-   public function get_folder($folders_id = NULL, $limit = NULL){
+   public function get_folder($folders_id = NULL, $limit = NULL, $extra_params = NULL){
       if(!$folders_id){
          $this->write_log('No folders_id given, can not get folder', true);
 
          return(NULL);
+      }
+
+      if(($memcache = $this->memcache) && !(is_array($extra_params) && $extra_params['refresh_memcached'])){
+         $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));
+
+         if($this->memcache_debug){
+            ?>read: <?=$memcache_key?> <?
+         }
+
+         if($response = $memcache->get($memcache_key)){
+            is_array($response['_client']) || ($response['_client'] = array());
+            $response['_client']['memcached'] = true;
+            return($response);
+         }
       }
 
       if($limit === false){
@@ -483,7 +763,7 @@ class vfolder{
       ($limit || $limit === 0 || $limit === '0') && ($json['limit'] = $limit);
       $random && ($json['random'] = true);
 
-      return($this->make_request('folders', $folders_id, json_encode($json)));
+      return($this->make_request('folders', $folders_id, json_encode($json), array('skip_memcache_before' => true, 'memcache_key' => $memcache_key)));
    }
 
    public function edit_folder($folders_id = NULL, $params = NULL){
@@ -505,7 +785,7 @@ class vfolder{
          return(NULL);
       }
 
-      return($this->make_request('folders/edit', $folders_id, json_encode($params)));
+      return($this->make_request('folders/edit', $folders_id, json_encode($params), array('skip_memcache_before' => true)));
    }
 
    public function add_folder($folders_path = NULL, $params = NULL){
@@ -521,7 +801,7 @@ class vfolder{
          $params = NULL;
       }
 
-      return($this->make_request('folders/add', $folders_path, $params?json_encode($params):NULL));
+      return($this->make_request('folders/add', $folders_path, $params?json_encode($params):NULL, array('skip_memcache_before' => true)));
    }
 
    #max_log_size is to prevent unforeseen 'Allowed memory size of n bytes exhausted' errors
