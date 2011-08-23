@@ -351,7 +351,8 @@ class vfolder_client{
       return(true);
    }
 
-   public function make_request($func = NULL, $id = NULL, $json = NULL, $return_text = NULL, $CURLOPT_HTTPHEADER = NULL){
+   #$params are params to the make_request call, not to the server
+   public function make_request($func = NULL, $id = NULL, $json = NULL, $params = NULL){
       if(!(($this->username || $this->accounts_id) && $this->password)){
          $this->write_log('Username or password not given, can not authenticate', true);
 
@@ -360,9 +361,17 @@ class vfolder_client{
 
       $this->write_log('Attempting to make request');
 
+      if(is_array($params)){
+         $return_text = $params['return_text'];
+         $CURLOPT_HTTPHEADER = $params['CURLOPT_HTTPHEADER'];
+         $skip_memcache = $params['skip_memcache'];
+         $skip_memcache_before = $params['skip_memcache_before'];
+         $skip_memcache_after = $params['skip_memcache_after']; #this is not recomended
+      }
+
       $_post = $post = $this->generate_post($json);
 
-      if($this->memcache){
+      if($this->memcache && !($skip_memcache || $skip_memcache_before)){
          if($cache = $this->memcache_before_request($func, $id, $post)){
             if(is_array($cache)){
                if(!is_array($cache['_client'])){
@@ -460,7 +469,7 @@ class vfolder_client{
          );
       }
 
-      if($this->memcache && $decoded){
+      if($this->memcache && $decoded && !($skip_memcache || $skip_memcache_after)){
          $this->memcache_after_request($func, $id, $_post, $decoded);
       }
 
@@ -497,7 +506,7 @@ class vfolder_client{
 
       $this->write_log("Attempting to upload file '$file'");
 
-      return($this->make_request('items/add', NULL, $post, NULL, array('Content-type: multipart/form-data')));
+      return($this->make_request('items/add', NULL, $post, array('CURLOPT_HTTPHEADER' => array('Content-type: multipart/form-data', 'skip_memcache_before'))));
    }
 
    public function add_item($source = NULL, $json = NULL){
@@ -515,7 +524,7 @@ class vfolder_client{
          return($this->make_request('items/add', NULL, $json));
       }
 
-      return($this->upload_to_server($source, $json));      
+      return($this->upload_to_server($source, $json, array('skip_memcache_before' => true)));      
    }
 
    public function get_item($items_id = NULL, $params = NULL, $extra_params = NULL){
@@ -523,6 +532,12 @@ class vfolder_client{
          $this->write_log('No items_id given, can not get item', true);
 
          return(NULL);
+      }
+
+      if($memcache = $this->memcache){
+         if($response = $memcache->get($this->memcache_prefix . md5(var_export(func_get_args(), true)))){
+            return($response);
+         }
       }
 
       if(func_num_args() > 1){
@@ -665,7 +680,7 @@ class vfolder_client{
          }
       }
 
-      return($this->make_request('items', $items_id, $query?$query:NULL));
+      return($this->make_request('items', $items_id, ($query?$query:NULL), array('skip_memcache_before' => true)));
    }
 
    public function edit_item($items_id = NULL, $params = NULL){
@@ -687,7 +702,7 @@ class vfolder_client{
          return(NULL);
       }
 
-      return($this->make_request('items/edit', $items_id, json_encode($params)));
+      return($this->make_request('items/edit', $items_id, json_encode($params), array('skip_memcache_before' => true)));
    }
 
    public function get_folder($folders_id = NULL, $limit = NULL){
@@ -695,6 +710,12 @@ class vfolder_client{
          $this->write_log('No folders_id given, can not get folder', true);
 
          return(NULL);
+      }
+
+      if($memcache = $this->memcache){
+         if($response = $memcache->get($this->memcache_prefix . md5(var_export(func_get_args(), true)))){
+            return($response);
+         }
       }
 
       if($limit === false){
@@ -713,7 +734,7 @@ class vfolder_client{
       ($limit || $limit === 0 || $limit === '0') && ($json['limit'] = $limit);
       $random && ($json['random'] = true);
 
-      return($this->make_request('folders', $folders_id, json_encode($json)));
+      return($this->make_request('folders', $folders_id, json_encode($json), array('skip_memcache_before' => true)));
    }
 
    public function edit_folder($folders_id = NULL, $params = NULL){
@@ -735,7 +756,7 @@ class vfolder_client{
          return(NULL);
       }
 
-      return($this->make_request('folders/edit', $folders_id, json_encode($params)));
+      return($this->make_request('folders/edit', $folders_id, json_encode($params), array('skip_memcache_before' => true)));
    }
 
    public function add_folder($folders_path = NULL, $params = NULL){
@@ -751,7 +772,7 @@ class vfolder_client{
          $params = NULL;
       }
 
-      return($this->make_request('folders/add', $folders_path, $params?json_encode($params):NULL));
+      return($this->make_request('folders/add', $folders_path, $params?json_encode($params):NULL, array('skip_memcache_before' => true)));
    }
 
    #max_log_size is to prevent unforeseen 'Allowed memory size of n bytes exhausted' errors
