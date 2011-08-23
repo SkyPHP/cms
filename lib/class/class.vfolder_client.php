@@ -1,10 +1,21 @@
 <?
 
-/* Warning about using memcache features!
+/*
+ * Warning about using memcache features!
  *
  * if you are using this client from more than one location
  * all clients *should* be using the same memcached server
  * otherwise there is no guarantee that cached vfolder server responses are up-to-date
+ *
+ * Note about memcache features
+ *
+ * get_item and get_folder store to memcache differently than make_request
+ * this is optimize speed for common requests
+ * in order to use different key nomenclature with this class, in a class extension or otherwise
+ * you must pass the custom key to as a the 'memcache_key' parameter to make_request 
+ * it is advised that you also pass 'skip_memcache_before' as true, although this is not required
+ * setting 'skip_memcache_after' to true will cause keys to not be deleted when they become out of date, this is not advised
+ *
  */
 
 #vfolder client class
@@ -221,11 +232,11 @@ class vfolder_client{
          return(NULL);
       }
 
-      if(is_array($obj) && !$obj['_id']){
-         $this->write_log('Return object doesn\'t appear to be useful (no _id set), will not store item in memcached');
+#      if(is_array($obj) && !$obj['_id']){
+#         $this->write_log('Return object doesn\'t appear to be useful (no _id set), will not store item in memcached');
 
-         return(NULL);
-      }
+#         return(NULL);
+#      }
 
       if($this->memcache_debug){
          ?>read: <?=$keys_key?> <?      
@@ -298,7 +309,7 @@ class vfolder_client{
       return($value);
    }
 
-   protected function memcache_after_request($func = NULL, $id = NULL, $post = NULL, $response = NULL){
+   protected function memcache_after_request($func = NULL, $id = NULL, $post = NULL, $response = NULL, $key = NULL){
       if(!($memcache = $this->memcache)){
          $this->write_log('No memcache object defined, can not interface with memcached', true);
 
@@ -323,7 +334,7 @@ class vfolder_client{
 
       $key_prefix = $this->memcache_key_prefix . $id;
       $key_suffix = "_" . md5(var_export($post, true));
-      $key = $key_prefix . $key_suffix;
+      $key || ($key = $key_prefix . $key_suffix);
 
       $keys_key = $key_prefix . "_keys";
 
@@ -367,6 +378,7 @@ class vfolder_client{
          $skip_memcache = $params['skip_memcache'];
          $skip_memcache_before = $params['skip_memcache_before'];
          $skip_memcache_after = $params['skip_memcache_after']; #this is not recomended
+         $memcache_key = $params['memcache_key'];
       }
 
       $_post = $post = $this->generate_post($json);
@@ -470,7 +482,7 @@ class vfolder_client{
       }
 
       if($this->memcache && $decoded && !($skip_memcache || $skip_memcache_after)){
-         $this->memcache_after_request($func, $id, $_post, $decoded);
+         $this->memcache_after_request($func, $id, $_post, $decoded, $memcache_key);
       }
 
       return($return_text?$response:($decoded?$decoded:$response));	
@@ -534,14 +546,16 @@ class vfolder_client{
          return(NULL);
       }
 
-      if($memcache = $this->memcache){
-         if($response = $memcache->get($this->memcache_prefix . md5(var_export(func_get_args(), true)))){
+      if($memcache = $this->memcache){  
+         if($response = $memcache->get($memcache_key = ($this->memcache_prefix . md5(var_export(func_get_args(), true))))){
+            is_array($response['_client']) || ($response['_client'] = array());
+            $response['_client']['memcached'] = true;
             return($response);
          }
       }
 
       if(func_num_args() > 1){
-         $_args = func_get_args(); #array_reverse($args);
+         $_args = func_get_args();
 
          while(count($_args) && !($element = array_pop($_args))){
          }
@@ -680,7 +694,7 @@ class vfolder_client{
          }
       }
 
-      return($this->make_request('items', $items_id, ($query?$query:NULL), array('skip_memcache_before' => true)));
+      return($this->make_request('items', $items_id, ($query?$query:NULL), array('skip_memcache_before' => true, 'memcache_key' => $memcache_key)));
    }
 
    public function edit_item($items_id = NULL, $params = NULL){
@@ -713,7 +727,9 @@ class vfolder_client{
       }
 
       if($memcache = $this->memcache){
-         if($response = $memcache->get($this->memcache_prefix . md5(var_export(func_get_args(), true)))){
+         if($response = $memcache->get($memcache_key = ($this->memcache_prefix . md5(var_export(func_get_args(), true))))){
+            is_array($response['_client']) || ($response['_client'] = array());
+            $response['_client']['memcached'] = true;
             return($response);
          }
       }
@@ -734,7 +750,7 @@ class vfolder_client{
       ($limit || $limit === 0 || $limit === '0') && ($json['limit'] = $limit);
       $random && ($json['random'] = true);
 
-      return($this->make_request('folders', $folders_id, json_encode($json), array('skip_memcache_before' => true)));
+      return($this->make_request('folders', $folders_id, json_encode($json), array('skip_memcache_before' => true, 'memcache_key' => $memcache_key)));
    }
 
    public function edit_folder($folders_id = NULL, $params = NULL){
