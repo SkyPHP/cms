@@ -546,7 +546,7 @@ class vfolder_client{
          return(NULL);
       }
 
-      if($memcache = $this->memcache){ 
+      if(($memcache = $this->memcache) && !(is_array($extra_params) && $extra_params['refresh_memcache'])){ 
          $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));     
 
          if($this->memcache_debug){
@@ -726,14 +726,14 @@ class vfolder_client{
       return($this->make_request('items/edit', $items_id, json_encode($params), array('skip_memcache_before' => true)));
    }
 
-   public function get_folder($folders_id = NULL, $limit = NULL){
+   public function get_folder($folders_id = NULL, $limit = NULL, $extra_params = NULL){
       if(!$folders_id){
          $this->write_log('No folders_id given, can not get folder', true);
 
          return(NULL);
       }
 
-      if($memcache = $this->memcache){
+      if(($memcache = $this->memcache) && !(is_array($extra_params) && $extra_params['refresh_memcache'])){
          $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));
 
          if($this->memcache_debug){
