@@ -546,14 +546,21 @@ class vfolder_client{
          return(NULL);
       }
 
-      if($memcache = $this->memcache){  
-         if($response = $memcache->get($memcache_key = ($this->memcache_prefix . md5(var_export(func_get_args(), true))))){
+      if($memcache = $this->memcache){ 
+         $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));     
+
+         if($this->memcache_debug){
+            ?>read: <?=$memcache_key?> <?
+         }
+
+         if($response = $memcache->get($memcache_key)){
             is_array($response['_client']) || ($response['_client'] = array());
             $response['_client']['memcached'] = true;
             return($response);
          }
       }
 
+      #this is to account for the alternate syntaxes for this function
       if(func_num_args() > 1){
          $_args = func_get_args();
 
@@ -569,7 +576,7 @@ class vfolder_client{
          unset($element, $_args);
       }
  
-      #this is to account for the short-hand syntaxes for this function
+      #this is to account for the alternate syntaxes for this function
       if($args && count($args) > 1 && !is_array($params) && !is_array($extra_params)){
          $args = func_get_args();
          array_shift($args);
@@ -727,7 +734,13 @@ class vfolder_client{
       }
 
       if($memcache = $this->memcache){
-         if($response = $memcache->get($memcache_key = ($this->memcache_prefix . md5(var_export(func_get_args(), true))))){
+         $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));
+
+         if($this->memcache_debug){
+            ?>read: <?=$memcache_key?> <?
+         }
+
+         if($response = $memcache->get($memcache_key)){
             is_array($response['_client']) || ($response['_client'] = array());
             $response['_client']['memcached'] = true;
             return($response);
