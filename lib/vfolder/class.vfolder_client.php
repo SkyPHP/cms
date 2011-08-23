@@ -376,7 +376,7 @@ class vfolder_client{
          $return_text = $params['return_text'];
          $CURLOPT_HTTPHEADER = $params['CURLOPT_HTTPHEADER'];
          $skip_memcache = $params['skip_memcache'];
-         $skip_memcache_before = $params['skip_memcache_before'];
+         $skip_memcache_before = ($params['skip_memcache_before'] || $params['refresh_memcached']);
          $skip_memcache_after = $params['skip_memcache_after']; #this is not recomended
          $memcache_key = $params['memcache_key'];
       }
@@ -546,7 +546,7 @@ class vfolder_client{
          return(NULL);
       }
 
-      if(($memcache = $this->memcache) && !(is_array($extra_params) && $extra_params['refresh_memcache'])){ 
+      if(($memcache = $this->memcache) && !(is_array($extra_params) && $extra_params['refresh_memcached'])){ 
          $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));     
 
          if($this->memcache_debug){
@@ -733,7 +733,7 @@ class vfolder_client{
          return(NULL);
       }
 
-      if(($memcache = $this->memcache) && !(is_array($extra_params) && $extra_params['refresh_memcache'])){
+      if(($memcache = $this->memcache) && !(is_array($extra_params) && $extra_params['refresh_memcached'])){
          $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));
 
          if($this->memcache_debug){
