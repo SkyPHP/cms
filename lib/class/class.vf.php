@@ -1,5 +1,13 @@
 <?
 
+if (!class_exists('vfolder_client')) {
+   include 'lib/vfolder/class.vfolder_client.php';
+   include 'lib/vfolder/class.vf_gallery_inc.php';
+   include 'lib/vfolder/class.vf_gallery.php';
+   include 'lib/vfolder/class.vf_uploader.php';
+   include 'lib/vfolder/class.vf_slideshow.php';
+}
+
 class vf{
    public static $client = NULL;
 
@@ -85,6 +93,19 @@ class vf{
    public static function getRandomItem($folders_id = NULL, $width = NULL, $height = NULL, $crop = NULL){
       return((object)self::$client->get_item(self::getRandomItemId($folders_id), $width, $height, $crop));
    }
+
+   public static function slideshow($args) {
+      return new vf_slideshow($args);
+   }
+
+   public static function uploader($args) {
+      return new vf_uploader($args);
+   }
+
+   public static function gallery($args) {
+      return new vf_gallery($args);
+   }
+
 }
 
 ?>
