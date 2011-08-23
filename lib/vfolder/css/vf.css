@@ -1,0 +1,35 @@
+.vf-slideshow {
+	width: auto;
+	height: auto;
+}
+	.vf-slideshow-main {
+		overflow:hidden;
+		position: relative;
+	}
+
+.vf-slideshow-thumbs {
+	
+}
+
+.vf-slideshow-thumb {
+	background: #ccc;
+	cursor: hand;
+	padding:3px;
+	float:left;
+}
+	.vf-slideshow-thumb.selected {
+		background: green;
+	}
+
+.vf-slideshow-controls {
+	background: #fff;
+	bottom:0;
+	left:0;
+	opacity: .4;
+	position: absolute;
+	right:0;
+	text-align: right;
+}
+	.vf-slideshow-controls a {
+		color: #000;
+	}
