@@ -22,7 +22,6 @@ class person extends model {
     }
 
     public function preValidate(){
-      error_log("in prevalidate");
       //partial data update is allowed for existing accounts
       if ($this->person_id) {
         $this->preFetchRequiredFields( $this->person_id );
