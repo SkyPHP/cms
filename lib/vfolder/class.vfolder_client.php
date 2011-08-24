@@ -538,6 +538,22 @@ class vfolder_client{
       return($this->upload_to_server($source, $json, array('skip_memcache_before' => true)));      
    }
 
+   public function alter_item($items_id = NULL, $params = NULL){
+      if(!$items_id){
+         $this->write_log('No items_id given, can not alter item', true);
+
+         return(NULL);
+      }
+
+      if(!$params){
+         $this->write_log('No parameters given, will not alter item', true);
+
+         return(NULL);
+      }
+
+      return($this->get_item($items_id, $params, array('alter_original' => true)));
+   }
+
    public function get_item($items_id = NULL, $params = NULL, $extra_params = NULL){
       if(!$items_id){
          $this->write_log('No items_id given, can not get item', true);
