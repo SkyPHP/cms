@@ -26,22 +26,21 @@ class person extends model {
       if ($this->person_id) {
         $this->preFetchRequiredFields( $this->person_id );
       }
-      
+
       //password validation
       //we don't give direct access to the person's password field
-      //we take password1/password2 (and current password if it's person) 
+      //we take password1/password2 (and current password if it's person)
 
-      if ($this->password1){ //is there a password request?
-        if ($this->password1 != $this->password2) { 
+      if ($this->password1){ //is there a password change request?
+        if ($this->password1 != $this->password2) {
           $this->_errors[] = "Passwords do not match";
           return;
         }
-        //error_log(json_encode($this->_data));
-        //        error_log("person id: " . $this->person_id);
-        //error_log("PERSON_ID: " . PERSON_ID);
 
         if (PERSON_ID == $this->person_id){ //is this a user trying to change his own pw?
-          if ( Login::generateHash($this->current_password, $this->generateUserSalt() ) 
+
+          //authenticate him (test his current_password)
+          if ( Login::generateHash($this->current_password, $this->generateUserSalt() )
                !=  aql::value( 'person.password_hash', PERSON_ID )  ) {
             $this->_errors[] = "Incorrect password";
             return;
@@ -51,8 +50,6 @@ class person extends model {
           $this->password = $this->password1;
 
         } else { //user trying to change someone else's password
-
-          error_log("promoter changing for user");
 
         //does this person have the rights to change the other person's password?
         $aql = "ct_promoter_user {
@@ -72,17 +69,17 @@ where person_id = {$this->person_id} and access_group not ilike '%admin%'
         }
 
         }
-        
+
 
       }
 
       //check for current password. if not, then check that users has access to change password
       //person logged in either a ct_admin (auth('ct_admin:*'))
-      //or that this person shares a ct_promoter with the user 
+      //or that this person shares a ct_promoter with the user
       //
 
       //same password
-      
+
       //$this->password = password1
 
       //if original password is not set, return
@@ -111,5 +108,25 @@ where person_id = {$this->person_id} and access_group not ilike '%admin%'
         $re = $o->save();
         if ($re['status'] == 'OK') $this->last_login_time = $o->last_login_time;
     }
+
+
+    //fetches all the (quick) logins this person has
+    //as an array of hashed each with promoter_name, ct_promoter_user_id/e, ct_promoter_id/e)
+  public function getLogins(){
+    
+    $aql = "ct_promoter_user {
+where person_id = {$this->person_id}
+order by ct_promoter_user.iorder asc 
+			}
+			ct_promoter {
+				name as promoter_name
+			}";
+    $rs = aql::select($aql);
+    
+    return $rs;
+
+  }
+
+ 
 
 }
