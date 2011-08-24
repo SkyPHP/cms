@@ -561,17 +561,20 @@ class vfolder_client{
          return(NULL);
       }
  
-      if(($memcache = $this->memcache) && !($this->memcache_refresh || (is_array($extra_params) && $extra_params['refresh_memcached']))){
-         $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));     
+      if($memcache = $this->memcache){
+         $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));
 
-         if($this->memcache_debug){
-            ?>read: <?=$memcache_key?> <?
-         }
+         if(!($this->memcache_refresh || (is_array($extra_params) && $extra_params['refresh_memcached']))){
+ 
+            if($this->memcache_debug){
+               ?>read: <?=$memcache_key?> <?
+            }
 
-         if($response = $memcache->get($memcache_key)){
-            is_array($response['_client']) || ($response['_client'] = array());
-            $response['_client']['memcached'] = true;
-            return($response);
+            if($response = $memcache->get($memcache_key)){
+               is_array($response['_client']) || ($response['_client'] = array());
+               $response['_client']['memcached'] = true;
+               return($response);
+            }
          }
       }
 
