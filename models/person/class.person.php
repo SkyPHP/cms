@@ -110,7 +110,7 @@ where person_id = {$this->person_id} and access_group not ilike '%admin%'
     }
 
 
-    //fetches all the (quick) logins this person has
+    //fetches all the (quick) logins to promoters that this person has
     //as an array of hashed each with promoter_name, ct_promoter_user_id/e, ct_promoter_id/e)
   public function getLogins(){
     
@@ -127,6 +127,22 @@ order by ct_promoter_user.iorder asc
 
   }
 
+  //add quick login to some promoter to this person given that promoter_ide
+  public function addLogin($ct_promoter_ide = null){
+    $ct_promoter_id = (int) decrypt($ct_promoter_ide, 'ct_promoter');
+    //actual promoter_id
+    error_log($ct_promoter_id);
+    error_log("value of it: " . aql::value('ct_promoter.id', 4347 ) );
+    if (! aql::value('ct_promoter.id', $ct_promoter_id ) ) {
+      $this->_errors[] = "invalid promoter id";
+      return;
+    }
+    $new_login = new ct_promoter_user();
+    $new_login->person_id = $this->person_id;
+    $new_login->ct_promoter_id = $ct_promoter_id ;
+    $new_login->validate();
+    $new_login->save();
+  }
  
 
 }
