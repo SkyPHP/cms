@@ -564,8 +564,7 @@ class vfolder_client{
       if($memcache = $this->memcache){
          $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));
 
-         if(!($this->memcache_refresh || (is_array($extra_params) && $extra_params['refresh_memcached']))){
- 
+         if(!($this->memcache_refresh || (is_array($extra_params) && $extra_params['refresh_memcached']))){ 
             if($this->memcache_debug){
                ?>read: <?=$memcache_key?> <?
             }
@@ -754,7 +753,7 @@ class vfolder_client{
       if($memcache = $this->memcache){
          $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));
 
-         if(!(is_array($extra_params) && $extra_params['refresh_memcached'])){
+          if(!($this->memcache_refresh || (is_array($extra_params) && $extra_params['refresh_memcached']))){
             if($this->memcache_debug){
                ?>read: <?=$memcache_key?> <?
             }
