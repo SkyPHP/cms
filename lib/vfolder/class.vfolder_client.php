@@ -232,12 +232,6 @@ class vfolder_client{
          return(NULL);
       }
 
-#      if(is_array($obj) && !$obj['_id']){
-#         $this->write_log('Return object doesn\'t appear to be useful (no _id set), will not store item in memcached');
-
-#         return(NULL);
-#      }
-
       if($this->memcache_debug){
          ?>read: <?=$keys_key?> <?      
       }
@@ -344,6 +338,7 @@ class vfolder_client{
             $this->memcache_add_key($keys_key, $key, $response);
             break;
          case('folders/edit'):
+         case('items/alter'):
          case('items/edit'):
             $this->memcache_delete_keys($keys_key);
             break;
@@ -539,6 +534,22 @@ class vfolder_client{
       return($this->upload_to_server($source, $json, array('skip_memcache_before' => true)));      
    }
 
+   public function alter_item($items_id = NULL, $params = NULL){
+      if(!$items_id){
+         $this->write_log('No items_id given, can not alter item', true);
+
+         return(NULL);
+      }
+
+      if(!$params){
+         $this->write_log('No parameters given, will not alter item', true);
+
+         return(NULL);
+      }
+
+      return($this->get_item($items_id, $params, array('alter_original' => true)));
+   }
+
    public function get_item($items_id = NULL, $params = NULL, $extra_params = NULL){
       if(!$items_id){
          $this->write_log('No items_id given, can not get item', true);
@@ -692,6 +703,8 @@ class vfolder_client{
       }
 
       if(is_array($extra_params)){
+         $alter_original = $extra_params['alter_original'];
+
          unset($extra_params['operations']);
 
          is_array($query) || ($query = array());
@@ -701,7 +714,7 @@ class vfolder_client{
          }
       }
 
-      return($this->make_request('items', $items_id, ($query?$query:NULL), array('skip_memcache_before' => true, 'memcache_key' => $memcache_key)));
+      return($this->make_request(($alter_original?'items/alter':'items'), $items_id, ($query?$query:NULL), array('skip_memcache_before' => true, 'memcache_key' => $memcache_key)));
    }
 
    public function edit_item($items_id = NULL, $params = NULL){
