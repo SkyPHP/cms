@@ -231,6 +231,12 @@ class vfolder_client{
          return(NULL);
       }
 
+#      if(is_array($obj) && !$obj['_id']){
+#         $this->write_log('Return object doesn\'t appear to be useful (no _id set), will not store item in memcached');
+
+#         return(NULL);
+#      }
+
       if($this->memcache_debug){
          ?>read: <?=$keys_key?> <?      
       }
@@ -337,7 +343,6 @@ class vfolder_client{
             $this->memcache_add_key($keys_key, $key, $response);
             break;
          case('folders/edit'):
-         case('items/alter'):
          case('items/edit'):
             $this->memcache_delete_keys($keys_key);
             break;
@@ -702,8 +707,6 @@ class vfolder_client{
       }
 
       if(is_array($extra_params)){
-         $alter_original = $extra_params['alter_original'];
-
          unset($extra_params['operations']);
 
          is_array($query) || ($query = array());
@@ -713,7 +716,7 @@ class vfolder_client{
          }
       }
 
-      return($this->make_request(($alter_original?'items/alter':'items'), $items_id, ($query?$query:NULL), array('skip_memcache_before' => true, 'memcache_key' => $memcache_key)));
+      return($this->make_request('items', $items_id, ($query?$query:NULL), array('skip_memcache_before' => true, 'memcache_key' => $memcache_key)));
    }
 
    public function edit_item($items_id = NULL, $params = NULL){
