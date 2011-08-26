@@ -327,6 +327,12 @@ class vfolder_client{
          return(NULL);
       }
 
+      if(!is_array($response)){
+         $this->write_log('Invalid response given, will not interface with memcached', true);
+
+         return(NULL);
+      }
+
       if(!$response['success']){
          $this->write_log('Response given indicated failure, will not interface with memcached', true);
       }
