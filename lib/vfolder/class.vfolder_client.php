@@ -347,6 +347,7 @@ class vfolder_client{
             $this->memcache_delete_keys($keys_key);
             break;
          case('items/add'):
+         case('items/remove'):
             $this->memcache_delete_keys($this->memcache_key_prefix . $response['folders_id'] . "_keys");
             break;
          case('folders/add'):
@@ -517,7 +518,7 @@ class vfolder_client{
 
       $this->write_log("Attempting to upload file '$file'");
 
-      return($this->make_request('items/add', NULL, $post, array('CURLOPT_HTTPHEADER' => array('Content-type: multipart/form-data', 'skip_memcache_before'))));
+      return($this->make_request('items/add', NULL, $post, array('CURLOPT_HTTPHEADER' => array('Content-type: multipart/form-data'), 'skip_memcache_before' => true)));
    }
 
    public function add_item($source = NULL, $json = NULL){
@@ -551,7 +552,17 @@ class vfolder_client{
          return(NULL);
       }
 
-      return($this->get_item($items_id, $params, array('alter_original' => true)));
+      return($this->make_request('items/alter', $items_id, NULL, array('skip_memcache_before' => true)));
+   }
+
+   public function remove_item($items_id = NULL){
+      if(!$items_id){
+         $this->write_log('No items_id given, can not remove item', true);
+
+         return(NULL);
+      }
+    
+      return($this->make_request('items/remove', $items_id, NULL, array('skip_memcache_before' => true)));
    }
 
    public function get_item($items_id = NULL, $params = NULL, $extra_params = NULL){
@@ -709,8 +720,6 @@ class vfolder_client{
       }
 
       if(is_array($extra_params)){
-         unset($extra_params['operations']);
-
          is_array($query) || ($query = array());
 
          foreach($extra_params as $extra => $value){
