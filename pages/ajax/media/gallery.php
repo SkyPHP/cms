@@ -1,32 +1,65 @@
-<div class="gallery" style="width:<?=$_POST['image_width']?>px; overflow:hidden;">	
-	<div class="slides" style=" height:<?=$_POST['image_height']?>px; overflow:hidden;">
-<?  
-		$vfolder = media::get_vfolder($_POST['vfolder']);
-	if ($vfolder['items']) foreach ($vfolder['items'] as $item) {
-		$img = media::get_item($item['media_item_id'],$_POST['image_width'],$_POST['image_height'],true);
+<? 
+	$params = tmp::cleanPost();
+	// krumo($params); 
+	// $vf = new vfolder($vfolder_client_config);
+	$vfolder = $vf->get_folder($params['vfolder'], $params['num_thumbs']);
+	// krumo($vfolder);
+
+	// if (tmp::isNum('vfolder', 'width|height|num')) echo 'yes?';
+
+	$num_items = count($vfolder['items']);
+	if (!$num_items) exit('no images');
+
+
 ?>
-		<div class="slide"><img src="<?=$img['src']?>" width="<?=$_POST['image_width']?>" height="<?=$_POST['image_height']?>" /></div>
-<?		
-	}
-	else exit('No Images');
-?>
-	   	</div>    
-	<div class="gallery-menu" <? if ($_POST['center_thumbs']) echo 'style="text-align: center"'?>>    
+	<div class="gallery" style="width:<?=$params['image_width']-2?>px; overflow:hidden;">	
+		<div class="slides" style=" height:<?=$params['image_height']?>px; overflow:hidden;">
+			<? 	foreach ($vfolder['items'] as $item) : 
+				$img = $vf->get_item($item['_id'], $params['image_width'], $params['image_height'], true);	?>
+				<div class="slide"><?=$img['html']?></div>
+			<? 	endforeach; ?>
+		</div>
+		<div class="gallery-menu" <? if ($params['center_thumbs']) echo 'style="text-align:center"'?>>
 			<ul>
-    		<li class="fbar">&nbsp;</li>
+				<li class="fbar">&nbsp;</li>
+				<? 	foreach ($vfolder['items'] as $k => $item) : 
+					// krumo($params);
+					$img = $vf->get_item($item['_id'], $params['thumb_width'], $params['thumb_height'], true); ?>
+					<li class="menuItem <?=(!$k)?'first':''?> <?=($k+1==$num_items)?'last':''?>"><a href="#"><?=$img['html']?></a></li>
+				<? 	endforeach; ?>
+			</ul>
+		</div>
+	</div>
 <?
-			$conuter = 0;
-			if ($_POST['num_thumbs']) $stop = $_POST['num_thumbs'];
-			else $stop = count($vfolder['items']);
-			foreach($vfolder['items'] as $item) {
-				$counter++;
-				$img = media::get_item($item['media_item_id'],$_POST['thumb_width'],$_POST['thumb_height'],true);
-?>		
-				<li class="menuItem <? if ($counter==1) echo 'first'; else if ($counter == $stop) echo 'last'?>"><a href=""><?=$img['html']?></a></li>
-<?
-				if ($counter == $stop) break;
+
+class tmp {
+	
+	public static function cleanPost() {
+		$rs = array();
+		$match = 'width|height|num';
+		foreach ($_POST as $k => $v) {
+			$v = addslashes(trim($v));
+			if (self::isNum($k, $match) && !is_numeric($v)) continue;
+			$rs[$k] = $v;
+		}
+		return $rs;
+	}
+
+	public static function isNum($field, $match) {
+		$is = true;
+		foreach (explode('|', $match) as $key) {
+			if (self::matches($field, $key)) {
+				// print_pre('matched: '.$field.' with '.$key);
+				continue;
 			}
-?>
-		</ul>	
-	</div>    
-</div>
+			$is = false;
+			break;	
+		}
+		return $is;
+	}
+
+	public static function matches($field, $val) {
+		return (strpos($field, $val) !== false);
+	}
+
+}

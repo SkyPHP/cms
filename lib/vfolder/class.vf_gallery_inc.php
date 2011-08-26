@@ -9,12 +9,14 @@ class vf_gallery_inc {
 		'enlarge_width' => 800,
 		'enlarge_height' => 800,
 		'thumb_width' => 50,
-		'thumb_height' => 50
+		'thumb_height' => 50,
+		'enlarge' => true
 	);
 
 	public $caption;
 	public $class;
 	public $crop;
+	public $enlarge;
 	public $enlarge_width;
 	public $enlarge_height;
 	public $filename;
@@ -35,10 +37,17 @@ class vf_gallery_inc {
 			->setByArray($c::$defaults)
 			->setByArray($args);
 		
+		if ($args['width'] && !$args['height']) {
+			$this->height = null;
+		}
+		if ($args['height'] && !$args['width']) {
+			$this->width = null;
+		}
+
 		if (!$this->folder && !$this->items) {
 			throw new Exception('class: <strong>vf_uploader</strong> requires a folder parameter or items to be set');
-		} else if (!is_object($this->folder) || get_class($this->folder) != 'vf_folder' && !$this->items) {
-			$this->folder = vf::getFolder($this->folder);
+		} else if (!is_object($this->folder) && !$this->items) {
+			$this->folder = vf::getFolder($this->folder, $this->limit);
 		}
 
 		$this->validate();
