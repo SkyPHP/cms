@@ -10,27 +10,39 @@ class vf_slideshow extends vf_gallery_inc {
 		'autostart' => true,
 		'delay' => 5000,
 		'html_include' => 'pages/ajax/vf/slideshow.php',
-		'thumb_type' => 'slide'
+		'thumb_type' => 'slide',
+		'transition' => 'slide',
+		'auto_hide_toolbar' => true,
+		'captions' => true,
+		'controls' => true
 	);
 
 	public static $thumb_types = array('slide', 'grid', 'none');
+	public static $transition_types = array('slide', 'fade');
 
 	public $autostart;
+	public $auto_hide_toolbar;
+	public $captions;
+	public $controls;
 	public $delay;
 	public $thumb_type;
+	public $transition;
 
 	public function makeHTML() {
 		global $p;
 		parent::makeHTML();
-		$p->css[] = '/lib/vfolder/css/vf.css';
-		$p->js[] = '/lib/vfolder/js/vf.js';
+		if (!in_array('/lib/vfolder/css/vf.css', $p->css)) $p->css[] = '/lib/vfolder/css/vf.css';
+		if (!in_array('/lib/js/jquery.hoverIntent.js', $p->js)) $p->js[] = '/lib/js/jquery.hoverIntent.js';
+		if (!in_array('/lib/vfolder/js/vf.js', $p->js)) $p->js[] = '/lib/vfolder/js/vf.js';
 	}
 
 	public function validate() {
+		if ($this->transi)
 		if ($this->crop) return;
 		if ($this->width) return;
 		if ($this->height) return;
 		throw new Exception('vf_slideshow expects a width or a height to be provided if crop is set to false.');
+
 		return $this;
 	}
 

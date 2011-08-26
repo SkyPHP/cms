@@ -11,21 +11,29 @@
 	
 }
 
+.vf-slideshow-caption {
+	color: #000;
+	font-size: 12px;
+	padding-bottom: 10px;
+}
+
 .vf-slideshow-thumb {
-	background: #ccc;
-	cursor: hand;
-	padding:3px;
+	background: #eee;
+	border-bottom: 1px solid #eee;
+	cursor: pointer;
+	padding:3px 3px 0px;
 	float:left;
 }
 	.vf-slideshow-thumb.selected {
-		background: green;
+		background: #18A6E7;
+		border-bottom: 1px solid #9e9e9e;
 	}
 
 .vf-slideshow-controls {
-	background: #fff;
+	background: #eee;
 	bottom:0;
 	left:0;
-	opacity: .4;
+	padding:10px;
 	position: absolute;
 	right:0;
 	text-align: right;
@@ -33,3 +41,101 @@
 	.vf-slideshow-controls a {
 		color: #000;
 	}
+
+.vf-enlarge-skybox-container {
+	background: #222;
+	padding: 8px 8px 6px;
+}
+
+.vf-enlarge-skybox {
+	display: block;
+	margin-top: 8px;
+}
+
+.vf-slideshow-controls > .float-right {
+	width: 59px;
+}
+
+.vf-slideshow-controls a {
+	background: url(/lib/vfolder/images/vf_controls.png) no-repeat;
+	background-position: 0 0;
+	display:block;
+	float: right;
+	height: 4px;
+	margin-left: 3px;
+	padding:4px 4px 1px;
+	text-indent: -99999px;
+	width: 4px;
+}
+	.vf-slideshow-controls .vf-slideshow-prev {
+		background-position: 0 0;
+	}
+		.vf-slideshow-prev:hover {
+			background-position: 0 -12px;
+		}
+	.vf-slideshow-controls .vf-slideshow-play {
+		background-position: -22px 0;
+		width: 3px;
+	}
+		.vf-slideshow-play:hover {
+			background-position: -22px -12px;
+		}
+	.vf-slideshow-controls .vf-slideshow-pause {
+		background-position: -11px 0;
+		width: 3px;
+	}
+		.vf-slideshow-pause:hover {
+			background-position: -11px -12px;
+		}
+	.vf-slideshow-controls .vf-slideshow-next {
+		background-position: -33px 0;
+	}
+		.vf-slideshow-next:hover {
+			background-position: -33px -12px;
+		}
+	.vf-slideshow-controls .vf-slideshow-enlarge {
+		background-position: -49px 0;
+	}
+		.vf-slideshow-enlarge:hover {
+			background-position: -49px -12px;
+		}
+
+.vf-uploader-status-skybox {
+	background: #fff;
+	border-top: 5px solid #555;
+	padding: 10px 10px 0;
+	width: 300px;
+}
+	.vf-uploader-status {
+		margin-bottom:10px;
+	}
+	.vf-uploader-upload-file {
+		border: 1px solid #999;
+		font-size: 10px;
+		margin-bottom: 10px;
+		padding: 5px 10px;
+	}
+	.vf-uploader-control {
+		background: url(/lib/vfolder/images/uploader_controls.png) no-repeat;
+		display: block;
+		float: right;
+		height: 16px;
+		margin: 3px 0 0 20px;
+		width: 16px;
+	}
+		.vf-uploader-remove {
+			background-position: 0 0;
+		}
+		.vf-uploader-loading {
+			background-position: -27px 0;
+		}
+		.vf-uploader-done {
+			background-position: -53px 0;
+		}
+.vf-gallery-item {
+	float: left;
+	background: #ddd;
+	border-bottom: 1px solid #ccc;
+	padding: 3px 3px 1px;
+	margin: 0 5px 5px 0;
+}

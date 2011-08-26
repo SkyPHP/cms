@@ -24,11 +24,15 @@ class vf_uploader {
 		
 		$this->setByArray(self::$defaults)->setByArray($args);
 
+		if ($this->gallery && !$this->folder) {
+			$this->folder = $this->gallery->folder;
+		}
+
 		$this->setMemToken();
 
 		if (!$this->folder) {
 			throw new Exception('class: <strong>vf_uploader</strong> requires a folder paramter');
-		} else if (!is_object($this->folder) || get_class($this->folder) != 'vf_folder') {
+		} else if (!is_object($this->folder)) {
 			$this->folder = vf::getFolder($this->folder);
 		}
 		
@@ -52,11 +56,15 @@ class vf_uploader {
 	}
 
 	public function makeButton() {
+		global $p;
+		if (!in_array('/lib/vfolder/css/vf.css', $p->css)) $p->css[] = '/lib/vfolder/css/vf.css';
+		if (!in_array('/lib/vfolder/js/vf.js', $p->js)) $p->js[] = '/lib/vfolder/js/vf.js';
+		
 		if ($this->gallery) {
 			$gallery_attr = 'refresh_gallery="'.$this->gallery->identifier.'"';
 		}
-		$this->button = '<button type="button" class="vf-uploader '.$this->class.'" '
-				.'uploader_token="'.$this->_token.'" '.$gallery_attr.'>' . $this->buttonText . '</button>';
+		$this->button = '<div class="vf-uploader-button-container"><button type="button" class="vf-uploader '.$this->class.'" '
+				.'uploader_token="'.$this->_token.'" '.$gallery_attr.'>' . $this->buttonText . '</button></div>';
 	}
 
 }

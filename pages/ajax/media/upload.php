@@ -22,7 +22,18 @@ if ($_FILES["file"]["tmp_name"] && !$errors) {
     $errors[] = "Error: No file uploaded!";
 }
  if (!$errors) {
-    $vfolder_path = $_POST['vfolder'];
+
+    // $vf = new vfolder(array(
+    //     'username' => 'joonbug',
+    //     'password' => 'bluetulip205',
+    //     'files_domain' => 'default',
+    //     'server_url' => 'vfolder.net/v2'
+    // ));
+
+    // $vfolder_path = $_POST['vfolder'];
+
+    // $item = $vf->upload_to_server($uploaded_file, array('folders_path' => ))
+
     if ( !$vfolder_path ) $vfolder_path = $_SESSION['media_browse']['vfolder'];
 
     $item = media::new_item($uploaded_file,$vfolder_path);
