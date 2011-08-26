@@ -29,9 +29,13 @@ class vf{
       return($client->initialized);
    }
 
-   public static function getItem($items_id = NULL, $params = NULL){
+   public static function getItem($items_id = NULL, $params = NULL, $width = NULL, $gravity = NULL){
       $operations = array();
  
+      if($params && !is_array($params)){
+         $params = array('height' => $height = $params, 'width' => $width, 'crop' => $gravity);
+      }
+
       if($params || ($params = NULL)){
          if($params['composite']){
             $composite = $params['composite'];
