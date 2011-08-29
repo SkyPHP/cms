@@ -99,6 +99,7 @@
 <? 		
 			include ('pages/admin/seo/duplicate-data/ajax/listing.php'); 
 ?>
+			<div class="clear"></div>
         </div>
         <div id="listing2" style="width:25%; float:left;"></div>
         <div class="clear"></div>
