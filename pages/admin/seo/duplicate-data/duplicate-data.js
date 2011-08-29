@@ -77,7 +77,6 @@ $(function() {
 		$.post('/admin/seo/duplicate-data/ajax/listing2',
 			{ 
 				market: market,
-				volume: volume, 
 				market_name_n: market_name,  
 				category: category,
 				base: base,
