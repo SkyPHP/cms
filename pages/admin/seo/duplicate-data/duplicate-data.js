@@ -41,6 +41,8 @@ $(function() {
 		base = $("input[name=base]:checked").val();
 		value = $(this).val();
 		filter = $(this).attr('name');
+		if (value) $('#'.filter+'_selected').html(' - ' + value);
+		else $('#'.filter+'_selected').html('');
 		$.post('/admin/seo/duplicate-data/ajax/listing',
 			{ 
 				market: market,
