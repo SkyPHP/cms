@@ -63,8 +63,7 @@ $(function() {
 	});
 
 	$('.phrase-listing1-radio').live('click',function() {
-		//$('.phrase-listing1-radio').attr('checked','');
-		//$(this).attr('checked','checked');
+		$('#saved-message').html('');
 		market = $("input[name=market]:checked").val();
 		volume = $("input[name=volume]:checked").val();
 		market_name = $("input[name=market_name]:checked").val();
