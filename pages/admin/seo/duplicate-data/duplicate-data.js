@@ -71,7 +71,7 @@ $(function() {
 	});
 	
 	$('.phrase-listing2-radio').live('click',function() {
-		val = $(this).val();
+		val = $(this).attr('phrase');
 		final = $('#final-phrase').val();
 		$('#final-phrase').val(final + ' ' + val);
 	});
