@@ -107,9 +107,8 @@ $(function() {
 	
 	$('#clear-all').live('click',function() {
 		$('#final-phrase').val('');
-		$('.listing_radio').each(function(index) {
-			if ($(this).attr('checked')) $(this).attr('checked','');
-		});
+		$('.phrase-listing1-radio').attr('checked','');
+		$('.phrase-listing2-radio').attr('checked','');
 	});
 	
 });
