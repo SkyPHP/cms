@@ -63,8 +63,9 @@ $(function() {
 
 	$('.phrase-listing1-radio').live('click',function() {
 		val = $(this).attr('phrase');
+		phrase_id = $(this).attr('phrase_id');
 		$('#final-phrase').val(val);
-		$.post('/admin/seo/duplicate-data/ajax/listing2',{},function(data) {
+		$.post('/admin/seo/duplicate-data/ajax/listing2',{phrase_id: phrase_id},function(data) {
 			$('#listing2').html(data);
 		});
 	});

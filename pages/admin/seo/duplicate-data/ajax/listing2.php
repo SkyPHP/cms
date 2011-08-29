@@ -1,6 +1,7 @@
 <?
 	$where = array();
 	$where[] = "volume > 0";
+	$where[] = "id != {$_POST['phrase_id']}";
 	if ($_POST['market']) $where[] = "market = '{$_POST['market']}'";
 	if ($_POST['market_name']) $where[] = "market_name = '{$_POST['market_name']}'";
 	if ($_POST['volume']) $where[] = "volume = {$_POST['volume']}";
