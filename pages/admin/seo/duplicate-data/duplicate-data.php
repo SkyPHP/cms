@@ -43,10 +43,10 @@
 	if ($type == 'phrase') {
 		$filters = array(
 			'category',
-			'volume',
 			'market_name',
 			'market',
-			'base'		
+			'base',
+			'volume',		
 		);
 		$table = 'dup_phrase_data';
 		$field = 'phrase';

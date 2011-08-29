@@ -12,7 +12,7 @@
 		$where[] = "market_name != '{$_POST['market_name_n']}'";
 		$where[] = "market != 'none'";
 	}
-	if ($_POST['volume']) $where[] = "volume = {$_POST['volume']}";
+	if ($_POST['volume']) $where[] = "volume > {$_POST['volume']}";
 	if ($_POST['category']) $where[] = "category = '{$_POST['category']}'";
 	if ($_POST['base']) $where[] = "base = '{$_POST['base']}'";
 
