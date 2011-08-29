@@ -73,8 +73,8 @@
 <?
 		foreach ($filters as $filter) {
 ?>			<div style="float:left; margin-right:50px;">
-				<div class="filter" type="<?=$type?>" style="font-weight:bold; width: 145px; padding-left:5px; cursor:pointer; border: 1px solid #999; border-bottom: 2px solid #999;" filter="<?=$filter['name']?>"><?=str_replace('_',' ',$filter['name'])?></div>
-                <div id="<?=$filter['name']?>" style="position:absolute; display:none; min-width:150px; background-color: #fff; border-bottom: 1px solid #999; border-left: 1px solid #999; border-right: 1px solid #999;" class="filter-area"><? include('pages/admin/seo/duplicate-data/filter.php') ?></div>
+				<div class="filter" type="<?=$type?>" style="font-weight:bold; width: 145px; padding-left:5px; cursor:pointer; border: 1px solid #999; border-bottom: 2px solid #999;" filter="<?=$filter?>"><?=str_replace('_',' ',$filter)?></div>
+                <div id="<?=$filter?>" style="position:absolute; display:none; min-width:150px; background-color: #fff; border-bottom: 1px solid #999; border-left: 1px solid #999; border-right: 1px solid #999;" class="filter-area"><? include('pages/admin/seo/duplicate-data/filter.php') ?></div>
             </div>
 <?	
 		}
