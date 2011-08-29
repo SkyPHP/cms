@@ -95,11 +95,12 @@
             <input type="text" id="final-phrase" style="width:93%; font-size:16px;" readonly  /><br>
 			<div style="margin-top:5px"><input type="button" value="save" id="save-final" /> <input type="button" value="clear" id="clear-all" /></div>
         </fieldset>   
-        <div id="listing">
+        <div id="listing" style="float:left">
 <? 		
-			include ('pages/admin/seo/duplicate-data/ajax/filter-listing.php'); 
+			include ('pages/admin/seo/duplicate-data/ajax/listing.php'); 
 ?>
         </div>
+        <div id="listing2"></div>
         <div class="clear"></div>
 	</div>
 <?	

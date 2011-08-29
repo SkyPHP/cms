@@ -41,7 +41,7 @@ $(function() {
 		base = $("input[name=base]:checked").val();
 		value = $(this).val();
 		filter = $(this).attr('name');
-		$.post('/admin/seo/duplicate-data/ajax/filter-listing',
+		$.post('/admin/seo/duplicate-data/ajax/listing',
 			{ 
 				market: market,
 				volume: volume, 
@@ -58,21 +58,16 @@ $(function() {
 		//	$('#auto').html(data);
 		//});
 	});
+
+	$('.phrase-listing1-radio').live('click',function() {
+		val = $(this).val();
+		$.post('/admin/seo/duplicate-data/ajax/listing2',{},function(data) {
+			$('#listing2').html(data);
+		});
+	});
 	
-	$('.listing_radio').die().live('click',function() {
-		val = '';
-		vals = new Array();
-		$('.listing_radio').each(function(index) {
-			if ($(this).attr('checked')) {
-				val += ' '+$(this).attr('phrase');
-				vals.push($(this).attr('phrase_id'));
-			}
-		});	
-		$('#final-phrase').val(val);
-		$('#final-phrase').attr('p1',vals[0]);
-		$('#final-phrase').attr('p2',vals[1]);
-		$('#final-phrase').attr('p3',vals[2]);
-		if (vals[3]) $('#final-phrase').attr('p4',vals[3]);
+	$('.phrase-listing2-radio').live('click',function() {
+		val = $(this).val();		
 	});
 	
 	$('.a-or-m-switch').die().live('change',function() {
@@ -80,7 +75,7 @@ $(function() {
 		$('.a-or-m-on').slideUp('fast',function() {
 			$('#'+val).addClass('a-or-m-on').slideDown('fast');
 		}).removeClass('a-or-m-on');
-	})
+	});
 	
 	$('#save-final').live('click',function() {
 		var val = $('#final-phrase').val();
