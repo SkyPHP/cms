@@ -1,6 +1,5 @@
 <?
 	$where = array();
-	if ($_POST['market'])
 	$where[] = "volume > 0";
 	if ($_POST['market']) $where[] = "market = '{$_POST['market']}'";
 	if ($_POST['market_name']) $where[] = "market_name = '{$_POST['market_name']}'";

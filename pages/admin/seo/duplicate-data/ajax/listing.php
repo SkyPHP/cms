@@ -14,7 +14,7 @@
 			$type = 'phrase';
 			$where[] = "volume > 0";
 			$width = '25%';
-			$listing = aql::select("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume order by volume DESC, phrase asc }", array('dup_phrase_data'=>array('where'=>$where,'order by'=>'volume desc')));
+			$listing = aql::select("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume order by volume DESC, phrase asc }", array('dup_phrase_data'=>array('where'=>$where)));
 		}
 	}
 	$count = count($listing);
