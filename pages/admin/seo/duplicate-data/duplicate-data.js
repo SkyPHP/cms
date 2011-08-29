@@ -63,8 +63,8 @@ $(function() {
 	});
 
 	$('.phrase-listing1-radio').live('click',function() {
-		$('.phrase-listing1-radio').attr('checked','');
-		$(this).attr('checked','checked');
+		//$('.phrase-listing1-radio').attr('checked','');
+		//$(this).attr('checked','checked');
 		market = $("input[name=market]:checked").val();
 		volume = $("input[name=volume]:checked").val();
 		market_name = $("input[name=market_name]:checked").val();
@@ -89,9 +89,10 @@ $(function() {
 	});
 	
 	$('.phrase-listing2-radio').live('click',function() {
-		val = $(this).attr('phrase');
+		val2 = $(this).attr('phrase');
+		val1 = $("input[name=phrase1]:checked").attr('phrase');
 		phrase_id = $(this).attr('phrase_id');
-		$('#final-phrase').val($('#final-phrase').val() + ' ' + val);
+		$('#final-phrase').val(val1 + ' ' + val2);
 		$('#final-phrase').attr('p2',phrase_id);
 	});
 	
