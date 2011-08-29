@@ -10,6 +10,7 @@
 		if ($type == 'paragraph') 
 			$listing = aql::select("dup_sentence { id as sentence_id, sentence, volume order by sentence asc }",array('dup_sentence'=>array('where'=>$where)));
 		else {
+			$where [] = "volume > 0";
 			$width = '30%';
 			$listing = aql::select("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume order by volume DESC, phrase asc }", array('dup_phrase_data'=>array('where'=>$where)));
 		}
