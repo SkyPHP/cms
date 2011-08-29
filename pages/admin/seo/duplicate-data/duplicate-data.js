@@ -109,6 +109,7 @@ $(function() {
 		$('#final-phrase').val('');
 		$('.phrase-listing1-radio').attr('checked','');
 		$('.phrase-listing2-radio').attr('checked','');
+		$('#listing2').html('');
 	});
 	
 });
