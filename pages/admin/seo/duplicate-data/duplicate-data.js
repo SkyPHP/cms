@@ -49,6 +49,7 @@ $(function() {
 				volume: volume, 
 				market_name: market_name,  
 				category: category,
+				base: base,
 				value: value,
 				filter: filter 
 			}, 
@@ -64,14 +65,28 @@ $(function() {
 	$('.phrase-listing1-radio').live('click',function() {
 		$('.phrase-listing1-radio').attr('checked','');
 		$(this).attr('checked','checked');
-		
+		market = $("input[name=market]:checked").val();
+		volume = $("input[name=volume]:checked").val();
+		market_name = $("input[name=market_name]:checked").val();
+		category = $("input[name=category]:checked").val();
+		base = $("input[name=base]:checked").val();
 		val = $(this).attr('phrase');
 		phrase_id = $(this).attr('phrase_id');
 		$('#final-phrase').val(val);
 		$('#final-phrase').attr('p1',phrase_id);
-		$.post('/admin/seo/duplicate-data/ajax/listing2',{phrase_id: phrase_id},function(data) {
-			$('#listing2').html(data);
-		});
+		$.post('/admin/seo/duplicate-data/ajax/listing2',
+			{ 
+				market: market,
+				volume: volume, 
+				market_name: market_name,  
+				category: category,
+				base: base,
+				phrase_id: phrase_id
+			},
+			function(data) {
+				$('#listing2').html(data);
+			}
+		);
 	});
 	
 	$('.phrase-listing2-radio').live('click',function() {
