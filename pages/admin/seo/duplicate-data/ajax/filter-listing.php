@@ -1,6 +1,10 @@
 <?
 	$where=array();
-	if ($_POST['market']) $where[] = "market = ".$_POST['market'];
+	if ($_POST['market']) $where[] = "market = '{$_POST['market']}'";
+	if ($_POST['market_name']) $where[] = "market_name = '{$_POST['market_name']}'";
+	if ($_POST['volume']) $where[] = "volume = {$_POST['volume']}";
+	if ($_POST['category']) $where[] = "category = '{$_POST['category']}'";
+	if ($_POST['base']) $where[] = "base = '{$_POST['base']}'";
 	if (!$listing) {
 		$type == $_POST['type'];
 		if ($type == 'paragraph') 
