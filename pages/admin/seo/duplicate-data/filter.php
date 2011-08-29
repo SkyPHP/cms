@@ -9,7 +9,7 @@
 	if($rs) while (!$rs->EOF) {
 ?>
 		<div style="margin-bottom:5px;">
-		<input type="checkbox" value="<?=$rs->Fields($filter['name'])?>" id="<?=$rs->Fields($filter['name'])?>" filter="<?=$filter['name']?>" class="filter_cb" /> <label style="cursor:pointer;" for="<?=$rs->Fields($filter['name'])?>"><?=strtolower($rs->Fields($filter['name']))?></label>
+		<input type="radio" value="<?=$rs->Fields($filter['name'])?>" id="<?=$rs->Fields($filter['name'])?>" name="<?=$filter['name']?>" class="phrase-filter-radio" /> <label style="cursor:pointer;" for="<?=$rs->Fields($filter['name'])?>"><?=strtolower($rs->Fields($filter['name']))?></label>
        	</div>
 <?		
 		$rs->MoveNext();

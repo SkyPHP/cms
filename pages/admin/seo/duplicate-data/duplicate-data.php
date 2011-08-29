@@ -41,19 +41,26 @@
 	snippet::tabs($p->tabs);
 	
 	if ($type == 'phrase') {
+		$filters = array(
+			'category',
+			'volume',
+			'market_name',
+			'market',
+			'base'			
+		);
 		$table = 'dup_phrase_data';
 		$field = 'phrase';
 		$width = 310;
 		$listing = aql::select($table." { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume where market != '' and market is not null and base != '' and base is not null and volume > 0 order by volume DESC, phrase asc }"); 
 	}
 	else if ($type == 'paragraph') {
+		$filters = array();
 		$table = 'dup_sentence';
 		$field = 'sentence';
 		$listing = aql::select($table." { sentence, volume where market is not null order by sentence asc }");
 	}
 	
 	$count = count($listing);
-	$rs = aql::select("dup_filters { name where type = '{$type}' order by id ASC }");
 ?>	
 	<div style="margin: 15px 0 0 0;">
      	<input type="radio" id="auto-switch-off" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-off">Manual Permutations</label><br>
@@ -64,7 +71,7 @@
 		<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
         <input type="hidden" id="table" value="<?=$table?>" />
 <?
-		foreach ($rs as $filter) {
+		foreach ($filters as $filter) {
 ?>			<div style="float:left; margin-right:50px;">
 				<div class="filter" type="<?=$type?>" style="font-weight:bold; width: 145px; padding-left:5px; cursor:pointer; border: 1px solid #999; border-bottom: 2px solid #999;" filter="<?=$filter['name']?>"><?=str_replace('_',' ',$filter['name'])?></div>
                 <div id="<?=$filter['name']?>" style="position:absolute; display:none; min-width:150px; background-color: #fff; border-bottom: 1px solid #999; border-left: 1px solid #999; border-right: 1px solid #999;" class="filter-area"><? include('pages/admin/seo/duplicate-data/filter.php') ?></div>

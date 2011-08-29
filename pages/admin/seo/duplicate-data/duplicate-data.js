@@ -33,16 +33,27 @@ $(function() {
 		$(this).removeClass('filter-on').addClass('filter');
 	});
 	
-	$('.filter_cb').die().live('click',function() {
+	$('.phrase-filter-radio').live('click',function() {
+		market = $("input[name=market]:checked").val();
+		volume = $("input[name=volume]:checked").val();
+		market_name = $("input[name=market_name]:checked").val();
+		category = $("input[name=category]:checked").val();
+		base = $("input[name=base]:checked").val();
 		value = $(this).val();
-		filter = $(this).attr('filter');
-		or = $('#or').val();
-		type = $(this).attr('type');
-		if ($(this).attr('checked')) sw = 'on';
-		else sw = 'off';
-		$.post('/admin/seo/duplicate-data/ajax/filter-listing',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
-			$('#listing').html(data);
-		});
+		filter = $(this).attr('name');
+		$.post('/admin/seo/duplicate-data/ajax/filter-listing',
+			{ 
+				market: market,
+				volume: volume, 
+				market_name: market_name,  
+				category: category,
+				value: value,
+				filter: filter 
+			}, 
+			function(data){
+				$('#listing').html(data);
+			}
+		);
 		//$.post('/admin/seo/duplicate-data/ajax/auto-permetate',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
 		//	$('#auto').html(data);
 		//});
