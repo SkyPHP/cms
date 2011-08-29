@@ -1,6 +1,6 @@
 <div style="padding-top:5px;">
 <?
-	if ($filter['name'] == 'volume') $DESC = 'desc';
+	if ($filter == 'volume') $DESC = 'desc';
 	else $DESC = '';
 	$rs = sql("SELECT DISTINCT ".$filter." FROM ".$table." where market != '' and base != '' and volume > 0 and active = 1 order by ".$filter." ".$DESC);
 ?>
