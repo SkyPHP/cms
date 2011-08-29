@@ -78,7 +78,7 @@ $(function() {
 			{ 
 				market: market,
 				volume: volume, 
-				market_name: market_name,  
+				market_name_n: market_name,  
 				category: category,
 				base: base,
 				phrase_id: phrase_id
