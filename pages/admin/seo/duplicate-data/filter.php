@@ -4,7 +4,7 @@
 	else $DESC = '';
 	$rs = sql("SELECT DISTINCT ".$filter." FROM ".$table." where market != '' and base != '' and volume > 0 and active = 1 order by ".$filter." ".$DESC);
 ?>
-	<!--<input type="checkbox" id="select_all"> <label for="select_all">Select All</label><br>-->
+	<input type="radio" value="" id="all_<?=$filter?>" name="<?=$filter?>" class="phrase-filter-radio" /> <label style="cursor:pointer;" for="all_<?=$filter?>">clear <?=$filter?></label>
 <?
 	if($rs) while (!$rs->EOF) {
 ?>
