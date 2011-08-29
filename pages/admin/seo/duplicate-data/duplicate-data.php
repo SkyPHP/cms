@@ -46,7 +46,7 @@
 			'volume',
 			'market_name',
 			'market',
-			'base'			
+			'base'		
 		);
 		$table = 'dup_phrase_data';
 		$field = 'phrase';

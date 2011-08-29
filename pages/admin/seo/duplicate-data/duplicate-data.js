@@ -62,6 +62,9 @@ $(function() {
 	});
 
 	$('.phrase-listing1-radio').live('click',function() {
+		$('.phrase-listing1-radio').attr('checked','');
+		$(this).attr('checked','checked');
+		
 		val = $(this).attr('phrase');
 		phrase_id = $(this).attr('phrase_id');
 		$('#final-phrase').val(val);
