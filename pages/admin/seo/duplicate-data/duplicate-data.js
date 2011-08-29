@@ -62,7 +62,7 @@ $(function() {
 	});
 
 	$('.phrase-listing1-radio').live('click',function() {
-		val = $(this).val();
+		val = $(this).attr('phrase');
 		$('#final-phrase').val(val);
 		$.post('/admin/seo/duplicate-data/ajax/listing2',{},function(data) {
 			$('#listing2').html(data);

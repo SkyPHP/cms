@@ -26,7 +26,7 @@
 <?
 		if ($listing) foreach ($listing as $data) {
 ?>
-			<div style="width:55px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?>)</div><div style="float:left;"> <input type="radio" name="phrase1" part="1" phrase="<?=$data['phrase']?>" phrase_id="<?=$data['phrase_id']?>" class="<?=$type?>-listing1-radio" id="<?=$data['lower_phrase']?>" /> <label for="<?=$data['lower_phrase']?>"><?=$data['lower_phrase']?></label></div>
+			<div style="width:55px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?>)</div><div style="float:left;"> <input type="radio" phrase="<?=$data['phrase']?>" phrase_id="<?=$data['phrase_id']?>" class="<?=$type?>-listing1-radio" id="<?=$data['lower_phrase']?>" /> <label for="<?=$data['lower_phrase']?>"><?=$data['lower_phrase']?></label></div>
         	<div class="clear"></div>
 <?	
 		}
