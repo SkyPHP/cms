@@ -72,10 +72,7 @@ $(function() {
 	
 	$('.phrase-listing2-radio').live('click',function() {
 		val = $(this).attr('phrase');
-		final = $('#final-phrase').val();
-		value = final + ' ' + val;
-		alert(value);
-		$('#final-phrase').val(value);
+		$('#final-phrase').val($('#final-phrase').val() + ' ' + val);
 	});
 	
 	$('.a-or-m-switch').die().live('change',function() {
