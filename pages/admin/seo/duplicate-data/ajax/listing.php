@@ -12,7 +12,7 @@
 			if ($_POST['category']) $where[] = "category = '{$_POST['category']}'";
 			if ($_POST['base']) $where[] = "base = '{$_POST['base']}'";
 			$type = 'phrase';
-			$where [] = "volume > 0";
+			$where[] = "volume > 0";
 			$width = '25%';
 			$listing = aql::select("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume order by volume DESC, phrase asc }", array('dup_phrase_data'=>array('where'=>$where,'order by'=>'volume desc')));
 		}
