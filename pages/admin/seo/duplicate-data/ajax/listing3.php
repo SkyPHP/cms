@@ -8,7 +8,7 @@
 	if ($_POST['category']) $where[] = "(category = '{$_POST['category_n']}' || category = 'general')";
 	if ($_POST['base']) $where[] = "base = '{$_POST['base']}'";
 
-	$listing2 = aql::select("dup_modifier { id as modifier_id, lower(phrase) as lower_phrase, phrase, volume order by volume DESC, phrase asc }", array('dup_phrase_data'=>array('where'=>$where)));
+	$listing2 = aql::select("dup_modifier { id as modifier_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_phrase_data'=>array('where'=>$where)));
 
 ?>
 
@@ -17,7 +17,7 @@
 <?
 		if ($listing2) foreach ($listing2 as $data) {
 ?>
-			<div style="width:55px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left;"> <input type="radio" name="phrase3" phrase="<?=$data['phrase']?>" modifier_id="<?=$data['modifier_id']?>" class="phrase-listing2-radio" id="<?=$data['lower_phrase']?>3" /> <label for="<?=$data['lower_phrase']?>3"><?=$data['lower_phrase']?></label></div>
+			<div style="width:55px; float:left; margin-right:5px; text-align:right;"></div><div style="float:left;"> <input type="radio" name="phrase3" phrase="<?=$data['phrase']?>" modifier_id="<?=$data['modifier_id']?>" class="phrase-listing2-radio" id="<?=$data['lower_phrase']?>3" /> <label for="<?=$data['lower_phrase']?>3"><?=$data['lower_phrase']?></label></div>
         	<div class="clear"></div>
 <?	
 		} else echo " No Matches";
