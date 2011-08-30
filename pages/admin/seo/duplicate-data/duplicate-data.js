@@ -85,7 +85,7 @@ $(function() {
 		val3 = $('input[name=phrase3]').val();
 		if (!val2) val2='';
 		if (!val3) val3='';
-		value = val1 + ' ' + val2 + ' ' + val3;
+		value = val1 + ' | ' + val2 + ' | ' + val3;
 		$('#final-phrase').val(value.capitalize());
 		$('#final-phrase').attr('p1',phrase_id);
 		$.post('/admin/seo/duplicate-data/ajax/listing2',
@@ -117,7 +117,7 @@ $(function() {
 		val1 = $("input[name=phrase1]:checked").attr('phrase');
 		phrase_id = $(this).attr('phrase_id');
 		if (!val3) val3 = '';
-		value = val1 + ' ' + val2 + ' ' + val3;
+		value = val1 + ' | ' + val2 + ' | ' + val3;
 		$('#final-phrase').val(value.capitalize());
 		$('#final-phrase').attr('p2',phrase_id);
 		if (!$('input[name=phrase3]:checked').val()) {
@@ -141,7 +141,7 @@ $(function() {
 		val2 = $("input[name=phrase2]:checked").attr('phrase');
 		val1 = $("input[name=phrase1]:checked").attr('phrase');
 		modifier_id = $(this).attr('modifier_id');
-		value = val1 + ' ' + val2 + ' ' + val3;
+		value = val1 + ' | ' + val2 + ' | ' + val3;
 		$('#final-phrase').val(value.capitalize());
 		$('#final-phrase').attr('p3',modifier_id);
 	});
