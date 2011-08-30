@@ -1,5 +1,9 @@
 var mouse_is_inside = false;
 
+String.prototype.capitalize = function(){
+    return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } );
+};
+
 $(function() {
 
     $('.filter-area, .filter').hover(function(){ 
@@ -109,7 +113,8 @@ $(function() {
 		val1 = $("input[name=phrase1]:checked").attr('phrase');
 		phrase_id = $(this).attr('phrase_id');
 		if (!val3) val3 = '';
-		$('#final-phrase').val(val1 + ' ' + val2 + ' ' + val3);
+		value = val1 + ' ' + val2 + ' ' + val3;
+		$('#final-phrase').val(value.capitalize());
 		$('#final-phrase').attr('p2',phrase_id);
 		if (!$('input[name=phrase3]:checked').val()) {
 			$.post('/admin/seo/duplicate-data/ajax/listing3',
@@ -132,7 +137,8 @@ $(function() {
 		val2 = $("input[name=phrase2]:checked").attr('phrase');
 		val1 = $("input[name=phrase1]:checked").attr('phrase');
 		modifier_id = $(this).attr('modifier_id');
-		$('#final-phrase').val(val1 + ' ' + val2 + ' ' + val3);
+		value = val1 + ' ' + val2 + ' ' + val3;
+		$('#final-phrase').val(value.capitalize());
 		$('#final-phrase').attr('p3',modifier_id);
 	});
 	
