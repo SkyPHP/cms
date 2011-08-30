@@ -188,4 +188,9 @@ $(function() {
 		$('#listing3').html('');
 	});
 	
+	$('#final-phrase').live('change',function() {
+		count = $(this).val().length;
+		$('#char-count').html(count + 'Characters');
+	});
+	
 });
