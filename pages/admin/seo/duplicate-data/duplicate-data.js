@@ -80,9 +80,13 @@ $(function() {
 		market_name = $("input[name=market_name]:checked").val();
 		category = $("input[name=category]:checked").val();
 		base = $("input[name=base]:checked").val();
-		val = $(this).attr('phrase');
-		
-		$('#final-phrase').val(val);
+		val1 = $(this).attr('phrase');
+		val2 = $('input[name=phrase2]').val();
+		val3 = $('input[name=phrase3]').val();
+		if (!val2) val2='';
+		if (!val3) val3='';
+		value = val1 + ' ' + val2 + ' ' + val3;
+		$('#final-phrase').val(value.capitalize());
 		$('#final-phrase').attr('p1',phrase_id);
 		$.post('/admin/seo/duplicate-data/ajax/listing2',
 			{ 
