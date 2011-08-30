@@ -758,7 +758,7 @@ class vfolder_client{
       return($this->make_request('items/edit', $items_id, json_encode($params), array('skip_memcache_before' => true)));
    }
 
-   public function get_folder($folders_id = NULL, $limit = NULL, $extra_params = NULL){
+   public function get_folder($folders_id = NULL, $params = NULL, $extra_params = NULL){
       if(!$folders_id){
          $this->write_log('No folders_id given, can not get folder', true);
 
@@ -781,21 +781,16 @@ class vfolder_client{
          }
       }
 
-      if($limit === false){
-         $limit = -1;
-      }elseif(is_array($limit)){
-         $random = $limit['random'];
-         $limit = $limit['limit'];
+      if(!is_array($params)){
+         $limit = $params;
+         unset($params);
 
-         if($random && $limit){
-            unset($limit);
-         }
+         $json = array();
+
+         ($limit || $limit === 0 || $limit === '0') && ($json['limit'] = $limit);
+      }else{
+         $json = $params;
       }
-
-      $json = array();
-
-      ($limit || $limit === 0 || $limit === '0') && ($json['limit'] = $limit);
-      $random && ($json['random'] = true);
 
       return($this->make_request('folders', $folders_id, json_encode($json), array('skip_memcache_before' => true, 'memcache_key' => $memcache_key)));
    }
