@@ -65,7 +65,7 @@ $(function() {
 	});
 
 	$('.phrase-listing1-radio').live('click',function() {
-		$('.phrase-filter-radio').attr('section','listing2');
+		$('.phrase-filter-radio').each(function() { $(this).attr('section','listing2'); });
 		$('#saved-message').html('');
 		market = $("input[name=market]:checked").val();
 		volume = $("input[name=volume]:checked").val();
