@@ -105,9 +105,11 @@ $(function() {
 		base = $("input[name=base]:checked").val();
 		
 		val2 = $(this).attr('phrase');
+		val3 = $("input[name=phrase3]:checked").attr('phrase');
 		val1 = $("input[name=phrase1]:checked").attr('phrase');
 		phrase_id = $(this).attr('phrase_id');
-		$('#final-phrase').val(val1 + ' ' + val2);
+		if (!val3) val3 = '';
+		$('#final-phrase').val(val1 + ' ' + val2 + ' ' + val3);
 		$('#final-phrase').attr('p2',phrase_id);
 		
 		$.post('/admin/seo/duplicate-data/ajax/listing3',
@@ -168,6 +170,7 @@ $(function() {
 		$('.phrase-listing1-radio').attr('checked','');
 		$('.phrase-listing2-radio').attr('checked','');
 		$('#listing2').html('');
+		$('#listing3').html('');
 	});
 	
 });
