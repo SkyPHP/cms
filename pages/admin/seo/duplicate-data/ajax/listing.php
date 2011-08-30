@@ -11,6 +11,7 @@
 			if ($_POST['volume']) $where[] = "volume > {$_POST['volume']}";
 			if ($_POST['category']) $where[] = "category = '{$_POST['category']}'";
 			if ($_POST['base']) $where[] = "base = '{$_POST['base']}'";
+			if ($_POST['modifier']) $where[] = "modifier = '{$_POST['modifier']}'";
 			$type = 'phrase';
 			$where[] = "market != 'none'";
 			$width = '25%';
