@@ -34,6 +34,7 @@ $(function() {
 	});
 	
 	$('.phrase-filter-radio').live('click',function() {
+		section = $(this).attr('section');
 		market = $("input[name=market]:checked").val();
 		volume = $("input[name=volume]:checked").val();
 		market_name = $("input[name=market_name]:checked").val();
@@ -43,7 +44,8 @@ $(function() {
 		filter = $(this).attr('name');
 		if (value) $('#'+filter+'_selected').html(' - ' + value);
 		else $('#'+filter+'_selected').html('');
-		$.post('/admin/seo/duplicate-data/ajax/listing',
+		url = '/admin/seo/duplicate-data/ajax/'+section;
+		$.post(url,
 			{ 
 				market: market,
 				volume: volume, 
@@ -54,7 +56,7 @@ $(function() {
 				filter: filter 
 			}, 
 			function(data){
-				$('#listing').html(data);
+				$('#'+section).html(data);
 			}
 		);
 		//$.post('/admin/seo/duplicate-data/ajax/auto-permetate',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
@@ -63,6 +65,7 @@ $(function() {
 	});
 
 	$('.phrase-listing1-radio').live('click',function() {
+		$('.phrase-filter-radio').attr('section','listing2');
 		$('#saved-message').html('');
 		market = $("input[name=market]:checked").val();
 		volume = $("input[name=volume]:checked").val();
@@ -123,6 +126,7 @@ $(function() {
 	});
 	
 	$('#clear-all').live('click',function() {
+		$('.phrase-filter-radio').attr('section','listing');
 		$('#final-phrase').val('');
 		$('.phrase-listing1-radio').attr('checked','');
 		$('.phrase-listing2-radio').attr('checked','');
