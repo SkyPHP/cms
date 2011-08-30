@@ -68,9 +68,8 @@ $(function() {
 
 	$('.phrase-listing1-radio').live('click',function() {
 		phrase_id = $(this).attr('phrase_id');
-		$('.phrase-filter-radio').each(function() { 
-			$(this).attr('section','listing2'); 
-		});
+		$('.phrase-filter-radio').attr('section','listing2');
+		$('.all').attr('section','listing2');
 		$('#saved-message').html('');
 		market = $("input[name=market]:checked").val();
 		volume = $("input[name=volume]:checked").val();
@@ -132,6 +131,7 @@ $(function() {
 	
 	$('#clear-all').live('click',function() {
 		$('.phrase-filter-radio').attr('section','listing');
+		$('.all').attr('section','listing');
 		$('#final-phrase').val('');
 		$('.phrase-listing1-radio').attr('checked','');
 		$('.phrase-listing2-radio').attr('checked','');
