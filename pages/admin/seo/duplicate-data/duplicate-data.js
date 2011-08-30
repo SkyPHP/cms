@@ -21,16 +21,16 @@ $(function() {
 	table = $('#table').val();
 	
 	$('.filter').live('click',function() {
-		$this = $(this);
-		filter = $this.attr('filter');
+		var $this = $(this);
+		var filter = $this.attr('filter');
 		$this.css('border-bottom', 'none');
 		$('#'+filter).slideDown('fast');
 		$this.removeClass('filter').addClass('filter-on');
 	});
 	
 	$('.filter-on').live('click',function() {
-		$this = $(this);
-		filter = $this.attr('filter');
+		var $this = $(this);
+		var filter = $this.attr('filter');
 		$('#'+filter).slideUp('fast',function() {
 			$this.css('border-bottom', '2px solid #999');
 		});
@@ -38,18 +38,18 @@ $(function() {
 	});
 	
 	$('.phrase-filter-radio').live('click',function() {
-		phrase_id = $('#final-phrase').attr('p1');
-		section = $(this).attr('section');
-		market = $("input[name=market]:checked").val();
-		volume = $("input[name=volume]:checked").val();
-		market_name = $("input[name=market_name]:checked").val();
-		category = $("input[name=category]:checked").val();
-		base = $("input[name=base]:checked").val();
-		value = $(this).val();
-		filter = $(this).attr('name');
+		var phrase_id = $('#final-phrase').attr('p1');
+		var section = $(this).attr('section');
+		var market = $("input[name=market]:checked").val();
+		var volume = $("input[name=volume]:checked").val();
+		var market_name = $("input[name=market_name]:checked").val();
+		var category = $("input[name=category]:checked").val();
+		var base = $("input[name=base]:checked").val();
+		var value = $(this).val();
+		var filter = $(this).attr('name');
 		if (value) $('#'+filter+'_selected').html(' - ' + value);
 		else $('#'+filter+'_selected').html('');
-		url = '/admin/seo/duplicate-data/ajax/'+section;
+		var url = '/admin/seo/duplicate-data/ajax/'+section;
 		$.post(url,
 			{ 
 				market: market,
@@ -75,15 +75,15 @@ $(function() {
 		$('.phrase-filter-radio').attr('section','listing2');
 		$('.all').attr('section','listing2');
 		$('#saved-message').html('');
-		market = $("input[name=market]:checked").val();
-		volume = $("input[name=volume]:checked").val();
-		market_name = $("input[name=market_name]:checked").val();
-		category = $("input[name=category]:checked").val();
-		base = $("input[name=base]:checked").val();
-		val1 = $(this).attr('phrase');
-		val2 = $('input[name=phrase2]:checked').attr('phrase');
-		val3 = $('input[name=phrase3]:checked').attr('phrase');
-		value = val1;
+		var market = $("input[name=market]:checked").val();
+		var volume = $("input[name=volume]:checked").val();
+		var market_name = $("input[name=market_name]:checked").val();
+		var category = $("input[name=category]:checked").val();
+		var base = $("input[name=base]:checked").val();
+		var val1 = $(this).attr('phrase');
+		var val2 = $('input[name=phrase2]:checked').attr('phrase');
+		var val3 = $('input[name=phrase3]:checked').attr('phrase');
+		var value = val1;
 		if (val2) value = value + ' | ' + val2;
 		if (val3) value = value + ' | ' + val3;
 		$('#final-phrase').val(value.capitalize());
@@ -108,17 +108,17 @@ $(function() {
 		$('.phrase-filter-radio').attr('section','listing3');
 		$('.all').attr('section','listing3');
 		$('#saved-message').html('');
-		market = $("input[name=market]:checked").val();
-		volume = $("input[name=volume]:checked").val();
-		market_name = $("input[name=market_name]:checked").val();
-		category = $("input[name=category]:checked").val();
-		base = $("input[name=base]:checked").val();
+		var market = $("input[name=market]:checked").val();
+		var volume = $("input[name=volume]:checked").val();
+		var market_name = $("input[name=market_name]:checked").val();
+		var category = $("input[name=category]:checked").val();
+		var base = $("input[name=base]:checked").val();
 		
-		val2 = $(this).attr('phrase');
-		val3 = $("input[name=phrase3]:checked").attr('phrase');
-		val1 = $("input[name=phrase1]:checked").attr('phrase');
-		phrase_id = $(this).attr('phrase_id');
-		value = val1;
+		var val2 = $(this).attr('phrase');
+		var val3 = $("input[name=phrase3]:checked").attr('phrase');
+		var val1 = $("input[name=phrase1]:checked").attr('phrase');
+		var phrase_id = $(this).attr('phrase_id');
+		var value = val1;
 		if (val2) value = value + ' | ' + val2;
 		if (val3) value = value + ' | ' + val3;
 		$('#final-phrase').val(value.capitalize());
@@ -140,15 +140,15 @@ $(function() {
 	});
 	
 	$('.phrase-listing3-radio').live('click',function() {
-		val3 = $(this).attr('phrase');
-		val2 = $("input[name=phrase2]:checked").attr('phrase');
-		val1 = $("input[name=phrase1]:checked").attr('phrase');
-		modifier_id = $(this).attr('modifier_id');
+		var val3 = $(this).attr('phrase');
+		var val2 = $("input[name=phrase2]:checked").attr('phrase');
+		var val1 = $("input[name=phrase1]:checked").attr('phrase');
+		var modifier_id = $(this).attr('modifier_id');
 		value = val1;
 		if (val2) value = value + ' | ' + val2;
 		if (val3) value = value + ' | ' + val3;
 		$('#final-phrase').val(value.capitalize());
-		$('#final-phrase').attr('p3',modifier_id);
+		$('#final-phrase').attr('mod',modifier_id);
 	});
 	
 	$('.a-or-m-switch').live('change',function() {
@@ -159,18 +159,15 @@ $(function() {
 	});
 	
 	$('#save-final').live('click',function() {
-		var val = $('#final-phrase').val();
 		var p1 = $('#final-phrase').attr('p1');
 		var p2 = $('#final-phrase').attr('p2');
-		var p3 = $('#final-phrase').attr('p3');
-		var p4 = $('#final-phrase').attr('p4');
+		var mod = $('#final-phrase').attr('mod');
 		var person_id = $('#person_id').val();
 		if (val) {
 			var data = {
 				'phrase1__dup_phrase_data_id' : p1,
 				'phrase2__dup_phrase_data_id' : p2,
-				'phrase3__dup_phrase_data_id' : p3,
-				'phrase4__dup_phrase_data_id' : p4,
+				'dup_modifier_id' : mod,
 				'mod__person_id' : person_id
 			};
 			$('#saved-message').aqlSave('dup_phrase_group',data);
