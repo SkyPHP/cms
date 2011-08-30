@@ -180,7 +180,7 @@ $(function() {
 		var val = $('#final-phrase').val();
 		var vol1 = $('#final-phrase').attr('vol1');
 		var vol2 = $('#final-phrase').attr('vol2');
-		var total_volume = Integer.parseInt(vol1) + Integer.parseInt(vol2);
+		var total_volume = parseInt(vol1) + parseInt(vol2);
 		var p1 = $('#final-phrase').attr('p1');
 		var p2 = $('#final-phrase').attr('p2');
 		var mod = $('#final-phrase').attr('mod');
