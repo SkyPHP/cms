@@ -97,7 +97,7 @@
     </div>
     
     <div id="manual" <? if ($_GET['area'] == 'auto') echo 'style="display:none;"'; else echo 'class="a-or-m-on"'; ?>>
-        <fieldset style="width:80%">
+        <fieldset style="width:85%">
             <legend class="legend">Final Phrase</legend>
 			<div id="saved-message"></div>
             <div id="char-count"></div>
