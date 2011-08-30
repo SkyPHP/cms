@@ -34,6 +34,7 @@ $(function() {
 	});
 	
 	$('.phrase-filter-radio').live('click',function() {
+		phrase_id = $('#final-phrase').attr('p1');
 		section = $(this).attr('section');
 		market = $("input[name=market]:checked").val();
 		volume = $("input[name=volume]:checked").val();
@@ -53,7 +54,8 @@ $(function() {
 				category: category,
 				base: base,
 				value: value,
-				filter: filter 
+				filter: filter,
+				phrase_id: phrase_id
 			}, 
 			function(data){
 				$('#'+section).html(data);
@@ -65,7 +67,10 @@ $(function() {
 	});
 
 	$('.phrase-listing1-radio').live('click',function() {
-		$('.phrase-filter-radio').each(function() { $(this).attr('section','listing2'); });
+		phrase_id = $(this).attr('phrase_id');
+		$('.phrase-filter-radio').each(function() { 
+			$(this).attr('section','listing2'); 
+		});
 		$('#saved-message').html('');
 		market = $("input[name=market]:checked").val();
 		volume = $("input[name=volume]:checked").val();
@@ -73,7 +78,7 @@ $(function() {
 		category = $("input[name=category]:checked").val();
 		base = $("input[name=base]:checked").val();
 		val = $(this).attr('phrase');
-		phrase_id = $(this).attr('phrase_id');
+		
 		$('#final-phrase').val(val);
 		$('#final-phrase').attr('p1',phrase_id);
 		$.post('/admin/seo/duplicate-data/ajax/listing2',
