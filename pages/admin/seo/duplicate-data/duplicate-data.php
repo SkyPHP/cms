@@ -63,6 +63,12 @@
 	}
 	
 	$count = count($listing);
+	
+	foreach ($seo_field_array as $header => $arr) {
+		foreach ($arr as $field => $limit) {
+			if ($field == str_replace('-','_',IDE)) $char_count_limit = $limit;
+		}
+	}	
 ?>	
 	<div style="margin: 15px 0 0 0;">
      	<input type="radio" id="auto-switch-off" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-off">Manual Permutations</label><br>
@@ -72,6 +78,7 @@
 	<div style="padding-top:10px;">
 		<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
         <input type="hidden" id="table" value="<?=$table?>" />
+        <input type="hidden" id="char_count_limit" value="<?=$char_count_limit?>" />
 <?
 		foreach ($filters as $filter) {
 ?>			<div style="float:left; margin-right:40px;">
