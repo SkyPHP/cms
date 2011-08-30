@@ -81,8 +81,8 @@ $(function() {
 		category = $("input[name=category]:checked").val();
 		base = $("input[name=base]:checked").val();
 		val1 = $(this).attr('phrase');
-		val2 = $('input[name=phrase2]').val();
-		val3 = $('input[name=phrase3]').val();
+		val2 = $('input[name=phrase2]:checked').attr('phrase');
+		val3 = $('input[name=phrase3]:checked').attr('phrase');
 		value = val1;
 		if (val2) value = value + ' | ' + val2;
 		if (val3) value = value + ' | ' + val3;
