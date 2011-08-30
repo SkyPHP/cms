@@ -8,7 +8,7 @@ String.prototype.trim = function() {
 };
 
 function trigger_count() {	
-	$('#char-count').html($('#final-phrase').val().length + 'Characters');
+	$('#char-count').html($('#final-phrase').val().length + ' Characters');
 }
 
 $(function() {
