@@ -1,15 +1,17 @@
 <div style="padding-top:5px;">
 <?
-	if ($filter['name'] == 'volume') $DESC = 'desc';
+	if ($filter == 'volume') $DESC = 'desc';
 	else $DESC = '';
-	$rs = sql("SELECT DISTINCT ".$filter['name']." FROM ".$table." where market != '' and base != '' and volume > 0 and active = 1 order by ".$filter['name']." ".$DESC);
+	$rs = sql("SELECT DISTINCT ".$filter." FROM ".$table." where active = 1 and ".$filter." is not null order by ".$filter." ".$DESC);
 ?>
-	<!--<input type="checkbox" id="select_all"> <label for="select_all">Select All</label><br>-->
+	<div style="margin-bottom:5px;">
+		<input type="radio" section="listing" value="" id="all_<?=$filter?>" name="<?=$filter?>" class="phrase-filter-radio" style="margin-left:3px;" /> <label style="cursor:pointer;" for="all_<?=$filter?>">ALL</label>
+    </div>
 <?
 	if($rs) while (!$rs->EOF) {
 ?>
 		<div style="margin-bottom:5px;">
-		<input type="checkbox" value="<?=$rs->Fields($filter['name'])?>" id="<?=$rs->Fields($filter['name'])?>" filter="<?=$filter['name']?>" class="filter_cb" /> <label style="cursor:pointer;" for="<?=$rs->Fields($filter['name'])?>"><?=strtolower($rs->Fields($filter['name']))?></label>
+		<input type="radio" section="listing" value="<?=$rs->Fields($filter)?>" id="<?=$filter?>_<?=$rs->Fields($filter)?>" name="<?=$filter?>" style="margin-left:3px;" class="phrase-filter-radio" /> <label style="cursor:pointer;" for="<?=$filter?>_<?=$rs->Fields($filter)?>"><?=strtolower($rs->Fields($filter))?></label>
        	</div>
 <?		
 		$rs->MoveNext();

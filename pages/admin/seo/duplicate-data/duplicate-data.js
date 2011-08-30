@@ -1,5 +1,9 @@
 var mouse_is_inside = false;
 
+String.prototype.capitalize = function(){
+    return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } );
+};
+
 $(function() {
 
     $('.filter-area, .filter').hover(function(){ 
@@ -17,85 +21,169 @@ $(function() {
 	table = $('#table').val();
 	
 	$('.filter').live('click',function() {
-		$this = $(this);
-		filter = $this.attr('filter');
+		var $this = $(this);
+		var filter = $this.attr('filter');
 		$this.css('border-bottom', 'none');
 		$('#'+filter).slideDown('fast');
 		$this.removeClass('filter').addClass('filter-on');
 	});
 	
 	$('.filter-on').live('click',function() {
-		$this = $(this);
-		filter = $this.attr('filter');
+		var $this = $(this);
+		var filter = $this.attr('filter');
 		$('#'+filter).slideUp('fast',function() {
 			$this.css('border-bottom', '2px solid #999');
 		});
 		$(this).removeClass('filter-on').addClass('filter');
 	});
 	
-	$('.filter_cb').die().live('click',function() {
-		value = $(this).val();
-		filter = $(this).attr('filter');
-		or = $('#or').val();
-		type = $(this).attr('type');
-		if ($(this).attr('checked')) sw = 'on';
-		else sw = 'off';
-		$.post('/admin/seo/duplicate-data/ajax/filter-listing',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
-			$('#listing').html(data);
-		});
+	$('.phrase-filter-radio').live('click',function() {
+		var phrase_id = $('#final-phrase').attr('p1');
+		var section = $(this).attr('section');
+		var market = $("input[name=market]:checked").val();
+		var volume = $("input[name=volume]:checked").val();
+		var market_name = $("input[name=market_name]:checked").val();
+		var category = $("input[name=category]:checked").val();
+		var base = $("input[name=base]:checked").val();
+		var value = $(this).val();
+		var filter = $(this).attr('name');
+		if (value) $('#'+filter+'_selected').html(' - ' + value);
+		else $('#'+filter+'_selected').html('');
+		var url = '/admin/seo/duplicate-data/ajax/'+section;
+		$.post(url,
+			{ 
+				market: market,
+				volume: volume, 
+				market_name: market_name,  
+				category: category,
+				base: base,
+				value: value,
+				filter: filter,
+				phrase_id: phrase_id
+			}, 
+			function(data){
+				$('#'+section).html(data);
+			}
+		);
 		//$.post('/admin/seo/duplicate-data/ajax/auto-permetate',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
 		//	$('#auto').html(data);
 		//});
 	});
-	
-	$('.listing_radio').die().live('click',function() {
-		val = '';
-		vals = new Array();
-		$('.listing_radio').each(function(index) {
-			if ($(this).attr('checked')) {
-				val += ' '+$(this).attr('phrase');
-				vals.push($(this).attr('phrase_id'));
-			}
-		});	
-		$('#final-phrase').val(val);
-		$('#final-phrase').attr('p1',vals[0]);
-		$('#final-phrase').attr('p2',vals[1]);
-		$('#final-phrase').attr('p3',vals[2]);
-		if (vals[3]) $('#final-phrase').attr('p4',vals[3]);
+
+	$('.phrase-listing1-radio').live('click',function() {
+		phrase_id = $(this).attr('phrase_id');
+		$('.phrase-filter-radio').attr('section','listing2');
+		$('.all').attr('section','listing2');
+		$('#saved-message').html('');
+		var market = $("input[name=market]:checked").val();
+		var volume = $("input[name=volume]:checked").val();
+		var market_name = $("input[name=market_name]:checked").val();
+		var category = $("input[name=category]:checked").val();
+		var base = $("input[name=base]:checked").val();
+		var val1 = $(this).attr('phrase');
+		var val2 = $('input[name=phrase2]:checked').attr('phrase');
+		var val3 = $('input[name=phrase3]:checked').attr('phrase');
+		var value = val1;
+		if (val2) value = value + ' | ' + val2;
+		if (val3) value = value + ' | ' + val3;
+		$('#final-phrase').val(value.capitalize());
+		$('#final-phrase').attr('p1',phrase_id);
+		if (!$('input[name=phrase2]:checked').val()) {
+			$.post('/admin/seo/duplicate-data/ajax/listing2',
+				{ 
+					market: market,
+					market_name_n: market_name,  
+					category: category,
+					base: base,
+					phrase_id: phrase_id
+				},
+				function(data) {
+					$('#listing2').html(data);
+				}
+			);
+		}
 	});
 	
-	$('.a-or-m-switch').die().live('change',function() {
+	$('.phrase-listing2-radio').live('click',function() {
+		$('.phrase-filter-radio').attr('section','listing3');
+		$('.all').attr('section','listing3');
+		$('#saved-message').html('');
+		var market = $("input[name=market]:checked").val();
+		var volume = $("input[name=volume]:checked").val();
+		var market_name = $("input[name=market_name]:checked").val();
+		var category = $("input[name=category]:checked").val();
+		var base = $("input[name=base]:checked").val();
+		
+		var val2 = $(this).attr('phrase');
+		var val3 = $("input[name=phrase3]:checked").attr('phrase');
+		var val1 = $("input[name=phrase1]:checked").attr('phrase');
+		var phrase_id = $(this).attr('phrase_id');
+		var value = val1;
+		if (val2) value = value + ' | ' + val2;
+		if (val3) value = value + ' | ' + val3;
+		$('#final-phrase').val(value.capitalize());
+		$('#final-phrase').attr('p2',phrase_id);
+		if (!$('input[name=phrase3]:checked').val()) {
+			$.post('/admin/seo/duplicate-data/ajax/listing3',
+				{ 
+					market: market,
+					market_name_n: market_name,  
+					category: category,
+					base: base,
+					phrase_id: phrase_id
+				},
+				function(data) {
+					$('#listing3').html(data);
+				}
+			);
+		}
+	});
+	
+	$('.phrase-listing3-radio').live('click',function() {
+		var val3 = $(this).attr('phrase');
+		var val2 = $("input[name=phrase2]:checked").attr('phrase');
+		var val1 = $("input[name=phrase1]:checked").attr('phrase');
+		var modifier_id = $(this).attr('modifier_id');
+		value = val1;
+		if (val2) value = value + ' | ' + val2;
+		if (val3) value = value + ' | ' + val3;
+		$('#final-phrase').val(value.capitalize());
+		$('#final-phrase').attr('mod',modifier_id);
+	});
+	
+	$('.a-or-m-switch').live('change',function() {
 		val = $(this).val();
 		$('.a-or-m-on').slideUp('fast',function() {
 			$('#'+val).addClass('a-or-m-on').slideDown('fast');
 		}).removeClass('a-or-m-on');
-	})
+	});
 	
 	$('#save-final').live('click',function() {
-		var val = $('#final-phrase').val();
+		val = $('#final-phrase').val();
 		var p1 = $('#final-phrase').attr('p1');
 		var p2 = $('#final-phrase').attr('p2');
-		var p3 = $('#final-phrase').attr('p3');
-		var p4 = $('#final-phrase').attr('p4');
+		var mod = $('#final-phrase').attr('mod');
 		var person_id = $('#person_id').val();
 		if (val) {
 			var data = {
 				'phrase1__dup_phrase_data_id' : p1,
 				'phrase2__dup_phrase_data_id' : p2,
-				'phrase3__dup_phrase_data_id' : p3,
-				'phrase4__dup_phrase_data_id' : p4,
+				'dup_modifier_id' : mod,
 				'mod__person_id' : person_id
 			};
-			$('#saved-message').aqlSave('dup_phrase',data);
+			$('#saved-message').aqlSave('dup_phrase_group',data);
 		}
 		else alert('Please select your choices from the lists below.');
 	});
 	
 	$('#clear-all').live('click',function() {
+		$('.phrase-filter-radio').attr('section','listing');
+		$('.all').attr('section','listing');
 		$('#final-phrase').val('');
-		$('.listing_radio').each(function(index) {
-			if ($(this).attr('checked')) $(this).attr('checked','');
-		});
+		$('.phrase-listing1-radio').attr('checked','');
+		$('.phrase-listing2-radio').attr('checked','');
+		$('#listing2').html('');
+		$('#listing3').html('');
 	});
 	
 });
