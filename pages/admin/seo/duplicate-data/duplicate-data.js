@@ -94,11 +94,12 @@ $(function() {
 		var val1 = $(this).attr('phrase');
 		var val2 = $('input[name=phrase2]:checked').attr('phrase');
 		var val3 = $('input[name=phrase3]:checked').attr('phrase');
+		var vol1 = $(this).attr('volume');
 		var value = val1.trim();
 		if (val2) value = value + ' | ' + val2.trim();
 		if (val3) value = value + ' | ' + val3.trim();
 		$('#final-phrase').val(value.capitalize());
-		$('#final-phrase').attr('p1',phrase_id);
+		$('#final-phrase').attr('p1',phrase_id).attr('vol1',volume);
 		if (!$('input[name=phrase2]:checked').val()) {
 			$.post('/admin/seo/duplicate-data/ajax/listing2',
 				{ 
@@ -126,6 +127,7 @@ $(function() {
 		var category = $("input[name=category]:checked").val();
 		var base = $("input[name=base]:checked").val();
 		
+		var vol2 = $(this).attr('phrase');
 		var val2 = $(this).attr('phrase');
 		var val3 = $("input[name=phrase3]:checked").attr('phrase');
 		var val1 = $("input[name=phrase1]:checked").attr('phrase');
@@ -134,7 +136,7 @@ $(function() {
 		if (val2) value = value + ' | ' + val2.trim();
 		if (val3) value = value + ' | ' + val3.trim();
 		$('#final-phrase').val(value.capitalize());
-		$('#final-phrase').attr('p2',phrase_id);
+		$('#final-phrase').attr('p2',phrase_id).attr('vol2',vol2);
 		if (!$('input[name=phrase3]:checked').val()) {
 			$.post('/admin/seo/duplicate-data/ajax/listing3',
 				{ 
@@ -173,7 +175,10 @@ $(function() {
 	});
 	
 	$('#save-final').live('click',function() {
-		val = $('#final-phrase').val();
+		var val = $('#final-phrase').val();
+		var vol1 = $('#final-phrase').attr('vol1');
+		var vol2 = $('#final-phrase').attr('vol2');
+		var total_volume = Integer.parseInt(vol1) + Integer.parseInt(vol2);
 		var p1 = $('#final-phrase').attr('p1');
 		var p2 = $('#final-phrase').attr('p2');
 		var mod = $('#final-phrase').attr('mod');
@@ -182,6 +187,7 @@ $(function() {
 			var data = {
 				'phrase1__dup_phrase_data_id' : p1,
 				'phrase2__dup_phrase_data_id' : p2,
+				'total_volume' : total_volume,
 				'dup_modifier_id' : mod,
 				'mod__person_id' : person_id
 			};
