@@ -1,5 +1,5 @@
 var mouse_is_inside = false;
-
+var char_count_limit = $('#char_count_limit').val();
 String.prototype.capitalize = function(){
     return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } );
 };
@@ -7,8 +7,12 @@ String.prototype.trim = function() {
 	return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 };
 
-function trigger_count() {	
-	$('#char-count').html($('#final-phrase').val().length + ' Characters');
+function trigger_count() {
+	var color;
+	count = $('#final-phrase').val().length;
+	if (count > char_count_limit) color = '#ff0000';
+	else color = '#000000'; 
+	$('#char-count').css('color',color).html(count + ' Characters');
 }
 
 $(function() {
