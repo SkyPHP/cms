@@ -77,6 +77,7 @@
 		<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
         <input type="hidden" id="table" value="<?=$table?>" />
         <input type="hidden" id="char_count_limit" value="<?=$char_count_limit?>" />
+        <input type="hidden" id="seo_field" value="<?=str_replace('-','_',IDE)?>" />
 <?
 		foreach ($filters as $filter) {
 ?>			<div style="float:left; margin-right:40px;">

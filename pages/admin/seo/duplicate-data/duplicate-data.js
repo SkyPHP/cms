@@ -185,11 +185,15 @@ $(function() {
 		var p2 = $('#final-phrase').attr('p2');
 		var mod = $('#final-phrase').attr('mod');
 		var person_id = $('#person_id').val();
+		var category = $("input[name=category]:checked").val();
+		var seo_field = $("#seo_field").val();
 		if (val) {
 			var data = {
 				'phrase1__dup_phrase_data_id' : p1,
 				'phrase2__dup_phrase_data_id' : p2,
 				'total_volume' : total_volume,
+				'category' : category,
+				'seo_field' : seo_field,
 				'dup_modifier_id' : mod,
 				'mod__person_id' : person_id
 			};
