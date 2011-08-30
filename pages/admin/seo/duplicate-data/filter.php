@@ -2,7 +2,7 @@
 <?
 	if ($filter == 'volume') $DESC = 'desc';
 	else $DESC = '';
-	$rs = sql("SELECT DISTINCT ".$filter." FROM ".$table." where market != '' and base != '' and volume > 0 and active = 1 order by ".$filter." ".$DESC);
+	$rs = sql("SELECT DISTINCT ".$filter." FROM ".$table." where active = 1 order by ".$filter." ".$DESC);
 ?>
 	<div style="margin-bottom:5px;">
 		<input type="radio" value="" id="all_<?=$filter?>" name="<?=$filter?>" class="phrase-filter-radio" style="margin-left:3px;" /> <label style="cursor:pointer;" for="all_<?=$filter?>">ALL</label>
