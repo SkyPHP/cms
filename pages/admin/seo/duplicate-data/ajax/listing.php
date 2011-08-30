@@ -20,7 +20,7 @@
 ?>
     <input type="hidden" id="type" value="<?=$type?>" />
 	<input type="hidden" id="person_id" value="<?=PERSON_ID?>" />
-    <fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:10px;">
+    <fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
     	<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>1 (<?=$count?> Phrases)</legend>
 <?
 		if ($listing) foreach ($listing as $data) {

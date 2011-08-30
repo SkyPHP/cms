@@ -13,7 +13,7 @@
 
 ?>
 
-<fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:10px;">
+<fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
     	<legend class="legend">Phrase Part 2 (<?=count($listing2)?> Phrases)</legend>
 <?
 		if ($listing2) foreach ($listing2 as $data) {
