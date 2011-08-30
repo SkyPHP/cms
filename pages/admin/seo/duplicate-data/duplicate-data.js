@@ -12,7 +12,7 @@ function trigger_count() {
 	count = $('#final-phrase').val().length;
 	if (count > char_count_limit) color = '#ff0000';
 	else color = '#000000'; 
-	$('#char-count').css('color',color).html(count + ' Characters');
+	$('#char-count').css('color',color).html(count + '/' + char_count_limit + ' Characters');
 }
 
 $(function() {
