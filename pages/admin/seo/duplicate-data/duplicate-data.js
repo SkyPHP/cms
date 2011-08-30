@@ -3,7 +3,9 @@ var mouse_is_inside = false;
 String.prototype.capitalize = function(){
     return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } );
 };
-
+String.prototype.trim = function() {
+	return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+};
 $(function() {
 
     $('.filter-area, .filter').hover(function(){ 
@@ -83,9 +85,9 @@ $(function() {
 		var val1 = $(this).attr('phrase');
 		var val2 = $('input[name=phrase2]:checked').attr('phrase');
 		var val3 = $('input[name=phrase3]:checked').attr('phrase');
-		var value = val1;
-		if (val2) value = value + ' | ' + val2;
-		if (val3) value = value + ' | ' + val3;
+		var value = val1.trim();
+		if (val2) value = value + ' | ' + val2.trim();
+		if (val3) value = value + ' | ' + val3.trim();
 		$('#final-phrase').val(value.capitalize());
 		$('#final-phrase').attr('p1',phrase_id);
 		if (!$('input[name=phrase2]:checked').val()) {
@@ -118,9 +120,9 @@ $(function() {
 		var val3 = $("input[name=phrase3]:checked").attr('phrase');
 		var val1 = $("input[name=phrase1]:checked").attr('phrase');
 		var phrase_id = $(this).attr('phrase_id');
-		var value = val1;
-		if (val2) value = value + ' | ' + val2;
-		if (val3) value = value + ' | ' + val3;
+		var value = val1.trim();
+		if (val2) value = value + ' | ' + val2.trim();
+		if (val3) value = value + ' | ' + val3.trim();
 		$('#final-phrase').val(value.capitalize());
 		$('#final-phrase').attr('p2',phrase_id);
 		if (!$('input[name=phrase3]:checked').val()) {
@@ -144,9 +146,9 @@ $(function() {
 		var val2 = $("input[name=phrase2]:checked").attr('phrase');
 		var val1 = $("input[name=phrase1]:checked").attr('phrase');
 		var modifier_id = $(this).attr('modifier_id');
-		value = val1;
-		if (val2) value = value + ' | ' + val2;
-		if (val3) value = value + ' | ' + val3;
+		value = val1.trim();
+		if (val2) value = value + ' | ' + val2.trim();
+		if (val3) value = value + ' | ' + val3.trim();
 		$('#final-phrase').val(value.capitalize());
 		$('#final-phrase').attr('mod',modifier_id);
 	});
