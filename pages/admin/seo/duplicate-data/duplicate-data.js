@@ -95,14 +95,46 @@ $(function() {
 	});
 	
 	$('.phrase-listing2-radio').live('click',function() {
+		$('.phrase-filter-radio').attr('section','listing3');
+		$('.all').attr('section','listing3');
+		$('#saved-message').html('');
+		market = $("input[name=market]:checked").val();
+		volume = $("input[name=volume]:checked").val();
+		market_name = $("input[name=market_name]:checked").val();
+		category = $("input[name=category]:checked").val();
+		base = $("input[name=base]:checked").val();
+		
 		val2 = $(this).attr('phrase');
 		val1 = $("input[name=phrase1]:checked").attr('phrase');
 		phrase_id = $(this).attr('phrase_id');
 		$('#final-phrase').val(val1 + ' ' + val2);
 		$('#final-phrase').attr('p2',phrase_id);
+		
+		$.post('/admin/seo/duplicate-data/ajax/listing3',
+			{ 
+				market: market,
+				market_name_n: market_name,  
+				category: category,
+				base: base,
+				phrase_id: phrase_id
+			},
+			function(data) {
+				$('#listing3').html(data);
+			}
+		);
+		
 	});
 	
-	$('.a-or-m-switch').die().live('change',function() {
+	$('.phrase-listing3-radio').live('click',function() {
+		val3 = $(this).attr('phrase');
+		val2 = $("input[name=phrase2]:checked").attr('phrase');
+		val1 = $("input[name=phrase1]:checked").attr('phrase');
+		modifier_id = $(this).attr('modifier_id');
+		$('#final-phrase').val(val1 + ' ' + val2 + ' ' + val3);
+		$('#final-phrase').attr('p3',modifier_id);
+	});
+	
+	$('.a-or-m-switch').live('change',function() {
 		val = $(this).val();
 		$('.a-or-m-on').slideUp('fast',function() {
 			$('#'+val).addClass('a-or-m-on').slideDown('fast');

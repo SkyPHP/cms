@@ -95,13 +95,9 @@
             <input type="text" id="final-phrase" style="width:93%; font-size:16px;" readonly  /><br>
 			<div style="margin-top:5px"><input type="button" value="save" id="save-final" /> <input type="button" value="clear" id="clear-all" /></div>
         </fieldset>   
-        <div id="listing" style="float:left;">
-<? 		
-			include ('pages/admin/seo/duplicate-data/ajax/listing.php'); 
-?>
-			<div class="clear"></div>
-        </div>
+        <div id="listing" style="float:left;"><? include ('pages/admin/seo/duplicate-data/ajax/listing.php'); ?></div>
         <div id="listing2" style="float:left;"></div>
+        <div id="listing3" style="float:left;"></div>
         <div class="clear"></div>
 	</div>
 <?	
