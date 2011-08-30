@@ -5,7 +5,7 @@
 	$rs = sql("SELECT DISTINCT ".$filter." FROM ".$table." where active = 1 and ".$filter." is not null order by ".$filter." ".$DESC);
 ?>
 	<div style="margin-bottom:5px;">
-		<input type="radio" class="all" section="listing" value="" id="all_<?=$filter?>" name="<?=$filter?>" class="phrase-filter-radio" style="margin-left:3px;" /> <label style="cursor:pointer;" for="all_<?=$filter?>">ALL</label>
+		<input type="radio" section="listing" value="" id="all_<?=$filter?>" name="<?=$filter?>" class="phrase-filter-radio" style="margin-left:3px;" /> <label style="cursor:pointer;" for="all_<?=$filter?>">ALL</label>
     </div>
 <?
 	if($rs) while (!$rs->EOF) {
