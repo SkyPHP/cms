@@ -6,6 +6,11 @@ String.prototype.capitalize = function(){
 String.prototype.trim = function() {
 	return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 };
+
+function trigger_count() {	
+	$('#char-count').html($('#final-phrase').val().length + 'Characters');
+}
+
 $(function() {
 
     $('.filter-area, .filter').hover(function(){ 
@@ -104,6 +109,7 @@ $(function() {
 				}
 			);
 		}
+		trigger_count();
 	});
 	
 	$('.phrase-listing2-radio').live('click',function() {
@@ -139,6 +145,7 @@ $(function() {
 				}
 			);
 		}
+		trigger_count();
 	});
 	
 	$('.phrase-listing3-radio').live('click',function() {
@@ -151,6 +158,7 @@ $(function() {
 		if (val3) value = value + ' | ' + val3.trim();
 		$('#final-phrase').val(value.capitalize());
 		$('#final-phrase').attr('mod',modifier_id);
+		trigger_count();
 	});
 	
 	$('.a-or-m-switch').live('change',function() {
@@ -186,11 +194,6 @@ $(function() {
 		$('.phrase-listing2-radio').attr('checked','');
 		$('#listing2').html('');
 		$('#listing3').html('');
-	});
-	
-	$('#final-phrase').live('change',function() {
-		count = $(this).val().length;
-		$('#char-count').html(count + 'Characters');
 	});
 	
 });
