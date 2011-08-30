@@ -37,6 +37,7 @@
 	snippet::tab_redirect($p->tabs);
 	
 	$p->template('seo','top');	
+	print_a($seo_field_array);
 	
 	snippet::tabs($p->tabs);
 	
