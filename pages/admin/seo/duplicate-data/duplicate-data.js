@@ -41,6 +41,7 @@ $(function() {
 		market_name = $("input[name=market_name]:checked").val();
 		category = $("input[name=category]:checked").val();
 		base = $("input[name=base]:checked").val();
+		modifier = $("input[name=modifier]:checked").val();
 		value = $(this).val();
 		filter = $(this).attr('name');
 		if (value) $('#'+filter+'_selected').html(' - ' + value);
@@ -53,6 +54,7 @@ $(function() {
 				market_name: market_name,  
 				category: category,
 				base: base,
+				modifier: modifier,
 				value: value,
 				filter: filter,
 				phrase_id: phrase_id
@@ -77,6 +79,7 @@ $(function() {
 		market_name = $("input[name=market_name]:checked").val();
 		category = $("input[name=category]:checked").val();
 		base = $("input[name=base]:checked").val();
+		modifier = $("input[name=modifier]:checked").val();
 		val = $(this).attr('phrase');
 		
 		$('#final-phrase').val(val);
@@ -87,6 +90,7 @@ $(function() {
 				market_name_n: market_name,  
 				category: category,
 				base: base,
+				modifier: modifier,
 				phrase_id: phrase_id
 			},
 			function(data) {
