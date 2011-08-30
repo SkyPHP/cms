@@ -159,6 +159,7 @@ $(function() {
 	});
 	
 	$('#save-final').live('click',function() {
+		val = $('#final-phrase').val();
 		var p1 = $('#final-phrase').attr('p1');
 		var p2 = $('#final-phrase').attr('p2');
 		var mod = $('#final-phrase').attr('mod');
