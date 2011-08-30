@@ -80,18 +80,20 @@ $(function() {
 		
 		$('#final-phrase').val(val);
 		$('#final-phrase').attr('p1',phrase_id);
-		$.post('/admin/seo/duplicate-data/ajax/listing2',
-			{ 
-				market: market,
-				market_name_n: market_name,  
-				category: category,
-				base: base,
-				phrase_id: phrase_id
-			},
-			function(data) {
-				$('#listing2').html(data);
-			}
-		);
+		if (!$('input[name=phrase3]:checked').val()) {
+			$.post('/admin/seo/duplicate-data/ajax/listing2',
+				{ 
+					market: market,
+					market_name_n: market_name,  
+					category: category,
+					base: base,
+					phrase_id: phrase_id
+				},
+				function(data) {
+					$('#listing2').html(data);
+				}
+			);
+		}
 	});
 	
 	$('.phrase-listing2-radio').live('click',function() {
