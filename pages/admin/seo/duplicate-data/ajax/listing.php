@@ -4,7 +4,7 @@
 		$rs = SQL("SELECT DISTINCT phrase".$x."__dup_phrase_data_id as phrase1 FROM dup_phrase_group where active = 1");	
 		if ($rs) while(!$rs->EOF) { 
 			$rs->MoveNext();
-			$phrase_array[$x][] = $rs1->Fields('phrase1');
+			$phrase_array[$x][] = $rs->Fields('phrase1');
 		}
 	}
 	
