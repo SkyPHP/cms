@@ -266,15 +266,18 @@ class snippet {
         $ytqs = 'fs=1&rel=0&showinfo=0&color1=0xffffff&color2=0xffffff&hd=0&hl=en_US&wmode=transparent';
 
 		if (!$width) $width = 560;
-		if (!$height) $height = $width*3/4;
+		if (!$height) $height = $width*9/16;
 		
+		if ($width) $width = 'width="'.$width.'"';
+		if ($height) $height = 'height="'.$height.'"';
+
 		if ($id) {
-			$embed = 	'<object width="'.$width.'" height="'.$height.'">'.
+			$embed = 	'<object '.$width.' '.$height.'>'.
 						'<param name="movie" value="http://www.youtube.com/v/'.$id.'?'.$ytqs.'"></param>'.
 						'<param name="allowFullScreen" value="true"></param>'.
 						'<param name="wmode" value="transparent"></param>'.
 						'<param name="allowscriptaccess" value="always"></param>'.
-						'<embed src="http://www.youtube.com/v/'.$id.'?'.$ytqs.'" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="'.$width.'" height="'.$height.'" wmode="transparent"></embed></object>';
+						'<embed src="http://www.youtube.com/v/'.$id.'?'.$ytqs.'" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" '.$width.' '.$height.' wmode="transparent"></embed></object>';
 			if ($silent) return $embed;
 			else echo $embed;
 		} else {
