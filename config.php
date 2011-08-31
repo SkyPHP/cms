@@ -6,19 +6,19 @@ $seo_field_array=array(
 		'h1_blurb'=>300
 	),
 	'meta'=>array(
-		'meta_title'=>100,
-		'meta_description'=>300,
-		'meta_keywords'=>100,
+		'meta_title'=>75,
+		'meta_description'=>165,
+		'meta_keywords'=>250,
 		'ICBM'=>100,
 		'geo-position'=>100,
 		'geo-placename'=>100,
 		'geo-region'=>100,
 		'geography'=>100,
-		'zipcode'=>10,
+		'zipcode'=>25,
 		'city'=>70,
 		'state'=>2,
 		'country'=>100,
-		'subject'=>100,
+		'subject'=>165,
 		'author'=>100,
 		'copyright'=>100
 	)
