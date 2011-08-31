@@ -1,7 +1,7 @@
 <?
 $seo_field_array=array(
 	'html'=>array(
-		'title'=>69,
+		'title'=>75,
 		'h1'=>100,
 		'h1_blurb'=>300
 	),
