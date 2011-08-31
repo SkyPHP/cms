@@ -581,15 +581,16 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 		?>
 <div class="krumo-root">
 	<ul class="krumo-node krumo-first">
-		<?php echo krumo::_dump($data);?>
+		<?php echo krumo::_dump($data);
+		if (false) { ?>
 		<li class="krumo-footnote">
 			<div class="krumo-version" style="white-space:nowrap;">
 				<h6>Krumo version <?php echo krumo::version();?></h6> | <a
 					href="http://krumo.sourceforge.net"
 					target="_blank">http://krumo.sourceforge.net</a>
 			</div>
-		
-		<?php if (@$d['file']) { ?>
+		<?php } ?>
+		<?php if (@$d['file'] && false) { ?>
 		<span class="krumo-call" style="white-space:nowrap;">
 			Called from <code><?php echo $d['file']?></code>,
 				line <code><?php echo $d['line']?></code></span>
@@ -941,7 +942,10 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 	Private Static Function _vars(&$data) {
 
 		$_is_object = is_object($data);
-		
+
+		if ($_is_object && get_class($data) == 'Closure' && is_callable($data)) return;
+				
+
 		// test for references in order to
 		// prevent endless recursion loops
 		//
@@ -950,7 +954,7 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 			? @$data->$_recursion_marker
 			: @$data[$_recursion_marker] ;
 		$_r = (integer) $_r;
-
+	
 		// recursion detected
 		//
 		if ($_r > 0) {

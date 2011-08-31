@@ -30,7 +30,7 @@ if ($_FILES["file"]["tmp_name"] && !$errors) {
     //     'server_url' => 'vfolder.net/v2'
     // ));
 
-    // $vfolder_path = $_POST['vfolder'];
+    $vfolder_path = $_POST['vfolder'];
 
     // $item = $vf->upload_to_server($uploaded_file, array('folders_path' => ))
 
@@ -68,7 +68,8 @@ if ( media::$error ) {
 if ($errors) {
     $re = array(
         'status' => 'Error',
-        'errors' => $errors
+        'errors' => $errors,
+        'd' => $_POST
     );
 } else {
     $re = array(
