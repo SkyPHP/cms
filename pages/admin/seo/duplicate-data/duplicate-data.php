@@ -55,9 +55,9 @@
 	}
 	else if ($type == 'paragraph') {
 		$filters = array();
-		$table = 'dup_sentence';
+		$table = 'dup_sentence_data';
 		$field = 'sentence';
-		$listing = aql::select($table." { sentence, volume where market is not null order by sentence asc }");
+		$listing = aql::select($table." { sentence where market is not null order by sentence asc }");
 	}
 	
 	$count = count($listing);
