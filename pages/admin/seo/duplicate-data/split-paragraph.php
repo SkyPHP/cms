@@ -8,7 +8,7 @@
     <div class="has-floats">
         <div class="hideable" style="float:left"><input type="button" value="Split" id="split" /></div>
         <div style="float:right">
-            <a id="hide-or-show" style="cursor:pointer;" do="hide">HIDE -</a>
+            <a id="hide-or-show" style="cursor:pointer;" do="hide">HIDE ORIGINAL -</a>
         </div>
     </div>
 </div>

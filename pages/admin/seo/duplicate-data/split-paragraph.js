@@ -20,12 +20,12 @@ $(function() {
 	$('#hide-or-show').live('click',function(){
 		$this = $(this);
 		if ($(this).attr('do') == 'hide') 
-			$('.hideable').slideUp('slow',function() {
-				$this.html('SHOW +').attr('do','show');
+			$('.hideable').slideUp('fast',function() {
+				$this.html('SHOW ORIGINAL+').attr('do','show');
 			});
 		else 
-			$('.hideable').slideDown('slow',function() {
-				$this.html('HIDE -').attr('do','hide');
+			$('.hideable').slideDown('fast',function() {
+				$this.html('HIDE ORIGINAL-').attr('do','hide');
 			});
 	});
 
