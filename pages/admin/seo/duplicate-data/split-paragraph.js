@@ -3,7 +3,7 @@ $(function() {
 		var val = $('#paragraph').val()
 		if (val) {
 			$.post('/admin/seo/duplicate-data/ajax/split.php',{ val: val }, function(data) {
-				$('#result').html(data);
+				$('#results').html(data);
 			});
 		}
 	});
