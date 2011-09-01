@@ -6,7 +6,7 @@
 ?>
 	<div class="has-floats" style="margin-top: 20px;">
 		<div style="float:left; width: 900px; margin-right: 10px; font-weight:bold;">Sentences</div>
-    	<div style="float:left; font-weight:bold;">\
+    	<div style="float:left; font-weight:bold;">
         	Order<br>
         	<input type="radio" name="auto-switch" value="man" <?=$man?>> Manual<br>
         	<input type="radio" name="auto-switch" value="auto"> Auto
