@@ -5,7 +5,7 @@
 	preg_match_all('~.*?[?.!]~s',$val,$sentences);
 ?>
 	<div class="has-floats" style="margin-top: 20px;">
-		<div style="float:left; width: 900px; margin-right: 10px; font-weight:bold; font-size:18px;">Sentences</div>
+		<div style="float:left; width: 1000px; margin-right: 10px; font-weight:bold; font-size:18px;">Sentences</div>
     	<div style="float:left; font-weight:bold;">
         	<span style="font-size:18px">Order</span><br>
         	<input type="radio" name="auto-switch" value="man" <?=$man?>> Manual<br>
