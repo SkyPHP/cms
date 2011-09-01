@@ -2,7 +2,7 @@
 	$val = $_POST['val'];
 	preg_match_all('~.*?[?.!]~s',$val,$sentences);
 	print_a($sentences);
-	foreach ($sentences as $key => $sentence) {
+	foreach ($sentences[0] as $key => $sentence) {
 ?>
 	<div id="sentence<?=$key?>-container" class="has-floats" style="margin-bottom:20px;">
     	<div>Sentence <?=$key+1?></div>
