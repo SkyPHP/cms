@@ -16,4 +16,16 @@ $(function() {
 			$('.manual-order').fadeIn('slow');
 		}
 	});
+	$('button .hide').live('click',function(){
+		$this = $(this);
+		$('.hideable').slideUp('slow',function() {
+			$this.html('SHOW +').removeClass('hide').addClass('show');
+		});
+	});
+	$('button .show').live('click',function(){
+		$this = $(this);
+		$('.hideable').slideDown('slow',function() {
+			$this.html('HIDE -').removeClass('show').addClass('hide');
+		});
+	});
 });
