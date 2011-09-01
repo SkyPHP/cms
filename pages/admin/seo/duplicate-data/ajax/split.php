@@ -10,7 +10,7 @@
         	<input type="text" id="sentence<?=$key?>" style="width:900px" value="<?=trim($sentence)?>." />
         </div>
         <div style="float:left;">
-        	<input type="text" style="width:10px;" maxlength="2" value="<?=$key+1?>" />
+        	<input type="text" style="width:16px;" maxlength="2" value="<?=$key+1?>" />
         </div>
     </div>
 <?		
