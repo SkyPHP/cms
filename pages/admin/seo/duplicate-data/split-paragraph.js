@@ -16,16 +16,17 @@ $(function() {
 			$('.manual-order').fadeIn('slow');
 		}
 	});
-	$('button .hide').live('click',function(){
+
+	$('#hide-or-show').live('click',function(){
 		$this = $(this);
-		$('.hideable').slideUp('slow',function() {
-			$this.html('SHOW +').removeClass('hide').addClass('show');
-		});
+		if ($(this).attr('do') == 'hide') 
+			$('.hideable').slideUp('slow',function() {
+				$this.html('SHOW +').attr('do','show');
+			});
+		else 
+			$('.hideable').slideDown('slow',function() {
+				$this.html('HIDE -').attr('do','hide');
+			});
 	});
-	$('button .show').live('click',function(){
-		$this = $(this);
-		$('.hideable').slideDown('slow',function() {
-			$this.html('HIDE -').removeClass('show').addClass('hide');
-		});
-	});
+
 });
