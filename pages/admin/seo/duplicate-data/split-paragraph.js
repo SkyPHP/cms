@@ -7,4 +7,13 @@ $(function() {
 			});
 		}
 	});
+	
+	$('input[name=auto-switch]').live('change',function() { 
+		if ($(this).val() == 'auto') {
+			$('.manual-order').fadeOut('slow');
+		}
+		else {
+			$('.manual-order').fadeIn('slow');
+		}
+	});
 });
