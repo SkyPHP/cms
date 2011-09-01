@@ -5,6 +5,7 @@
 		if (trim($sentence)) {
 ?>
 	<div id="sentence<?=$key?>-container" class="has-floats" style="margin-bottom:20px;">
+    	<div>Sentence <?=$key?></div>
 		<div style="float:left; margin-right:10px;">
         	<input type="text" id="sentence<?=$key?>" style="width:900px" value="<?=trim($sentence)?>." />
         </div>
