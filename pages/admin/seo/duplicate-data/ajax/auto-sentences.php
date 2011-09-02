@@ -17,12 +17,14 @@
 		}
 	}
 	
-	$perms = permute($sentences);
-	echo $perms;
+	permute($sentences);
+	print_a($perm0);
+	
+	print_a($perm1);
 		
 	function permute($items, $perms = array( )) {
 		if (empty($items)) {
-			return $perms;
+			print_a ($perms); 
 		}
 		else { 
 			for ($i = count($items) - 1; $i >= 0; --$i) { 
