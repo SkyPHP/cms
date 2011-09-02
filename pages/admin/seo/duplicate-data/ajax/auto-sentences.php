@@ -18,13 +18,10 @@
 		}
 	}
 	
-	permutate($sentences, 10, 0);
+	permutate($sentences, 10);
 		
-	function permutate($items, $limit, $count, $perms = array( )) {
-		$count++;
-		echo $count;
-		if ($count == $limit) exit();
-		else if (empty($items)) {
+	function permutate($items, $limit, $perms = array( )) {
+	    if (empty($items)) {
 			configure_perm ($perms);
 		}
 		else { 
@@ -33,12 +30,38 @@
 				$newperms = $perms;
 				list($foo) = array_splice($newitems, $i, 1);
 				array_unshift($newperms, $foo);
-				$newperms = $newperms;
-				permutate($newitems, $limit, $count, $newperms); 
+				permutate($newitems, $limit, $newperms); 
 			} 
 		} 
 	}
 	
+	function permutate($items, $limit = 24, $perms = array( )) {
+		$count = 0;
+		$num_items = count($items);
+		$limit = $limit + $num_items + $num_items - 3;
+		$permutate = function($items, $perms) use(&$limit, &$count, &$permutate) {
+			// print_pre($count);
+			if (empty($items)) {
+				configure_perm($perms);
+			} else {
+				$count++;
+				for ($i = count($items) - 1; $i >= 0; --$i) {
+					$newitems = $items;
+					$newperms = $perms;
+					list($foo) = array_splice($newitems, $i, 1);
+					array_unshift($newperms, $foo);
+					if ($limit <= $count) {
+						configure_perm(array_merge($newitems,$newperms));
+						break;
+					}
+					$permutate($newitems, $newperms);
+				}
+			}
+		};
+		$permutate($items, $perms);
+	}
+
+
 	function configure_perm($perms=array( )) {
 		echo '<div class="has-floats" style="margin-bottom:15px;">';
 		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" vesion="'.$x.' class="perm_box" /></div>';
