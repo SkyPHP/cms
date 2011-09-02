@@ -33,7 +33,7 @@
 				list($foo) = array_splice($newitems, $i, 1);
 				array_unshift($newperms, $foo);
 				$newperms = $newperms;
-				eval ("$perm".$i." = $newperms");
+				eval ("$perm".$i." = $newperms;");
 				permute($newitems, $newperms); 
 			} 
 		} 
