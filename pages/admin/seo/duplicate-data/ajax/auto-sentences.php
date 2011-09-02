@@ -18,7 +18,7 @@
 	}
 	
 	$perms = permute($sentences);
-	print_a($perms);
+	echo $perms;
 		
 	function permute($items, $perms = array( )) {
 		if (empty($items)) {
