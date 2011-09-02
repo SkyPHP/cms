@@ -4,7 +4,7 @@
 	$no_sentences = $_POST['no_sentences'];
 	$sentences=array();
 	for ($x = 0; $x <= $no_sentences; $x++) {
-		$sentences[$x] = $_POST['sentence'+$x];
+		$sentences[$x] = $_POST['sentence'.$x];
 	}
 	print_a ($sentences);
 	if ($_POST['use_first']) { 
@@ -20,9 +20,8 @@
 		}
 	}
 	
-	//$s = permute($sentences);
-	echo $s;
-	
+	permute($sentences);
+		
 	function permute($items, $perms = array( )) {
 		if (empty($items)) print join(' ', $perms) . "\n"; 
 		else { 
