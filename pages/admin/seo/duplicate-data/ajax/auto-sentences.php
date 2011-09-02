@@ -3,8 +3,9 @@
 	$no_sentences = $_POST['no_sentences'];
 	$sentences=array();
 	for ($x = 0; $x <= $no_sentences; $x++) {
-		$sentences[] = $_POST['sentence'+$x];
+		$sentences[$x] = $_POST['sentence'+$x];
 	}
+	print_a ($sentences);
 	if ($_POST['use_first']) { 
 		$first = $sentences[0];
 		$sentences = array_slice($sentences,1);
@@ -17,8 +18,8 @@
 			if ($key >= $limit) unset($sentences[$key]);	
 		}
 	}
-	print_a ($sentences);
-	$s = permute($sentences);
+	
+	//$s = permute($sentences);
 	echo $s;
 	
 	function permute($items, $perms = array( )) {
