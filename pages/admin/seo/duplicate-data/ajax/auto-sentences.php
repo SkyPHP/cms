@@ -18,7 +18,7 @@
 		}
 	}
 	
-	permutate($sentences, 10);
+	permutate($sentences);
 	
 	function permutate($items, $limit = 24, $perms = array( )) {
 		$count = 0;
