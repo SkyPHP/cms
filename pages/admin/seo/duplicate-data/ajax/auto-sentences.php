@@ -46,7 +46,7 @@
 		$x = 0;
 		foreach ($sentences as $sentence) {
 			$x++;
-			$rs=aql::select("dup_sentence_data { id as s_id where sentence = '".addslashes($sentence)."' }");
+			$rs=aql::select("dup_sentence_data { id as s_id where sentence ilike '".addslashes($sentence)."' }");
 			echo 's'.$x.'="'.$rs[0]['s_id'].'" ';
 		}
 		echo 'version="'.$x.' class="perm_box" />Version ('.$count.')</div>';
