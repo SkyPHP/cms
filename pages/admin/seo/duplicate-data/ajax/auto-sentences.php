@@ -2,7 +2,7 @@
 	print_a($_POST);
 	$no_sentences = $_POST['no_sentences'];
 	$sentences=array();
-	for ($x = 1; $x <= $no_sentences; $x++) {
+	for ($x = 0; $x <= $no_sentences; $x++) {
 		$sentences[] = $_POST['sentence'+$x];
 	}
 	if ($_POST['use_first']) { 
@@ -33,7 +33,7 @@
 				$newperms = $perms;
 				list($foo) = array_splice($newitems, $i, 1);
 				array_unshift($newperms, $foo);
-				pc_permute($newitems, $newperms); 
+				permute($newitems, $newperms); 
 			} 
 		} 
 	}
