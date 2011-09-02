@@ -21,7 +21,7 @@
 		$permutate = function($items, $perms) use(&$limit, &$count, &$permutate) {
 			// print_pre($count);
 			if (empty($items)) {
-				configure_perm($count,$perms);
+				configure_perm($perms);
 			} else {
 				$count++;
 				for ($i = count($items) - 1; $i >= 0; --$i) {
@@ -30,7 +30,7 @@
 					list($foo) = array_splice($newitems, $i, 1);
 					array_unshift($newperms, $foo);
 					if ($limit <= $count) {
-						configure_perm($count,array_merge($newitems,$newperms));
+						configure_perm(array_merge($newitems,$newperms));
 						break;
 					}
 					$permutate($newitems, $newperms);
@@ -40,7 +40,7 @@
 		$permutate($items, $perms);
 	}
 
-	function configure_perm($count,$sentences=array( )) {
+	function configure_perm($sentences=array( )) {
 		echo '<div class="has-floats" style="margin-bottom:15px;">';
 		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" ';
 		$x = 0;
@@ -49,10 +49,10 @@
 			$rs = sql("SELECT id FROM dup_sentence_data where sentence ilike '".addslashes($sentence)."'");
 			if ($rs) echo 's'.$x.'="'.$rs->Fields('id').'" ';
 		}
-		echo 'version="'.$x.' class="perm_box" />Version ('.$count.')</div>';
+		echo 'version="'.$x.' class="perm_box" /></div>';
 		echo '<div style="float:left;">';
 		foreach ($sentences as $sentence) {			
-			echo $perm.'<br>';
+			echo $sentence.'<br>';
 		}
 		echo "</div></div>";
 	}
