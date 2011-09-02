@@ -17,14 +17,12 @@
 		}
 	}
 	
-	permute($sentences);
-	print_a($perm0);
-	
-	print_a($perm1);
+	$perms = permute($sentences);
+	print_a($perms);
 		
 	function permute($items, $perms = array( )) {
 		if (empty($items)) {
-			$items = $items;//print join(' ', $perms) . "\n"; 
+			return $perms;
 		}
 		else { 
 			for ($i = count($items) - 1; $i >= 0; --$i) { 
@@ -33,8 +31,6 @@
 				list($foo) = array_splice($newitems, $i, 1);
 				array_unshift($newperms, $foo);
 				$newperms = $newperms;
-				eval ("\$perm".$i." = \$newperms;");
-				eval ("global $perm".$i.";");
 				permute($newitems, $newperms); 
 			} 
 		} 
