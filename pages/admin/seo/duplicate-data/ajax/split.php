@@ -14,6 +14,12 @@
 	</div>
 <?
 	foreach ($sentences[0] as $key => $sentence) {
+		$data = array(
+			'sentence' => addslashes($sentence),
+			'name' => $_POST['name'],
+			'source' => $_POST['source']
+		);
+		aql::insert('dup_sentence_data',$data);
 ?>	
 	<div id="sentence<?=$key?>-container" class="has-floats" style="margin:10px 0 20px 0;">
     	<div>Sentence <?=$key+1?></div>

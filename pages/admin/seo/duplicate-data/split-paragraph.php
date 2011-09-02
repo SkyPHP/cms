@@ -4,6 +4,10 @@
 ?>
 <h1><?=$p->title?></h1>
 <div style="width:1000px">
+	<div class="has-floats">
+    	<div style="float:left; margin-right:15px;">Name: <input type="text" id="name" /></div>
+        <div style="float:left;">Source: <input type="text" id="source" /></div>
+    </div>
     <div class="hideable"><textarea id="paragraph" style="width:1000px; height: 100px;"></textarea></div>
     <div class="has-floats">
         <div class="hideable" style="float:left"><input type="button" value="Split" id="split" /></div>
