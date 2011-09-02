@@ -1,4 +1,9 @@
 $(function() {
+	$('#name').live('keyup',function() {
+		if ($(this).val()) $('#split').show();
+		else $('#split').hide();
+	});
+	
 	$("#split").live('click',function() {
 		var val = $('#paragraph').val()
 		if (val) {
