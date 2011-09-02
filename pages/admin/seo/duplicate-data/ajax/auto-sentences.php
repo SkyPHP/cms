@@ -21,7 +21,7 @@
 		
 	function permutate($items, $perms = array( )) {
 		if (empty($items)) {
-			print_r ($perms); 
+			krumo ($perms); 
 		}
 		else { 
 			for ($i = count($items) - 1; $i >= 0; --$i) { 
