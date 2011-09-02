@@ -17,11 +17,11 @@
 		}
 	}
 	
-	permutate($sentences);
+	permutate($sentences, 10);
 		
-	function permutate($items, $perms = array( )) {
+	function permutate($items, $limit, $perms = array( )) {
 		if (empty($items)) {
-			krumo ($perms); 
+			configure_perms ($perms, $limit); 
 		}
 		else { 
 			for ($i = count($items) - 1; $i >= 0; --$i) { 
@@ -30,8 +30,18 @@
 				list($foo) = array_splice($newitems, $i, 1);
 				array_unshift($newperms, $foo);
 				$newperms = $newperms;
-				permutate($newitems, $newperms); 
+				permutate($newitems, $limit, $newperms); 
 			} 
 		} 
+	}
+	
+	function configure_perms($perms=array( ),$limit) {
+		$x = 0;
+		foreach ($perms as $key => $arr) {
+			$x++;
+			echo '<input type="checkbox" vesion="'.$x.' class="perm_box" /> Version ( '.$x." ) ";
+				print join(' ', $arr) . "<br><br>"; 
+			
+		}
 	}
 ?>
