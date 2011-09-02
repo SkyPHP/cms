@@ -1,4 +1,5 @@
 <?
+	print_a($_POST);
 	$no_sentences = $_POST['no_sentences'];
 	$sentences=array();
 	for ($x = 1; $x <= $no_sentences; $x++) {
