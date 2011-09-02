@@ -17,9 +17,9 @@
 		}
 	}
 	
-	permutate($sentences, 10);
+	permutate($sentences, 10, 0);
 		
-	function permutate($items, $limit, $x = 0, $perms = array( )) {
+	function permutate($items, $limit, $x, $perms = array( )) {
 		if (empty($items)) {
 			$x++;
 			configure_perm ($perms, $limit, $x);
