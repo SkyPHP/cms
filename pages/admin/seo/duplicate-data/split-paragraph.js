@@ -17,10 +17,10 @@ $(function() {
 				$this = $(this);
 				eval("data1.sentence" + index + " = $this.val()");
 			});
-			data.no_sentences = c;
+			data1.no_sentences = c;
 			$('.manual-order').fadeOut('slow',function() {
 				$.post('/admin/seo/duplicate-data/ajax/auto-sentences',data1,function(data) {
-					$('#auto-sentences').html('data').slideDown('fast');
+					$('#auto-sentences').html(data).slideDown('fast');
 				});
 				
 			});
