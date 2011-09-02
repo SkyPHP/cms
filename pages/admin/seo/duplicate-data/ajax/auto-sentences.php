@@ -9,18 +9,12 @@
 		$first = $sentences[0];
 		$sentences = array_slice($sentences,1);
 	}
-	if ($_POST['limit']) {
-		$limit = $_POST['limit'];
-		if ($first) $limit--;
-		$num = $limit;
-		foreach($sentences as $key => $sentence) {
-			if ($key >= $limit) unset($sentences[$key]);	
-		}
-	}
 	
+	if ($_POST['limit']) $limit = $_POST['limit'];
+	else $limit = 25;
 	permutate($sentences);
 	
-	function permutate($items, $limit = 24, $perms = array( )) {
+	function permutate($items, $limit, $perms = array( )) {
 		$count = 0;
 		$num_items = count($items);
 		$limit = $limit + $num_items + $num_items - 3;
