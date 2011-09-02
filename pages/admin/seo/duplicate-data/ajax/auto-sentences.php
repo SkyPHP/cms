@@ -1,7 +1,7 @@
 <?
 	$no_sentences = $_POST['no_sentences'];
 	$sentences=array();
-	for ($x = 0; $x <= $no_sentences; $x++) {
+	for ($x = 0; $x < $no_sentences; $x++) {
 		$sentences[$x] = $_POST['sentence'.$x];
 	}
 	if ($_POST['use_first']) { 
