@@ -30,7 +30,7 @@
 					list($foo) = array_splice($newitems, $i, 1);
 					array_unshift($newperms, $foo);
 					if ($limit <= $count) {
-						configure_perm(array_merge($newitems,$newperms));
+						configure_perm($count,array_merge($newitems,$newperms));
 						break;
 					}
 					$permutate($newitems, $newperms);
@@ -40,10 +40,9 @@
 		$permutate($items, $perms);
 	}
 
-
-	function configure_perm($perms=array( )) {
+	function configure_perm($count,$perms=array( )) {
 		echo '<div class="has-floats" style="margin-bottom:15px;">';
-		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" vesion="'.$x.' class="perm_box" /></div>';
+		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" vesion="'.$x.' class="perm_box" />Version ('.$count.')</div>';
 		echo '<div style="float:left;">';
 		foreach ($perms as $perm) {			
 			echo $perm.'<br>';
