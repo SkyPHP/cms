@@ -12,7 +12,7 @@
 	
 	if ($_POST['limit']) $limit = $_POST['limit'];
 	else $limit = 25;
-	permutate($sentences);
+	permutate($sentences,$limit);
 	
 	function permutate($items, $limit, $perms = array( )) {
 		$count = 0;
