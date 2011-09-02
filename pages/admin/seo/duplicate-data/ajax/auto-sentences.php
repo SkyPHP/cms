@@ -23,7 +23,7 @@
 	permute($sentences);
 		
 	function permute($items, $perms = array( )) {
-		if (empty($items)) print join(' ', $perms) . "\n"; 
+		if (empty($items)) print join('<br>', $perms) . "\n"; 
 		else { 
 			for ($i = count($items) - 1; $i >= 0; --$i) { 
 				$newitems = $items;
