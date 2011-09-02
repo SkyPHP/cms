@@ -11,7 +11,7 @@
 	}
 	
 	if ($_POST['limit']) $limit = $_POST['limit'];
-	else $limit = 25;
+	else $limit = 50;
 	permutate($sentences,$limit);
 	
 	function permutate($items, $limit, $perms = array( )) {
