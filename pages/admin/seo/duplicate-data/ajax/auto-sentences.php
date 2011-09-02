@@ -22,7 +22,8 @@
 		
 	}
 	else {
-		permute($sentences);
+		$s = permute($sentences);
+		echo $s;
 	}
 	
 	function permute($items, $perms = array( )) {
