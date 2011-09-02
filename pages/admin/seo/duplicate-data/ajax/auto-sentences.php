@@ -45,6 +45,7 @@
 		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" ';
 		$x = 0;
 		foreach ($sentences as $sentence) {
+			$x++;
 			$rs=aql::select("dup_sentence_data { id as s_id where sentence = '".$sentence."'");
 			echo 's'.$x.'="'.$rs[0]['s_id'].'" ';
 		}
