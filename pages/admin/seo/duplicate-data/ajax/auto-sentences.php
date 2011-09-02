@@ -21,7 +21,7 @@
 		
 	function permutate($items, $perms = array( )) {
 		if (empty($items)) {
-			print_a ($perms); 
+			print_r ($perms); 
 		}
 		else { 
 			for ($i = count($items) - 1; $i >= 0; --$i) { 
