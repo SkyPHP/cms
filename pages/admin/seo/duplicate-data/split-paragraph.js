@@ -10,6 +10,7 @@ $(function() {
 	
 	$('input[name=auto-switch]').die().live('change',function() { 
 		if ($(this).val() == 'auto') {
+			$('#auto-sentences').html('<img src="/images/loading.gif">');
 			data1 = {};
 			c = 0;
 			$('.sentence').each(function(index,element) {
@@ -23,7 +24,6 @@ $(function() {
 				$.post('/admin/seo/duplicate-data/ajax/auto-sentences',data1,function(data) {
 					$('#auto-sentences').html(data).slideDown('fast');
 				});
-				
 			});
 		}
 		else {

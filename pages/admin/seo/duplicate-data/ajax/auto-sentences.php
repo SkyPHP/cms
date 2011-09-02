@@ -40,11 +40,17 @@
 		$permutate($items, $perms);
 	}
 
-	function configure_perm($count,$perms=array( )) {
+	function configure_perm($count,$senteces=array( )) {
 		echo '<div class="has-floats" style="margin-bottom:15px;">';
-		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" vesion="'.$x.' class="perm_box" />Version ('.$count.')</div>';
+		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" ';
+		$x = 0;
+		foreach ($sentences as $sentence) {
+			$rs=aql::select("dup_sentence_data { id as s_id where sentence = '".$sentence."'");
+			echo 's'.$x.'="'.$rs[0]['s_id'].'" ';
+		}
+		echo 'version="'.$x.' class="perm_box" />Version ('.$count.')</div>';
 		echo '<div style="float:left;">';
-		foreach ($perms as $perm) {			
+		foreach ($sentences as $sentence) {			
 			echo $perm.'<br>';
 		}
 		echo "</div></div>";
