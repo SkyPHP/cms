@@ -38,10 +38,8 @@
 	}
 	
 	function configure_perm($perms=array( ), $limit) {
-		$x++;
-		global $x;
 		echo '<div class="has-floats">';
-		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" vesion="'.$x.' class="perm_box" /> ('.$x.'</div>';
+		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" vesion="'.$x.' class="perm_box" /></div>';
 		echo '<div style="float:left;">';
 		foreach ($perms as $perm) {			
 			echo $perm.'<br>';
