@@ -10,16 +10,16 @@ $(function() {
 	
 	$('input[name=auto-switch]').live('change',function() { 
 		if ($(this).val() == 'auto') {
-			data = {};
+			data1 = {};
 			c = 0;
 			$('.sentence').each(function(index,element) {
 				c++;
 				$this = $(this);
-				eval("data.sentence" + index + " = $this.val()");
+				eval("data1.sentence" + index + " = $this.val()");
 			});
 			data.no_sentences = c;
 			$('.manual-order').fadeOut('slow',function() {
-				$.post('/admin/seo/duplicate-data/ajax/auto-sentences',data,function(data) {
+				$.post('/admin/seo/duplicate-data/ajax/auto-sentences',data1,function(data) {
 					$('#auto-sentences').html('data').slideDown('fast');
 				});
 				
