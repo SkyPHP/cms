@@ -38,9 +38,10 @@
 	
 	function configure_perm($perms=array( ), $limit, $x) {
 		echo '<input type="checkbox" vesion="'.$x.' class="perm_box" /> Version ( '.$x." ) ";
+		echo '<div style="width:350px;">';
 		foreach ($perms as $perm) {			
 			echo $perm.' ';
 		}
-		echo "<br><br><br>";
+		echo "</div><br><br><br>";
 	}
 ?>
