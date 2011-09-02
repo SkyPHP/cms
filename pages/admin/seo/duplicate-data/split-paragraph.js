@@ -6,8 +6,10 @@ $(function() {
 	
 	$("#split").live('click',function() {
 		var val = $('#paragraph').val()
+		var name = $('#name').val();
+		var source = $('#source').val();
 		if (val) {
-			$.post('/admin/seo/duplicate-data/ajax/split',{ val: val }, function(data) {
+			$.post('/admin/seo/duplicate-data/ajax/split',{ val: val, source: source, name: name }, function(data) {
 				$('#results').html(data);
 			});
 		}
