@@ -21,7 +21,7 @@
 	permutate($sentences, 10, 0);
 		
 	function permutate($items, $limit, $count, $perms = array( )) {
-		$count = $count++;
+		$count++;
 		echo $count;
 		if ($count == $limit) exit();
 		else if (empty($items)) {
