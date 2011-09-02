@@ -20,13 +20,14 @@
 	permute($sentences);
 		
 	function permute($items, $perms = array( )) {
-		if (empty($items)) print join('<br>', $perms) . "\n"; 
+		if (empty($items)) print join(' ', $perms) . "\n"; 
 		else { 
 			for ($i = count($items) - 1; $i >= 0; --$i) { 
 				$newitems = $items;
 				$newperms = $perms;
 				list($foo) = array_splice($newitems, $i, 1);
 				array_unshift($newperms, $foo);
+				$newperms = $newperms."<br><br>";
 				permute($newitems, $newperms); 
 			} 
 		} 
