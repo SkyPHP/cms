@@ -1,12 +1,9 @@
 <?
-	print_a($_POST);
-	echo $_POST['sentence0'];
 	$no_sentences = $_POST['no_sentences'];
 	$sentences=array();
 	for ($x = 0; $x <= $no_sentences; $x++) {
 		$sentences[$x] = $_POST['sentence'.$x];
 	}
-	print_a ($sentences);
 	if ($_POST['use_first']) { 
 		$first = $sentences[0];
 		$sentences = array_slice($sentences,1);
