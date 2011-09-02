@@ -17,7 +17,7 @@
 			if ($key >= $limit) unset($sentences[$key]);	
 		}
 	}
-	
+	print_a ($sentences);
 	$s = permute($sentences);
 	echo $s;
 	
