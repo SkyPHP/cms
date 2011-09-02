@@ -21,7 +21,7 @@
 		$permutate = function($items, $perms) use(&$limit, &$count, &$permutate) {
 			// print_pre($count);
 			if (empty($items)) {
-				configure_perm($perms);
+				configure_perm($count,$perms);
 			} else {
 				$count++;
 				for ($i = count($items) - 1; $i >= 0; --$i) {
