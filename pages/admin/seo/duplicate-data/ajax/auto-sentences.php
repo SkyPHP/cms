@@ -17,12 +17,13 @@
 		}
 	}
 	
-	permutate($sentences, 10, 0);
+	permutate($sentences, 10);
 		
-	function permutate($items, $limit, $x, $perms = array( )) {
+	$x = 0;
+	global $x;
+	function permutate($items, $limit, $perms = array( )) {
 		if (empty($items)) {
-			$x++;
-			configure_perm ($perms, $limit, $x);
+			configure_perm ($perms, $limit);
 		}
 		else { 
 			for ($i = count($items) - 1; $i >= 0; --$i) { 
@@ -31,12 +32,13 @@
 				list($foo) = array_splice($newitems, $i, 1);
 				array_unshift($newperms, $foo);
 				$newperms = $newperms;
-				permutate($newitems, $limit, $x, $newperms); 
+				permutate($newitems, $limit, $newperms); 
 			} 
 		} 
 	}
 	
-	function configure_perm($perms=array( ), $limit, $x) {
+	function configure_perm($perms=array( ), $limit) {
+		$x++;
 		echo '<input type="checkbox" vesion="'.$x.' class="perm_box" /> Version ( '.$x." ) ";
 		echo '<div style="width:350px;">';
 		foreach ($perms as $perm) {			
