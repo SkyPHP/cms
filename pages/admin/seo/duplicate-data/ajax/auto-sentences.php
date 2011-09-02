@@ -20,11 +20,10 @@
 	
 	permutate($sentences, 10, 0);
 		
-	$x = 0;
-	global $x;
 	function permutate($items, $limit, $count, $perms = array( )) {
 		$count = $count++;
-		if ($count == $limit) return true;
+		echo $count;
+		if ($count == $limit) exit();
 		else if (empty($items)) {
 			configure_perm ($perms);
 		}
