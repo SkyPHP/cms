@@ -19,21 +19,6 @@
 	}
 	
 	permutate($sentences, 10);
-		
-	function permutate($items, $limit, $perms = array( )) {
-	    if (empty($items)) {
-			configure_perm ($perms);
-		}
-		else { 
-			for ($i = count($items) - 1; $i >= 0; --$i) { 
-				$newitems = $items;
-				$newperms = $perms;
-				list($foo) = array_splice($newitems, $i, 1);
-				array_unshift($newperms, $foo);
-				permutate($newitems, $limit, $newperms); 
-			} 
-		} 
-	}
 	
 	function permutate($items, $limit = 24, $perms = array( )) {
 		$count = 0;
