@@ -19,9 +19,10 @@
 	
 	permutate($sentences, 10);
 		
-	function permutate($items, $limit, $perms = array( )) {
+	function permutate($items, $limit, $x = 0, $perms = array( )) {
 		if (empty($items)) {
-			configure_perms ($perms, $limit); 
+			$x++;
+			configure_perms ($perms, $limit, $x);
 		}
 		else { 
 			for ($i = count($items) - 1; $i >= 0; --$i) { 
@@ -30,18 +31,16 @@
 				list($foo) = array_splice($newitems, $i, 1);
 				array_unshift($newperms, $foo);
 				$newperms = $newperms;
-				permutate($newitems, $limit, $newperms); 
+				permutate($newitems, $limit, $x, $newperms); 
 			} 
 		} 
 	}
 	
-	function configure_perms($perms=array( ),$limit) {
-		$x = 0;
-		foreach ($perms as $key => $arr) {
-			$x++;
-			echo '<input type="checkbox" vesion="'.$x.' class="perm_box" /> Version ( '.$x." ) ";
-				print join(' ', $arr) . "<br><br>"; 
-			
+	function configure_perm($perms=array( ), $limit, $x) {
+		echo '<input type="checkbox" vesion="'.$x.' class="perm_box" /> Version ( '.$x." ) ";
+		foreach ($perms as $perm) {			
+			echo $perm.' ';
 		}
+		echo "<br><br><br>";
 	}
 ?>
