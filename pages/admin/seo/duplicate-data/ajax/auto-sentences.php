@@ -22,7 +22,7 @@
 	function permutate($items, $limit, $x = 0, $perms = array( )) {
 		if (empty($items)) {
 			$x++;
-			configure_perms ($perms, $limit, $x);
+			configure_perm ($perms, $limit, $x);
 		}
 		else { 
 			for ($i = count($items) - 1; $i >= 0; --$i) { 
