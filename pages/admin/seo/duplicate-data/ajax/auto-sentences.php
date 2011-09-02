@@ -40,7 +40,7 @@
 		$permutate($items, $perms);
 	}
 
-	function configure_perm($count,$senteces=array( )) {
+	function configure_perm($count,$sentences=array( )) {
 		echo '<div class="has-floats" style="margin-bottom:15px;">';
 		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" ';
 		$x = 0;
