@@ -8,7 +8,7 @@ $(function() {
 		}
 	});
 	
-	$('input[name=auto-switch]').live('change',function() { 
+	$('input[name=auto-switch]').die().live('change',function() { 
 		if ($(this).val() == 'auto') {
 			data1 = {};
 			c = 0;
