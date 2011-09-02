@@ -19,7 +19,6 @@ $(function() {
 				eval("data1.sentence" + index + " = $this.val()");
 			});
 			data1.no_sentences = c;
-			if (c > 4) data1.limit = 25;
 			$('.manual-order').fadeOut('slow',function() {
 				$.post('/admin/seo/duplicate-data/ajax/auto-sentences',data1,function(data) {
 					$('#auto-sentences').html(data).slideDown('fast');
