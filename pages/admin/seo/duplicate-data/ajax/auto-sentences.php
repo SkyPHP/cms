@@ -18,13 +18,8 @@
 		}
 	}
 	
-	if ($first) {
-		
-	}
-	else {
-		$s = permute($sentences);
-		echo $s;
-	}
+	$s = permute($sentences);
+	echo $s;
 	
 	function permute($items, $perms = array( )) {
 		if (empty($items)) print join(' ', $perms) . "\n"; 
