@@ -17,12 +17,9 @@
 		}
 	}
 	
-	permute($sentences);
-	print_a($perm0);
-	
-	print_a($perm1);
+	permutate($sentences);
 		
-	function permute($items, $perms = array( )) {
+	function permutate($items, $perms = array( )) {
 		if (empty($items)) {
 			print_a ($perms); 
 		}
@@ -33,7 +30,7 @@
 				list($foo) = array_splice($newitems, $i, 1);
 				array_unshift($newperms, $foo);
 				$newperms = $newperms;
-				permute($newitems, $newperms); 
+				permutate($newitems, $newperms); 
 			} 
 		} 
 	}
