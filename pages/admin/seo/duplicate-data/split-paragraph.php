@@ -4,7 +4,7 @@
 ?>
 <h1><?=$p->title?></h1>
 <div style="width:1000px">
-	<div class="has-floats">
+	<div class="has-floats" style="margin-bottom:2px;">
     	<div style="float:left; margin-right:15px;">Name: <input type="text" id="name" /></div>
         <div style="float:left;">Source: <input type="text" id="source" /></div>
     </div>
