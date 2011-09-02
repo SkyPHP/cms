@@ -34,6 +34,7 @@
 				array_unshift($newperms, $foo);
 				$newperms = $newperms;
 				eval ("\$perm".$i." = \$newperms;");
+				eval ("global $perm".$i.";");
 				permute($newitems, $newperms); 
 			} 
 		} 
