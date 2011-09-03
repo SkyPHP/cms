@@ -179,7 +179,7 @@ $(function() {
 			$('#'+val).addClass('a-or-m-on').fadeIn('slow');
 		}).removeClass('a-or-m-on');
 		if (val='auto') {
-			$('.phrase-filter-radio').attr('section','mulit-listing');
+			$('.phrase-filter-radio').attr('section','multi-listing');
 			$('.all').attr('section','multi-listing');	
 		}
 		else {
