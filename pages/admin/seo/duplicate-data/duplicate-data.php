@@ -72,7 +72,7 @@
      	<input type="radio" id="auto-switch-off" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-off">Single</label><br>
         <input type="radio" id="auto-switch-on" <? if ($_GET['area'] == 'auto') echo 'checked' ?> value="auto" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Multi</label><br>
   	</div>
-	<div id="auto" <? if ($_GET['area'] != 'auto') echo 'style="display:none;"'; else echo 'class="a-or-m-on"'; ?>>
+	<div id="auto" style="display:none;">
 <?
 		include ('pages/admin/seo/duplicate-data/ajax/multi.php');
 ?>

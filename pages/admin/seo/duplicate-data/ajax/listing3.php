@@ -8,7 +8,7 @@
 	if ($_POST['category']) $where[] = "(category = '{$_POST['category_n']}' || category = 'general')";
 	if ($_POST['base']) $where[] = "base = '{$_POST['base']}'";
 
-	$listing3 = aql::select("dup_modifier { id as modifier_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_phrase_data'=>array('where'=>$where)));
+	$listing3 = aql::select("dup_modifier { id as modifier_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_modifier'=>array('where'=>$where)));
 
 ?>
 
