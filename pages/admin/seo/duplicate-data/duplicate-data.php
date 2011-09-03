@@ -75,6 +75,7 @@
 	<div style="padding-top:10px;">
 		<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
 		<input type="hidden" id="table" value="<?=$table?>" />
+		<input type="hidden" id="listing_no" value="listing1" />
 		<input type="hidden" id="char_count_limit" value="<?=$char_count_limit?>" />
 		<input type="hidden" id="seo_field" value="<?=str_replace('-','_',IDE)?>" />
 <?
