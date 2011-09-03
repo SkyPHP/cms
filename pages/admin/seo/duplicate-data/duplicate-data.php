@@ -74,7 +74,7 @@
   	</div>
 	<div id="auto" <? if ($_GET['area'] != 'auto') echo 'style="display:none;"'; else echo 'class="a-or-m-on"'; ?>>
 <?
-		//include ('pages/admin/seo/duplicate-data/ajax/auto-permutate.php');
+		include ('pages/admin/seo/duplicate-data/ajax/multi.php');
 ?>
     </div>
 	<div id="manual" <? if ($_GET['area'] == 'auto') echo 'style="display:none;"'; else echo 'class="a-or-m-on"'; ?>>

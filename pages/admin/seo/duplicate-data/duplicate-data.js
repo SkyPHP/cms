@@ -171,8 +171,8 @@ $(function() {
 	
 	$('.a-or-m-switch').live('change',function() {
 		val = $(this).val();
-		$('.a-or-m-on').slideUp('fast',function() {
-			$('#'+val).addClass('a-or-m-on').slideDown('fast');
+		$('.a-or-m-on').slideUp(100,function() {
+			$('#'+val).addClass('a-or-m-on').slideDown(100);
 		}).removeClass('a-or-m-on');
 	});
 	
