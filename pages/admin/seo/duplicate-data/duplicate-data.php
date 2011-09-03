@@ -69,8 +69,8 @@
 	}	
 ?>	
 	<div style="margin: 15px 0 0 0;">
-     	<input type="radio" id="auto-switch-off" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-off">Manual Permutations</label><br>
-        <input type="radio" id="auto-switch-on" <? if ($_GET['area'] == 'auto') echo 'checked' ?> value="auto" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Auto Permutations</label><br>
+     	<input type="radio" id="auto-switch-off" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-off">Single</label><br>
+        <input type="radio" id="auto-switch-on" <? if ($_GET['area'] == 'auto') echo 'checked' ?> value="auto" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Multi</label><br>
   	</div>
     
 	<div style="padding-top:10px;">
