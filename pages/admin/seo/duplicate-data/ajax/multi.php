@@ -12,9 +12,13 @@
 		'volume',		
 	);
 	foreach ($filters as $filter) {
-?>			<div style="float:left; margin-right:40px;">
-			<div class="filter" type="<?=$type?>" style="font-weight:bold; width: 175px; padding-left:5px; cursor:pointer; border: 1px solid #999; border-bottom: 2px solid #999;" filter="<?=$filter?>"><?=str_replace('_',' ',$filter)?><span id="<?=$filter?>_selected" style="text-transform:lowercase"></span></div>
-			<div id="<?=$filter?>" style="position:absolute; display:none; min-width:180px; background-color: #fff; border-bottom: 1px solid #999; border-left: 1px solid #999; border-right: 1px solid #999;" class="filter-area"><? include('pages/admin/seo/duplicate-data/filter.php') ?></div>
+?>		<div style="float:left; margin-right:40px;">
+			<div class="filter" type="<?=$type?>" style="font-weight:bold; width: 175px; padding-left:5px; cursor:pointer; border: 1px solid #999; border-bottom: 2px solid #999;" filter="<?=$filter?>">
+				<?=str_replace('_',' ',$filter)?>	
+				<span id="<?=$filter?>_selected" style="text-transform:lowercase"></span>
+			</div>
+			<div id="<?=$filter?>" style="position:absolute; display:none; min-width:180px; background-color: #fff; border-bottom: 1px solid #999; border-left: 1px solid #999; border-right: 1px solid #999;" class="filter-area">					<? include('pages/admin/seo/duplicate-data/filter.php') ?>
+			</div>
 		</div>
 <?	
 	}
@@ -51,6 +55,7 @@
 		}
 ?>
 		</fieldset>
+		</div>
 		<div style="float:left;">
 		<fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Phrase Part 2</legend>
@@ -75,6 +80,6 @@
 <?	
 		}
 ?>
-    		</fieldset>
-		</div>
+    	</fieldset>
+	</div>
 </div>
