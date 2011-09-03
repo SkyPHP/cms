@@ -62,6 +62,7 @@ $(function() {
 		else $('#'+filter+'_selected').html('');
 		var url = '/admin/seo/duplicate-data/ajax/'+section;
 		alert(url);
+		$('#'+section).html('<img src="/images/loading.gif" />');
 		$.post(url,
 			{ 
 				market: market,
