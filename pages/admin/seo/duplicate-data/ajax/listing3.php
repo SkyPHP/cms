@@ -8,14 +8,14 @@
 	if ($_POST['category']) $where[] = "(category = '{$_POST['category_n']}' || category = 'general')";
 	if ($_POST['base']) $where[] = "base = '{$_POST['base']}'";
 
-	$listing2 = aql::select("dup_modifier { id as modifier_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_phrase_data'=>array('where'=>$where)));
+	$listing3 = aql::select("dup_modifier { id as modifier_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_phrase_data'=>array('where'=>$where)));
 
 ?>
 
 <fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
-    	<legend class="legend">Modifier (<?=count($listing2)?> Phrases)</legend>
+    	<legend class="legend">Modifier (<?=count($listing2)?> Modifiers)</legend>
 <?
-		if ($listing2) foreach ($listing2 as $data) {
+		if ($listing3) foreach ($listing3 as $data) {
 ?>
 			<div style="width:65px; float:left; margin-right:5px; text-align:right;"></div><div style="float:left;"> <input type="radio" name="phrase3" phrase="<?=$data['phrase']?>" modifier_id="<?=$data['modifier_id']?>" class="phrase-listing3-radio" id="<?=$data['lower_phrase']?>3" /> <label for="<?=$data['lower_phrase']?>3"><?=$data['lower_phrase']?></label></div>
         	<div class="clear"></div>

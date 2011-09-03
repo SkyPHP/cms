@@ -41,13 +41,6 @@
 	snippet::tabs($p->tabs);
 	
 	if ($type == 'phrase') {
-		$filters = array(
-			'category',
-			'market_name',
-			'market',
-			'base',
-			'volume',		
-		);
 		$table = 'dup_phrase_data';
 		$field = 'phrase';
 		$width = 310;

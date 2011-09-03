@@ -4,6 +4,13 @@
 	<input type="hidden" id="char_count_limit" value="<?=$char_count_limit?>" />
 	<input type="hidden" id="seo_field" value="<?=str_replace('-','_',IDE)?>" />
 <?
+	$filters = array(
+		'category',
+		'market_name',
+		'market',
+		'base',
+		'volume',		
+	);
 	foreach ($filters as $filter) {
 ?>			<div style="float:left; margin-right:40px;">
 			<div class="filter" type="<?=$type?>" style="font-weight:bold; width: 175px; padding-left:5px; cursor:pointer; border: 1px solid #999; border-bottom: 2px solid #999;" filter="<?=$filter?>"><?=str_replace('_',' ',$filter)?><span id="<?=$filter?>_selected" style="text-transform:lowercase"></span></div>
@@ -15,6 +22,7 @@
 	<div class="clear"></div>
 </div>
 
+<div id="multi-listing">
 <?
 	$where=array();
 		
@@ -31,27 +39,42 @@
 ?>
     <input type="hidden" id="type" value="<?=$type?>" />
 	<input type="hidden" id="person_id" value="<?=PERSON_ID?>" />
-    <fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
-    	<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>1 (<?=$count?> Phrases)</legend>
+	<div style="float:left">
+		<fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
+			<legend class="legend">Phrase Part 1</legend>
 <?
-		if ($listing) foreach ($listing as $data) {
+			if ($listing) foreach ($listing as $data) {
 ?>
 			<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left;"> <input type="checkbox" id="phrase1_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="multi-listing1-cb" id="<?=$data['lower_phrase']?>" /> <label for="phrase1_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
         	<div class="clear"></div>
 <?	
 		}
 ?>
-    </fieldset>
-    <fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
-    	<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>1 (<?=$count?> Phrases)</legend>
+		</fieldset>
+		<div style="float:left;">
+		<fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
+			<legend class="legend">Phrase Part 2</legend>
 <?
-		if ($listing) foreach ($listing as $data) {
+			if ($listing) foreach ($listing as $data) {
 ?>
-			<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left;"> <input type="checkbox" id="phrase2_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="multi-listing1-cb" id="<?=$data['lower_phrase']?>" /> <label for="phrase2_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
+				<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left;"> <input type="checkbox" id="phrase2_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="multi-listing1-cb" id="<?=$data['lower_phrase']?>" /> <label for="phrase2_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
         	<div class="clear"></div>
 <?	
 		}
 ?>
-    </fieldset>
-
-
+    	</fieldset>
+	</div>
+	<div style="float:left;">
+		<fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
+		<legend class="legend">Modifier</legend>
+<?
+		$mods = aql::select("dup_modifier { id as modifier_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_phrase_data'=>array('where'=>$where)));
+		if ($mods) foreach ($mods as $data) {
+?>
+			<div> <input type="checkbox" id="mod_<?=$data['mod_id']?>" phrase="<?=$data['modifier']?>" mod_id="<?=$data['mod_id']?>" class="mod-cb" id="<?=$data['lower_modifier']?>" /> <label for="mod_<?=$data['mod_id']?>"><?=$data['modifier']?></label></div>
+<?	
+		}
+?>
+    		</fieldset>
+		</div>
+</div>
