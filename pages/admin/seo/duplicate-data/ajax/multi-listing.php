@@ -1,6 +1,6 @@
 <?
 	$where=array();
-		
+	print_a($_POST);
 	if ($_POST['market']) $where[] = "market = '{$_POST['market']}'";
 	if ($_POST['market_name']) $where[] = "market_name = '{$_POST['market_name']}'";
 	if ($_POST['volume']) $where[] = "volume >= {$_POST['volume']}";
