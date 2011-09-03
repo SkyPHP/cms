@@ -41,6 +41,13 @@
 	snippet::tabs($p->tabs);
 	
 	if ($type == 'phrase') {
+		$filters = array(
+			'category',
+			'market_name',
+			'market',
+			'base',
+			'volume',		
+		);
 		$table = 'dup_phrase_data';
 		$field = 'phrase';
 		$width = 310;
@@ -71,8 +78,7 @@
 ?>
     </div>
 	<div id="manual" <? if ($_GET['area'] == 'auto') echo 'style="display:none;"'; else echo 'class="a-or-m-on"'; ?>>
-    
-		
+    	
 		<div style="padding-top:10px;">
 			<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
 			<input type="hidden" id="table" value="<?=$table?>" />
