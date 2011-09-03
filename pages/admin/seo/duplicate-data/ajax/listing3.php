@@ -17,7 +17,7 @@
 <?
 		if ($listing2) foreach ($listing2 as $data) {
 ?>
-			<div style="width:55px; float:left; margin-right:5px; text-align:right;"></div><div style="float:left;"> <input type="radio" name="phrase3" phrase="<?=$data['phrase']?>" modifier_id="<?=$data['modifier_id']?>" class="phrase-listing3-radio" id="<?=$data['lower_phrase']?>3" /> <label for="<?=$data['lower_phrase']?>3"><?=$data['lower_phrase']?></label></div>
+			<div style="width:65px; float:left; margin-right:5px; text-align:right;"></div><div style="float:left;"> <input type="radio" name="phrase3" phrase="<?=$data['phrase']?>" modifier_id="<?=$data['modifier_id']?>" class="phrase-listing3-radio" id="<?=$data['lower_phrase']?>3" /> <label for="<?=$data['lower_phrase']?>3"><?=$data['lower_phrase']?></label></div>
         	<div class="clear"></div>
 <?	
 		} else echo " No Matches";
