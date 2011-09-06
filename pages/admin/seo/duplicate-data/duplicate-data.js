@@ -173,7 +173,7 @@ $(function() {
 		trigger_count();
 	});
 	
-	$('input[name=multi-switch').live('change',function() {
+	$('input[name=multi-switch]').live('change',function() {
 		val = $(this).val();
 		if (val='multi') {
 			$('#single').fadeOut('slow',function() {
