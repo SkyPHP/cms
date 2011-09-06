@@ -22,7 +22,7 @@ class Login {
 
 	public static function make() {
 		self::$session_key = self::getSessionLoginKey();
-		if ($_SESSION[self::$session_key]['person_id']) $_SESSION['login'] = $_SESSION[self::$session_key];
+		if ($_SESSION[self::$session_key]['person_id']) $_SESSION['login'] = &$_SESSION[self::$session_key];
 		if (is_array($_SESSION['login'])) foreach ($_SESSION['login'] as $key => $v) {
 			self::$session[$key] = $v;
 		}
@@ -153,7 +153,7 @@ class Login {
 
 	public static function set($k = null, $v = null) {
 		if (!$k) return;
-		$_SESSION[self::$session_key][$k] = $v;
+		// $_SESSION[self::$session_key][$k] = $v;
 		$_SESSION['login'][$k] = $v;
 		self::$session[$k] = $v;
 	}
@@ -180,7 +180,7 @@ class Login {
 	}
 
 	public static function update() {
-		$_SESSION[self::$session_key] = $_SESSION['login'];
+		// $_SESSION[self::$session_key] = $_SESSION['login'];
 	}
 
 }
