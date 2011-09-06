@@ -173,18 +173,21 @@ $(function() {
 		trigger_count();
 	});
 	
-	$('.a-or-m-switch').live('change',function() {
+	$('.s-or-m-switch').live('change',function() {
 		val = $(this).val();
-		$('.a-or-m-on').fadeOut('fast',function() {
-			$('#'+val).addClass('a-or-m-on').fadeIn('slow');
-		}).removeClass('a-or-m-on');
 		if (val='auto') {
+			$('#single').fadeOut('slow',function() {
+				$('#multi').fadeIn('slow');
+			});
 			$('.phrase-filter-radio').attr('section','multi-listing');
 			$('.all').attr('section','multi-listing');	
 		}
 		else {
+			$('#multi').fadeOut('slow',function() {
+				$('#single').fadeIn('slow');
+			});
 			$('.phrase-filter-radio').attr('section',$('#listing_no').val());
-			$('.all').attr('section',$('#listing_no').val());	
+			$('.all').attr('section',$('listing_no').val());	
 		}
 	});
 	
