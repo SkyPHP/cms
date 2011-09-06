@@ -226,7 +226,7 @@ $(function() {
 		$('#listing3').html('');
 	});
 	
-	$('#save-multi').live('click',function(){
+	$('.save-multi').live('click',function(){
 		data = {};
 		phrase1 = new array();
 		phrase2 = new array();
