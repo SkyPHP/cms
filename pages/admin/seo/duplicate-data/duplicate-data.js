@@ -175,7 +175,7 @@ $(function() {
 	
 	$('.s-or-m-switch').live('change',function() {
 		val = $(this).val();
-		if (val='auto') {
+		if (val='multi') {
 			$('#single').fadeOut('slow',function() {
 				$('#multi').fadeIn('slow');
 			});
