@@ -226,4 +226,23 @@ $(function() {
 		$('#listing3').html('');
 	});
 	
+	$('#save-multi').live('click',function(){
+		data = {};
+		phrase1 = new array();
+		phrase2 = new array();
+		mod = new array();
+		$('.multi-listing1-cb').each(function(index) {
+            if ($this.attr('checked')) phrase1.push($(this).attr('phrase_id'));
+        });
+		$('.multi-listing2-cb').each(function(index) {
+            if ($this.attr('checked')) phrase2.push($(this).attr('phrase_id'));
+        });
+		$('.mod-cb').each(function(index) {
+            if ($this.attr('checked')) mod.push($(this).attr('phrase_id'));
+        });
+		$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ phrase1: phrase1, phrase2: phrase2, mod: mod },function(data) {
+			$('#multi-saved').html(data);
+		});
+	});
+	
 });
