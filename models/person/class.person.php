@@ -13,77 +13,59 @@ class person extends model {
     );
 
     public function construct(){
-      //virtual properties
-      $this->addProperty("password1"); //password field 1 and 2 (validate same)
-      $this->addProperty("password2");
-      $this->addProperty("current_password"); //current_password (user change own password)
-
-
+        $this->addProperty('password1', 'password2', 'current_password'); //password field 1 and 2 (validate same)
     }
 
     public function preValidate(){
-      //partial data update is allowed for existing accounts
-      if ($this->person_id) {
-        $this->preFetchRequiredFields( $this->person_id );
-      }
+        //password validation
+        //we don't give direct access to the person's password field
+        //we take password1/password2 (and current password if it's person)
 
-      //password validation
-      //we don't give direct access to the person's password field
-      //we take password1/password2 (and current password if it's person)
-
-      if ($this->password1){ //is there a password change request?
-        if ($this->password1 != $this->password2) {
-          $this->_errors[] = "Passwords do not match";
-          return;
+        if ($this->password1) { //is there a password change request?
+            if ($this->password1 != $this->password2) {
+                $this->_errors[] = "Passwords do not match";
+                return;
+            }
+            if (PERSON_ID == $this->person_id) { //is this a user trying to change his own pw?
+                //authenticate him (test his current_password)
+                if ( Login::generateHash($this->current_password, $this->generateUserSalt() ) !=  aql::value( 'person.password_hash', PERSON_ID )  ) {
+                    $this->_errors[] = "Incorrect password";
+                    return;
+                }
+                //otherwise, self password change is valid
+                //set it up for the set_password() method below
+                $this->password = $this->password1;
+            } else { //user trying to change someone else's password
+                //does this person have the rights to change the other person's password?
+                $aql =  "
+                            ct_promoter_user {
+                                count(*)
+                                where person_id = ".PERSON_ID." and access_group ilike '%admin%'
+                            }
+                            ct_promoter_user as u on ct_promoter_user.ct_promoter_id = u.ct_promoter_id {
+                                where person_id = {$this->person_id} and access_group not ilike '%admin%'
+                            }
+                        ";
+                $rs = aql::select( $aql );
+                if ($rs[0]['count'] != 0 or auth('ct_admin:*') ){
+                    $this->password = $this->password1;
+                } else {
+                    $this->_errors[] = "Access to change password denied";
+                }
+            }
         }
 
-        if (PERSON_ID == $this->person_id){ //is this a user trying to change his own pw?
+        //check for current password. if not, then check that users has access to change password
+        //person logged in either a ct_admin (auth('ct_admin:*'))
+        //or that this person shares a ct_promoter with the user
+        //
 
-          //authenticate him (test his current_password)
-          if ( Login::generateHash($this->current_password, $this->generateUserSalt() )
-               !=  aql::value( 'person.password_hash', PERSON_ID )  ) {
-            $this->_errors[] = "Incorrect password";
-            return;
-          }
-          //otherwise, self password change is valid
-          //set it up for the set_password() method below
-          $this->password = $this->password1;
+        //same password
 
-        } else { //user trying to change someone else's password
+        //$this->password = password1
 
-        //does this person have the rights to change the other person's password?
-        $aql = "ct_promoter_user {
-count(*)
-where person_id = ".PERSON_ID." and access_group ilike '%admin%'
-}
-ct_promoter_user as u on ct_promoter_user.ct_promoter_id = u.ct_promoter_id {
-where person_id = {$this->person_id} and access_group not ilike '%admin%'
-}
-";
-
-        $rs = aql::select( $aql );
-        if ($rs[0]['count'] != "0" or auth('ct_admin:*')  ){
-          $this->password = $this->password1;
-        } else {
-          $this->_errors[] = "Access to change password denied";
-        }
-
-        }
-
-
-      }
-
-      //check for current password. if not, then check that users has access to change password
-      //person logged in either a ct_admin (auth('ct_admin:*'))
-      //or that this person shares a ct_promoter with the user
-      //
-
-      //same password
-
-      //$this->password = password1
-
-      //if original password is not set, return
-      //
+        //if original password is not set, return
+        //
 
     }
 
@@ -94,7 +76,10 @@ where person_id = {$this->person_id} and access_group not ilike '%admin%'
 
     public function set_password($val) {
         if (!$val) return;
-        if (!$this->person_ide) return;
+        if (!$this->person_ide) {
+            if (!$this->person_id) return;
+            $this->person_ide = encrypt($this->person_id, 'person');
+        }
         $this->_data['password_hash'] = Login::generateHash($val, $this->generateUserSalt());
     }
 
@@ -109,40 +94,25 @@ where person_id = {$this->person_id} and access_group not ilike '%admin%'
         if ($re['status'] == 'OK') $this->last_login_time = $o->last_login_time;
     }
 
-
     //fetches all the (quick) logins to promoters that this person has
     //as an array of hashed each with promoter_name, ct_promoter_user_id/e, ct_promoter_id/e)
-  public function getLogins(){
-    
-    $aql = "ct_promoter_user {
-where person_id = {$this->person_id}
-order by ct_promoter_user.iorder asc 
-			}
-			ct_promoter {
-				name as promoter_name
-			}";
-    $rs = aql::select($aql);
-    
-    return $rs;
-
-  }
-
-  //add quick login to some promoter to this person given that promoter_ide
-  public function addLogin($ct_promoter_ide = null){
-    $ct_promoter_id = (int) decrypt($ct_promoter_ide, 'ct_promoter');
-    //actual promoter_id
-    error_log($ct_promoter_id);
-    error_log("value of it: " . aql::value('ct_promoter.id', 4347 ) );
-    if (! aql::value('ct_promoter.id', $ct_promoter_id ) ) {
-      $this->_errors[] = "invalid promoter id";
-      return;
+    public function getLogins(){
+        $aql =  "ct_promoter_user {
+                    where person_id = {$this->person_id}
+                    order by ct_promoter_user.iorder asc 
+                    }
+                    ct_promoter {
+                    name as promoter_name
+                }";
+        return aql::select($aql);
     }
-    $new_login = new ct_promoter_user();
-    $new_login->person_id = $this->person_id;
-    $new_login->ct_promoter_id = $ct_promoter_id ;
-    $new_login->validate();
-    $new_login->save();
-  }
- 
 
+    //add quick login to some promoter to this person given that promoter_ide
+    public function addLogin($ct_promoter_ide = null){
+        $new_login = new ct_promoter_user();
+        return $new_login->loadArray(array(
+            'person_id' => $this->person_id,
+            'ct_promoter_ide' => $ct_promoter_ide
+        ))->save();
+    }
 }

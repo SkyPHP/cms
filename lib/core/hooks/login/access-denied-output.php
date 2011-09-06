@@ -1,5 +1,5 @@
 <?
-if (Login::get('person_id')) {
+if (Login::isLoggedIn()) {
     include( 'pages/401.php' );
 } else {
     $p->template('html5','top');

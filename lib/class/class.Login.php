@@ -33,7 +33,8 @@ class Login {
 	}
 
 	public function checkLogin() {
-		global $rs_logins;
+		global $access_groups, $access_denied, $rs_logins;
+
 		if (!$this->post_password) {
 			$this->_errors[] = 'You need to enter a password.';
 		} 
@@ -53,26 +54,28 @@ class Login {
 					}
 				";
 		$rs_logins = aql::select($aql);
-
+		if ($this->post_password) {
+			$granted = true;
+			foreach ($rs_logins as $p) {
+				$this->person = new person($p['person_id'], null, true);
+				if (!$this->person->person_id) continue;
+				if ($access_groups) { $granted = auth($access_groups, $this->person->person_id); }
+				if (!$granted) continue;
+				if ($this->_checkLogin($this->post_password) && $granted) {
+					return $this->r(array('person_ide' => $this->person->person_ide));
+				} 
+			}
+		}
+		$this->_errors[] = 'Invalid Login';
+		$this->r();
 		$this->person = new person($rs_logins[0]['person_id'], null, true);
-
-		if (!$this->person->person_id) {
-			$this->_errors[] = 'Username / email address not found.';
-			return $this->r();
-		}
-
-		if (!$this->_checkLogin($this->post_password)) {
-			$this->_errors[] = 'The password you entered is incorrect.';
-			return $this->r();
-		}
-		return $this->r(array('person_ide' => $this->person->person_ide));
 	}
 
 	public function _checkLogin($password) {
 		$salt = $this->person->generateUserSalt();
 		$pw = Login::generateHash($password, $salt);
-		return ($password == $this->person->password); // temp fix while new hash algo
-		return ($pw == $this->person->password_hash) ? true : false;
+		// return ($password == $this->person->password); // temp fix while new hash algo
+		return ($pw == $this->person->password_hash);
 	}
 
 	public function doLogin() {
@@ -139,10 +142,8 @@ class Login {
 	}
 
 	public static function generateHash($password, $salt) {
-		return hash(self::ALGO, 
-			hash(self::ALGO, $salt.$password).
-			hash(self::ALGO, Login::getGlobalSalt())
-		);
+		$prefix = '$2a$08$';	$suffix = '$';
+		return crypt($password.$salt, $prefix.$salt.Login::GetGlobalSalt().$suffix);
 	}
 
 	public function getGlobalSalt() {
