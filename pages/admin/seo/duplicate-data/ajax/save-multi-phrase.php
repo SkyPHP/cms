@@ -10,7 +10,7 @@
 	
 	if ($_POST['mods']) {
 		foreach ($phrases as $phrase) {
-			foreach ($mods as $mod) {
+			foreach ($_POST['mods'] as $mod) {
 				$final[] = $phrase.' | '.$mod;
 			}
 		}
