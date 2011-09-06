@@ -228,9 +228,9 @@ $(function() {
 	
 	$('.save-multi').live('click',function(){
 		data = {};
-		phrase1 = new array();
-		phrase2 = new array();
-		mod = new array();
+		phrase1 = new Array();
+		phrase2 = new Array();
+		mod = new Array();
 		$('.multi-listing1-cb').each(function(index) {
             if ($this.attr('checked')) phrase1.push($(this).attr('phrase_id'));
         });
