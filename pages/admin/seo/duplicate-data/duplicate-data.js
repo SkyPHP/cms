@@ -61,7 +61,6 @@ $(function() {
 		if (value) $('#'+filter+'_selected').html(' - ' + value);
 		else $('#'+filter+'_selected').html('');
 		var url = '/admin/seo/duplicate-data/ajax/'+section;
-		alert(url);
 		$('#'+section).html('<img src="/images/loading.gif" />');
 		$.post(url,
 			{ 
@@ -173,7 +172,7 @@ $(function() {
 		trigger_count();
 	});
 	
-	$('input[name=multi-switch]').live('change',function() {
+	$('.multi-switch').live('click',function() {
 		val = $(this).val();
 		if (val='multi') {
 			$('#single').fadeOut('slow',function() {

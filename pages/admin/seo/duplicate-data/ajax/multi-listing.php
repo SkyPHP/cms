@@ -1,6 +1,5 @@
 <?
 	$where=array();
-	print_a($_POST);
 	if ($_POST['market']) $where[] = "market = '{$_POST['market']}'";
 	if ($_POST['market_name']) $where[] = "market_name = '{$_POST['market_name']}'";
 	if ($_POST['volume']) $where[] = "volume >= {$_POST['volume']}";
@@ -45,6 +44,8 @@
 		<fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 		<legend class="legend">Modifier</legend>
 <?
+		$where = array();
+		if ($_POST['category']) $where[] = "category = '{$_POST['category']}'";
 		$mods = aql::select("dup_modifier { id as mod_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_modifier'=>array('where'=>$where)));
 		if ($mods) foreach ($mods as $data) {
 ?>

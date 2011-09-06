@@ -69,8 +69,8 @@
 	}	
 ?>	
 	<div style="margin: 15px 0 0 0;">
-     	<input type="radio" id="single-on" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="single" name="multi-switch" /> <label for="single-on">Single</label><br>
-        <input type="radio" id="multi-on" <? if ($_GET['area'] == 'auto') echo 'checked' ?> value="multi" name="multi-switch" /> <label for="multi-on">Multi</label><br>
+     	<input type="radio" id="single-on" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="single" class="multi-switch" name="multi-switch" /> <label for="single-on">Single</label><br>
+        <input type="radio" id="multi-on" <? if ($_GET['area'] == 'auto') echo 'checked' ?> value="multi" class="multi-switch" name="multi-switch" /> <label for="multi-on">Multi</label><br>
   	</div>
 	<div style="padding-top:10px;">
 		<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
