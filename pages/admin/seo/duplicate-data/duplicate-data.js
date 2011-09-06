@@ -230,7 +230,7 @@ $(function() {
 		data = {};
 		phrase1 = new Array();
 		phrase2 = new Array();
-		mod = new Array();
+		mods = new Array();
 		$('.multi-listing1-cb').each(function(index) {
             if ($(this).attr('checked')) phrase1.push($(this).attr('phrase_id'));
         });
@@ -240,7 +240,7 @@ $(function() {
 		$('.mod-cb').each(function(index) {
             if ($(this).attr('checked')) mod.push($(this).attr('mod_id'));
         });
-		$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ phrase1: phrase1, phrase2: phrase2, mod: mod },function(data) {
+		$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ phrase1: phrase1, phrase2: phrase2, mods: mods },function(data) {
 			$('#multi-saved').html(data);
 		});
 	});
