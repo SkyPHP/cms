@@ -4,7 +4,7 @@
 		$rs = SQL("SELECT DISTINCT phrase".$x."__dup_phrase_data_id as phrase1 FROM dup_phrase_group where active = 1");	
 		if ($rs) while(!$rs->EOF) { 
 			$rs->MoveNext();
-			$phrase_array[$x][] = $rs1->Fields('phrase1');
+			$phrase_array[$x][] = $rs->Fields('phrase1');
 		}
 	}
 	
@@ -32,9 +32,9 @@
 <?
 		if ($listing) foreach ($listing as $data) {
 			
-			if (array_search($data['phrase_id'],$phrase[1]) || array_search($data['phrase_id'],$phrase[2])) $style = 'style="color:#999"'; else $style='';
+			//if (array_search($data['phrase_id'],$phrase[1]) || array_search($data['phrase_id'],$phrase[2])) $style = 'style="color:#999"'; else $style='';
 ?>
-			<div style="width:55px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left;"> <input type="radio" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" name="phrase1" phrase_id="<?=$data['phrase_id']?>" class="<?=$type?>-listing1-radio" id="<?=$data['lower_phrase']?>" /> <label for="<?=$data['lower_phrase']?>" <?=$style?>><?=$data['lower_phrase']?></label></div>
+			<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left;"> <input type="radio" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" name="phrase1" phrase_id="<?=$data['phrase_id']?>" class="<?=$type?>-listing1-radio" id="<?=$data['lower_phrase']?>" /> <label for="<?=$data['lower_phrase']?>" <?=$style?>><?=$data['lower_phrase']?></label></div>
         	<div class="clear"></div>
 <?	
 		}

@@ -61,6 +61,8 @@ $(function() {
 		if (value) $('#'+filter+'_selected').html(' - ' + value);
 		else $('#'+filter+'_selected').html('');
 		var url = '/admin/seo/duplicate-data/ajax/'+section;
+		alert(url);
+		$('#'+section).html('<img src="/images/loading.gif" />');
 		$.post(url,
 			{ 
 				market: market,
@@ -85,6 +87,7 @@ $(function() {
 		phrase_id = $(this).attr('phrase_id');
 		$('.phrase-filter-radio').attr('section','listing2');
 		$('.all').attr('section','listing2');
+		$('#listing_no').val('listing2');
 		$('#saved-message').html('');
 		var market = $("input[name=market]:checked").val();
 		var volume = $("input[name=volume]:checked").val();
@@ -121,6 +124,7 @@ $(function() {
 	$('.phrase-listing2-radio').live('click',function() {
 		$('.phrase-filter-radio').attr('section','listing3');
 		$('.all').attr('section','listing3');
+		$('#listing_no').val('listing3');
 		$('#saved-message').html('');
 		var market = $("input[name=market]:checked").val();
 		var volume = $("input[name=volume]:checked").val();
@@ -171,9 +175,17 @@ $(function() {
 	
 	$('.a-or-m-switch').live('change',function() {
 		val = $(this).val();
-		$('.a-or-m-on').slideUp('fast',function() {
-			$('#'+val).addClass('a-or-m-on').slideDown('fast');
+		$('.a-or-m-on').fadeOut('fast',function() {
+			$('#'+val).addClass('a-or-m-on').fadeIn('slow');
 		}).removeClass('a-or-m-on');
+		if (val='auto') {
+			$('.phrase-filter-radio').attr('section','multi-listing');
+			$('.all').attr('section','multi-listing');	
+		}
+		else {
+			$('.phrase-filter-radio').attr('section',$('#listing_no').val());
+			$('.all').attr('section',$('#listing_no').val());	
+		}
 	});
 	
 	$('#save-final').live('click',function() {
