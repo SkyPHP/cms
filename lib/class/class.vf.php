@@ -89,6 +89,10 @@ class vf {
 
    public static function getRandomItemId($folders_id = NULL){
       $folder = self::$client->get_folder($folders_id, array('random' => 1));
+      if(!(is_array($folder) && is_array($folder['items']) && is_array($folder['items'][0]))){
+         return(false);
+      }
+
       $items_id = $folder['items'][0]['_id'];
       return($items_id);
    }
