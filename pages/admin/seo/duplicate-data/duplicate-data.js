@@ -172,9 +172,9 @@ $(function() {
 		trigger_count();
 	});
 	
-	$('.multi-switch').live('click',function() {
+	$('input[name=multi-switch]').live('click',function() {
 		val = $(this).val();
-		if (val='multi') {
+		if (val=='multi') {
 			$('#single').fadeOut('slow',function() {
 				$('#multi').fadeIn('slow');
 			});
