@@ -35,5 +35,4 @@
 <?		
 	}
 ?>
-<div id="save-sentences-message"></div>
-<div id="auto-sentences" style="display:none"><input type="button" class="save-sentences" value="Save" style="margin-top:10px; margin-bottom:10px;" /></div>
+<div id="auto-sentences" style="display:none"></div>

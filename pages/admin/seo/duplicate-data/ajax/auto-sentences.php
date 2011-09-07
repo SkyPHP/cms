@@ -1,4 +1,5 @@
 	<div style="font-size:18px; font-weight:bold;margin-bottom: 10px;">Auto Permutation List</div>
+	<div id="save-sentences-message"></div>
 	<input type="button" class="save-auto-sentences" value="Save" style="margin-top:10px; margin-bottom:10px;" />
 <?
 	$no_sentences = $_POST['no_sentences'];
