@@ -14,6 +14,9 @@
 		
 	$limit = 50;
 	permutate($sentences,$limit);
+?>
+	<input type="button" class="save-auto-sentences" value="Save" style="margin-top:10px; margin-bottom:10px;" />
+<?
 	
 	function permutate($items, $limit, $perms = array( )) {
 		$count = 0;

@@ -1,4 +1,5 @@
 ajax_path = '/admin/seo/duplicate-data/ajax/';
+loading_image = '<img src="/images/loading.gif" />';
 
 $(function() {
 	
@@ -20,7 +21,7 @@ $(function() {
 	
 	$('input[name=auto-switch]').die().live('change',function() { 
 		if ($(this).val() == 'auto') {
-			$('#auto-sentences').html('<img src="/images/loading.gif">');
+			$('#auto-sentences').html(loading_image);
 			data1 = {};
 			c = 0;
 			$('.sentence').each(function(index,element) {
@@ -57,10 +58,13 @@ $(function() {
 	});
 	
 	$(".save-auto-sentences").live('click',function() {
+		$('#save-sentences-message').html(loading_image);
 		var list = new Array();
 		$('.perm-box').each(function() {
-			order = $(this).attr('s_order');
-			list.push(order);
+			if ($(this).attr('checked')) {	
+				order = $(this).attr('s_order');
+				list.push(order);
+			}
 		});
 		if (list.length > 0) {
 			$.post(ajax_path+'save-auto-sentences',{ list: list },function() {
