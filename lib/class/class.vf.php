@@ -97,6 +97,10 @@ class vf {
       return((object)self::$client->get_item(self::getRandomItemId($folders_id), $width, $height, $crop));
    }
 
+   public static function removeItem($items_id) {
+      return ((object) self::$client->remove_item($items_id));
+   }
+
    public static function slideshow($args) {
       return new vf_slideshow($args);
    }

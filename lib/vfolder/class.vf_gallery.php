@@ -34,6 +34,10 @@ class vf_gallery extends vf_gallery_inc {
 		parent::makeHTML();
 		if (!in_array('/lib/vfolder/css/vf.css', $p->css)) $p->css[] = '/lib/vfolder/css/vf.css';
 		if (!in_array('/lib/vfolder/js/vf.js', $p->js)) $p->js[] = '/lib/vfolder/js/vf.js';
+		if ($this->contextMenu) {
+			$p->css[] = '/lib/jquery.contextMenu/jquery.contextMenu.css';
+			$p->js[] = '/lib/jquery.contextMenu/jquery.contextMenu.js';
+		}
 	}
 
 	public function setMemToken() {

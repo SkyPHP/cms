@@ -17,6 +17,7 @@ class vf_uploader {
 	public $gallery;
 	public $maxFileSize;
 	public $folder;
+	public $folders_path;
 
 	public $_token = null;
 
