@@ -1,5 +1,5 @@
 <?
-	if (!$_POST['list']) exit('fail');
+	if (!$_POST['list']) exit('Please Select a Paragraph');
 	else {
 		$rs = aql::select("dup_sentence_group { group_number order by group_number desc limit 1 }");
 		$num = $rs[0]['group_number'] + 1;
