@@ -1,5 +1,13 @@
 <?
 
+/*
+ var_dump((object)array('aa' => 'bb' , 'cc' => 'dd' , 'ee' => 'ff'));
+
+
+die();
+
+*/
+
 array_walk(vf::$deps, function($dep) {
    if (!class_exists($dep)) include 'lib/vfolder/class.'.$dep.'.php';
 });
@@ -88,13 +96,18 @@ class vf {
    }
 
    public static function getRandomItemId($folders_id = NULL){
-      $folder = self::$client->get_folder($folders_id, array('random' => 1));
+      $folder = self::$client->get_folder($folders_id, array('random' => 1, 'limit' => 1));
+
+      if(!(is_array($folder) && is_array($folder['items']) && is_array($folder['items'][0]))){ 
+         return(false);
+      }
+
       $items_id = $folder['items'][0]['_id'];
       return($items_id);
    }
 
    public static function getRandomItem($folders_id = NULL, $width = NULL, $height = NULL, $crop = NULL){
-      return((object)self::$client->get_item(self::getRandomItemId($folders_id), $width, $height, $crop));
+      return((object) self::$client->get_item(self::getRandomItemId($folders_id), $width, $height, $crop));
    }
 
    public static function removeItem($items_id) {

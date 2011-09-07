@@ -69,8 +69,8 @@
 	}	
 ?>	
 	<div style="margin: 15px 0 0 0;">
-     	<input type="radio" id="auto-switch-off" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="manual" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-off">Single</label><br>
-        <input type="radio" id="auto-switch-on" <? if ($_GET['area'] == 'auto') echo 'checked' ?> value="auto" class="a-or-m-switch" name="auto-switch" /> <label for="auto-switch-on">Multi</label><br>
+     	<input type="radio" id="single-on" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="single" class="multi-switch" name="multi-switch" /> <label for="single-on">Single</label><br>
+        <input type="radio" id="multi-on" <? if ($_GET['area'] == 'auto') echo 'checked' ?> value="multi" class="multi-switch" name="multi-switch" /> <label for="multi-on">Multi</label><br>
   	</div>
 	<div style="padding-top:10px;">
 		<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
@@ -90,14 +90,14 @@
 		<div class="clear"></div>
 	</div>
 	
-	<div id="auto" style="display:none;">
+	<div id="multi" style="display:none;">
 		<div id="multi-listing">
 <?
 			include ('pages/admin/seo/duplicate-data/ajax/multi-listing.php');
 ?>
 		</div>
     </div>
-	<div id="manual" <? if ($_GET['area'] == 'auto') echo 'style="display:none;"'; else echo 'class="a-or-m-on"'; ?>>
+	<div id="single">
     	
 		<fieldset style="width:85%">
 			<legend class="legend">Final Phrase</legend>
