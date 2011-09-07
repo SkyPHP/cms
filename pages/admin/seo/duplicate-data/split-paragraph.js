@@ -31,9 +31,11 @@ $(function() {
 					$('#auto-sentences').html(data).slideDown('fast');
 				});
 			});
+			$('#switch-on').val('auto');
 		}
 		else {
 			$('#auto-sentences').slideUp('fast',function() {
+				$('#switch-on').val('manual');
 				$('.manual-order').fadeIn('slow');
 			});
 		}
@@ -50,5 +52,12 @@ $(function() {
 				$this.html('HIDE ORIGINAL-').attr('do','hide');
 			});
 	});
-
+	$("#save-sentences").live('click',function() {
+		if ($('#switch-on').val() == 'manual') {
+		
+		}
+		else {
+			
+		}
+	});
 });

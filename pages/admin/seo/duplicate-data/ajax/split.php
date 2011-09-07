@@ -33,4 +33,5 @@
 <?		
 	}
 ?>
+<input type="button" id="save-sentences" value="Save" style="margin-top:10px; margin-bottom:10px;" />
 <div id="auto-sentences" style="display:none"></div>

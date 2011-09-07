@@ -12,6 +12,9 @@
 	
 	$limit = 50;
 	permutate($sentences,$limit);
+?>
+	<input type="button" id="save-sentences" value="Save" style="margin-top:10px; margin-bottom:10px;" />
+<?
 	
 	function permutate($items, $limit, $perms = array( )) {
 		$count = 0;
@@ -45,7 +48,7 @@
 		$x = 0;
 		foreach ($sentences as $sentence) {
 			$x++;
-			$rs = sql("SELECT id FROM dup_sentence_data where sentence ilike '".addslashes($sentence)."'");
+			$rs = sql("SELECT id FROM dup_sentence_data where lower(sentence) = '".strtolower(addslashes($sentence))."'");
 			if ($rs) echo 's'.$x.'="'.$rs->Fields('id').'" ';
 		}
 		echo 'version="'.$x.' class="perm_box" /></div>';
@@ -55,4 +58,24 @@
 		}
 		echo "</div></div>";
 	}
+	
+
+require_once("lib/class/class.combination.php");
+
+$values = array(1,3,5,6,10);
+
+$combinations1 = new combination($values, false);
+$combinations = $combinations1->getCombinations();
+ 
+foreach ($combinations as $comb)
+{
+    for ($i=0; $i<count($comb); $i++)
+    {
+        echo $comb[$i]." ";
+    }
+    echo "<br>";
+}
+?>
+	
+
 ?>
