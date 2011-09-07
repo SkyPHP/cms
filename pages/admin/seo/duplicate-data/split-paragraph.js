@@ -1,19 +1,5 @@
 ajax_path = '/admin/seo/duplicate-data/ajax/';
 
-function lookdeep(obj){
-    var A= [], tem;
-    for(var p in obj){
-        if(obj.hasOwnProperty(p)){
-                tem= obj[p];
-                if(tem && typeof tem=='object'){
-                        A[A.length]= p+':{ '+arguments.callee(tem).join(', ')+'}';
-                }
-                else A[A.length]= [p+':'+tem.toString()];
-        }
-    }
-    return A;
-}
-
 $(function() {
 	$('#name').live('keyup',function() {
 		if ($(this).val()) $('#split').show();
@@ -73,27 +59,15 @@ $(function() {
 		
 		}
 		else {
-			list = new Array();
+			var list = new Array();
 			$('.perm-box').each(function() {
-				var s=lookdeep($(this)).join('\n');
-				alert(s);
-				/*$this = $(this);
-				if ($this.attr('checked')) {
-					end = false;
-					var x = 1;
-					ids = new Array();
-					while(!end) {
-						x++;
-						if ($this.attr('s'+x+'_id')) ids.push($this.attr('s'+x+'_id'));
-						else end = true;
-					}
-					list.push(ids);
-				} */
+				order = $(this).attr('s_order');
+				list.push(order);
 			});
 			if (list.length > 0) {
-				$.post(ajax_path+'save-auto-sentences', {list: list}, function(data) {
-					$('#save-senteces-message').html(data);				
-				});
+				$.post(ajax_path+'save-auto-sentences',{ list: list },function() {
+					
+				});	
 			}
 		}
 	});

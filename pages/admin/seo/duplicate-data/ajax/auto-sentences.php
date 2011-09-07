@@ -45,13 +45,14 @@
 
 	function configure_perm($sentences=array( )) {
 		echo '<div class="has-floats" style="margin-bottom:15px;">';
-		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" class="perm-box" ';
+		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" class="perm-box" s_order=" ';
 		$x = 0;
 		foreach ($sentences as $sentence_id) {
 			$x++;
-			echo 's'.$x.'_id="'.$sentence_id.'" ';
+			echo $sentence_id;
+			if ($x!=count($sentences)) echo ",";
 		}
-		echo  '/></div>';
+		echo  '"/></div>';
 		echo '<div style="float:left;">';
 		foreach ($sentences as $sentence_id) {			
 			$rs = aql::select("dup_sentence_data { sentence where id = ".$sentence_id." } ");
