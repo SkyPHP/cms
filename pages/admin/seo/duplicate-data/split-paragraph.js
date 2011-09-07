@@ -60,13 +60,15 @@ $(function() {
 	$(".save-auto-sentences").live('click',function() {
 		$('#save-sentences-message').html(loading_image);
 		var list = new Array();
+		cont = false;
 		$('.perm-box').each(function() {
 			if ($(this).attr('checked')) {	
+				var cont = true;
 				order = $(this).attr('s_order');
 				list.push(order);
 			}
 		});
-		if (list.length > 0) {
+		if (cont) {
 			$.post(ajax_path+'save-auto-sentences',{ list: list },function() {
 				$('#save-sentences-message').html(data);
 			});	
