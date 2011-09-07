@@ -8,7 +8,8 @@
 			);
 			aql::insert("dup_sentence_group",$data);
 			$num++;
-		}	
+		}
+		exit('Saved');	
 	}
 	
 ?>
