@@ -253,7 +253,7 @@ $(function() {
 			}
         });
 		if (phrase1_ids.length < 1 || phrase2_ids.length < 1) {
-			$('#multi-saved').html('Please Select The Phrases/Modifiers You Wish to Use');
+			$('#multi-saved').html('Please Select The Phrases and Modifiers You Wish to Use');
 		}
 		else { 
 			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ phrase1: phrase1, phrase2: phrase2, mods: mods, phrase1_ids: phrase1_ids, phrase2_ids: phrase2_ids, mod_ids: mod_ids },function(data) {
