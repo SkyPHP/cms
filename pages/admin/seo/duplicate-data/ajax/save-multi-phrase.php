@@ -1,22 +1,23 @@
 <?
+	// GET ALL THE POSTED IDS
 	if ($_POST['phrase1_ids'])
 		foreach ($_POST['phrase1_ids'] as $p1) {
-			$phrase = $p1;
 			if ($_POST['phrase2_ids']) 
 				foreach ($_POST['phrase2_ids'] as $p2) {
-					$phrases[] = $p1.','.$p2;
+					$phrase_ids[] = $p1.','.$p2;
 				}
 		}
 	
 	if ($_POST['mod_ids']) {
-		foreach ($phrases as $phrase) {
+		foreach ($phrase_ids as $id_group) {
 			foreach ($_POST['mod_ids'] as $mod) {
-				$final[] = $phrase.','.$mod;
+				$final[] = $id_group.','.$mod;
 			}
 		}
 	}
-	else $final = $phrases;
+	else $final = $phrase_ids;
 	
+	// CHECK THE DB AND ENTER NON-DUPS
 	foreach ($final as $key => $phrase) {
 		$split = explode(',',$phrase);
 		if ($split[2]) $mod_where = "and dup_modifier_id = ".$split[2];
@@ -32,9 +33,9 @@
 	}	
 	
 	
+	// SHOW THE POSTED STUFF
 	if ($_POST['phrase1'])
 		foreach ($_POST['phrase1'] as $p1) {
-			$phrase = $p1;
 			if ($_POST['phrase2']) 
 				foreach ($_POST['phrase2'] as $p2) {
 					$phrases[] = $p1.','.$p2;
@@ -53,7 +54,7 @@
 	foreach ($words as $key => $phrase) {
 		if ($exists[$key]) $status = "Duplicate";
 		else $status = "OK";
-		echo "<div>".$phrase."</div> ".$status;
+		echo "<div>".$phrase." - ".$status."</div>";
 	}
 	
 	print_a($final);
