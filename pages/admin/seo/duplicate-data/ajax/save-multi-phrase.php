@@ -85,6 +85,6 @@
 			else $status = "OK";
 			$split = explode(',',$phrase);
 			$phrase_final = implode(' | ',$split);
-			echo '<div class="has-floats"><div style="margin-bottom:2px; float:left; margin-right: 15px; width: 600px">'.ucwords($phrase_final).'</div><div style="float:left;"'.$status.'</div></div>';
+			echo '<div class="has-floats"><div style="margin-bottom:2px; float:left; margin-right: 15px; width: 600px">'.ucwords($phrase_final).'</div><div style="float:left;">'.$status.'</div></div>';
 		}
 ?>
