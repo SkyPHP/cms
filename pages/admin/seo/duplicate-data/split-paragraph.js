@@ -59,9 +59,9 @@ $(function() {
 		
 		}
 		else {
+			list = new Array();
 			$('.perm-box').each(function() {
 				$this = $(this);
-				list = new Array();
 				if ($this.attr('checked')) {
 					end = false;
 					var x = 1;
@@ -76,7 +76,7 @@ $(function() {
 			});
 			if (list.length > 0) {
 				$.post(ajax_path+'save-auto-sentences', {list: list}, function(data) {
-					$('#save-senteces-message').html(data);
+				$('#save-senteces-message').html(data);
 				});
 			}
 		}
