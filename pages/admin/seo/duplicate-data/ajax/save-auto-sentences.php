@@ -3,7 +3,7 @@
 	else {
 		foreach($_POST['list'] as $list) {
 			$data = array(
-				'order' => $list,
+				'sentence_order' => $list,
 				'mod__person_id' => PERSON_ID
 			);
 			aql::insert("dup_sentence_group",$data);
