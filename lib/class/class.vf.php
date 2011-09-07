@@ -1,5 +1,13 @@
 <?
 
+/*
+ var_dump((object)array('aa' => 'bb' , 'cc' => 'dd' , 'ee' => 'ff'));
+
+
+die();
+
+*/
+
 array_walk(vf::$deps, function($dep) {
    if (!class_exists($dep)) include 'lib/vfolder/class.'.$dep.'.php';
 });
@@ -88,8 +96,9 @@ class vf {
    }
 
    public static function getRandomItemId($folders_id = NULL){
-      $folder = self::$client->get_folder($folders_id, array('random' => 1));
-      if(!(is_array($folder) && is_array($folder['items']) && is_array($folder['items'][0]))){
+      $folder = self::$client->get_folder($folders_id, array('random' => 1, 'limit' => 1));
+
+      if(!(is_array($folder) && is_array($folder['items']) && is_array($folder['items'][0]))){ 
          return(false);
       }
 
@@ -98,7 +107,7 @@ class vf {
    }
 
    public static function getRandomItem($folders_id = NULL, $width = NULL, $height = NULL, $crop = NULL){
-      return((object)self::$client->get_item(self::getRandomItemId($folders_id), $width, $height, $crop));
+      return((object) self::$client->get_item(self::getRandomItemId($folders_id), $width, $height, $crop));
    }
 
    public static function slideshow($args) {
