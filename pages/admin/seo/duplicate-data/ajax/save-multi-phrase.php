@@ -54,7 +54,9 @@
 	foreach ($words as $key => $phrase) {
 		if ($exists[$key]) $status = "Duplicate";
 		else $status = "OK";
-		echo "<div>".$phrase." - ".$status."</div>";
+		$split = explode(',',$phrase);
+		$phrase_final = implode(' | ',$split);
+		echo "<div>".ucwords($phrase_final)." - ".$status."</div>";
 	}
 	
 	print_a($final);
