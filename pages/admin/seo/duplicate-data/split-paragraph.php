@@ -3,7 +3,6 @@
 	$p->template('seo','top');
 ?>
 <h1><?=$p->title?></h1>
-<input type="hidden" id="switch-on" value="manual" />
 <div style="width:1000px">
 	<div class="has-floats" style="margin-bottom:5px;">
     	<div style="float:left; margin-right:15px;">Name: <input type="text" id="name" /></div>

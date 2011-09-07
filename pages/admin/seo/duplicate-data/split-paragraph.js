@@ -1,6 +1,7 @@
 ajax_path = '/admin/seo/duplicate-data/ajax/';
 
 $(function() {
+	
 	$('#name').live('keyup',function() {
 		if ($(this).val()) $('#split').show();
 		else $('#split').hide();
@@ -54,21 +55,17 @@ $(function() {
 				$this.html('HIDE ORIGINAL-').attr('do','hide');
 			});
 	});
-	$(".save-sentences").live('click',function() {
-		if ($('#switch-on').val() == 'manual') {
-		
-		}
-		else {
-			var list = new Array();
-			$('.perm-box').each(function() {
-				order = $(this).attr('s_order');
-				list.push(order);
-			});
-			if (list.length > 0) {
-				$.post(ajax_path+'save-auto-sentences',{ list: list },function() {
-					$('#save-sentences-message').html(data);
-				});	
-			}
+	
+	$(".save-auto-sentences").live('click',function() {
+		var list = new Array();
+		$('.perm-box').each(function() {
+			order = $(this).attr('s_order');
+			list.push(order);
+		});
+		if (list.length > 0) {
+			$.post(ajax_path+'save-auto-sentences',{ list: list },function() {
+				$('#save-sentences-message').html(data);
+			});	
 		}
 	});
 });

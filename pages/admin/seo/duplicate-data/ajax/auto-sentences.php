@@ -1,4 +1,5 @@
 	<div style="font-size:18px; font-weight:bold;margin-bottom: 10px;">Auto Permutation List</div>
+	<input type="button" class="save-auto-sentences" value="Save" style="margin-top:10px; margin-bottom:10px;" />
 <?
 	$no_sentences = $_POST['no_sentences'];
 	$sentences=array();
@@ -13,9 +14,6 @@
 		
 	$limit = 50;
 	permutate($sentences,$limit);
-?>
-	<input type="button" class="save-sentences" value="Save" style="margin-top:10px; margin-bottom:10px;" />
-<?
 	
 	function permutate($items, $limit, $perms = array( )) {
 		$count = 0;
@@ -45,7 +43,7 @@
 
 	function configure_perm($sentences=array( )) {
 		echo '<div class="has-floats" style="margin-bottom:15px;">';
-		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" class="perm-box" s_order=" ';
+		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" class="perm-box" s_order="';
 		$x = 0;
 		foreach ($sentences as $sentence_id) {
 			$x++;
