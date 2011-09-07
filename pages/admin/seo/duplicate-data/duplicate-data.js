@@ -227,22 +227,41 @@ $(function() {
 	});
 	
 	$('.save-multi').live('click',function(){
-		$('#multi-saved').html('<img src="/imnages/loading.gif" />');
+		$('#multi-saved').html('<img src="/images/loading.gif" />');
+		var text;
 		phrase1 = new Array();
 		phrase2 = new Array();
 		mods = new Array();
+		phrase1_ids = new Array();
+		phrase2_ids = new Array();
+		mod_ids = new Array();
 		$('.multi-listing1-cb').each(function(index) {
-            if ($(this).attr('checked')) phrase1.push($(this).attr('phrase_id'));
+            if ($(this).attr('checked')) {
+				phrase1_ids.push($(this).attr('phrase_id'));
+				phrase1.push($(this).attr('phrase'));
+			}
         });
 		$('.multi-listing2-cb').each(function(index) {
-            if ($(this).attr('checked')) phrase2.push($(this).attr('phrase_id'));
+            if ($(this).attr('checked')) {
+				phrase2_ids.push($(this).attr('phrase_id'));
+				phrase2.push($(this).attr('phrase'));
+			}
         });
 		$('.mod-cb').each(function(index) {
-            if ($(this).attr('checked')) mods.push($(this).attr('mod_id'));
+            if ($(this).attr('checked')) {
+				mod_ids.push($(this).attr('mod_id'));
+				mods.push($(this).attr('phrase'));
+			}
         });
-		$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ phrase1: phrase1, phrase2: phrase2, mods: mods },function(data) {
-			$('#multi-saved').html(data);
-		});
+		if (phrase1_ids.length < 1 && phrase2_ids.length < 1) text = 'Please Select The Phrases and Modifiers You Wish to Use';
+		else if (phrase1_ids.length < 1) text = 'Check a Phrase from Phrase Part 1';
+		else if (phrase2_ids.length < 1) text = 'Check a Phrase from Phrase Part 2';
+		if (text) $('#multi-saved').html(text);
+		else { 
+			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ phrase1: phrase1, phrase2: phrase2, mods: mods, phrase1_ids: phrase1_ids, phrase2_ids: phrase2_ids, mod_ids: mod_ids },function(data) {
+				$('#multi-saved').html(data);
+			});
+		}
 	});
 	
 });
