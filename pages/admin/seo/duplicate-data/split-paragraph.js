@@ -69,7 +69,8 @@ $(function() {
 			}
 		});
 		$.post(ajax_path+'save-auto-sentences',{ list: list },function(data) {
-			$('#save-sentences-message').html(data);
+			if (data == 'fail') alert('Select a Paragraph');
+			else $('#save-sentences-message').html('saved...');
 		});	
 		
 	});
