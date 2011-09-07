@@ -45,7 +45,7 @@ $(function() {
 		}
 	});
 
-	$('#hide-or-show').live('click',function(){
+	$('#hide-or-show').die().live('click',function(){
 		$this = $(this);
 		if ($(this).attr('do') == 'hide') 
 			$('.hideable').slideUp('fast',function() {
@@ -57,7 +57,7 @@ $(function() {
 			});
 	});
 	
-	$(".save-auto-sentences").live('click',function() {
+	$(".save-auto-sentences").die().live('click',function() {
 		$('#save-sentences-message').html(loading_image);
 		var list = new Array();
 		cont = false;
@@ -69,7 +69,7 @@ $(function() {
 			}
 		});
 		if (cont) {
-			$.post(ajax_path+'save-auto-sentences',{ list: list },function() {
+			$.post(ajax_path+'save-auto-sentences',{ list: list },function(data) {
 				$('#save-sentences-message').html(data);
 			});	
 		}
