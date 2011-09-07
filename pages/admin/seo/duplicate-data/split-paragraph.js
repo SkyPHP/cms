@@ -63,15 +63,14 @@ $(function() {
 		cont = false;
 		$('.perm-box').each(function() {
 			if ($(this).attr('checked')) {	
-				var cont = true;
+				cont = true;
 				order = $(this).attr('s_order');
 				list.push(order);
 			}
 		});
-		if (cont) {
-			$.post(ajax_path+'save-auto-sentences',{ list: list },function(data) {
-				$('#save-sentences-message').html(data);
-			});	
-		}
+		$.post(ajax_path+'save-auto-sentences',{ list: list },function(data) {
+			$('#save-sentences-message').html(data);
+		});	
+		
 	});
 });
