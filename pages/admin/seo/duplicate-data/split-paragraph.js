@@ -75,7 +75,7 @@ $(function() {
 			});
 			if (list.length > 0) {
 				$.post(ajax_path+'save-auto-sentences', {list: list}, function(data) {
-					
+					$('#save-senteces-message').html(data);
 				});
 			}
 		}
