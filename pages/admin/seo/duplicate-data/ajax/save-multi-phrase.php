@@ -59,11 +59,12 @@
 	}
 	else $words = $phrases;
 	
-	foreach ($words as $key => $phrase) {
-		if ($exists[$key]) $status = "Duplicate";
-		else $status = "OK";
-		$split = explode(',',$phrase);
-		$phrase_final = implode(' | ',$split);
-		echo "<div>".ucwords($phrase_final)." - ".$status."</div>";
-	}
+	if ($words) 
+		foreach ($words as $key => $phrase) {
+			if ($exists[$key]) $status = "Duplicate";
+			else $status = "OK";
+			$split = explode(',',$phrase);
+			$phrase_final = implode(' | ',$split);
+			echo "<div>".ucwords($phrase_final)." - ".$status."</div>";
+		}
 ?>

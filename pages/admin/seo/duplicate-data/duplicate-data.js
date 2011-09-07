@@ -252,7 +252,7 @@ $(function() {
 				mods.push($(this).attr('phrase'));
 			}
         });
-		if (!phrase1_ids || !phrase2_ids) {
+		if (phrase1_ids.length < 1 || phrase2_ids.length < 1) {
 			$('#multi-saved').html('Please Select The Phrases/Modifiers You Wish to Use');
 		}
 		else { 
