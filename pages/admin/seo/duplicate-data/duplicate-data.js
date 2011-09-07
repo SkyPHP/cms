@@ -243,6 +243,8 @@ $(function() {
 	$('.save-multi').live('click',function(){
 		$('#multi-saved').html('<img src="/images/loading.gif" />');
 		var text;
+		volume1 = new Array();
+		volume2 = new Array();
 		phrase1 = new Array();
 		phrase2 = new Array();
 		mods = new Array();
