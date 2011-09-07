@@ -251,12 +251,14 @@ $(function() {
 		mod_ids = new Array();
 		$('.multi-listing1-cb').each(function(index) {
             if ($(this).attr('checked')) {
+				volume1.push($(this).attr('volume'));
 				phrase1_ids.push($(this).attr('phrase_id'));
 				phrase1.push($(this).attr('phrase'));
 			}
         });
 		$('.multi-listing2-cb').each(function(index) {
             if ($(this).attr('checked')) {
+				volume2.push($(this).attr('volume'));
 				phrase2_ids.push($(this).attr('phrase_id'));
 				phrase2.push($(this).attr('phrase'));
 			}
@@ -272,7 +274,7 @@ $(function() {
 		else if (phrase2_ids.length < 1) text = 'Check a Phrase from Phrase Part 2';
 		if (text) $('#multi-saved').html(text);
 		else { 
-			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ phrase1: phrase1, phrase2: phrase2, mods: mods, phrase1_ids: phrase1_ids, phrase2_ids: phrase2_ids, mod_ids: mod_ids },function(data) {
+			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ volume1: volume1, volume2: volume2, phrase1: phrase1, phrase2: phrase2, mods: mods, phrase1_ids: phrase1_ids, phrase2_ids: phrase2_ids, mod_ids: mod_ids },function(data) {
 				$('#multi-saved').html(data);
 			});
 		}

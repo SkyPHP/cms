@@ -17,6 +17,18 @@
 	}
 	else $final = $phrase_ids;
 	
+	// GET ALL THE POSTED VOLUMES AND SET THE TOTAL FOR EACH KEY
+	foreach ($_POST['volume1'] as $volume) {
+		$vol1[] = $volume;
+	}
+	foreach ($_POST['volume2'] as $volume) {
+		$vol2[] = $volume;
+	}
+	
+	foreach($vol1 as $key => $volume) {
+		$total_volume[] = $volume + $vol2[$key];
+	}
+	
 	// CHECK THE DB AND ENTER NON-DUPS
 	foreach ($final as $key => $phrase) {
 		$split = explode(',',$phrase);
@@ -35,7 +47,8 @@
 				'phrase1__dup_phrase_data_id' => $split[0],
 				'phrase2__dup_phrase_data_id' => $split[1],
 				'dup_modifier_id' => $split[2],
-				'mod__person_id' => PERSON_ID
+				'mod__person_id' => PERSON_ID,
+				'total_volume' => $total_volume[$key]
 			);
 			aql::insert('dup_phrase_group',$data);
 		}	
