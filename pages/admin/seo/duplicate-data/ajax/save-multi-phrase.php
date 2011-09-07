@@ -29,7 +29,7 @@
 				{$mod_where}
 			}
 		");
-		if ($rs) $exists[$key] = true;
+		if ($rs || ($split[0] == $split[1])) $exists[$key] = true;
 		else {
 			$data = array(
 				'phrase1__dup_phrase_data_id' => $split[0],
