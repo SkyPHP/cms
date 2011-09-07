@@ -78,8 +78,8 @@
 		foreach ($words as $key => $phrase) { if ($exists[$key]) $dup_count++; }
 		if (!$dup_count) $style_attr = 'style="margin-bottom: 5px;"';
 		else $style = ''; 
-		echo '<div>'.count($words).' Selected Phrases.</div>';
-		echo '<div '.$style_attr.'> '.(count($words) - $dup_count).' Phrases Saved.</div>';
+		echo '<div>'.count($words).' Selected Phrase Groups .</div>';
+		echo '<div '.$style_attr.'> '.(count($words) - $dup_count).' Phrase Groups Saved.</div>';
 		if ($dup_count > 1) echo '<div style="margin-bottom:5px;">'.$dup_count.' Duplicates.</div>';
 		else if ($dup_count) echo '<div style="margin-bottom:5px;">'.$dup_count.' Duplicate.</div>';
 		foreach ($words as $key => $phrase) {
