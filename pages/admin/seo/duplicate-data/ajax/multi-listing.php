@@ -22,7 +22,7 @@
 <?
 			if ($listing) foreach ($listing as $data) {
 ?>
-				<div id="listing1_<?=$data['phrase']?>">
+				<div id="listing1_<?=$data['phrase_id']?>">
 					<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left;"> <input type="checkbox" id="phrase1_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="multi-listing1-cb" id="<?=$data['lower_phrase']?>" /> <label for="phrase1_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
         			<div class="clear"></div>
                 </div>
@@ -37,7 +37,7 @@
 <?
 			if ($listing) foreach ($listing as $data) {
 ?>
-				<div id="listing2_<?=$data['phrase']?>">
+				<div id="listing2_<?=$data['phrase_id']?>">
 					<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left;"> <input type="checkbox" id="phrase2_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="multi-listing2-cb" id="<?=$data['lower_phrase']?>" /> <label for="phrase2_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
         			<div class="clear"></div>
                 </div>
