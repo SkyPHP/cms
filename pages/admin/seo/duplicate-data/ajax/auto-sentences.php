@@ -14,7 +14,7 @@
 	$limit = 50;
 	permutate($sentences,$limit);
 ?>
-	<input type="button" id="save-sentences" value="Save" style="margin-top:10px; margin-bottom:10px;" />
+	<input type="button" class="save-sentences" value="Save" style="margin-top:10px; margin-bottom:10px;" />
 <?
 	
 	function permutate($items, $limit, $perms = array( )) {
