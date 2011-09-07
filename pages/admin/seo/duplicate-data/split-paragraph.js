@@ -1,3 +1,5 @@
+ajax_path = '/admin/seo/duplicate-data/ajax/';
+
 $(function() {
 	$('#name').live('keyup',function() {
 		if ($(this).val()) $('#split').show();
@@ -9,7 +11,7 @@ $(function() {
 		var name = $('#name').val();
 		var source = $('#source').val();
 		if (val) {
-			$.post('/admin/seo/duplicate-data/ajax/split',{ val: val, source: source, name: name }, function(data) {
+			$.post(ajax_path+'split',{ val: val, source: source, name: name }, function(data) {
 				$('#results').html(data);
 			});
 		}
@@ -27,7 +29,7 @@ $(function() {
 			});
 			data1.no_sentences = c;
 			$('.manual-order').fadeOut('slow',function() {
-				$.post('/admin/seo/duplicate-data/ajax/auto-sentences',data1,function(data) {
+				$.post(ajax_path+'auto-sentences',data1,function(data) {
 					$('#auto-sentences').html(data).slideDown('fast');
 				});
 			});
@@ -57,7 +59,25 @@ $(function() {
 		
 		}
 		else {
-			
+			$('.perm-box').each(function() {
+				$this = $(this);
+				list = new Array();
+				if ($this.attr('checked')) {
+					end = false;
+					var x = 1;
+					ids = new Array();
+					while(!end) {
+						x++;
+						if ($this.attr('s'+x+'_id')) ids.push($this.attr('s'+x+'_id'));
+					}
+					list.push(ids);
+				}
+			});
+			if (list.length > 0) {
+				$.post(ajax_path+'save-auto-sentences', {list: list}, function(data) {
+					
+				});
+			}
 		}
 	});
 });

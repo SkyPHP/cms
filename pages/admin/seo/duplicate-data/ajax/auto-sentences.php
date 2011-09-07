@@ -45,7 +45,7 @@
 
 	function configure_perm($sentences=array( )) {
 		echo '<div class="has-floats" style="margin-bottom:15px;">';
-		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" class="perm_box" ';
+		echo '<div style="float:left; margin-right:10px;"><input type="checkbox" class="perm-box" ';
 		$x = 0;
 		foreach ($sentences as $sentence_id) {
 			$x++;
