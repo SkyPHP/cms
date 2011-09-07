@@ -69,6 +69,7 @@ $(function() {
 					while(!end) {
 						x++;
 						if ($this.attr('s'+x+'_id')) ids.push($this.attr('s'+x+'_id'));
+						else end = true;
 					}
 					list.push(ids);
 				}
