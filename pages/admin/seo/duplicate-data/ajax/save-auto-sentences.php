@@ -5,7 +5,6 @@
 		$num = $rs[0]['group_number'] + 1;
 		foreach($_POST['list'] as $list) {
 			$data = array(
-				'group_number' => $num,
 				'order' => $list,
 				'mod__person_id' => PERSON_ID
 			);
