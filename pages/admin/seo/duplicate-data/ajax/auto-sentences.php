@@ -59,23 +59,4 @@
 		echo "</div></div>";
 	}
 	
-
-require_once("lib/class/class.combination.php");
-
-$values = array(1,3,5,6,10);
-
-$combinations1 = new combination($values, false);
-$combinations = $combinations1->getCombinations();
- 
-foreach ($combinations as $comb)
-{
-    for ($i=0; $i<count($comb); $i++)
-    {
-        echo $comb[$i]." ";
-    }
-    echo "<br>";
-}
-?>
-	
-
 ?>
