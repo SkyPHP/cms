@@ -30,8 +30,16 @@
 			}
 		");
 		if ($rs) $exists[$key] = true;
-	}	
-	
+		else {
+			$data = array(
+				'phrase1__dup_phrase_data_id' => $split[0],
+				'phrase2__dup_phrase_data_id' => $split[1],
+				'dup_modifier_id' => $split[2],
+				'mod__person_id' => PERSON_ID
+			);
+			aql::insert('dup_phrase_group',$data);
+		}	
+	}		
 	
 	// SHOW THE POSTED STUFF
 	if ($_POST['phrase1'])
@@ -58,6 +66,4 @@
 		$phrase_final = implode(' | ',$split);
 		echo "<div>".ucwords($phrase_final)." - ".$status."</div>";
 	}
-	
-	print_a($final);
 ?>
