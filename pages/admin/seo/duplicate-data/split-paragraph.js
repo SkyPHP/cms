@@ -23,7 +23,7 @@ $(function() {
 			$('.sentence').each(function(index,element) {
 				c++;
 				$this = $(this);
-				eval("data1.sentence" + index + " = $this.val()");
+				eval("data1.sentence" + index + "_id = $this.attr('dup_sentence_data_id')");
 			});
 			data1.no_sentences = c;
 			$('.manual-order').fadeOut('slow',function() {
