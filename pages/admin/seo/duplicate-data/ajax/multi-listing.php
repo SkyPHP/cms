@@ -47,7 +47,7 @@
 		<legend class="legend">Modifier</legend>
 <?
 		$where = array();
-		if ($_POST['category']) $where[] = "( category = '{$_POST['category']}' OR category is null OR category = '' )";
+		if ($_POST['category']) $where[] = "( category = '{$_POST['category']}' OR category = 'general' )";
 		$mods = aql::select("dup_modifier { id as mod_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_modifier'=>array('where'=>$where)));
 		if ($mods) foreach ($mods as $data) {
 ?>
