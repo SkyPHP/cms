@@ -53,10 +53,9 @@
 		}
 		echo  '/></div>';
 		echo '<div style="float:left;">';
-		print_a($sentences);
 		foreach ($sentences as $sentence_id) {			
-			//$rs = aql::select("dup_sentence_data { sentence where id = ".$sentence_id." } ");
-			//echo $rs[0]['sentence'].'<br>';
+			$rs = aql::select("dup_sentence_data { sentence where id = ".$sentence_id." } ");
+			echo $rs[0]['sentence'].'<br>';
 		}
 		echo "</div></div>";
 	}
