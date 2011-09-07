@@ -228,6 +228,7 @@ $(function() {
 	
 	$('.save-multi').live('click',function(){
 		$('#multi-saved').html('<img src="/imnages/loading.gif" />');
+		var text;
 		phrase1 = new Array();
 		phrase2 = new Array();
 		mods = new Array();
@@ -252,9 +253,9 @@ $(function() {
 				mods.push($(this).attr('phrase'));
 			}
         });
-		if (phrase1_ids.length < 1 || phrase2_ids.length < 1) {
-			$('#multi-saved').html('Please Select The Phrases and Modifiers You Wish to Use');
-		}
+		if (phrase1_ids.length < 1 && phrase2_ids.length < 1) text = 'Please Select The Phrases and Modifiers You Wish to Use';
+		else if (phrase1_ids.length < 1) text = 'Check a Phrase from Phrase Part 1';
+		else if (phrase2_ids.length < 1) text = 'Check a Phrase from Phrase Part 2';
 		else { 
 			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ phrase1: phrase1, phrase2: phrase2, mods: mods, phrase1_ids: phrase1_ids, phrase2_ids: phrase2_ids, mod_ids: mod_ids },function(data) {
 				$('#multi-saved').html(data);
