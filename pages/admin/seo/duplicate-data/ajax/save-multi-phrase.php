@@ -76,9 +76,10 @@
 	
 	if ($words) 
 		foreach ($words as $key => $phrase) { if ($exists[$key]) $dup_count++; }
-		echo '<div>'.count($words).' Selected Phrase(s).</div>';
-		echo '<div>'.(count($words) - $dup_count).' Phrase(s) Saved.</div>';
-		echo '<div style="margin-bottom:5px;">'.$dup_count.' Duplicate(s).</div>';
+		echo '<div>'.count($words).' Selected Phrases.</div>';
+		echo '<div>'.(count($words) - $dup_count).' Phrases Saved.</div>';
+		if ($dup_count > 1) echo '<div style="margin-bottom:5px;">'.$dup_count.' Duplicates.</div>';
+		else if ($dup_count) echo '<div style="margin-bottom:5px;">'.$dup_count.' Duplicate.</div>';
 		foreach ($words as $key => $phrase) {
 			if ($exists[$key]) $status = "Duplicate";
 			else $status = "OK";
