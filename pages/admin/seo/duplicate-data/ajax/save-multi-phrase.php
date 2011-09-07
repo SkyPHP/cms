@@ -48,7 +48,8 @@
 				'phrase2__dup_phrase_data_id' => $split[1],
 				'dup_modifier_id' => $split[2],
 				'mod__person_id' => PERSON_ID,
-				'total_volume' => $total_volume[$key]
+				'total_volume' => $total_volume[$key],
+				'category' => $_POST['category']
 			);
 			aql::insert('dup_phrase_group',$data);
 		}	
@@ -72,7 +73,12 @@
 	}
 	else $words = $phrases;
 	
+	
 	if ($words) 
+		foreach ($words as $key => $phrase) { if ($exists[$key]) $dup_count++; }
+		echo '<div>'.count($words).' Selected Phrases.</div>';
+		echo '<div>'.(count($words) - $dup_count).' Phrases Saved.</div>';
+		echo '<div style="margin-bottom:5px;">'.$dup_count.' Duplicates.</div>';
 		foreach ($words as $key => $phrase) {
 			if ($exists[$key]) $status = "Duplicate";
 			else $status = "OK";

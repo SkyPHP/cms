@@ -251,6 +251,7 @@ $(function() {
 		phrase1_ids = new Array();
 		phrase2_ids = new Array();
 		mod_ids = new Array();
+		var category = $("input[name=category]:checked").val();
 		$('.multi-listing1-cb').each(function(index) {
             if ($(this).attr('checked')) {
 				volume1.push($(this).attr('volume'));
@@ -276,7 +277,7 @@ $(function() {
 		else if (phrase2_ids.length < 1) text = 'Check a Phrase from Phrase Part 2';
 		if (text) $('#multi-saved').html(text);
 		else { 
-			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ volume1: volume1, volume2: volume2, phrase1: phrase1, phrase2: phrase2, mods: mods, phrase1_ids: phrase1_ids, phrase2_ids: phrase2_ids, mod_ids: mod_ids },function(data) {
+			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ category: category, volume1: volume1, volume2: volume2, phrase1: phrase1, phrase2: phrase2, mods: mods, phrase1_ids: phrase1_ids, phrase2_ids: phrase2_ids, mod_ids: mod_ids },function(data) {
 				$('#multi-saved').html(data);
 			});
 		}
