@@ -107,8 +107,6 @@ class vf {
    }
 
    public static function getRandomItem($folders_id = NULL, $width = NULL, $height = NULL, $crop = NULL){
-      #var_dump(self::$client->get_item(self::getRandomItemId($folders_id), $width, $height, $crop));
-
       return((object) self::$client->get_item(self::getRandomItemId($folders_id), $width, $height, $crop));
    }
 
