@@ -26,33 +26,48 @@ class person extends model {
                 $this->_errors[] = "Passwords do not match";
                 return;
             }
-            if (PERSON_ID == $this->person_id) { //is this a user trying to change his own pw?
-                //authenticate him (test his current_password)
-                if ( Login::generateHash($this->current_password, $this->generateUserSalt() ) !=  aql::value( 'person.password_hash', PERSON_ID )  ) {
-                    $this->_errors[] = "Incorrect password";
+            if (defined('PERSON_ID')) {
+                 if (PERSON_ID == $this->person_id) { //is this a user trying to change his own pw?
+                    //authenticate him (test his current_password)
+                    if ( Login::generateHash($this->current_password, $this->generateUserSalt() ) !=  aql::value( 'person.password_hash', PERSON_ID )  ) {
+                        $this->_errors[] = "Incorrect password";
+                        return;
+                    }
+                    //otherwise, self password change is valid
+                    //set it up for the set_password() method below
+                    $this->password = $this->password1;
+                } else { //user trying to change someone else's password
+                    //does this person have the rights to change the other person's password?
+                    $aql =  "
+                                ct_promoter_user {
+                                    count(*)
+                                    where person_id = ".PERSON_ID." and access_group ilike '%admin%'
+                                }
+                                ct_promoter_user as u on ct_promoter_user.ct_promoter_id = u.ct_promoter_id {
+                                    where person_id = {$this->person_id} and access_group not ilike '%admin%'
+                                }
+                            ";
+                    $rs = aql::select( $aql );
+                    if ($rs[0]['count'] != 0 or auth('ct_admin:*') ){
+                        $this->password = $this->password1;
+                    } else {
+                        $this->_errors[] = "Access to change password denied";
+                    }
+                }
+            } else {
+                // trying to reset your own password but not logged in
+                if ($this->password_reset_hash != aql::value( 'person.password_reset_hash', $this->person_id ) ) {
+                    $this->_errors[] = 'Request another password reset, this token is no longer valid.';
+                    $o = new person;
+                    $o->person_id = $this->person_id;
+                    $o->_token = $this->_token;
+                    $o->password_reset_hash = null;
+                    $o->save();
                     return;
                 }
-                //otherwise, self password change is valid
-                //set it up for the set_password() method below
                 $this->password = $this->password1;
-            } else { //user trying to change someone else's password
-                //does this person have the rights to change the other person's password?
-                $aql =  "
-                            ct_promoter_user {
-                                count(*)
-                                where person_id = ".PERSON_ID." and access_group ilike '%admin%'
-                            }
-                            ct_promoter_user as u on ct_promoter_user.ct_promoter_id = u.ct_promoter_id {
-                                where person_id = {$this->person_id} and access_group not ilike '%admin%'
-                            }
-                        ";
-                $rs = aql::select( $aql );
-                if ($rs[0]['count'] != 0 or auth('ct_admin:*') ){
-                    $this->password = $this->password1;
-                } else {
-                    $this->_errors[] = "Access to change password denied";
-                }
             }
+               
         }
 
         //check for current password. if not, then check that users has access to change password
@@ -78,7 +93,7 @@ class person extends model {
         if (!$val) return;
         if (!$this->person_ide) {
             if (!$this->person_id) return;
-            $this->person_ide = encrypt($this->person_id, 'person');
+            $this->person_ide = $ide = encrypt($this->person_id, 'person');
         }
         $this->_data['password_hash'] = Login::generateHash($val, $this->generateUserSalt());
     }

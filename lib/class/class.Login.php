@@ -1,8 +1,6 @@
 <?
 
 class Login {
-	
-	const ALGO = 'sha512';
 
 	public static $session;
 	public static $session_key;
@@ -50,7 +48,9 @@ class Login {
 					person {
 						where (
 							email_address ilike '{$this->post_username}' or username ilike '{$this->post_username}'
+							and password_hash is not null
 						)
+						order by id desc
 					}
 				";
 		$rs_logins = aql::select($aql);
@@ -67,7 +67,7 @@ class Login {
 			}
 		}
 		$this->_errors[] = 'Invalid Login';
-		$this->r();
+		return $this->r();
 		$this->person = new person($rs_logins[0]['person_id'], null, true);
 	}
 

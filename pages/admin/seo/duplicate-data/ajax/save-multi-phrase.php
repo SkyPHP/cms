@@ -17,6 +17,18 @@
 	}
 	else $final = $phrase_ids;
 	
+	// GET ALL THE POSTED VOLUMES AND SET THE TOTAL FOR EACH KEY
+	foreach ($_POST['volume1'] as $volume) {
+		$vol1[] = $volume;
+	}
+	foreach ($_POST['volume2'] as $volume) {
+		$vol2[] = $volume;
+	}
+	
+	foreach($vol1 as $key => $volume) {
+		$total_volume[] = $volume + $vol2[$key];
+	}
+	
 	// CHECK THE DB AND ENTER NON-DUPS
 	foreach ($final as $key => $phrase) {
 		$split = explode(',',$phrase);
@@ -35,7 +47,9 @@
 				'phrase1__dup_phrase_data_id' => $split[0],
 				'phrase2__dup_phrase_data_id' => $split[1],
 				'dup_modifier_id' => $split[2],
-				'mod__person_id' => PERSON_ID
+				'mod__person_id' => PERSON_ID,
+				'total_volume' => $total_volume[$key],
+				'category' => $_POST['category']
 			);
 			aql::insert('dup_phrase_group',$data);
 		}	
@@ -59,12 +73,20 @@
 	}
 	else $words = $phrases;
 	
+	
 	if ($words) 
+		foreach ($words as $key => $phrase) { if ($exists[$key]) $dup_count++; }
+		if (!$dup_count) $style_attr = 'style="margin-bottom: 5px;"';
+		else $style = ''; 
+		echo '<div>'.count($words).' Selected Phrase Groups .</div>';
+		echo '<div '.$style_attr.'> '.(count($words) - $dup_count).' Phrase Groups Saved.</div>';
+		if ($dup_count > 1) echo '<div style="margin-bottom:5px;">'.$dup_count.' Duplicates.</div>';
+		else if ($dup_count) echo '<div style="margin-bottom:5px;">'.$dup_count.' Duplicate.</div>';
 		foreach ($words as $key => $phrase) {
 			if ($exists[$key]) $status = "Duplicate";
 			else $status = "OK";
 			$split = explode(',',$phrase);
 			$phrase_final = implode(' | ',$split);
-			echo "<div>".ucwords($phrase_final)." - ".$status."</div>";
+			echo '<div class="has-floats"><div style="margin-bottom:2px; float:left; margin-right: 15px; width: 600px">'.ucwords($phrase_final).'</div><div style="float:left;">'.$status.'</div></div>';
 		}
 ?>

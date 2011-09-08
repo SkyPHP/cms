@@ -49,7 +49,8 @@ if (!$errors) {
 if ($errors) {
 	$response = array(
 		'status' => 'Error',
-		'errors' => $errors
+		'errors' => $errors,
+		'params' => $params
 	);
 } else {
 	$response = array(

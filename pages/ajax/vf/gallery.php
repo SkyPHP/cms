@@ -14,15 +14,15 @@ if (!$gallery) {
 	if (!$items) $items = $gallery->items;
 }
 
-
+$empty = (count($items) == 0);
 
 // krumo($gallery);
 ?>
-<div class="vf-gallery has-floats" id="<?=$gallery->identifier?>" 
+<div class="vf-gallery has-floats <?=($empty)?'vf-gallery-empty':''?>" id="<?=$gallery->identifier?>" 
 	token="<?=$gallery->_token?>"
 	<?=($gallery->contextMenu) ? 'context_menu="true"' : ''?>
 ><?
-	if ($gallery->folder->items_count == 0) {
+	if ($empty) {
 		?><div class="vf-gallery-empty-message"><?
 			echo $gallery->empty_message;
 		?></div><?

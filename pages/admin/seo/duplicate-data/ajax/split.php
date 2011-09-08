@@ -2,7 +2,7 @@
 	$val = $_POST['val'];
 	if ($_POST['auto']) $auto = 'checked="checked"';
 	else $man = 'checked="checked"';
-	preg_match_all('~.*?[?.!]~s',$val,$sentences);
+	preg_match_all('~.*?[?.!]~s',addslashes($val),$sentences);
 ?>
 	<div class="has-floats" style="margin-top: 20px;">
 		<div style="float:left; width: 1000px; margin-right: 10px; font-weight:bold; font-size:18px;">Sentences</div>
@@ -13,21 +13,23 @@
         </div>
 	</div>
 <?
+	$ids = array();
 	foreach ($sentences[0] as $key => $sentence) {
 		$data = array(
 			'sentence' => addslashes($sentence),
 			'name' => $_POST['name'],
-			'source' => $_POST['source']
+			'source' => $_POST['source'],
+			'mod__person_id' => PERSON_ID
 		);
-		aql::insert('dup_sentence_data',$data);
+		$insert = aql::insert('dup_sentence_data',$data);
 ?>	
 	<div id="sentence<?=$key?>-container" class="has-floats" style="margin:10px 0 20px 0;">
     	<div>Sentence <?=$key+1?></div>
 		<div style="float:left; margin-right:10px;">
-        	<input type="text" id="sentence<?=$key?>" style="width:1000px" class="sentence" value="<?=trim($sentence)?>" />
+        	<input type="text" dup_sentence_data_id="<?=$insert[0]['dup_sentence_data_id']?>" id="sentence<?=$key?>" style="width:1000px" class="sentence" value="<?=trim(stripslashes($sentence))?>" />
         </div>
         <div style="float:left;" class="manual-order">
-        	<input type="text" style="width:16px; text-align:right;" maxlength="2" value="<?=$key+1?>" />
+        	<input type="text" dup_sentence_data_id="<?=$insert[0]['dup_sentence_data_id']?>" style="width:16px; text-align:right;" maxlength="2" value="<?=$key+1?>" />
         </div>
     </div>
 <?		
