@@ -780,7 +780,7 @@ class vfolder_client{
             }
          }
       }
-
+#
       if(!is_array($params)){
          $limit = $params;
          unset($params);
