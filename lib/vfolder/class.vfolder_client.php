@@ -337,6 +337,10 @@ class vfolder_client{
          $this->write_log('Response given indicated failure, will not interface with memcached', true);
       }
 
+      if(strpos($func, 'folders') === 0){
+         $id = $response['folders_id']; #because folders can be identified by either path or _id, we need to make sure memcached only uses one or the other, never both
+      }
+
       $key_prefix = $this->memcache_key_prefix . $id;
       $key_suffix = "_" . md5(var_export($post, true));
       $key || ($key = $key_prefix . $key_suffix);
@@ -352,8 +356,9 @@ class vfolder_client{
          case('items/edit'):
             $this->memcache_delete_keys($keys_key);
             break;
-         case('items/add'):
          case('items/remove'):
+            $this->memcache_delete_keys($keys_key);
+         case('items/add'):
             $this->memcache_delete_keys($this->memcache_key_prefix . $response['folders_id'] . "_keys");
             break;
          case('folders/add'):
@@ -780,7 +785,7 @@ class vfolder_client{
             }
          }
       }
-#
+
       if(!is_array($params)){
          $limit = $params;
          unset($params);
