@@ -130,25 +130,24 @@ class holiday {
 
 		//add holidays easily define in the gregorian calendar
 		$this->holidays = Array(
-			"New Year's Day" => $this->bjd,
-			"Martin Luther King Day" => nth_weekday_jd(3,dMONDAY,1,$yr),
-			"St. Valentine's Day"=> gregorian_to_jd(2,14,$yr),
-			"Presidents' Day" => nth_weekday_jd(3,dMONDAY,2,$yr),
-			"St. Patrick's Day" => gregorian_to_jd(3,17,$yr),
-			"April Fools' Day" => gregorian_to_jd(4,1,$yr),
-			"Cinco De Mayo" => gregorian_to_jd(5,5,$yr),
-			"Mothers' Day" => nth_weekday_jd(2,dSUNDAY,5,$yr),
-			"Memorial Day" => $this->MemorialDay($yr),
-			"Fathers' Day" => nth_weekday_jd(3,dSUNDAY,6,$yr),
-			"Independence Day" => gregorian_to_jd(7,4,$yr),
-			"Labor Day" => nth_weekday_jd(1,dMONDAY,9,$yr),
-			"Columbus Day" => nth_weekday_jd(2,dMONDAY,10,$yr),
-			"Halloween" => gregorian_to_jd(10,31,$yr), 
-			"Thanksgiving Day" => nth_weekday_jd(4, dTHURSDAY, 11,$yr),
-			"Christmas Eve" => gregorian_to_jd(12,24,$yr),
-			"Christmas Day" => gregorian_to_jd(12,25,$yr),
-			"Mardi Gras/Fat Tuesday" => easter_jd($yr,-47),
-			"Easter" =>	easter_jd($yr)
+			"newyearseve" => gregorian_to_jd(12,31,$yr),
+			"valentinesday"=> gregorian_to_jd(2,14,$yr),
+			"presidentsday" => nth_weekday_jd(3,dMONDAY,2,$yr),
+			"stpatricksday" => gregorian_to_jd(3,17,$yr),
+			"aprilfoolsday" => gregorian_to_jd(4,1,$yr),
+			"cincodemayo" => gregorian_to_jd(5,5,$yr),
+			"mothersday" => nth_weekday_jd(2,dSUNDAY,5,$yr),
+			"memorialday" => $this->MemorialDay($yr),
+			"fathersday" => nth_weekday_jd(3,dSUNDAY,6,$yr),
+			"fourthofjuly" => gregorian_to_jd(7,4,$yr),
+			"laborday" => nth_weekday_jd(1,dMONDAY,9,$yr),
+			"columbusday" => nth_weekday_jd(2,dMONDAY,10,$yr),
+			"halloween" => gregorian_to_jd(10,31,$yr), 
+			"thanksgiving" => nth_weekday_jd(4, dTHURSDAY, 11,$yr),
+			"christmaseve" => gregorian_to_jd(12,24,$yr),
+			"christmasday" => gregorian_to_jd(12,25,$yr),
+			"mardigras" => easter_jd($yr,-47),
+			"easter" =>	easter_jd($yr)
 		);
 			
 		asort($this->holidays);
