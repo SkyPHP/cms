@@ -4,7 +4,7 @@
 
 class Mailer {
 
-	public static $from_default = 'CraveTickets <info@cravetickets.com>';
+	public static $from_default = null;
 	public static $contents = array(
 		'html' => "MIME-Verson: 1.0\r\nContent-type: text/html; charset=iso-8859-1\r\n",
 		'text' => ''
@@ -28,6 +28,10 @@ class Mailer {
 		if ($from) $this->from = $from;
 	}
 
+	public static function setDefaultFrom($from) {
+		self::$from_default = $from;
+	}
+
 	public function setFrom($s) {
 		$this->from = $s;
 		return $this;
@@ -40,8 +44,13 @@ class Mailer {
 
 	public function makeHeaders() {
 		if ($this->headers) return $this->headers;
-		$this->headers = $this->content_type
-						.'From: '.$this->from."\r\n";
+
+		if (!$this->from) {
+			throw new Exception('Mailer expects from to be specified before sending an email.');
+		}
+
+		$this->headers = $this->content_type;
+		if ($this->from) $this->headers .= 'From: '.$this->from."\r\n";
 		foreach ($this->cc as $cc) {
 			$this->headers .= 'Cc: '.$cc."\r\n";
 		}
