@@ -26,14 +26,8 @@ $(document).ready(function() {
 		});
 	});
 	
-	$('.password_form').saveForm({
+	$('#password_form').saveForm({
 		saveText:"Your password has been updated."
 	})
 	
 });
-
-
-
-
-
-
