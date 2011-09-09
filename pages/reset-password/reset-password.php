@@ -6,24 +6,23 @@ $p->template('website', 'top');
 <div class="center">
 
 <?
-if(!$p->queryfolders[0] || decrypt($p->queryfolders[0],'person'))
-	// IF THERE IS A PERSON ID
-	if(!$p->queryfolders[1]) {
-		// IF THERE IS NO HASH LET THEM TRY TO RESET THEIR PASSWORD
-		include('/pages/reset-password/includes/set_hash_form.php');
+if(decrypt($p->queryfolders[0],'person')) {
+	$reset_hash = aql::value('person.password_reset_hash', $p->queryfolders[0]);
+	if ($reset_hash == $p->queryfolders[1]) {
+		include('pages/reset-password/includes/set_password_form.php');
 	}
 	else {
-		// IF THERE IS A HASH
-		if( true ) {
-			// IF THE HASH IS VALID
-			include('/pages/reset-password/includes/set_password_form.php');
-		}
-		else {
-			// IF THE HASH IS INVALID CLEAR HASH AND SHOW ERROR
-		}
+		$o = new person;
+		$o->person_ide = $p->queryfolders[0];
+		$o->_token = $o->getToken();
+		$o->password_reset_hash = "";
+		$re = $o->save();
+		$hash_mismatch = TRUE;
+		include('pages/reset-password/includes/set_hash_form.php');
 	}
+}
 else {
-	// IF THERE IS NO PERSON ID
+	include('pages/reset-password/includes/set_hash_form.php');
 }
 
 

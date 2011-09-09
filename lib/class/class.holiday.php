@@ -130,94 +130,27 @@ class holiday {
 
 		//add holidays easily define in the gregorian calendar
 		$this->holidays = Array(
-			"New Year's Day" => $this->bjd,
-
-			"Candlemas" => gregorian_to_jd(1,2, $yr),
-			"Epiphany" => gregorian_to_jd(1,6,$yr),
-
-			"Martin Luther King Day" => nth_weekday_jd(3,dMONDAY,1,$yr),
-
-			"Abraham Lincoln's Birthday" => gregorian_to_jd(2,12,$yr),
-			"St. Valentine's Day"=> gregorian_to_jd(2,14,$yr),
-			"Presidents' Day" => nth_weekday_jd(3,dMONDAY,2,$yr),
-
-			"George Washington's Birthday" => gregorian_to_jd(2,22,$yr),
-			"St. Patrick's Day" => gregorian_to_jd(3,17,$yr),
-
-			"April Fools' Day" => gregorian_to_jd(4,1,$yr),
-
-			"May Day" => gregorian_to_jd(5,1,$yr),
-
-			"Cinco De Mayo" => gregorian_to_jd(5,5,$yr),
-			"Mothers' Day" => nth_weekday_jd(2,dSUNDAY,5,$yr),
-			"Memorial Day" => $this->MemorialDay($yr),
-			"Flag Day" => gregorian_to_jd(6,14,$yr),
-			"Fathers' Day" => nth_weekday_jd(3,dSUNDAY,6,$yr),
-			"Independence Day" => gregorian_to_jd(7,4,$yr),
-			"Labor Day" => nth_weekday_jd(1,dMONDAY,9,$yr),
-			"Columbus Day" => nth_weekday_jd(2,dMONDAY,10,$yr),
-
-			"Holloween" => gregorian_to_jd(10,31,$yr),
-			"All Saints' Day" => gregorian_to_jd(11,1,$yr),
-			"All Souls' Day" => gregorian_to_jd(11,2,$yr),
-			"Veterans' Day" => gregorian_to_jd(11,11,$yr),
-			"Thanksgiving Day" => nth_weekday_jd(4, dTHURSDAY, 11,$yr),
-			"Advent Begins" => $this->NthSundayOfAdvent(1,$yr),
-
-			"1st Sunday of Advent" => $this->NthSundayOfAdvent(1,$yr),
-
-			"2nd Sunday of Advent" => $this->NthSundayOfAdvent(2,$yr),
-
-			"3rd Sunday of Advent" => $this->NthSundayOfAdvent(3,$yr),
-
-			"4th Sunday of Advent" => $this->NthSundayOfAdvent(4,$yr),
-			"Christmas Eve" => gregorian_to_jd(12,24,$yr),
-			"Christmas Day" => gregorian_to_jd(12,25,$yr),
-
-
-			"Mardi Gras/Fat Tuesday" => easter_jd($yr,-47),
-			"Ash Wednesday" => easter_jd($yr,-46),
-			"1st Sunday of Lent" => easter_jd($yr,-42),
-
-			"2nd Sunday of Lent" => easter_jd($yr,-35),
-
-			"3rd Sunday of Lent" => easter_jd($yr,-28),
-
-			"4th Sunday of Lent" => easter_jd($yr,-21),
-
-			"5th Sunday of Lent" => easter_jd($yr,-14),
-			"Palm Sunday" => easter_jd($yr,-7),
-			"Maundy Thursday" => easter_jd($yr,-3),
-			"Good Friday" => easter_jd($yr,-2),
-			"Easter" =>	easter_jd($yr),
-			"Ascension" => easter_jd($yr,39),
-			"Pentecost" => easter_jd($yr,49) );
-
-			//add jewish holidays to holidays array
-			$this->hebrew_holidays();
-
-			//add islamic holidays
-			$this->islamic_holidays();
-
-			asort($this->holidays);
-	}
-
-	//method to add a hebrew holiday in month, day, year form
-	// use $shabbat_test = TRUE when the holiday CAN'T fall on shabbat
-	// and set $shabbat_jda to the month day used when the holiday normally
-	// falls on shabbat (saturday)
-	function add_hebrew_holiday($name, $jmo, $jda, $jyr,
-		$shabbat_test = FALSE, $shabbat_jda = 0) {
-		//adar holidays fall in Vedar in leap years
-		if ( $jmo == mADAR && hebrew_leap($jyr) ) $jmo = mVEDAR;
-
-		$jd = hebrew_to_jd($jmo, $jda, $jyr);
-		//perform the shabbat_test
-		if ($shabbat_test && jd_to_weekday($jd) == dSATURDAY)
-			$jd = hebrew_to_jd($jmo, $shabbat_jda, $jyr);
-
-		$this->add_holiday_jd($name, $jd, $jyr);
-
+			"newyearseve" => gregorian_to_jd(12,31,$yr),
+			"valentinesday"=> gregorian_to_jd(2,14,$yr),
+			"presidentsday" => nth_weekday_jd(3,dMONDAY,2,$yr),
+			"stpatricksday" => gregorian_to_jd(3,17,$yr),
+			"aprilfoolsday" => gregorian_to_jd(4,1,$yr),
+			"cincodemayo" => gregorian_to_jd(5,5,$yr),
+			"mothersday" => nth_weekday_jd(2,dSUNDAY,5,$yr),
+			"memorialday" => $this->MemorialDay($yr),
+			"fathersday" => nth_weekday_jd(3,dSUNDAY,6,$yr),
+			"fourthofjuly" => gregorian_to_jd(7,4,$yr),
+			"laborday" => nth_weekday_jd(1,dMONDAY,9,$yr),
+			"columbusday" => nth_weekday_jd(2,dMONDAY,10,$yr),
+			"halloween" => gregorian_to_jd(10,31,$yr), 
+			"thanksgiving" => nth_weekday_jd(4, dTHURSDAY, 11,$yr),
+			"christmaseve" => gregorian_to_jd(12,24,$yr),
+			"christmasday" => gregorian_to_jd(12,25,$yr),
+			"mardigras" => easter_jd($yr,-47),
+			"easter" =>	easter_jd($yr)
+		);
+			
+		asort($this->holidays);
 	}
 
 	//method actually adds the holiday to the array, if it falls within
@@ -232,105 +165,6 @@ class holiday {
 			if(array_key_exists($name,$this->holidays)) $name .= (" " . $yr);
 			$this->holidays[$name] = $jd;
 		}
-	}
-
-	//method adds n holidays named name starting on hebrew date $jmo/$jda/$jyr
-	//used primarily to list festival days
-	function add_n_hebrew_holidays($n, $name, $jmo, $jda, $jyr) {
-
-		//$jd and $n adjusted for use in loop
-		$jd = hebrew_to_jd($jmo, $jda, $jyr) - 1;
-		$n = $n + 1;
-
-		for ($i=1; $i < $n; $i++) {
-			$ex = ($i==1 ? "st" : ($i==2 ? "nd" : ($i==3 ? "rd" : "th" )));
-			$this->add_holiday_jd($i . $ex . " Day of " . $name, $jd+$i, $jyr);
-		}
-	}
-
-	//method adds a series of hebrew holidays (using above methods)
-	function hebrew_holidays() {
-
-		jd_to_hebrew($this->bjd, $jmo, $jda, $bjyr); //for beg jewish yr
-		jd_to_hebrew($this->ejd, $jmo,$jda, $ejyr); //for end jewish yr
-
-		//there usually are more than 1 jewish year in a gregorian year
-		//for loop cycles through the hebrew years in the gregorian year
-		//to assure they are all considered (note won't be added to list
-		//if they don't fall within the current gregorian year
-		for($jyr = $bjyr; $jyr <= $ejyr; $jyr++ ) {
-			//Major Festivals
-			$this->add_n_hebrew_holidays(2, "Rosh Hashana", mTISHRI, 1, $jyr); //Jewish New Year
-			$this->add_hebrew_holiday("Yom Kippur", mTISHRI, 10, $jyr); //Day of Atonement
-
-			$this->add_n_hebrew_holidays(2, "Sukkot", mTISHRI, 15, $jyr); //Tabernacles
-			$this->add_n_hebrew_holidays(7, "Sukkot Chol Hamoed", mTISHRI, 17, $jyr);
-
-			$this->add_hebrew_holiday("Sh'mini Atzeret", mTISHRI, 22, $jyr);
-
-			$this->add_hebrew_holiday("Simchat Tora", mTISHRI, 23, $jyr);
-
-			$this->add_n_hebrew_holidays(2, "Pesach (Passover)", mNISAN, 15, $jyr); //Pesach
-			$this->add_n_hebrew_holidays(4, "Pesach Chol Hamoed", mNISAN, 17, $jyr);
-
-			$this->add_n_hebrew_holidays(2, "Pesach (Final Holiday)", mNISAN, 21, $jyr);
-
-			$this->add_n_hebrew_holidays(2, "Shavuot", mSIVAN, 6, $jyr);
-
-			//Minor Festivals
-			$this->add_n_hebrew_holidays(8, "Chanukka", mKISLEV, 25, $jyr);
-
-			$this->add_hebrew_holiday("Purim", mADAR, 14, $jyr);
-
-			//Fast Days
-			$this->add_hebrew_holiday("Tzom Gedalya", mTISHRI, 3, $jyr, TRUE, 4);
-			$this->add_hebrew_holiday("Asara b'Tevet", mTEVET, 10, $jyr);
-			$this->add_hebrew_holiday("Tan'anit Ester", mADAR, 13, $jyr, TRUE, 11);
-			$this->add_hebrew_holiday("Shiv'a Asar b'Tammuz", mTAMMUZ, 17, $jyr, TRUE, 18);
-			$this->add_hebrew_holiday("Tish'a b'Av", mAV, 9, $jyr, TRUE, 10);
-
-
-		}
-
-	}
-
-	//utility method to add an islamic holiday
-	function add_islamic_holiday($name, $imo, $ida, $iyr) {
-
-		$this->add_holiday_jd($name, islamic_to_jd($imo, $ida, $iyr), $iyr);
-	}
-
-	//method adds a series of islamic holidays
-	function islamic_holidays() {
-		jd_to_islamic($this->bjd, $imo, $ida, $biyr); //for biyr
-		jd_to_islamic($this->ejd, $imo, $ida, $eiyr); //for eiyr
-
-		//as for the jewish, more than one islamic year is covered
-		//in any gregorian year--for loop used to ensure they are all covered
-		for($iyr = $biyr; $iyr <= $eiyr; $iyr++) {
-			$this->add_islamic_holiday("Islamic New Year", mMuharram, 1, $iyr);
-			$this->add_islamic_holiday("Ashura'", mMuharram, 10, $iyr);
-			$this->add_islamic_holiday("Mawlid an Nabi", mRabiI, 12, $iyr);
-			$this->add_islamic_holiday("Lailat al Miraj", mRajab, 27, $iyr);
-			$this->add_islamic_holiday("Lailat al Bara'a", mShaban, 15, $iyr);
-			$this->add_islamic_holiday("Ramadan begins", mRamadan, 1, $iyr);
-			$this->add_islamic_holiday("Lailat al Qadr", mRamadan, 27, $iyr);
-			$this->add_islamic_holiday("'Id al Fitr", mShawwal, 1, $iyr);
-			$this->add_islamic_holiday("eve of Adha", mDhualHijja, 9, $iyr);
-			$this->add_islamic_holiday("'Id al Adha", mDhualHijja, 10, $iyr);
-
-		}
-	}
-
-	//method determines the Nth Sunday of Advent
-	function NthSundayOfAdvent($n,$yr)
-	{	//(4-n)th sunday before christmas
-		$jd = gregorian_to_jd(12,25,$yr);
-
-		$temp=jd_to_weekday($jd);
-		if ($temp == dSUNDAY) $temp = 7;
-
-		return ( $jd - $temp - (4-$n) * 7 );
 	}
 
 	//method determines Memorial Day
