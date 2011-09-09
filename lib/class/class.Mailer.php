@@ -4,7 +4,7 @@
 
 class Mailer {
 
-	public static $from_default = 'info@cravetickets.com';
+	public static $from_default = 'CraveTickets <info@cravetickets.com>';
 	public static $contents = array(
 		'html' => "MIME-Verson: 1.0\r\nContent-type: text/html; charset=iso-8859-1\r\n",
 		'text' => ''
@@ -30,6 +30,11 @@ class Mailer {
 
 	public function setFrom($s) {
 		$this->from = $s;
+		return $this;
+	}
+
+	public function setSubject($s) {
+		$this->subject = $s;
 		return $this;
 	}
 
