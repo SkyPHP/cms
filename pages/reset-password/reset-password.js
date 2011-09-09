@@ -20,7 +20,7 @@ $(document).ready(function() {
 		console.log(url);
 		$.post(url, $('#email_hash').serialize(), function(json) {
 			aql.json.handle(json, $('#response_div'), {
-				successMessage: 'Your password reset email has been sent.'
+				successMessage: 'An email has been sent to '+$('#email_address').val()+' which contains a link to reset your password.'
 			});
 		});
 	});
