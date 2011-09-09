@@ -408,8 +408,8 @@ class vfolder_client{
          }
       }
 
-      $func && ($post['func'] = $func);
-      $id && ($post['id'] = $id);
+      $func && ($post['func'] = $func); 
+      ((is_array($id) && ($id = implode(',', $id))) || $id) && ($post['id'] = $id);
 
       if($post['json']){
          if(is_array($post['json'])){
