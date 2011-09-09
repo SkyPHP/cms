@@ -28,7 +28,7 @@ exit_json($re);
 // do emailing
 $body ='You recently asked to reset your Crave Tickets password. To complete your request, please follow this link:<br />
 <br />
-http://cravetickets.info/password-reset/'.$o->person_ide.'/'.$o->password_reset_hash.'<br />
+http://cravetickets.info/reset-password/'.$o->person_ide.'/'.$o->password_reset_hash.'<br />
 <br />
 If you did not request a new password, you may disregard this message.'; // Not going recursive here. (in a heredoc) 
 $mailer = new Mailer; 
