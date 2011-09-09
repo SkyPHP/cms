@@ -131,68 +131,26 @@ class holiday {
 		//add holidays easily define in the gregorian calendar
 		$this->holidays = Array(
 			"New Year's Day" => $this->bjd,
-
-			"Candlemas" => gregorian_to_jd(1,2, $yr),
-			"Epiphany" => gregorian_to_jd(1,6,$yr),
-
 			"Martin Luther King Day" => nth_weekday_jd(3,dMONDAY,1,$yr),
-
-			"Abraham Lincoln's Birthday" => gregorian_to_jd(2,12,$yr),
 			"St. Valentine's Day"=> gregorian_to_jd(2,14,$yr),
 			"Presidents' Day" => nth_weekday_jd(3,dMONDAY,2,$yr),
-
-			"George Washington's Birthday" => gregorian_to_jd(2,22,$yr),
 			"St. Patrick's Day" => gregorian_to_jd(3,17,$yr),
-
 			"April Fools' Day" => gregorian_to_jd(4,1,$yr),
-
-			"May Day" => gregorian_to_jd(5,1,$yr),
-
 			"Cinco De Mayo" => gregorian_to_jd(5,5,$yr),
 			"Mothers' Day" => nth_weekday_jd(2,dSUNDAY,5,$yr),
 			"Memorial Day" => $this->MemorialDay($yr),
-			"Flag Day" => gregorian_to_jd(6,14,$yr),
 			"Fathers' Day" => nth_weekday_jd(3,dSUNDAY,6,$yr),
 			"Independence Day" => gregorian_to_jd(7,4,$yr),
 			"Labor Day" => nth_weekday_jd(1,dMONDAY,9,$yr),
 			"Columbus Day" => nth_weekday_jd(2,dMONDAY,10,$yr),
-
-			"Holloween" => gregorian_to_jd(10,31,$yr),
-			"All Saints' Day" => gregorian_to_jd(11,1,$yr),
-			"All Souls' Day" => gregorian_to_jd(11,2,$yr),
-			"Veterans' Day" => gregorian_to_jd(11,11,$yr),
+			"Halloween" => gregorian_to_jd(10,31,$yr), 
 			"Thanksgiving Day" => nth_weekday_jd(4, dTHURSDAY, 11,$yr),
-			"Advent Begins" => $this->NthSundayOfAdvent(1,$yr),
-
-			"1st Sunday of Advent" => $this->NthSundayOfAdvent(1,$yr),
-
-			"2nd Sunday of Advent" => $this->NthSundayOfAdvent(2,$yr),
-
-			"3rd Sunday of Advent" => $this->NthSundayOfAdvent(3,$yr),
-
-			"4th Sunday of Advent" => $this->NthSundayOfAdvent(4,$yr),
 			"Christmas Eve" => gregorian_to_jd(12,24,$yr),
 			"Christmas Day" => gregorian_to_jd(12,25,$yr),
-
-
 			"Mardi Gras/Fat Tuesday" => easter_jd($yr,-47),
-			"Ash Wednesday" => easter_jd($yr,-46),
-			"1st Sunday of Lent" => easter_jd($yr,-42),
-
-			"2nd Sunday of Lent" => easter_jd($yr,-35),
-
-			"3rd Sunday of Lent" => easter_jd($yr,-28),
-
-			"4th Sunday of Lent" => easter_jd($yr,-21),
-
-			"5th Sunday of Lent" => easter_jd($yr,-14),
-			"Palm Sunday" => easter_jd($yr,-7),
-			"Maundy Thursday" => easter_jd($yr,-3),
-			"Good Friday" => easter_jd($yr,-2),
-			"Easter" =>	easter_jd($yr),
-			"Ascension" => easter_jd($yr,39),
-			"Pentecost" => easter_jd($yr,49) );
-
+			"Easter" =>	easter_jd($yr)
+		);
+			
 			//add jewish holidays to holidays array
 			$this->hebrew_holidays();
 
