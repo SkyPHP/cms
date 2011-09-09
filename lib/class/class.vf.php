@@ -1,13 +1,5 @@
 <?
 
-/*
- var_dump((object)array('aa' => 'bb' , 'cc' => 'dd' , 'ee' => 'ff'));
-
-
-die();
-
-*/
-
 array_walk(vf::$deps, function($dep) {
    if (!class_exists($dep)) include 'lib/vfolder/class.'.$dep.'.php';
 });
@@ -107,11 +99,36 @@ class vf {
    }
 
    public static function getRandomItem($folders_id = NULL, $width = NULL, $height = NULL, $crop = NULL){
-      return((object) self::$client->get_item(self::getRandomItemId($folders_id), $width, $height, $crop));
+      return((object) self::getRandomItems($folders_id, 1, $width, $height, $crop));
    }
 
-   public static function removeItem($items_id) {
+   public static function getRandomItems($folders_id = NULL, $limit = NULL, $width = NULL, $height = NULL, $crop = NULL){
+      $request_array = array('random' => true, 'limit' => $limit?$limit:10);
+
+      if(is_array($width)){
+         $request_array['operations'] = $width;
+      }else{
+         if($width){
+            $operations = array();
+ 
+            $operations[] = array('type' => ($crop?'smart_crop':'resize'), 'height' => $height, 'width' => $width);
+
+            $crop && ($operations[0]['gravity'] = $crop !== true?$crop:'Center');            
+
+            $request_array['operations'] = $operations;
+         }
+      }
+
+      return((object) self::$client->get_folder($folders_id, $request_array));
+   }
+
+   public static function removeItem($items_id = NULL) {
       return ((object) self::$client->remove_item($items_id));
+   }
+ 
+   #this is a pretty specialized and dangerous function, it is best not to allow any syntax variations
+   public static function alterItem($items_id = NULL, $operations = NULL){
+      return((object) self::$client->alter_item($items_id, $operations));
    }
 
    public static function slideshow($args) {
