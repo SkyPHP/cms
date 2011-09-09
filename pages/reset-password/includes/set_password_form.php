@@ -4,7 +4,7 @@ $o->_token = $o->getToken();
 
 ?>
 
-<div class="info" id="response_div">Enter your new password</div> 
+<div id="response_div" class="info password_form">Enter your new password</div> 
 <form model="person" class="aqlForm">
     <input type="hidden" name="_token" value="<?=$o->_token?>" />
     <input type="hidden" name="person_ide" value="<?=$o->person_ide?>" />	
