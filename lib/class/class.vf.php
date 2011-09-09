@@ -105,17 +105,23 @@ class vf {
    public static function getRandomItems($folders_id = NULL, $limit = NULL, $width = NULL, $height = NULL, $crop = NULL){
       $request_array = array('random' => true, 'limit' => $limit?$limit:10);
 
-      if(is_array($width)){
-         $request_array['operations'] = $width;
+      if(is_array($limit)){
+         $request_array = $limit;
+
+         $request_array['random'] || ($request_array['random'] = true);
       }else{
-         if($width){
-            $operations = array();
+         if(is_array($width)){
+            $request_array['operations'] = $width;
+         }else{
+            if($width){
+               $operations = array();
  
-            $operations[] = array('type' => ($crop?'smart_crop':'resize'), 'height' => $height, 'width' => $width);
+               $operations[] = array('type' => ($crop?'smart_crop':'resize'), 'height' => $height, 'width' => $width);
 
-            $crop && ($operations[0]['gravity'] = $crop !== true?$crop:'Center');            
+               $crop && ($operations[0]['gravity'] = $crop !== true?$crop:'Center');            
 
-            $request_array['operations'] = $operations;
+               $request_array['operations'] = $operations;
+            }
          }
       }
 
