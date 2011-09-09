@@ -30,7 +30,7 @@ $body ='You recently asked to reset your Crave Tickets password. To complete you
 <br />
 http://cravetickets.info/password-reset/'.$o->person_ide.'/'.$o->password_reset_hash.'<br />
 <br />
-If you did not request a new password, you may disregard this message or visit our Help Center at http://www.facebook.com/help/?topic=password_reset to learn more.'; // Not going recursive here. (in a heredoc) 
+If you did not request a new password, you may disregard this message.'; // Not going recursive here. (in a heredoc) 
 $mailer = new Mailer; 
 $mailer->addTo($_POST['email_address'])
 // can add multiple recipients
