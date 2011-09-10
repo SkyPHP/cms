@@ -46,12 +46,6 @@
 	$GREGORIAN_DAY = Array("Sunday", "Monday", "Tuesday", "Wednesday",
 				"Thursday", "Friday", "Saturday");
 
-	$HEBREW_DAY = Array("yom rishon", "yom sheni", "yom sh'lishi",
-				"yom revi'i", "yom chamishi", "yom shishi", "shabbat kodesh");
-
-	$ISLAMIC_DAY = Array("al-'ahad", "al-'ithnayn", "ath-thalatha'", "al-'arb`a'",
-				"al-khamis", "al-jum`a", "as-sabt");
-
 	//gregorian month constants
 	define("mJANUARY", 1, TRUE);
 	define("mFEBRUARY", 2, TRUE);
@@ -69,47 +63,6 @@
 	$GREGORIAN_MONTH = Array(1 => "January", "February", "March",
 				"April", "May", "June", "July", "August", "September",
 				"October", "November", "December");
-
-	//HEBREW month constants
-	define("mNISAN", 1, TRUE);
-	define("mIYYAR", 2, TRUE);
-	define("mSIVAN", 3, TRUE);
-	define("mTAMMUZ", 4, TRUE);
-	define("mAV", 5, TRUE);
-	define("mELUL", 6, TRUE);
-	define("mTISHRI", 7, TRUE);
-	define("mCHESHVAN", 8, TRUE);
-	define("mKISLEV", 9, TRUE);
-	define("mTEVET", 10, TRUE);
-	define("mSHVAT", 11, TRUE);
-	define("mADAR", 12, TRUE);
-	define("mADARI", 12, TRUE);  //leap month
-	define("mADARII", 13, TRUE); //Adar in leap year
-	define("mVEDAR", 13, TRUE);  //alternative ADAR in leap year
-
-	$HEBREW_MONTH = Array(1=>"Nisan", "Iyyar", "Sivan", "Tammuz", "Av",
-				"Elul", "Tishri", "Cheshvan", "Kislev", "Teveth", "Sh'vat", "Adar", "Vedar");
-
-	$HEBREW_LEAP_MONTH = Array(1=>"Nisan", "Iyyar", "Sivan", "Tammuz", "Av",
-				"Elul", "Tishri", "Cheshvan", "Kislev", "Teveth", "Sh'vat", "Adar I", "Adar II");
-
-	//ISLAMIC MONTH constants
-	define("mMuharram", 1, TRUE);
-	define("mSafar", 2, TRUE);
-	define("mRabiI", 3, TRUE);
-	define("mRabiII", 4, TRUE);
-	define("mJumadlaI", 5, TRUE);
-	define("mJumadaII", 6, TRUE);
-	define("mRajab", 7, TRUE);
-	define("mShaban", 8, TRUE);
-	define("mRamadan", 9, TRUE);
-	define("mShawwal", 10, TRUE);
-	define("mDhualQada", 11, TRUE);
-	define("mDhualHijja", 12, TRUE);
-
-	$ISLAMIC_MONTH = Array(1=>"Muharram", "Safar", "Rabi`al-Awwal", "Rabi`ath-Thani",
-				"Jumad l-Ula", "Jumada t-Tania", "Rajab", "Sha`ban", "Ramadan",
-				"Shawwal", "Dhu l-Qa`da", "Dhu l-Hijja");
 
 /*************************
 	holiday -- class provides methods to determine and output holidays in any given gregorian year
@@ -137,14 +90,14 @@ class holiday {
 			"aprilfoolsday" => gregorian_to_jd(4,1,$yr),
 			"cincodemayo" => gregorian_to_jd(5,5,$yr),
 			"mothersday" => nth_weekday_jd(2,dSUNDAY,5,$yr),
-			"memorialday" => $this->MemorialDay($yr),
+			"memorialday" => $this->memorialDay($yr),
 			"fathersday" => nth_weekday_jd(3,dSUNDAY,6,$yr),
 			"fourthofjuly" => gregorian_to_jd(7,4,$yr),
 			"laborday" => nth_weekday_jd(1,dMONDAY,9,$yr),
 			"columbusday" => nth_weekday_jd(2,dMONDAY,10,$yr),
 			"halloween" => gregorian_to_jd(10,31,$yr), 
 			"thanksgiving" => nth_weekday_jd(4, dTHURSDAY, 11,$yr),
-			"christmaseve" => gregorian_to_jd(12,24,$yr),
+			"christmas" => gregorian_to_jd(12,24,$yr),
 			"christmasday" => gregorian_to_jd(12,25,$yr),
 			"mardigras" => easter_jd($yr,-47),
 			"easter" =>	easter_jd($yr)
@@ -153,22 +106,8 @@ class holiday {
 		asort($this->holidays);
 	}
 
-	//method actually adds the holiday to the array, if it falls within
-	//the current gregorian year
-	//used for both hebrew and islamic holidays
-	//yr is appended if holiday name is repeated during the greorian year
-	function add_holiday_jd($name, $jd, $yr) {
-
-		//does date fall within the current gregorian calendar year?
-		if($jd >= $this->bjd && $jd <= $this->ejd) {
-			//append yr if the holiday is already in the list
-			if(array_key_exists($name,$this->holidays)) $name .= (" " . $yr);
-			$this->holidays[$name] = $jd;
-		}
-	}
-
 	//method determines Memorial Day
-	function MemorialDay ($yr)
+	function memorialDay ($yr)
 	{	//last mon in may
 		$jd = gregorian_to_jd(5,31,$yr);
 
@@ -182,7 +121,7 @@ class holiday {
 	//method prints/lists ALL holidays to the html output
 	//modify for the html output you want, or to return a string
 	//containing all output
-	function ListHolidays($y=0)
+	function listHolidays($y=0)
 	{
 		global $GREGORIAN_MONTH, $GREGORIAN_DAY;
 		//call with year $y for other than current year
@@ -210,7 +149,7 @@ class holiday {
 	//method returns a string listing all current holidays
 	//falling on the input julian day parameter ($jd)
 	//the string is empty is no holidays fall on that date
-	function GetHolidays($jd)
+	function getHolidays($jd)
 	{
 		$s="";
 		reset($this->holidays);
@@ -225,16 +164,32 @@ class holiday {
 		return ($s);
 	}
 
-	//method returns the julian day of the holiday corresponding to
-	//the input parameter $s (e.g.: "Christmas")
+	//method returns the date of the holiday corresponding to
+	//the input parameter $s = ct_holiday.slug (e.g.: "christmas")
 	//zero (0) is returned if no holidays correspond to $s
-	function GetHoliday($s)
+	
+	function getDate($s)
 	{
-		if (array_key_exists($s, $this->holidays)) return ($this->holidays[$s]);
+		if (array_key_exists($s, $this->holidays)) return (strtotime(jdtogregorian(intval($this->holidays[$s],10)+1)));
+
 
 		//the key doesn't exist, return 0
 		return (0);
 	}
+	
+	// static function to get the next ct_holidays
+	function getUpcomingHolidays($date=NULL) {
+		if (!$date) $date = time();
+		$year = date('Y');
+		$rs = aql::select("ct_holiday { slug, date where date is not null order by date_order asc }");
+		foreach ($rs as $r) {
+			if (strtotime($r['date'].'/'.$year) > $date ) $this_years_holidays[$r['slug']] = strtotime($r['date'].'/'.$year);
+			else $next_years_holidays[$r['slug']] = strtotime($r['date'].'/'.($year+1));
+		}
+		return(array_merge($this_years_holidays,$next_years_holidays));
+}
+
+	
 
 } //end class
 
