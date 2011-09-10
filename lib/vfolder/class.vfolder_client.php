@@ -42,6 +42,8 @@ class vfolder_client{
    public $memcache = NULL;
    public $memcache_key_prefix = NULL;
    public $memcache_refresh = NULL;
+   
+   public $config_memcache_signature = NULL;
 
    public $initialized = NULL;
 
@@ -83,6 +85,9 @@ class vfolder_client{
 
          $skip_request = $params['skip_request'];
       }
+
+      #these configs can affect item retrieval, and memcache needs to be aware of this
+      $this->config_memcache_signature = md5(var_export(array($username, $server_url, $files_domain, $default_gravity), true));
 
       if(!($username && $password)){
          $this->write_log('Username or Password not given, can not authenticate', true);
@@ -155,11 +160,7 @@ class vfolder_client{
    }
 
    #only generates the 'json' parameter portion of the post, authentication and 'func' and 'id' fields not set
-   protected function generate_post($json = NULL){
-      if(!$json){
-         return(NULL);
-      }
-
+   protected function generate_post($json = NULL, $func = NULL){
       $post = array();
 
       if(is_array($json) && $json['json']){
@@ -169,10 +170,10 @@ class vfolder_client{
       }
 
       if(is_array($this->func_boilerplate) && is_array($this->func_boilerplate[$func])){
-         is_array($post['json']) || (is_string($post['json']) && is_array($post['json'] = json_decode($post['json'], true))) || ($post['json'] = array());
+         is_array($post['json']) || (is_string($post['json']) && is_array($post['json'] = json_decode($post['json'], true))) || ($post['json'] = array()) && true;
 
          foreach($this->func_boilerplate[$func] as $key => $value){
-            !$post['json'][$key] && ($post['json'][$key] = $value);
+            $post['json'][$key] || ($post['json'][$key] = $value);
          }
          unset($key, $value);
       }
@@ -283,10 +284,10 @@ class vfolder_client{
       }
 
       $key_prefix = $this->memcache_key_prefix . $id;
-      $key_suffix = "_" . md5(var_export($post, true));
+      $key_suffix = '_' . md5(var_export($post, true)) . '_' . $this->config_memcache_signature;
       $key = $key_prefix . $key_suffix;
 
-      $keys_key = $key_prefix . "_keys";
+      $keys_key = $key_prefix . '_keys';
 
       switch($func){
          case('folders'):
@@ -342,10 +343,10 @@ class vfolder_client{
       }
 
       $key_prefix = $this->memcache_key_prefix . $id;
-      $key_suffix = "_" . md5(var_export($post, true));
+      $key_suffix = '_' . md5(var_export($post, true)) . '_'. $this->config_memcache_signature;
       $key || ($key = $key_prefix . $key_suffix);
 
-      $keys_key = $key_prefix . "_keys";
+      $keys_key = $key_prefix . '_keys';
 
       switch($func){
          case('items'):
@@ -392,7 +393,7 @@ class vfolder_client{
          $memcache_key = $params['memcache_key'];
       }
 
-      $_post = $post = $this->generate_post($json);
+      $_post = $post = $this->generate_post($json, $func);
 
       if($this->memcache && !($skip_memcache || $skip_memcache_before)){
          if($cache = $this->memcache_before_request($func, $id, $post)){
@@ -408,8 +409,8 @@ class vfolder_client{
          }
       }
 
-      $func && ($post['func'] = $func);
-      $id && ($post['id'] = $id);
+      $func && ($post['func'] = $func); 
+      ((is_array($id) && ($id = implode(',', $id))) || $id) && ($post['id'] = $id);
 
       if($post['json']){
          if(is_array($post['json'])){
@@ -584,7 +585,7 @@ class vfolder_client{
       }
  
       if($memcache = $this->memcache){
-         $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));
+         $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true))) . '_' . $this->config_memcache_signature;
 
          if(!($this->memcache_refresh || (is_array($extra_params) && $extra_params['refresh_memcached']))){ 
             if($this->memcache_debug){
@@ -771,7 +772,7 @@ class vfolder_client{
       }
 
       if($memcache = $this->memcache){
-         $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true)));
+         $memcache_key = ($this->memcache_key_prefix . md5(var_export(func_get_args(), true))) . '_' . $this->config_memcache_signature;
 
           if(!($this->memcache_refresh || (is_array($extra_params) && $extra_params['refresh_memcached']))){
             if($this->memcache_debug){
