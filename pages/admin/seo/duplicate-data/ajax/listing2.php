@@ -13,12 +13,12 @@
 
 ?>
 
-<fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
+<fieldset style="width:450px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
     	<legend class="legend">Phrase Part 2 (<?=count($listing2)?> Phrases)</legend>
 <?
 		if ($listing2) foreach ($listing2 as $data) {
 ?>
-			<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left;"> <input type="radio" name="phrase2" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="phrase-listing2-radio" id="<?=$data['lower_phrase']?>2" /> <label for="<?=$data['lower_phrase']?>2"><?=$data['lower_phrase']?></label></div>
+			<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>) {<?=$data['phrase_id']?>}</div><div style="float:left;"> <input type="radio" name="phrase2" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="phrase-listing2-radio" id="<?=$data['lower_phrase']?>2" /> <label for="<?=$data['lower_phrase']?>2"><?=$data['lower_phrase']?></label></div>
         	<div class="clear"></div>
 <?	
 		} else echo " No Matches";

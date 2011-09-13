@@ -173,7 +173,7 @@
 			})
 		});
 		
-		$('.url_cb_click').live('click',function() {
+		/*$('.url_cb_click').live('click',function() {
 			field = $(this).attr('field');
 			website_page_id = $('#url_specific').attr('website_page_id')
 			website_id = $('#url_specific').attr('website_id')
@@ -184,7 +184,8 @@
 			$.post('/admin/seo/webpage/ajax/show-input-data',{field:field, url_specific: url_specific, uri: uri, website_id: website_id, website_page_id: website_page_id},function(data) {
 				$('#field_'+field).val(data)
 			});
-		})
+		});
+		*/
 	});
 </script>
 

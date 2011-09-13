@@ -27,14 +27,14 @@
 ?>
     <input type="hidden" id="type" value="<?=$type?>" />
 	<input type="hidden" id="person_id" value="<?=PERSON_ID?>" />
-    <fieldset style="width:350px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
+    <fieldset style="width:450px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
     	<legend class="legend"><?=$type=='phrase'?'Phrase Part ':'Sentence #'?>1 (<?=$count?> Phrases)</legend>
 <?
 		if ($listing) foreach ($listing as $data) {
 			
 			//if (array_search($data['phrase_id'],$phrase[1]) || array_search($data['phrase_id'],$phrase[2])) $style = 'style="color:#999"'; else $style='';
 ?>
-			<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left;"> <input type="radio" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" name="phrase1" phrase_id="<?=$data['phrase_id']?>" class="<?=$type?>-listing1-radio" id="<?=$data['lower_phrase']?>" /> <label for="<?=$data['lower_phrase']?>" <?=$style?>><?=$data['lower_phrase']?></label></div>
+			<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>) {<?=$data['phrase_id']?>}</div><div style="float:left;"> <input type="radio" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" name="phrase1" phrase_id="<?=$data['phrase_id']?>" class="<?=$type?>-listing1-radio" id="<?=$data['lower_phrase']?>" /> <label for="<?=$data['lower_phrase']?>" <?=$style?>><?=$data['lower_phrase']?></label></div>
         	<div class="clear"></div>
 <?	
 		}
