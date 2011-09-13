@@ -86,9 +86,6 @@ class vfolder_client{
          $skip_request = $params['skip_request'];
       }
 
-      #these configs can affect item retrieval, and memcache needs to be aware of this
-      $this->config_memcache_signature = md5(var_export(array($username, $server_url, $files_domain, $default_gravity), true));
-
       if(!($username && $password)){
          $this->write_log('Username or Password not given, can not authenticate', true);
 
@@ -123,6 +120,9 @@ class vfolder_client{
       $this->secure = $secure;
 
       $this->server_url = $server_url;
+
+      #these configs can affect item retrieval, and memcache needs to be aware of this
+      $this->config_memcache_signature = md5(var_export(array($username, $server_url, $files_domain), true));
 
       if(self::is_MongoId($username)){
          $this->accounts_id = $username;
@@ -342,7 +342,7 @@ class vfolder_client{
          $id = $response['folders_id']; #because folders can be identified by either path or _id, we need to make sure memcached only uses one or the other, never both
       }
 
-      $key_prefix = $this->memcache_key_prefix . $id;
+      $key_prefix = $this->memcache_key_prefix . "_" . $id;
       $key_suffix = '_' . md5(var_export($post, true)) . '_'. $this->config_memcache_signature;
       $key || ($key = $key_prefix . $key_suffix);
 
@@ -357,6 +357,8 @@ class vfolder_client{
          case('items/edit'):
             $this->memcache_delete_keys($keys_key);
             break;
+         case('items/move'):
+            $this->memcache_delete_keys($this->memcache_key_prefix . $response['old_folders_id'] . "_keys");
          case('items/remove'):
             $this->memcache_delete_keys($keys_key);
          case('items/add'):
@@ -741,6 +743,34 @@ class vfolder_client{
 
       return($this->make_request('items', $items_id, ($query?$query:NULL), array('skip_memcache_before' => true, 'memcache_key' => $memcache_key)));
    }
+
+   public function move_item($items_id = NULL, $params = NULL){
+      if(!$items_id){
+         $this->write_log('No items_id given, can not move item', true);
+
+         return(NULL);
+      }
+
+      if(!$params){
+         $this->write_log('No folders identifier given, will not move item', true);
+
+         return(NULL);
+      }else{
+         if(!is_array($params)){
+            $folders_identifier = $params;
+            $params = array('folder' => $folders_identifier);
+         }
+      }
+
+      if(!is_array($params)){
+         $this->write_log('Malformed input, will not move item', true);
+
+         return(NULL);
+      }
+
+      return($this->make_request('items/move', $items_id, json_encode($params), array('skip_memcache_before' => true)));
+   }
+
 
    public function edit_item($items_id = NULL, $params = NULL){
       if(!$items_id){
