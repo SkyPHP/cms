@@ -3,19 +3,26 @@
 <?
 	global $website_id;
 	if (!$website_id) $website_id=$_POST['website_id'];
+	if (!$website_id) {
+		$rs = aql::select("website { where domain = '{$_SERVER['HTTP_HOST']}' }");	
+		$website_id = $rs[0]['website_id'];
+	}
 	if (!$page['website_page_id']) $page['website_page_id'] = $_POST['website_page_id'];
-	if (!$uri) $uri = $_POST['uri'];	
-	if ($_POST['val'] == 1) $uri_enabled = true;
+	$uri = $_POST['uri'];
+	
+	if ($_POST['uri_enabled'] == 1 || $url_specific_flag) $uri_enabled = true;
+	else $uri_enabled=false;
 	
  	if (is_numeric($page['website_page_id'])) {
 		$page['website_page_ide'] = encrypt($page['website_page_id'],'website_page');
 		$rs = aql::select("website_page_data { field, value where website_page_id = {$page['website_page_id']} }");
-		foreach($rs as $r) $fields[$r['field']]=$r['value'];
+		if ($rs) foreach($rs as $r) $fields[$r['field']]=$r['value'];
 
-		$rs2 = aql::select("website_uri_data { field, value, on_website where website_id = {$website_id} and uri = '{$uri}' }");
-		foreach($rs2 as $r) {
-			$fields2[$r['field']] = $r['value'];
-			$on_website[$r['field']] = $r['on_website'];
+		if ($uri_enabled) {
+			$rs2 = aql::select("website_uri_data { field, value, on_website where website_id = {$website_id} and uri = '{$uri}' }");
+			if ($rs2) foreach($rs2 as $r) {
+				$fields2[$r['field']] = $r['value'];
+			}
 		}
 	
 		if (is_array($seo_field_array)) {
@@ -86,18 +93,18 @@
 					
 	?>			
 					<div style="float:left; padding:10px;">
-                    	<!--<span class="uri_field_cb" <?=!$uri_enabled?'style="display:none;"':''?>><input class="url_cb_click" field="<?=$field?>" type="checkbox" id="uri_cb_<?=$field?>" style="margin-bottom:2px;" <?=($fields2[$field] && $on_website[$field])?'checked="checked"':'' ?> /> URL Specific</span>--> <label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
+                    	<? /*<span class="uri_field_cb" <?=!$uri_enabled?'style="display:none;"':''?>><input class="url_cb_click" field="<?=$field?>" type="checkbox" id="uri_cb_<?=$field?>" style="margin-bottom:2px;" <?=($fields2[$field] && $on_website[$field])?'checked="checked"':'' ?> /> URL Specific</span> */ ?> <label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
 						<span style="font-size:10px;	color:#060;	margin-left:10px;" id="saved_<?=$y?>"></span><br>
 	<?
 						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' )  {
 							$width = 410;
 	?>	
-							<textarea uri_enabled="<?=$fields2[$field] && $uri_enabled && $on_website[$field]?1:0?>" id="field_<?=$field?>" style="width:410px; height:150px;" max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$fields2[$field] && $uri_enabled && $on_website[$field]?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
+							<textarea uri_enabled="<?=$uri_enabled?1:0?>" id="field_<?=$field?>" style="width:410px; height:150px;" max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
 	<?
 						} else {
 							$width = 850;
 	?>					
-							<input uri_enabled="<? //$fields2[$field] && $uri_enabled && $on_website[$field]?1:0 ?>" id="field_<?=$field?>" type="text" class="seo-input" max="<?=$char_max?>" field="<?=$field?>" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" value="<?=$fields2[$field] && $uri_enabled && $on_website[$field]?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?>" style="width:850px;" />
+							<input uri_enabled="<?=$uri_enabled?1:0?>" id="field_<?=$field?>" type="text" class="seo-input" max="<?=$char_max?>" field="<?=$field?>" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" value="<?=$uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?>" style="width:850px;" />
 	<?                    
 						}
 	?>					
