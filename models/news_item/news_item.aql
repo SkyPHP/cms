@@ -1,0 +1,13 @@
+news_item {
+
+    subject,
+    message,
+    insert_time,
+    category,
+    mod__person_id
+
+    news_who {
+        who
+    }
+
+}
