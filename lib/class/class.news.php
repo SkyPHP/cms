@@ -72,35 +72,27 @@ class news {
         }
 
         // return a distinct field in a table with an order by
-        $table = 'news_who';
-        $field = 'news_item_id';
         $where = "who in ( $who_csv )";
         $order_by = 'insert_time desc';
+        $person_id = PERSON_ID ? PERSON_ID : 0;
         $sql = "
-            SELECT {$field} FROM (
-                SELECT DISTINCT ON (q.{$field}) {$field}, row FROM (
+            SELECT news_item_id FROM (
+                SELECT DISTINCT ON (q.news_item_id) news_item_id, row FROM (
                     SELECT
-                        {$field},
+                        news_who.news_item_id,
                         row_number() OVER (ORDER BY {$order_by}) AS row
-                    FROM {$table}
-                    WHERE {$table}.active = 1
+                    FROM news_who
+                    LEFT JOIN news_hide on news_hide.news_item_id = news_who.news_item_id
+                        and news_hide.person_id = $person_id
+                        and news_hide.active = 1
+                    WHERE news_who.active = 1
+                    AND news_hide.id is null
                     AND {$where}
                     ORDER BY {$order_by}
                     OFFSET {$offset}
                     LIMIT {$limit}
                 ) AS q
             ) AS fin ORDER BY row";
-
-        if ( PERSON_ID ) $sql = "
-            ($sql)
-            EXCEPT
-            (
-                SELECT news_item_id
-                FROM news_hide
-                WHERE active = 1
-                AND person_id = " . PERSON_ID . "
-            )";
-
         //print_pre($sql);
         elapsed('before news query');
         $arr = sql_array($sql);
@@ -121,16 +113,17 @@ class news {
     public function add($param) {
 
         $n = new news_item();
-        $n->subject = $param['subject'];
-        $n->message = $param['message'];
-        $n->mod__person_id = $param['mod__person_id'];
-        if ( $param['time'] ) $n->insert_time = $param['time'];
         $n->category = $param['category'];
+        $n->json = $param['json'];
+        $n->mod__person_id = $param['mod__person_id'];
+        //$n->insert_time = 'now()';
+        if ( $param['time'] ) $n->insert_time = $param['time'];
         $who = $param['who'];
         if ( !is_array($who) ) $who = array($who);
         $who_array = $who;
         foreach ( $who_array as $i => $who ) {
             $n->news_who[$i]['who'] = $who;
+            //$n->news_who[$i]['insert_time'] = 'now()';
         }
         $n->save();
 
@@ -141,8 +134,11 @@ class news {
      */
     public function ago($insert_time) {
         $then = strtotime($insert_time);
-        $now = time();
+        $r = sql("select current_timestamp(0) as now");
+        $now = strtotime($r->Fields('now'));
         $seconds_ago = $now - $then;
+        //return 'insert_time: ' . $insert_time . ' , now: ' . $now;
+        if ( $seconds_ago < 0 ) return 'a while ago';
         $intervals = array(
             'year' => 60 * 60 * 24 * 365,
             'month' => 60 * 60 * 24 * 30,
