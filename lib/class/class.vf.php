@@ -1,12 +1,14 @@
 <?
 
+include('lib/class/class.vfolder_client.php');
+
 array_walk(vf::$deps, function($dep) {
    if (!class_exists($dep)) include 'lib/class/class.'.$dep.'.php';
 });
 
 class vf {
 
-   public static $deps = array('vfolder_client', 'vf_gallery_inc', 'vf_gallery', 'vf_uploader', 'vf_slideshow'); 
+   public static $deps = array(/*'vfolder_client',*/ 'vf_gallery_inc', 'vf_gallery', 'vf_uploader', 'vf_slideshow');
 
    public static $client = NULL;
 
