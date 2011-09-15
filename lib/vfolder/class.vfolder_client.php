@@ -47,6 +47,8 @@ class vfolder_client{
 
    public $initialized = NULL;
 
+   protected $debug = NULL;
+
    public function __construct($params = NULL){
       $this->log = array();
       $this->errors = array();
@@ -82,6 +84,8 @@ class vfolder_client{
          ($this->memcache_key_prefix = $params['memcache_key_prefix']) || ($this->memcache_key_prefix = 'vfolder:');
          $this->memcache_refresh = (bool)$params['memcache_refresh'];
          $this->memcache_debug = (bool)$params['memcache_debug'];
+
+         $this->debug = (bool)$params['debug'];
 
          $skip_request = $params['skip_request'];
       }
@@ -497,6 +501,10 @@ class vfolder_client{
 
       if($this->memcache && $decoded && !($skip_memcache || $skip_memcache_after)){
          $this->memcache_after_request($func, $id, $_post, $decoded, $memcache_key);
+      }
+
+      if($this->debug){
+         print_r($response);
       }
 
       return($return_text?$response:($decoded?$decoded:$response));	
