@@ -42,12 +42,14 @@ class vfolder_client{
    public $memcache = NULL;
    public $memcache_key_prefix = NULL;
    public $memcache_refresh = NULL;
+   public $memcache_cache_error = NULL;
    
    public $config_memcache_signature = NULL;
 
    public $initialized = NULL;
 
-   protected $debug = NULL;
+   public $debug = NULL;
+   public $debug_callback = NULL;
 
    public function __construct($params = NULL){
       $this->log = array();
@@ -55,6 +57,8 @@ class vfolder_client{
 
       $this->max_log_size = 50;
  
+      $this->write_log('config: ' . var_export($params, true));
+
       if(func_num_args() > 1){
          $args = func_get_args(); 
 
@@ -84,8 +88,13 @@ class vfolder_client{
          ($this->memcache_key_prefix = $params['memcache_key_prefix']) || ($this->memcache_key_prefix = 'vfolder:');
          $this->memcache_refresh = (bool)$params['memcache_refresh'];
          $this->memcache_debug = (bool)$params['memcache_debug'];
+         
+         ($this->memcache_cache_error = true) && $params['memcache_cache_error'] !== NULL && ($this->memcache_cache_error = (bool)$params['memcache_cache_error']);
 
          $this->debug = (bool)$params['debug'];
+         $this->debug_callback = $params['debug_callback'];
+
+         $return_log = $params['return_log'];
 
          $skip_request = $params['skip_request'];
       }
@@ -96,12 +105,23 @@ class vfolder_client{
          return(NULL);
       }
 
-      if($files_domain){
-         $this->func_boilerplate = array();
+      $this->func_boilerplate = array();
 
-         $this->func_boilerplate['items'] = $this->func_boilerplate['items/edit'] = array(
-            'files_domain' => $files_domain
-         );
+      foreach(array(
+         'all',
+         'items', 'items/add', 'items/edit', 'items/remove', 'items/alter', 'items/move',
+         'folders', 'folders/add', 'folders/edit'
+      ) as $i){
+         $this->func_boilerplate[$i] = array();
+      }
+      unset($i);
+
+      if($files_domain){
+         $this->func_boilerplate['all']['files_domain'] = $files_domain;
+      }
+      
+      if($return_log){
+         $this->func_boilerplate['all']['return_log'] = true;
       }
 
       if($secure){
@@ -126,7 +146,7 @@ class vfolder_client{
       $this->server_url = $server_url;
 
       #these configs can affect item retrieval, and memcache needs to be aware of this
-      $this->config_memcache_signature = md5(var_export(array($username, $server_url, $files_domain), true));
+      $this->config_memcache_signature = md5(var_export(array($username, $server_url, $files_domain, $return_log), true));
 
       if(self::is_MongoId($username)){
          $this->accounts_id = $username;
@@ -173,16 +193,25 @@ class vfolder_client{
          $post['json'] = $json;
       }
 
-      if(is_array($this->func_boilerplate) && is_array($this->func_boilerplate[$func])){
+      if(is_array($this->func_boilerplate)){
          is_array($post['json']) || (is_string($post['json']) && is_array($post['json'] = json_decode($post['json'], true))) || ($post['json'] = array()) && true;
-
-         foreach($this->func_boilerplate[$func] as $key => $value){
-            $post['json'][$key] || ($post['json'][$key] = $value);
+ 
+         if(is_array($this->func_boilerplate['all'])){
+            foreach($this->func_boilerplate['all'] as $key => $value){
+               $post['json'][$key] || ($post['json'][$key] = $value);
+            }
+            unset($key, $value);
          }
-         unset($key, $value);
-      }
 
-      return($post);
+         if(is_array($this->func_boilerplate[$func])){
+            foreach($this->func_boilerplate[$func] as $key => $value){
+               $post['json'][$key] || ($post['json'][$key] = $value);
+            }
+            unset($key, $value);
+         }
+     }
+
+     return($post);
    }
 
    protected function memcache_delete_keys($keys_key = NULL){
@@ -236,7 +265,7 @@ class vfolder_client{
          return(NULL);
       }
 
-      if(is_array($obj) && !$obj['success']){
+      if(is_array($obj) && !$obj['success'] && !$this->memcache_cache_error){
          $this->write_log('Return object indicates failures, will not store item in memcached');
 
          return(NULL);
@@ -339,7 +368,10 @@ class vfolder_client{
       }
 
       if(!$response['success']){
-         $this->write_log('Response given indicated failure, will not interface with memcached', true);
+         if(!$this->memcache_cache_error){
+            $this->write_log('Response given indicated failure, will not interface with memcached', true);
+            return(NULL);
+         }
       }
 
       if(strpos($func, 'folders') === 0){
@@ -457,6 +489,8 @@ class vfolder_client{
          return(NULL);
       }
 
+      $this->write_log('request POST: ' . var_export($post, true));
+
       if(!curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $post)){
          $this->write_log('curl_setopt CURLOPT_POSTFIELDS failed, ' . (($error = curl_error($curl_handle))?$error:'unknown error') . ', can not make request', true);
 
@@ -504,7 +538,11 @@ class vfolder_client{
       }
 
       if($this->debug){
-         print_r($response);
+         if(is_callable($this->debug_callback)){
+            $this->debug_callback($return_text?$response:($decoded?$decoded:$response));
+         }else{
+            print_r($return_text?$response:($decoded?$decoded:$response));
+         }
       }
 
       return($return_text?$response:($decoded?$decoded:$response));	
