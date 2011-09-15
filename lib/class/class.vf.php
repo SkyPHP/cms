@@ -1,12 +1,14 @@
 <?
 
+include('lib/class/class.vfolder_client.php');
+
 array_walk(vf::$deps, function($dep) {
    if (!class_exists($dep)) include 'lib/vfolder/class.'.$dep.'.php';
 });
 
 class vf {
 
-   public static $deps = array('vfolder_client', 'vf_gallery_inc', 'vf_gallery', 'vf_uploader', 'vf_slideshow'); 
+   public static $deps = array(/*'vfolder_client',*/ 'vf_gallery_inc', 'vf_gallery', 'vf_uploader', 'vf_slideshow');
 
    public static $client = NULL;
 
@@ -99,7 +101,8 @@ class vf {
    }
 
    public static function getRandomItem($folders_id = NULL, $width = NULL, $height = NULL, $crop = NULL){
-      return((object) self::getRandomItems($folders_id, 1, $width, $height, $crop));
+       $items = self::getRandomItems($folders_id, 1, $width, $height, $crop);
+       return (object) $items[0];
    }
 
    public static function getRandomItems($folders_id = NULL, $limit = NULL, $width = NULL, $height = NULL, $crop = NULL){
@@ -125,7 +128,8 @@ class vf {
          }
       }
 
-      return((object) self::$client->get_folder($folders_id, $request_array));
+      $folder = self::$client->get_folder($folders_id, $request_array);
+      return $folder['items'];
    }
 
    public static function removeItem($items_id = NULL) {
