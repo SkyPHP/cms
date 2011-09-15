@@ -30,7 +30,7 @@
 			if ($page_data['url_specific']) {
 				$mem_key = "seo:".$website_id.":".$p->urlpath;
 				$uri_data = mem($mem_key);
-				$uri_data = false;
+				$uri_data =  NULL;
 				if (!$uri_data) {
 					$ud = aql::select("website_uri_data { field, value where website_id = {$website_id} and uri = '{$p->urlpath}' and on_website = 1 and value is not null }");
 					foreach($ud as $u) {
