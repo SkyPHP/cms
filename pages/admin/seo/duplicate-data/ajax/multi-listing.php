@@ -16,29 +16,29 @@
     <input type="hidden" id="type" value="<?=$type?>" />
 	<input type="hidden" id="person_id" value="<?=PERSON_ID?>" />
 <div class="has-floats">	
-	<div style="float:left">
+	<div id="listing1" style="float:left">
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Phrase Part 1</legend>
 <?
 			if ($listing) foreach ($listing as $data) {
 ?>
 				<div id="listing1_<?=$data['phrase_id']?>">
-					<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>) {<?=$data['phrase_id']?>}</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase1_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="multi-listing1-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width:430px;"> <label for="phrase1_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
+					<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>) {<?=$data['phrase_id']?>}</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase1_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="listing1-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width:430px;"> <label for="phrase1_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
         			<div class="clear"></div>
                 </div>
 <?	
-		}
+			}
 ?>
 		</fieldset>
-		</div>
-		<div style="float:left;">
+	</div>
+	<div id="listing2" style="float:left;">
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Phrase Part 2</legend>
 <?
 			if ($listing) foreach ($listing as $data) {
 ?>
 				<div id="listing2_<?=$data['phrase_id']?>">
-					<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>) {<?=$data['phrase_id']?>}</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase2_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="multi-listing2-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width: 430px;"><label for="phrase2_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
+					<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>) {<?=$data['phrase_id']?>}</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase2_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="listing2-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width: 430px;"><label for="phrase2_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
         			<div class="clear"></div>
                 </div>
 <?	
@@ -46,7 +46,7 @@
 ?>
     	</fieldset>
 	</div>
-	<div style="float:left;">
+	<div id="modifier" style="float:left;">
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 		<legend class="legend">Modifier</legend>
 <?
@@ -62,4 +62,4 @@
     	</fieldset>
 	</div>
 </div>
-<input type="button" class="save-multi" value="Save" style="margin-top:10px;" />
+<input type="button" id="save" value="Save" style="margin-top:10px;" />

@@ -1,13 +1,7 @@
 <?
 	$p->title = 'Duplicate Data System ';
-	$p->tabs = array(
-		'Title' => '/admin/seo/duplicate-data/title',
-		'H1' => '/admin/seo/duplicate-data/h1',
-		'H1 Blurb' => '/admin/seo/duplicate-data/h1-blurb',
-		'Meta Title' => '/admin/seo/duplicate-data/meta-title',
-		'Meta Description' => '/admin/seo/duplicate-data/meta-description'
-	);
-	switch(IDE) {
+	
+	switch($_GET['type']) {
 		
 		case 'title':
 			$title .= '- Title';
@@ -19,63 +13,35 @@
 			$title .= '- H1';
 		break;
 		
-		case 'h1-blurb':
-			$type = "paragraph";
-			$title .= '- H1 Blurb';
-		break;
-		
 		case 'meta-title':
 			$type = "phrase"; 
 			$title .= '- Meta Title';
 		break;
 		
-		case 'meta-description':
-			$type = "paragraph";
-			$title .= '- Meta Description';
-		break;
 	}
-	snippet::tab_redirect($p->tabs);
-	
+		
 	$p->template('seo','top');
 		
-	snippet::tabs($p->tabs);
-	
-	if ($type == 'phrase') {
-		$filters = array(
-			'category',
-			'market_name',
-			'market',
-			'base',
-			'volume',		
-		);
-		$table = 'dup_phrase_data';
-		$field = 'phrase';
-		$width = 310;
-		$listing = aql::select($table." { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume order by volume DESC, phrase asc }"); 
-	}
-	else if ($type == 'paragraph') {
-		$filters = array();
-		$table = 'dup_sentence_data';
-		$field = 'sentence';
-		$listing = aql::select($table." { sentence where market is not null order by sentence asc }");
-	}
-	
+	$filters = array(
+		'category',
+		'market_name',
+		'market',
+		'base',
+		'volume',		
+	);
+	$width = 310;
+	$listing = aql::select("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume order by volume DESC, phrase asc }"); 
+		
 	$count = count($listing);
 	
 	foreach ($seo_field_array as $header => $arr) {
 		foreach ($arr as $field => $limit) {
-			if ($field == str_replace('-','_',IDE)) $char_count_limit = $limit;
+			if ($field == str_replace('-','_',$_GET['type'])) $char_count_limit = $limit;
 		}
 	}	
 ?>	
-	<div style="margin: 15px 0 0 0;">
-     	<input type="radio" id="single-on" <? if ($_GET['area'] != 'auto') echo 'checked' ?> value="single" class="multi-switch" name="multi-switch" /> <label for="single-on">Single</label><br>
-        <input type="radio" id="multi-on" <? if ($_GET['area'] == 'auto') echo 'checked' ?> value="multi" class="multi-switch" name="multi-switch" /> <label for="multi-on">Multi</label><br>
-  	</div>
 	<div style="padding-top:10px;">
 		<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
-		<input type="hidden" id="table" value="<?=$table?>" />
-		<input type="hidden" id="listing_no" value="listing1" />
 		<input type="hidden" id="char_count_limit" value="<?=$char_count_limit?>" />
 		<input type="hidden" id="seo_field" value="<?=str_replace('-','_',IDE)?>" />
 <?
@@ -90,27 +56,13 @@
 		<div class="clear"></div>
 	</div>
 	
-	<div id="multi" style="display:none;">
+	<div id="multi">
 		<div id="multi-listing">
 <?
 			include ('pages/admin/seo/duplicate-data/ajax/multi-listing.php');
 ?>
 		</div>
     </div>
-	<div id="single">
-    	
-		<fieldset style="width:85%">
-			<legend class="legend">Final Phrase</legend>
-			<div id="saved-message"></div>
-			<div id="char-count"></div>
-			<input type="text" id="final-phrase" style="width:93%; font-size:16px;" readonly  /><br>
-			<div style="margin-top:5px"><input type="button" value="save" id="save-final" /> <input type="button" value="clear" id="clear-all" /></div>
-		</fieldset>   
-		<div id="listing" style="float:left;"><? include ('pages/admin/seo/duplicate-data/ajax/listing.php'); ?></div>
-		<div id="listing2" style="float:left;"></div>
-		<div id="listing3" style="float:left;"></div>
-		<div class="clear"></div>
-	</div>
-<?	
+<?
 	$p->template('seo','bottom');	
 ?>

@@ -29,8 +29,6 @@ $(function() {
 		});
     });
 
-	table = $('#table').val();
-	
 	$('.filter').live('click',function() {
 		var $this = $(this);
 		var filter = $this.attr('filter');
@@ -50,7 +48,17 @@ $(function() {
 	
 	$('.phrase-filter-radio').live('click',function() {
 		var phrase_id = $('#final-phrase').attr('p1');
-		var section = $(this).attr('section');
+		$('.multi-listing1-cb').each(function(index, element) {
+			if ($(this).attr('checked')) cb1 = true;
+			else cb1 = false;
+		});
+		$('.multi-listing2-cb').each(function(index, element) {
+			if ($(this).attr('checked')) cb2 = true;
+			else cb2 = true;
+		});
+		if (cb1 && !cb2) section = 'listing2';
+		else if (cb1 && cb2) section = 'modifier';
+		else section = 'listing1';
 		var market = $("input[name=market]:checked").val();
 		var volume = $("input[name=volume]:checked").val();
 		var market_name = $("input[name=market_name]:checked").val();
@@ -82,165 +90,21 @@ $(function() {
 		//});
 	});
 
-	$('.phrase-listing1-radio').live('click',function() {
-		phrase_id = $(this).attr('phrase_id');
-		$('.phrase-filter-radio').attr('section','listing2');
-		$('.all').attr('section','listing2');
-		$('#listing_no').val('listing2');
-		$('#saved-message').html('');
-		var market = $("input[name=market]:checked").val();
-		var volume = $("input[name=volume]:checked").val();
-		var market_name = $("input[name=market_name]:checked").val();
-		var category = $("input[name=category]:checked").val();
-		var base = $("input[name=base]:checked").val();
-		var val1 = $(this).attr('phrase');
-		var val2 = $('input[name=phrase2]:checked').attr('phrase');
-		var val3 = $('input[name=phrase3]:checked').attr('phrase');
-		var vol1 = $(this).attr('volume');
-		var value = val1.trim();
-		if (val2) value = value + ' | ' + val2.trim();
-		if (val3) value = value + ' | ' + val3.trim();
-		$('#final-phrase').val(value.capitalize());
-		$('#final-phrase').attr('p1',phrase_id);
-		$('#final-phrase').attr('vol1',vol1);
-		if (!$('input[name=phrase2]:checked').val()) {
-			$.post('/admin/seo/duplicate-data/ajax/listing2',
-				{ 
-					market: market,
-					market_name_n: market_name,  
-					category: category,
-					base: base,
-					phrase_id: phrase_id
-				},
-				function(data) {
-					$('#listing2').html(data);
-				}
-			);
-		}
-		trigger_count();
-	});
-	
-	$('.phrase-listing2-radio').live('click',function() {
-		$('.phrase-filter-radio').attr('section','listing3');
-		$('.all').attr('section','listing3');
-		$('#listing_no').val('listing3');
-		$('#saved-message').html('');
-		var market = $("input[name=market]:checked").val();
-		var volume = $("input[name=volume]:checked").val();
-		var market_name = $("input[name=market_name]:checked").val();
-		var category = $("input[name=category]:checked").val();
-		var base = $("input[name=base]:checked").val();
-		
-		var vol2 = $(this).attr('volume');
-		var val2 = $(this).attr('phrase');
-		var val3 = $("input[name=phrase3]:checked").attr('phrase');
-		var val1 = $("input[name=phrase1]:checked").attr('phrase');
-		var phrase_id = $(this).attr('phrase_id');
-		var value = val1.trim();
-		if (val2) value = value + ' | ' + val2.trim();
-		if (val3) value = value + ' | ' + val3.trim();
-		$('#final-phrase').val(value.capitalize());
-		$('#final-phrase').attr('p2',phrase_id);
-		$('#final-phrase').attr('vol2',vol2);
-		if (!$('input[name=phrase3]:checked').val()) {
-			$.post('/admin/seo/duplicate-data/ajax/listing3',
-				{ 
-					market: market,
-					market_name_n: market_name,  
-					category: category,
-					base: base,
-					phrase_id: phrase_id
-				},
-				function(data) {
-					$('#listing3').html(data);
-				}
-			);
-		}
-		trigger_count();
-	});
-	
-	$('.phrase-listing3-radio').live('click',function() {
-		var val3 = $(this).attr('phrase');
-		var val2 = $("input[name=phrase2]:checked").attr('phrase');
-		var val1 = $("input[name=phrase1]:checked").attr('phrase');
-		var modifier_id = $(this).attr('modifier_id');
-		value = val1.trim();
-		if (val2) value = value + ' | ' + val2.trim();
-		if (val3) value = value + ' | ' + val3.trim();
-		$('#final-phrase').val(value.capitalize());
-		$('#final-phrase').attr('mod',modifier_id);
-		trigger_count();
-	});
-	
-	$('input[name=multi-switch]').live('click',function() {
-		val = $(this).val();
-		if (val=='multi') {
-			$('#single').fadeOut('slow',function() {
-				$('#multi').fadeIn('slow');
-			});
-			$('.phrase-filter-radio').attr('section','multi-listing');
-			$('.all').attr('section','multi-listing');	
-		}
-		else {
-			$('#multi').fadeOut('slow',function() {
-				$('#single').fadeIn('slow');
-			});
-			$('.phrase-filter-radio').attr('section',$('#listing_no').val());
-			$('.all').attr('section',$('listing_no').val());	
-		}
-	});
-	
-	$('#save-final').live('click',function() {
-		var val = $('#final-phrase').val();
-		var vol1 = $('#final-phrase').attr('vol1');
-		var vol2 = $('#final-phrase').attr('vol2');
-		var total_volume = parseInt(vol1) + parseInt(vol2);
-		var p1 = $('#final-phrase').attr('p1');
-		var p2 = $('#final-phrase').attr('p2');
-		var mod = $('#final-phrase').attr('mod');
-		var person_id = $('#person_id').val();
-		var category = $("input[name=category]:checked").val();
-		var seo_field = $("#seo_field").val();
-		if (val) {
-			var data = {
-				'phrase1__dup_phrase_data_id' : p1,
-				'phrase2__dup_phrase_data_id' : p2,
-				'total_volume' : total_volume,
-				'category' : category,
-				'seo_field' : seo_field,
-				'dup_modifier_id' : mod,
-				'mod__person_id' : person_id
-			};
-			$('#saved-message').aqlSave('dup_phrase_group',data);
-		}
-		else alert('Please select your choices from the lists below.');
-	});
-	
-	$('#clear-all').live('click',function() {
-		$('.phrase-filter-radio').attr('section','listing');
-		$('.all').attr('section','listing');
-		$('#final-phrase').val('');
-		$('.phrase-listing1-radio').attr('checked','');
-		$('.phrase-listing2-radio').attr('checked','');
-		$('#listing2').html('');
-		$('#listing3').html('');
-	});
-	
-	$('.multi-listing1-cb').live('click',function() {
+	$('.listing1-cb').live('click',function() {
 		phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) $('#listing2_'+phrase_id).hide();
 		else $('#listing2_'+phrase_id).show();
 		
 	});
 	
-	$('.multi-listing2-cb').live('click',function() {
+	$('.listing2-cb').live('click',function() {
 		phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) $('#listing1_'+phrase_id).hide();
 		else $('#listing1_'+phrase_id).show();
 		
 	});
 	
-	$('.save-multi').live('click',function(){
+	$('#save').live('click',function(){
 		$('#multi-saved').html('<img src="/images/loading.gif" />');
 		var text;
 		volume1 = new Array();
@@ -252,14 +116,14 @@ $(function() {
 		phrase2_ids = new Array();
 		mod_ids = new Array();
 		var category = $("input[name=category]:checked").val();
-		$('.multi-listing1-cb').each(function(index) {
+		$('.listing1-cb').each(function(index) {
             if ($(this).attr('checked')) {
 				volume1.push($(this).attr('volume'));
 				phrase1_ids.push($(this).attr('phrase_id'));
 				phrase1.push($(this).attr('phrase'));
 			}
         });
-		$('.multi-listing2-cb').each(function(index) {
+		$('.listing2-cb').each(function(index) {
             if ($(this).attr('checked')) {
 				volume2.push($(this).attr('volume'));
 				phrase2_ids.push($(this).attr('phrase_id'));
