@@ -49,9 +49,9 @@ $(function() {
 	});
 	
 	$('.type-filter-radio').live('click',function() {
-		val = $(this).val();
+		value = $(this).val();
 		$('#type').val(val);
-		$('#type_selected').html(val);
+		$('#type_selected').html(' - ' + value);
 		
 	});
 		
