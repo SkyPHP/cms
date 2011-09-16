@@ -1,4 +1,4 @@
-<input type="button" class="save" value="Save" style="margin-top:10px; visibility:hidden;" /> <div id="multi-saved" style="margin-top:10px;"></div>
+<input type="button" class="save" value="Save" style="margin-top:10px; display:none;" /> <div id="multi-saved" style="margin-top:10px;"></div>
 
 <?
 	$where=array();
@@ -68,4 +68,4 @@
     	</fieldset>
 	</div>
 </div>
-<input type="button" class="save" value="Save" style="margin-top:10px; visibility:hidden;" />
+<input type="button" class="save" value="Save" style="margin-top:10px; display:none;" />

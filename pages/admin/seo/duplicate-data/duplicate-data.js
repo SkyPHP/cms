@@ -99,15 +99,11 @@ $(function() {
 		phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) {
 			$('#listing2_'+phrase_id).hide();
-			$('.save').each(function() {
-				$(this).attr('visibility','visible');				
-			});
+			$('.save').show();
 		}
 		else {
 			$('#listing2_'+phrase_id).show();
-			$('.save').each(function(){
-				$(this).attr('visibility','hidden');
-			});
+			$('.save').hide();		
 		}
 	});
 	
