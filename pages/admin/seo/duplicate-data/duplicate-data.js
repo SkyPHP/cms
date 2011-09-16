@@ -100,14 +100,15 @@ $(function() {
 		cb1 = false;
 		$('.listing1-cb').each(function() {
 			if ($(this).attr('checked')) cb1 = true;
-			return (!cb1);
+			if (cb1) return false;
 		});
 		cb2 = false;
 		$('.listing2-cb').each(function(index, element) {
 			if ($(this).attr('checked')) cb2 = true;
-			return (!cb2);			
+			if (cb2) return false;			
 		});
 		if (!cb1 || !cb2) $('.save').attr('disabled','disabled');
+		else $('.save').removeattr('disabled');
 	});
 	
 	$('.listing2-cb').livequery('click',function() {
