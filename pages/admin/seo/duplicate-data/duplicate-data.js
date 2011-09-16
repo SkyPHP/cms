@@ -107,6 +107,7 @@ $(function() {
 				if ($(this).attr('checked')) cb1 = true;
 				return (!cb1);
 			});
+			cb2 = false;
 			$('.listing2-cb').each(function(index, element) {
 				if ($(this).attr('checked')) cb2 = true;
 				return (!cb2);			
