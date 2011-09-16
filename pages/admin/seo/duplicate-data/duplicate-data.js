@@ -17,11 +17,13 @@ function trigger_count() {
 
 $(function() {
 
-    $('.filter-area, .filter').hover(function(){ 
-        mouse_is_inside=true; 
-    }, function(){ 
-        mouse_is_inside=false; 
-    });
+    $('.filter-area, .filter').hover(
+		function(){ 
+        	mouse_is_inside=true; 
+    	}, function(){ 
+        	mouse_is_inside=false; 
+    	}
+	);
 
     $("#container").mouseup(function(){ 
         if(! mouse_is_inside) $('.filter-area').slideUp('fast',function() {
@@ -48,11 +50,11 @@ $(function() {
 	
 	$('.phrase-filter-radio').live('click',function() {
 		var phrase_id = $('#final-phrase').attr('p1');
-		$('.multi-listing1-cb').each(function(index, element) {
+		$('.listing1-cb').each(function(index, element) {
 			if ($(this).attr('checked')) cb1 = true;
 			else cb1 = false;
 		});
-		$('.multi-listing2-cb').each(function(index, element) {
+		$('.listing2-cb').each(function(index, element) {
 			if ($(this).attr('checked')) cb2 = true;
 			else cb2 = true;
 		});

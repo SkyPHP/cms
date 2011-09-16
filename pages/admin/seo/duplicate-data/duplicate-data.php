@@ -59,7 +59,7 @@
 	<div id="multi">
 		<div id="multi-listing">
 <?
-			include ('pages/admin/seo/duplicate-data/ajax/multi-listing.php');
+			include ('pages/admin/seo/duplicate-data/multi-listing.php');
 ?>
 		</div>
     </div>
