@@ -48,6 +48,7 @@
 	);
 ?>	
 	<input type="hidden" name="type" value="H1" />
+	<a style="margin: 15px;" href="/admin/seo/duplicate-data/split-paragraph" />Paragraph Splitter</a>
 	<div style="padding-top:10px; float:left; margin-right: 20px;">
 		<div class="filter" type="type" filter="type">Type<span id="type_selected"></span></div>
 		<div id="type" class="filter-area">
