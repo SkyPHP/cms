@@ -134,8 +134,7 @@ class news {
      */
     public function ago($insert_time) {
         $then = strtotime($insert_time);
-        $r = sql("select current_timestamp(0) as now");
-        $now = strtotime($r->Fields('now'));
+        $now = self::getDbTime();
         $seconds_ago = $now - $then;
         //return 'insert_time: ' . $insert_time . ' , now: ' . $now;
         if ( $seconds_ago < 0 ) return 'a while ago';
@@ -156,5 +155,15 @@ class news {
         return 'a few seconds ago';
     }
 
+
+    public function getDbTime() {
+        // get the current time of the master database, but only get it once per page load
+        global $dbw;
+        if ( $GLOBALS['news_db_time'] ) return $GLOBALS['news_db_time'];
+        $r = sql("select current_timestamp(0) as now",$dbw);
+        $now = strtotime($r->Fields('now'));
+        $GLOBALS['news_db_time'] = $now;
+        return $now;
+    }
 
 }
