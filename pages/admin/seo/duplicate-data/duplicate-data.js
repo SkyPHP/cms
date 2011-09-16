@@ -101,10 +101,14 @@ $(function() {
 			$('#listing2_'+phrase_id).hide();
 			$('.save').css('visibility','visible');
 		}
-		else $('.listing1-cb').each(function() {
-			if ($(this).attr('checked')) cb1 = true;
-			return (!cb1);
-		});
+		else { 
+			cb1 = false;
+			$('.listing1-cb').each(function() {
+				if ($(this).attr('checked')) cb1 = true;
+				return (!cb1);
+			});
+			if (cb1) $('.save').css('visibility','hidden');
+		}
 	});
 	
 	$('.listing2-cb').livequery('click',function() {
