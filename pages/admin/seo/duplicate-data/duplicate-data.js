@@ -107,7 +107,7 @@ $(function() {
 				if ($(this).attr('checked')) cb1 = true;
 				return (!cb1);
 			});
-			if (!cb1) $('.save').attr('disabled','');
+			if (!cb1) $('.save').attr('disabled','disabled');
 		}
 	});
 	
