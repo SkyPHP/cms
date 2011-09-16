@@ -56,7 +56,7 @@ $(function() {
 		});
 		$('.listing2-cb').each(function(index, element) {
 			if ($(this).attr('checked')) cb2 = true;
-			else cb2 = true;
+			else cb2 = false;
 		});
 		if (cb1 && !cb2) section = 'listing2';
 		else if (cb1 && cb2) section = 'modifier';
