@@ -97,23 +97,17 @@ $(function() {
 	$('.listing1-cb').livequery('click',function() {		
 		
 		phrase_id = $(this).attr('phrase_id');
-		if ($(this).attr('checked')) {
-			$('#listing2_'+phrase_id).hide();
-			$('.save').removeAttr('disabled');
-		}
-		else { 
-			cb1 = false;
-			$('.listing1-cb').each(function() {
-				if ($(this).attr('checked')) cb1 = true;
-				return (!cb1);
-			});
-			cb2 = false;
-			$('.listing2-cb').each(function(index, element) {
-				if ($(this).attr('checked')) cb2 = true;
-				return (!cb2);			
-			});
-			if (!cb1 || !cb2) $('.save').attr('disabled','disabled');
-		}
+		cb1 = false;
+		$('.listing1-cb').each(function() {
+			if ($(this).attr('checked')) cb1 = true;
+			return (!cb1);
+		});
+		cb2 = false;
+		$('.listing2-cb').each(function(index, element) {
+			if ($(this).attr('checked')) cb2 = true;
+			return (!cb2);			
+		});
+		if (!cb1 || !cb2) $('.save').attr('disabled','disabled');
 	});
 	
 	$('.listing2-cb').livequery('click',function() {
