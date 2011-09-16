@@ -97,6 +97,9 @@ $(function() {
 	$('.listing1-cb').livequery('click',function() {		
 		
 		phrase_id = $(this).attr('phrase_id');
+		if ($(this).attr('checked')) $('#listing2_'+phrase_id).hide();
+		else $('#listing2_'+phrase_id).show();
+		
 		cb1 = false;
 		$('.listing1-cb').each(function() {
 			if ($(this).attr('checked')) cb1 = true;
@@ -108,7 +111,7 @@ $(function() {
 			if (cb2) return false;			
 		});
 		if (!cb1 || !cb2) $('.save').attr('disabled','disabled');
-		else $('.save').removeattr('disabled');
+		else $('.save').removeAttr('disabled');
 	});
 	
 	$('.listing2-cb').livequery('click',function() {
