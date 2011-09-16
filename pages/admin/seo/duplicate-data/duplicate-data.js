@@ -101,10 +101,10 @@ $(function() {
 			$('#listing2_'+phrase_id).hide();
 			$('.save').css('visibility','visible');
 		}
-		else {
-			$('#listing2_'+phrase_id).show();
-			$('.save').css('visibility','hidden');		
-		}
+		else $('.listing1-cb').each(function() {
+			if ($(this).attr('checked')) cb1 = true;
+			return (!cb1);
+		});
 	});
 	
 	$('.listing2-cb').livequery('click',function() {
