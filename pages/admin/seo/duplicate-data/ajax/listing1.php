@@ -1,5 +1,3 @@
-	<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
-		<legend class="legend">Phrase Part 1</legend>
 <?
 		$where=array();
 		if ($_POST['market']) $where[] = "market = '{$_POST['market']}'";
@@ -17,5 +15,5 @@
 			</div>
 <?	
 		}
+		else echo "No Data";
 ?>
-	</fieldset>
