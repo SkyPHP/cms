@@ -51,7 +51,7 @@
 	<div style="padding-top:10px;">
 		<div style="float:left; margin-right:15px; font-weight:bold;">Type:</div>
 		<div style="float:left;">
-			<div class="filter"><?=str_replace('_',' ',$filter)?><span id="type_selected"></span></div>
+			<div class="filter">Type<span id="type_selected"></span></div>
 			<div id="type" class="filter-area">
 				<div style="padding-top:5px;">
 <?
