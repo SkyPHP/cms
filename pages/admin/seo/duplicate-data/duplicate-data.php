@@ -49,21 +49,18 @@
 ?>	
 	<input type="hidden" name="type" value="H1" />
 	<div style="padding-top:10px; float:left; margin-right: 20px;">
-		<div style="float:left; margin-right:15px; font-weight:bold;">Type:</div>
-		<div style="float:left;">
-			<div class="filter" type="type" filter="type">Type<span id="type_selected"></span></div>
-			<div id="type" class="filter-area">
-				<div style="padding-top:5px;">
+		<div class="filter" type="type" filter="type">Type<span id="type_selected"></span></div>
+		<div id="type" class="filter-area">
+			<div style="padding-top:5px;">
 <?
-					foreach ($field_array as $field) {
+				foreach ($field_array as $field) {
 ?>
-						<div style="margin-bottom:5px;">
-							<input type="radio" <?=$field=='Title'?'checked':''?> value="<?=str_replace(' ','_',strtolower($field))?>" id="<?=str_replace(' ','_',strtolower($field))?>" name="type" style="margin-left:3px;" class="type-filter-radio" /> <label style="cursor:pointer;" for="<?=str_replace(' ','_',strtolower($field))?>"><?=$field?></label>
-       					</div>
+					<div style="margin-bottom:5px;">
+						<input type="radio" <?=$field=='Title'?'checked':''?> value="<?=str_replace(' ','_',strtolower($field))?>" id="<?=str_replace(' ','_',strtolower($field))?>" name="type" style="margin-left:3px;" class="type-filter-radio" /> <label style="cursor:pointer;" for="<?=str_replace(' ','_',strtolower($field))?>"><?=$field?></label>
+					</div>
 <?
-					}
+				}
 ?>
-				</div>
 			</div>
 		</div>
 	</div>
