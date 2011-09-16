@@ -53,7 +53,6 @@
 <?	
 		}
 ?>
-		<div style="float:left"><input type="color" id="bgcolor" value="#FFFFFF"></div>
 		<div class="clear"></div>
 	</div>
 	
