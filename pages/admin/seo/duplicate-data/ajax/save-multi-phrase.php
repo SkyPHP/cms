@@ -44,6 +44,7 @@
 		if ($rs || ($split[0] == $split[1])) $exists[$key] = true;
 		else {
 			$data = array(
+				'seo_field' => $_POST['type'],
 				'phrase1__dup_phrase_data_id' => $split[0],
 				'phrase2__dup_phrase_data_id' => $split[1],
 				'dup_modifier_id' => $split[2],
