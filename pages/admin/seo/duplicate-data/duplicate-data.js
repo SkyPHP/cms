@@ -107,8 +107,7 @@ $(function() {
 	$('.listing2-cb').live('click',function() {
 		phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) $('#listing1_'+phrase_id).hide();
-			else $('#listing1_'+phrase_id).show();
-		
+		else $('#listing1_'+phrase_id).show();
 	});
 		
 	$('.save').live('click',function(){
