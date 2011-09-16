@@ -99,7 +99,7 @@ $(function() {
 		phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) {
 			$('#listing2_'+phrase_id).hide();
-			$('.save').attr('disabled','');
+			$('.save').removeAttr('disabled');
 		}
 		else { 
 			cb1 = false;
@@ -107,7 +107,7 @@ $(function() {
 				if ($(this).attr('checked')) cb1 = true;
 				return (!cb1);
 			});
-			if (!cb1) $('.save').attr('disables','disabled');
+			if (!cb1) $('.save').attr('disabled','');
 		}
 	});
 	
