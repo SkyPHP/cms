@@ -5,7 +5,7 @@
 	if ($_POST['market']) $where[] = "market = '{$_POST['market']}'";
 	if ($_POST['market_name']) $where[] = "market_name = '{$_POST['market_name']}'";
 	if ($_POST['market_name_n']) if ($_POST['market_name_n'] != 'National') $where[] = "market_name != '{$_POST['market_name_n']}'";
-	if ($_POST['category']) $where[] = "(category = '{$_POST['category_n']}' || category = 'general')";
+	if ($_POST['category']) $where[] = "(category = '{$_POST['category']}' || category = 'general')";
 	if ($_POST['base']) $where[] = "base = '{$_POST['base']}'";
 
 	$listing3 = aql::select("dup_modifier { id as modifier_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_modifier'=>array('where'=>$where)));
