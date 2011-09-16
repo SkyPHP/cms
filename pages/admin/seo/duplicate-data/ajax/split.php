@@ -2,7 +2,7 @@
 	$val = $_POST['val'];
 	if ($_POST['auto']) $auto = 'checked="checked"';
 	else $man = 'checked="checked"';
-	preg_match_all('~.*?[?.!]~s',addslashes($val),$sentences);
+	preg_match_all('~.*?[?.!]~s',strip_tags($val),$sentences);
 ?>
 	<div class="has-floats" style="margin-top: 20px;">
 		<div style="float:left; width: 1000px; margin-right: 10px; font-weight:bold; font-size:18px;">Sentences</div>
