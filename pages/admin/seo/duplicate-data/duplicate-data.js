@@ -50,13 +50,13 @@ $(function() {
 	
 	$('.phrase-filter-radio').live('click',function() {
 		var phrase_id = $('#final-phrase').attr('p1');
+		cb1 = false;
 		$('.listing1-cb').each(function(index, element) {
 			if ($(this).attr('checked')) cb1 = true;
-			else cb1 = false;
 		});
+		cb2 = false;
 		$('.listing2-cb').each(function(index, element) {
 			if ($(this).attr('checked')) cb2 = true;
-			else cb2 = false;
 		});
 		if (cb1 && !cb2) section = 'listing2';
 		else if (cb1 && cb2) section = 'modifier';
