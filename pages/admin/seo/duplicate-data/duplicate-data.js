@@ -94,7 +94,8 @@ $(function() {
 		//});
 	});
 
-	$('.listing1-cb').live('click',function() {
+	$('.listing1-cb').livequery('click',function() {		
+		
 		phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) {
 			$('#listing2_'+phrase_id).hide();
@@ -104,17 +105,19 @@ $(function() {
 		}
 		else {
 			$('#listing2_'+phrase_id).show();
-			$('.save').attr('visibility','hidden');
+			$('.save').each(function(){
+				$(this).attr('visibility','hidden');
+			});
 		}
 	});
 	
-	$('.listing2-cb').live('click',function() {
+	$('.listing2-cb').livequery('click',function() {
 		phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) $('#listing1_'+phrase_id).hide();
 		else $('#listing1_'+phrase_id).show();
 	});
 		
-	$('.save').live('click',function(){
+	$('.save').livequery('click',function(){
 		$('#multi-saved').html('<img src="/images/loading.gif" />');
 		var text;
 		volume1 = new Array();
