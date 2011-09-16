@@ -112,7 +112,7 @@ $(function() {
 				if ($(this).attr('checked')) cb2 = true;
 				return (!cb2);			
 			});
-			if (!cb1 && !cb2) $('.save').attr('disabled','disabled');
+			if (!cb1 || !cb2) $('.save').attr('disabled','disabled');
 		}
 	});
 	
