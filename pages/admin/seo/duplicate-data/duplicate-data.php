@@ -56,7 +56,7 @@
 				foreach ($field_array as $field) {
 ?>
 					<div style="margin-bottom:5px;">
-						<input type="radio" <?=$field=='Title'?'checked':''?> value="<?=str_replace(' ','_',strtolower($field))?>" id="<?=str_replace(' ','_',strtolower($field))?>" name="type" style="margin-left:3px;" class="type-filter-radio" /> <label style="cursor:pointer;" for="<?=str_replace(' ','_',strtolower($field))?>"><?=$field?></label>
+						<input type="radio" <?=$field=='Title'?'checked':''?> value="<?=$field?>" id="<?=str_replace(' ','_',strtolower($field))?>" name="type" style="margin-left:3px;" class="type-filter-radio" /> <label style="cursor:pointer;" for="<?=str_replace(' ','_',strtolower($field))?>"><?=$field?></label>
 					</div>
 <?
 				}
