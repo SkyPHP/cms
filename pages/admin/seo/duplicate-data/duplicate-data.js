@@ -35,14 +35,14 @@ $(function() {
 		var $this = $(this);
 		var filter = $this.attr('filter');
 		$this.css('border-bottom', 'none');
-		$('#'+filter).slideDown('fast');
+		$('#'+filter).slideDown(100);
 		$this.removeClass('filter').addClass('filter-on');
 	});
 	
 	$('.filter-on').live('click',function() {
 		var $this = $(this);
 		var filter = $this.attr('filter');
-		$('#'+filter).slideUp('fast',function() {
+		$('#'+filter).slideUp(100,function() {
 			$this.css('border-bottom', '2px solid #999');
 		});
 		$(this).removeClass('filter-on').addClass('filter');
