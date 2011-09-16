@@ -94,19 +94,24 @@ $(function() {
 
 	$('.listing1-cb').live('click',function() {
 		phrase_id = $(this).attr('phrase_id');
-		if ($(this).attr('checked')) $('#listing2_'+phrase_id).hide();
-		else $('#listing2_'+phrase_id).show();
-		
+		if ($(this).attr('checked')) {
+			$('#listing2_'+phrase_id).hide();
+			$('.save').attr('visibility','visible');
+		}
+		else {
+			$('#listing2_'+phrase_id).show();
+			$('.save').attr('visibility','hidden');
+		}
 	});
 	
 	$('.listing2-cb').live('click',function() {
 		phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) $('#listing1_'+phrase_id).hide();
-		else $('#listing1_'+phrase_id).show();
+			else $('#listing1_'+phrase_id).show();
 		
 	});
-	
-	$('#save').live('click',function(){
+		
+	$('.save').live('click',function(){
 		$('#multi-saved').html('<img src="/images/loading.gif" />');
 		var text;
 		volume1 = new Array();
