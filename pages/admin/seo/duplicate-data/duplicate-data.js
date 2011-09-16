@@ -99,25 +99,14 @@ $(function() {
 		phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) $('#listing2_'+phrase_id).hide();
 		else $('#listing2_'+phrase_id).show();
-		
-		cb1 = false;
-		$('.listing1-cb').each(function() {
-			if ($(this).attr('checked')) cb1 = true;
-			if (cb1) return false;
-		});
-		cb2 = false;
-		$('.listing2-cb').each(function(index, element) {
-			if ($(this).attr('checked')) cb2 = true;
-			if (cb2) return false;			
-		});
-		if (!cb1 || !cb2) $('.save').attr('disabled','disabled');
-		else $('.save').removeAttr('disabled');
+		saveDisableCheck();
 	});
 	
 	$('.listing2-cb').livequery('click',function() {
 		phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) $('#listing1_'+phrase_id).hide();
 		else $('#listing1_'+phrase_id).show();
+		saveDisableCheck();
 	});
 		
 	$('.save').livequery('click',function(){
@@ -164,3 +153,18 @@ $(function() {
 	});
 	
 });
+
+function saveDisableCheck() {
+	cb1 = false;
+	$('.listing1-cb').each(function() {
+		if ($(this).attr('checked')) cb1 = true;
+		if (cb1) return false;
+	});
+	cb2 = false;
+	$('.listing2-cb').each(function(index, element) {
+		if ($(this).attr('checked')) cb2 = true;
+		if (cb2) return false;			
+	});
+	if (!cb1 || !cb2) $('.save').attr('disabled','disabled');
+	else $('.save').removeAttr('disabled');
+}
