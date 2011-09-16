@@ -98,7 +98,9 @@ $(function() {
 		phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) {
 			$('#listing2_'+phrase_id).hide();
-			$('.save').attr('visibility','visible');
+			$('.save').each(function() {
+				$(this).attr('visibility','visible');				
+			});
 		}
 		else {
 			$('#listing2_'+phrase_id).show();
