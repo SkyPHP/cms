@@ -48,7 +48,7 @@
 	);
 ?>	
 	<input type="hidden" name="type" value="H1" />
-	<div style="padding-top:10px;">
+	<div style="padding-top:10px; float:left">
 		<div style="float:left; margin-right:15px; font-weight:bold;">Type:</div>
 		<div style="float:left;">
 			<div class="filter">Type<span id="type_selected"></span></div>
@@ -67,7 +67,7 @@
 			</div>
 		</div>
 	</div>
-	<div style="padding-top:10px;" class="clear">
+	<div style="padding-top:10px; float:left">
 		<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
 		<input type="hidden" id="char_count_limit" value="<?=$char_count_limit?>" />
 		<input type="hidden" id="seo_field" value="<?=str_replace('-','_',IDE)?>" />
