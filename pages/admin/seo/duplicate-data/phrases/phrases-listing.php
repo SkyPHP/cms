@@ -4,6 +4,11 @@
 
 		$a = array();
 		$phrases = dup_phrase_data::getList($a);
+		
+		foreach($phrases as $phrase_id) {
+			$dup_phrase = new dup_phrase_data($phrase_id);	
+			krumo($dup_phrase);
+		}
 	
 
 	$p->template('seo','bottom');

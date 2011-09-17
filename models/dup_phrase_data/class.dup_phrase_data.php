@@ -1,7 +1,7 @@
 <?
 	class dup_phrase_data extends model {
 		
-		public static function getPhrases($a=array()) {
+		public function getList($a=array()) {
 			
 			//. category
 			//. sub_category
@@ -16,12 +16,14 @@
 			if ($a['base']) $where[] = "base = '".$a['base']."'";
 			if ($a['volume']) $where[] = "volume = ".$a['volume'];
 			if ($a['holiday']) $where[] = "holiday = '".$a['holiday']."'";
+			if ($a['order_by']) $order_by = $a['order_by'];
 			
-			$rs = aql::select();
+			$aql = "dup_phrase_data { id as phrase_id }";
+
+			$clause = array("dup_phrase_data"=>array("where"=>$where,"order by"=>$order_by));
+			return aql::select($aql);
+	
 		}
-		
-		public function contruct() {
 				
-		}
 	}
 ?>
