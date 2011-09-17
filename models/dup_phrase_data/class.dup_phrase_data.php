@@ -18,10 +18,15 @@
 			if ($a['holiday']) $where[] = "holiday = '".$a['holiday']."'";
 			if ($a['order_by']) $order_by = $a['order_by'];
 			
-			$aql = "dup_phrase_data { id as phrase_id }";
-
+			$aql = "dup_phrase_data { }";
 			$clause = array("dup_phrase_data"=>array("where"=>$where,"order by"=>$order_by));
-			return aql::select($aql);
+			$rs =  aql::select($aql,$clause);
+			$ids = array();
+			
+			foreach($rs as $r) {
+				$ids[] = $r['dup_phrase_data_id'];	
+			}
+			return $ids;
 	
 		}
 				
