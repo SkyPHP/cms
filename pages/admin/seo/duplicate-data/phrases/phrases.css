@@ -13,6 +13,9 @@
 .row {
 	width: 100%;
 }
+.alternate {
+	background: #eceef0;	
+}
 
 	.column {
 		border: 1px solid #CCC;

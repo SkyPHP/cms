@@ -15,10 +15,12 @@
 			<th class="title">Base</th>
 		</tr>
 <?		
+		$x = 0;
 		foreach($phrases as $phrase_id) {
+			$x++;
 			$dup_phrase = new dup_phrase_data($phrase_id);	
 ?>
-			<tr class="row">
+			<tr class="<?=$x%2?'alternate':'row'?>">
 				<td class="column"><?=$dup_phrase['phrase']?></td>
 				<td class="column"><?=$dup_phrase['category']?></td>
 				<td class="column"><?=$dup_phrase['volume']?></td>
