@@ -1,6 +1,6 @@
 <?
 	$o = new dup_phrase_data(IDE);
-	$p->title = "Phrase Skybox (".$o['dup_phrase_data_id'].")";
+	$p->title = "Phrase Skybox (dup_phrase_data: ".$o['dup_phrase_data_id'].")";
 	$p->css[] = '/admin/seo/duplicate-data/phrases/skybox/phrase-skybox.css';
 	$p->template('skybox','top');
 ?>
