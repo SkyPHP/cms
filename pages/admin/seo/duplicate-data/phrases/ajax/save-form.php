@@ -1,5 +1,6 @@
 <?
 	if (!$_POST['_token']) exit('No Token Given');
+	else unset($_POST['_token']);
 	if ($_POST['dup_phrase_data_ide']) {
 		$ide = $_POST['dup_phrase_data_ide'];
 		unset ($_POST['dup_phrase_data_ide']);
