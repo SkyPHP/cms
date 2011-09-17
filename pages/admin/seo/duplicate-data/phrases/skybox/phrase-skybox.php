@@ -52,7 +52,7 @@
 		$('#save').live('click',function() { 
 			$('#save-message').html('<img src="loading.gif" />');
 			data = $('form').serializeArray();
-			data._token = 'thisismytoken';
+			alert(data);
 			$.post('/admin/seo/duplicate-data/phrases/ajax/save-form',data,function(html) {
 				$('#save-message').html(html);
 			});
