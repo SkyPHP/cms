@@ -25,7 +25,8 @@
 #count {
 	width: 95%;
 	text-align:right;
-	margin-bottom:2px;
+	margin:0 5px 2px 0;
+	font-size:14px;
 	font-weight:bold;
 }
 table {
