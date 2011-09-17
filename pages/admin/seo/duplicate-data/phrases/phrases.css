@@ -1,0 +1,19 @@
+/* CSS Document */
+.header {
+	width:100%;
+	font-size: 16px;
+	font-weight:bold;
+}
+	.title {
+		border: 1px solid #CCC;
+		text-align:center;
+		padding: 3px 10px;
+	}
+
+.row {
+	width: 100%;
+}
+
+	.column {
+		border: 1px solid #CCC;
+	}
