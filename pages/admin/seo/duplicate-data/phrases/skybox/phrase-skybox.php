@@ -49,8 +49,8 @@
 	$(function() {
 		$('#save').live('click',function() { 
 			$('#save_message').html('<img src="loading.gif" />');
-			$data = $('form').serializeArray();
-			$.post('/admin/seo/duplicate-data/phrases/ajax/save-form',$data,function(html) {
+			data = $('form').serializeArray();
+			$.post('/admin/seo/duplicate-data/phrases/ajax/save-form',data,function(html) {
 				$('#save_message').html(html);
 			});
 		});
