@@ -22,3 +22,12 @@
 		border: 1px solid #CCC;
 		padding: 5px;
 	}
+#count {
+	width: 95%;
+	text-align:right;
+	margin-bottom:2px;
+	font-weight:bold;
+}
+table {
+	clear: both;	
+}
