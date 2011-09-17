@@ -5,7 +5,7 @@
 		$a = array();
 		$phrases = dup_phrase_data::getList($a);
 ?>
-	<table width="90%">
+	<table width="95%">
 		<tr class="header">
 			<th class="title">Phrase</th>
 			<th class="title">Category</th>
