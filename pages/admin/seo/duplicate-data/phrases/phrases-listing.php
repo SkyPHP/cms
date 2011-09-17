@@ -22,21 +22,18 @@
 			$dup_phrase = new dup_phrase_data($phrase_id);	
 ?>
 			<tr class="<?=$x%2?'alternate':'row'?>">
-				<td class="column"><?=$dup_phrase['phrase']?></td>
-				<td class="column"><?=$dup_phrase['category']?></td>
-				<td class="column"><?=$dup_phrase['volume']?></td>
-				<td class="column"><?=$dup_phrase['keyword']?></td>
-				<td class="column"><?=$dup_phrase['holiday']?></td>
-				<td class="column"><?=$dup_phrase['base']?></td>
-				<td class="column" valign="middle" style="text-align:center;"><input type="button" phrase_id="<?=$dup_phrase['dup_phrase_id']?>" value="edit"></td>		
+				<td class="column" valign="middle"><?=$dup_phrase['phrase']?></td>
+				<td class="column" valign="middle"><?=$dup_phrase['category']?></td>
+				<td class="column" valign="middle"><?=$dup_phrase['volume']?></td>
+				<td class="column" valign="middle"><?=$dup_phrase['keyword']?></td>
+				<td class="column" valign="middle"><?=$dup_phrase['holiday']?></td>
+				<td class="column" valign="middle"><?=$dup_phrase['base']?></td>
+				<td class="column" valign="middle" style="text-align:center;"><input class="edit" type="button" phrase_ide="<?=$dup_phrase['dup_phrase_ide']?>" value="edit"></td>		
 			</tr>
 <?
-			
 		}
 ?>
 	</table>
 <?
-	
-
 	$p->template('seo','bottom');
 ?>
