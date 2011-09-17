@@ -6,7 +6,7 @@
 ?>
 	<form model="dup_phrase_data" class="aqlForm">
 		<input type="hidden" name="dup_phrase_data_ide" value="<?=$o['dup_phrase_data_ide']?>" />
-		<input type="hidden" name="_token" value="<?=$o['_token']?>" />
+		<input type="hidden" name="_token" value="<?=$o->_token?>" />
 		<div class="field">
 			<? $field = "phrase" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
