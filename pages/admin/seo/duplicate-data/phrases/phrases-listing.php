@@ -18,6 +18,7 @@
 <?		
 		$x = 0;
 		foreach($phrases as $phrase_id) {
+			print_a($phrases);
 			$x++;
 			$dup_phrase = new dup_phrase_data($phrase_id);	
 ?>
