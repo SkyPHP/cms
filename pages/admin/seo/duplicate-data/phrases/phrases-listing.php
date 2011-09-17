@@ -5,6 +5,7 @@
 		$a = array();
 		$phrases = dup_phrase_data::getList($a);
 ?>
+	<div id="count"><?=count($phrases)?> Records</div>
 	<table width="95%">
 		<tr class="header">
 			<th class="title">Phrase</th>
