@@ -18,18 +18,18 @@
 <?		
 		$x = 0;
 		foreach($phrases as $phrase_id) {
-			print_a($phrases);
 			$x++;
-			$dup_phrase = new dup_phrase_data($phrase_id);	
+			$o = new dup_phrase_data($phrase_id);	
+			krumo ($o->dataToArray());
 ?>
 			<tr class="<?=$x%2?'alternate':'row'?>">
-				<td class="column" valign="middle"><?=$dup_phrase['phrase']?></td>
-				<td class="column" valign="middle"><?=$dup_phrase['category']?></td>
-				<td class="column" valign="middle"><?=$dup_phrase['volume']?></td>
-				<td class="column" valign="middle"><?=$dup_phrase['keyword']?></td>
-				<td class="column" valign="middle"><?=$dup_phrase['holiday']?></td>
-				<td class="column" valign="middle"><?=$dup_phrase['base']?></td>
-				<td class="column" valign="middle" style="text-align:center;"><input class="edit" type="button" phrase_ide="<?=$dup_phrase['dup_phrase_ide']?>" value="edit"></td>		
+				<td class="column" valign="middle"><?=$o['phrase']?></td>
+				<td class="column" valign="middle"><?=$o['category']?></td>
+				<td class="column" valign="middle"><?=$o['volume']?></td>
+				<td class="column" valign="middle"><?=$o['keyword']?></td>
+				<td class="column" valign="middle"><?=$o['holiday']?></td>
+				<td class="column" valign="middle"><?=$o['base']?></td>
+				<td class="column" valign="middle" style="text-align:center;"><input class="edit" type="button" phrase_ide="<?=$o['dup_phrase_ide']?>" value="edit"></td>		
 			</tr>
 <?
 		}
