@@ -6,6 +6,7 @@
 ?>
 	<form>
 		<input type="hidden" name="dup_phrase_data_ide" value="<?=$o['dup_phrase_data_ide']?>" />
+		<input type="hidden" name="_token" value="<?=$o['dup_phrase_data_ide']?>" />
 		<div class="field">
 			<? $field = "phrase" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
@@ -52,7 +53,6 @@
 		$('#save').live('click',function() { 
 			$('#save-message').html('<img src="loading.gif" />');
 			data = $('form').serializeArray();
-			alert(data);
 			$.post('/admin/seo/duplicate-data/phrases/ajax/save-form',data,function(html) {
 				$('#save-message').html(html);
 			});
