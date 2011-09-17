@@ -4,7 +4,7 @@
 	$p->css[] = '/admin/seo/duplicate-data/phrases/skybox/phrase-skybox.css';
 	$p->template('skybox','top');
 ?>
-	<form id="dup_phrase_data">
+	<form>
 		<div class="field">
 			<? $field = "phrase" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
@@ -49,8 +49,8 @@
 	$(function() {
 		$('#save').live('click',function() { 
 			$('#save_message').html('<img src="loading.gif" />');
-			$data = ('#dup_phrase_data').serialize();
-			$.post('/admin/seo/duplicate-data/phrases/ajax/save-form',data,function(html) {
+			$data = $('form').serializeArray();
+			$.post('/admin/seo/duplicate-data/phrases/ajax/save-form',$data,function(html) {
 				$('#save_message').html(html);
 			});
 		});
