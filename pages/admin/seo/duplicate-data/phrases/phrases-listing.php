@@ -28,7 +28,7 @@
 				<td class="column"><?=$dup_phrase['keyword']?></td>
 				<td class="column"><?=$dup_phrase['holiday']?></td>
 				<td class="column"><?=$dup_phrase['base']?></td>
-				<td class="column" valign="middle"><input type="button" phrase_id="<?=$dup_phrase['dup_phrase_id']?>" value="edit"></td>		
+				<td class="column" valign="middle" style="text-align:center;"><input type="button" phrase_id="<?=$dup_phrase['dup_phrase_id']?>" value="edit"></td>		
 			</tr>
 <?
 			
