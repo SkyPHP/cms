@@ -5,7 +5,7 @@
 		$ide = $_POST['dup_phrase_data_ide'];
 		unset ($_POST['dup_phrase_data_ide']);
 		$update = aql::update("dup_phrase_data",$_POST,$ide);
-		if ($update) exit('Saved');
+		if ($update === true) exit('Saved');
 		else print_a($_POST);
 	}
 	else {
