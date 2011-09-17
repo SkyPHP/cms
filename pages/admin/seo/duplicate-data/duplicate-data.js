@@ -52,7 +52,6 @@ $(function() {
 		val = $(this).val();
 		$('#type').val(val);
 		$('#type_selected').html(' - ' + val);
-		
 	});
 		
 	$('.phrase-filter-radio').live('click',function() {
