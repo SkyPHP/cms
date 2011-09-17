@@ -13,6 +13,7 @@
 			<th class="title">Keyword</th>
 			<th class="title">Holiday</th>
 			<th class="title">Base</th>
+			<th class="title">Edit</th>
 		</tr>
 <?		
 		$x = 0;
@@ -26,7 +27,8 @@
 				<td class="column"><?=$dup_phrase['volume']?></td>
 				<td class="column"><?=$dup_phrase['keyword']?></td>
 				<td class="column"><?=$dup_phrase['holiday']?></td>
-				<td class="column"><?=$dup_phrase['base']?></td>				
+				<td class="column"><?=$dup_phrase['base']?></td>
+				<td class="colmun" style="text-align:center;"><input type="button" phrase_id="<?=$dup_phrase['dup_phrase_id']?>" value="edit"></td>		
 			</tr>
 <?
 			
