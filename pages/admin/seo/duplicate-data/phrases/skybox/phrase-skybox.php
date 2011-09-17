@@ -4,7 +4,7 @@
 	$p->css[] = '/admin/seo/duplicate-data/phrases/skybox/phrase-skybox.css';
 	$p->template('skybox','top');
 ?>
-	<form>
+	<form model="dup_phrase_data" class="aqlForm">
 		<input type="hidden" name="dup_phrase_data_ide" value="<?=$o['dup_phrase_data_ide']?>" />
 		<input type="hidden" name="_token" value="<?=$o['dup_phrase_data_ide']?>" />
 		<div class="field">
@@ -51,11 +51,8 @@
 	$(function() {
 		
 		$('#save').live('click',function() { 
-			$('#save-message').html('<img src="loading.gif" />');
 			data = $('form').serializeArray();
-			$.post('/admin/seo/duplicate-data/phrases/ajax/save-form',data,function(html) {
-				$('#save-message').html(html);
-			});
+			$('#save-message').aqlSave("dup_phrase_data",data);
 		});
 	});
 </script>
