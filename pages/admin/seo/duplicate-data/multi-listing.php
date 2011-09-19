@@ -24,7 +24,7 @@
 				if ($listing) foreach ($listing as $data) {
 ?>
 					<div id="listing1_<?=$data['phrase_id']?>">
-						<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>) {<?=$data['phrase_id']?>}</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase1_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="listing1-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width:430px;"> <label for="phrase1_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
+						<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase1_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="listing1-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width:430px;"> <label for="phrase1_<?=$data['phrase_id']?>">{<?=$data['phrase_id']?>} <?=$data['lower_phrase']?></label></div>
 						<div class="clear"></div>
 					</div>
 <?	
@@ -41,7 +41,7 @@
 				if ($listing) foreach ($listing as $data) {
 ?>
 					<div id="listing2_<?=$data['phrase_id']?>">
-						<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>) {<?=$data['phrase_id']?>}</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase2_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="listing2-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width: 430px;"><label for="phrase2_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
+						<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase2_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="listing2-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width: 430px;"><label for="phrase2_<?=$data['phrase_id']?>"> {<?=$data['phrase_id']?>}<?=$data['lower_phrase']?></label></div>
         				<div class="clear"></div>
             	    </div>
 <?	
@@ -60,7 +60,7 @@
 				$mods = aql::select("dup_modifier { id as mod_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_modifier'=>array('where'=>$where)));
 				if ($mods) foreach ($mods as $data) {
 ?>
-					<div style="width:65px; float:left; margin-right:5px; text-align:right;">{<?=$data['mod_id']?>}</div> <div style="float:left; margin-right:5px;"><input type="checkbox" id="mod_<?=$data['mod_id']?>" phrase="<?=$data['phrase']?>" mod_id="<?=$data['mod_id']?>" class="mod-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width: 430px"><label for="mod_<?=$data['mod_id']?>"><?=$data['lower_phrase']?></label></div>
+					<div style="width:65px; float:left; margin-right:5px; text-align:right;"></div> <div style="float:left; margin-right:5px;"><input type="checkbox" id="mod_<?=$data['mod_id']?>" phrase="<?=$data['phrase']?>" mod_id="<?=$data['mod_id']?>" class="mod-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width: 430px"><label for="mod_<?=$data['mod_id']?>">{<?=$data['mod_id']?>} <?=$data['lower_phrase']?></label></div>
 <?	
 				}
 ?>
