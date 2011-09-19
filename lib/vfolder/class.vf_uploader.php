@@ -11,8 +11,8 @@ class vf_uploader {
 	public $button;
 	public $buttonText;
 	public $class;
-	public $dbField;
-	public $dbRowId;
+	public $db_field;
+	public $db_row_id;
 	public $fileTypes;
 	public $gallery;
 	public $maxFileSize;
