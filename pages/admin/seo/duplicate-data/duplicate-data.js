@@ -91,11 +91,13 @@ $(function() {
 					filter: filter,
 					phrase_id: phrase_id
 				};
-			url = '/admin/seo/duplicate-data/ajax/'+section[x];
+			url = '/admin/seo/duplicate-data/ajax/'+section[0];
 			$.post(url, data, function(html1) {
 					$('#'+section[0]).html(html1);
+					url = '/admin/seo/duplicate-data/ajax/'+section[1];
 					if (section[1]) $.post(url, data, function(html2) {
 						$('#'+section[1]).html(html2);
+						url = '/admin/seo/duplicate-data/ajax/'+section[2];
 						if (section[2]) $.post(url, data, function(html3) {
 							$('#'+section[2]).html(html3);
 						});
