@@ -12,6 +12,11 @@
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:500px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
+		<div class="field">
+			<? $field = "seo_formula" ?>
+			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
+			<input style="width:500px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
+		</div>
 		<div class="field float-left" style="margin-right:20px;">
 			<? $field = "category" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
@@ -24,12 +29,23 @@
 		</div>
 		<div class="clear"></div>
 		<div class="field float-left" style="margin-right:20px;">
-			<? $field = "volume" ?>
+			<? $field = "market" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
 		<div class="field float-left">
+			<? $field = "market_name" ?>
+			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
+			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
+		</div>
+		<div class="clear"></div>
+		<div class="field float-left">
 			<? $field = "holiday" ?>
+			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
+			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
+		</div>
+		<div class="field float-left">
+			<? $field = "base" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
