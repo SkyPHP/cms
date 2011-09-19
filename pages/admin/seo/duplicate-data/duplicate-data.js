@@ -63,9 +63,8 @@ $(function() {
 		if (!section.length) {
 			$(this).removeAttr('checked');
 			alert('Pick a group to filter');
-			$('.filter-area').slideUp('fast',function() {
-				$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');	
-			});
+			$('.filter-area').slideUp('fast');
+			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');	
 		}
 		else {
 			var market = $("input[name=market]:checked").val();
