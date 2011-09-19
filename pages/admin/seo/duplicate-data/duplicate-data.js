@@ -61,6 +61,9 @@ $(function() {
 		if ($('#phrase2-filter-cb').attr('checked')) section.push('listing2');
 		if ($('#mod-filter-cb').attr('checked')) section.push('modifier');
 		if (!section.length) {
+			$('.filter-area').slideUp('fast',function() {
+				$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');	
+			});
 			$(this).removeAttr('checked');
 			alert('Pick a group to filter');
 		}
