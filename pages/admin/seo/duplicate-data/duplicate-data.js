@@ -49,39 +49,52 @@ $(function() {
 	});
 	
 	$('.type-filter-radio').live('click',function() {
-		val = $(this).val();
+		var val = $(this).val();
 		$('#type').val(val);
 		$('#type_selected').html(' - ' + val);
 	});
 		
 	$('.phrase-filter-radio').live('click',function() {
 		var phrase_id = $('#final-phrase').attr('p1');
-		cb1 = false;
-		$('.listing1-cb').each(function(index, element) {
-			if ($(this).attr('checked')) cb1 = true;
-			return (!cb1);
-		});
-		cb2 = false;
-		$('.listing2-cb').each(function(index, element) {
-			if ($(this).attr('checked')) cb2 = true;
-			return (!cb2);			
-		});
-		if (cb1 && !cb2) section = 'listing2';
-		else if (cb1 && cb2) section = 'modifier';
-		else section = 'listing1';
-		var market = $("input[name=market]:checked").val();
-		var volume = $("input[name=volume]:checked").val();
-		var market_name = $("input[name=market_name]:checked").val();
-		var category = $("input[name=category]:checked").val();
-		var base = $("input[name=base]:checked").val();
-		var value = $(this).val();
-		var filter = $(this).attr('name');
-		if (value) $('#'+filter+'_selected').html(' - ' + value);
-		else $('#'+filter+'_selected').html('');
-		var url = '/admin/seo/duplicate-data/ajax/'+section;
-		$('#'+section).html('<img src="/images/loading.gif" />');
-		$.post(url,
-			{ 
+		var section = new Array();
+		if ($('#phrase1-filter-cb').attr('checked')) section.push('listing1');
+		if ($('#phrase2-filter-cb').attr('checked')) section.push('listing2');
+		if ($('#mod-filter-cb').attr('checked')) section.push('modifier');
+		count = section.length;
+		if (!count) {
+			$(this).removeAttr('checked');
+			alert('Pick a group to filter');
+			$('.filter-area').slideUp('fast');
+			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');	
+		}
+		else {
+			var market = $("input[name=market]:checked").val();
+			var volume = $("input[name=volume]:checked").val();
+			var market_name = $("input[name=market_name]:checked").val();
+			var category = $("input[name=category]:checked").val();
+			var base = $("input[name=base]:checked").val();
+			var value = $(this).val();
+			var filter = $(this).attr('name');
+			if (value) $('#'+filter+'_selected').html(' - ' + value);
+			else $('#'+filter+'_selected').html('');
+			l1 = false;
+			l2 = false;
+			ids = new Array();
+			for (i=0;i<count;i++) {
+				$('#'+section[i]).fadeOut('fast');
+				if (section[i]=='listing1')	l1 = true;
+				if (section[i]=='listing2') l2 = true;
+			}
+			if (!l1 && l2) $('.listing1-cb').each(function() {
+				phrase_id = $(this).attr('phrase_id');
+				if ($(this).attr('checked')) ids.push(phrase_id);
+			});
+			else if (l1 && !l2) $('.listing2-cb').each(function() {
+				phrase_id = $(this).attr('phrase_id');
+				if ($(this).attr('checked')) ids.push(phrase_id);
+			});
+			data = { 
+				ids: ids,
 				market: market,
 				volume: volume, 
 				market_name: market_name,  
@@ -90,11 +103,26 @@ $(function() {
 				value: value,
 				filter: filter,
 				phrase_id: phrase_id
-			}, 
-			function(data){
-				$('#'+section).html(data);
+			};
+			url = '/admin/seo/duplicate-data/ajax/'+section[0];
+			$.post(url, data, function(html1) {
+					$('#'+section[0]).html(html1);
+					url = '/admin/seo/duplicate-data/ajax/'+section[1];
+					if (section[1]) $.post(url, data, function(html2) {
+						url = '/admin/seo/duplicate-data/ajax/'+section[2];
+						if (section[2]) $.post(url, data, function(html3) {
+							$('#'+section[2]).html(html3);
+							$('#'+section[2]).fadeIn('fast');
+							
+						});
+					});
+				}
+			);
+			for (i=0;i<count;i++) {
+				$('#'+section[i]).fadeIn('fast');		
 			}
-		);
+		}
+		
 		//$.post('/admin/seo/duplicate-data/ajax/auto-permetate',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
 		//	$('#auto').html(data);
 		//});

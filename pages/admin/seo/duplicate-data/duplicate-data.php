@@ -47,10 +47,11 @@
 		'Keywords'
 	);
 ?>	
-	<input type="hidden" name="type" value="H1" />
+	<div style="font-size:16px; margin-bottom: 10px;">Note: Save button will be disabled until you have selected a phrase1 & a phrase2.</div>
+	<input type="hidden" name="type" value="Title" />
 	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a></div>
 	<div style="padding-top:10px; float:left; margin-right: 20px;">
-		<div class="filter" type="type" filter="type">Type<span id="type_selected"></span></div>
+		<div class="filter" type="type" filter="type">Type<span id="type_selected"> - Title</span></div>
 		<div id="type" class="filter-area">
 			<div style="padding-top:5px;">
 <?

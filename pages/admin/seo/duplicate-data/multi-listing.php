@@ -17,6 +17,7 @@
 	<input type="hidden" id="person_id" value="<?=PERSON_ID?>" />
 <div class="has-floats">	
 	<div style="float:left">
+		<div><input type="checkbox" checked id="phrase1-filter-cb" /> <label for="phrase1-filter-cb">Select to Filter Phrase 1</label></div>
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Phrase Part 1</legend>
 			<div id="listing1">
@@ -24,7 +25,7 @@
 				if ($listing) foreach ($listing as $data) {
 ?>
 					<div id="listing1_<?=$data['phrase_id']?>">
-						<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>) {<?=$data['phrase_id']?>}</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase1_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="listing1-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width:430px;"> <label for="phrase1_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
+						<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase1_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="listing1-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width:430px;"> <label for="phrase1_<?=$data['phrase_id']?>">{<?=$data['phrase_id']?>} <?=$data['lower_phrase']?></label></div>
 						<div class="clear"></div>
 					</div>
 <?	
@@ -34,6 +35,7 @@
 		</fieldset>
 	</div>
 	<div style="float:left;">
+		<div><input type="checkbox" checked id="phrase2-filter-cb" /> <label for="phrase2-filter-cb">Select to Filter Phrase 2</label></div>
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Phrase Part 2</legend>
 			<div id="listing2">
@@ -41,7 +43,7 @@
 				if ($listing) foreach ($listing as $data) {
 ?>
 					<div id="listing2_<?=$data['phrase_id']?>">
-						<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>) {<?=$data['phrase_id']?>}</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase2_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="listing2-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width: 430px;"><label for="phrase2_<?=$data['phrase_id']?>"><?=$data['lower_phrase']?></label></div>
+						<div style="width:65px; float:left; margin-right:5px; text-align:right;">(<?=$data['volume']?$data['volume']:0?>)</div><div style="float:left; margin-right:5px;"> <input type="checkbox" id="phrase2_<?=$data['phrase_id']?>" phrase="<?=$data['phrase']?>" volume="<?=$data['volume']?>" phrase_id="<?=$data['phrase_id']?>" class="listing2-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width: 430px;"><label for="phrase2_<?=$data['phrase_id']?>"> {<?=$data['phrase_id']?>} <?=$data['lower_phrase']?></label></div>
         				<div class="clear"></div>
             	    </div>
 <?	
@@ -51,6 +53,7 @@
     	</fieldset>
 	</div>
 	<div style="float:left;">
+	<div><input type="checkbox" checked id="mod-filter-cb" /> <label for="mod-filter-cb">Select to Filter Modifier (category only)</label></div>
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Modifier</legend>
 			<div id="modifier">
@@ -59,8 +62,8 @@
 				if ($_POST['category']) $where[] = "( category = '{$_POST['category']}' OR category = 'general' )";
 				$mods = aql::select("dup_modifier { id as mod_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_modifier'=>array('where'=>$where)));
 				if ($mods) foreach ($mods as $data) {
-?>
-					<div style="width:65px; float:left; margin-right:5px; text-align:right;">{<?=$data['mod_id']?>}</div> <div style="float:left; margin-right:5px;"><input type="checkbox" id="mod_<?=$data['mod_id']?>" phrase="<?=$data['phrase']?>" mod_id="<?=$data['mod_id']?>" class="mod-cb" id="<?=$data['lower_phrase']?>" /></div><div style="float:left; width: 430px"><label for="mod_<?=$data['mod_id']?>"><?=$data['lower_phrase']?></label></div>
+?>				
+					<div><input type="checkbox" id="mod_<?=$data['mod_id']?>" phrase="<?=$data['phrase']?>" mod_id="<?=$data['mod_id']?>" class="mod-cb" id="<?=$data['lower_phrase']?>" /> <label for="mod_<?=$data['mod_id']?>">{<?=$data['mod_id']?>} <?=$data['lower_phrase']?></label></div>
 <?	
 				}
 ?>
