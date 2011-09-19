@@ -60,35 +60,40 @@ $(function() {
 		if ($('#phrase1-filter-cb').attr('checked')) section.push('listing1');
 		if ($('#phrase2-filter-cb').attr('checked')) section.push('listing2');
 		if ($('#mod-filter-cb').attr('checked')) section.push('modifier');
-		if (!section.length) alert('Pick a group to filter');
-		var market = $("input[name=market]:checked").val();
-		var volume = $("input[name=volume]:checked").val();
-		var market_name = $("input[name=market_name]:checked").val();
-		var category = $("input[name=category]:checked").val();
-		var base = $("input[name=base]:checked").val();
-		var value = $(this).val();
-		var filter = $(this).attr('name');
-		if (value) $('#'+filter+'_selected').html(' - ' + value);
-		else $('#'+filter+'_selected').html('');
-		var url = '/admin/seo/duplicate-data/ajax/'+section;
-		var count = section.length;
-		for (i = 0; i < count; i++) { 
-	 		$('#'+sections[i]).html('<img src="/images/loading.gif" />');
-			$.post(url,
-				{ 
-					market: market,
-					volume: volume, 
-					market_name: market_name,  
-					category: category,
-					base: base,
-					value: value,
-					filter: filter,
-					phrase_id: phrase_id
-				}, 
-				function(data){
-					$('#'+section[i]).html(data);
-				}
-			);
+		if (!section.length) {
+			$(this).removeAttr('checked');
+			alert('Pick a group to filter');
+		}
+		else {
+			var market = $("input[name=market]:checked").val();
+			var volume = $("input[name=volume]:checked").val();
+			var market_name = $("input[name=market_name]:checked").val();
+			var category = $("input[name=category]:checked").val();
+			var base = $("input[name=base]:checked").val();
+			var value = $(this).val();
+			var filter = $(this).attr('name');
+			if (value) $('#'+filter+'_selected').html(' - ' + value);
+			else $('#'+filter+'_selected').html('');
+			var url = '/admin/seo/duplicate-data/ajax/'+section;
+			var count = section.length;
+			for (i = 0; i < count; i++) { 
+				$('#'+sections[i]).html('<img src="/images/loading.gif" />');
+				$.post(url,
+					{ 
+						market: market,
+						volume: volume, 
+						market_name: market_name,  
+						category: category,
+						base: base,
+						value: value,
+						filter: filter,
+						phrase_id: phrase_id
+					}, 
+					function(data){
+						$('#'+section[i]).html(data);
+					}
+				);
+			}
 		}
 		//$.post('/admin/seo/duplicate-data/ajax/auto-permetate',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
 		//	$('#auto').html(data);
