@@ -1,1 +1,4 @@
-<? include ('listing1.php');
+<?
+	$num = 2;
+ 	include ('listing1.php'); 
+?>
