@@ -47,7 +47,7 @@
 		'Keywords'
 	);
 ?>	
-	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases/">Phrase Listing</a></div>
+	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases">Phrase Listing</a></div>
 	<h1><?=$p->title?></h1>
 	<div style="font-size:16px; margin-bottom: 10px;">Note: Save button will be disabled until you have selected a phrase1 & a phrase2.</div>
 	<input type="hidden" name="type" value="Title" />	

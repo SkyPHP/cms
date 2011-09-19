@@ -5,6 +5,8 @@
 		$a = array();
 		$phrases = dup_phrase_data::getList($a);
 ?>
+	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases">Phrase Listing</a></div>
+	<h1><?=$p->title?></h1>
 	<div id="count"><?=count($phrases)?> Records</div>
 	<table width="95%">
 		<tr class="header">
