@@ -109,11 +109,10 @@ $(function() {
 					$('#'+section[0]).html(html1);
 					url = '/admin/seo/duplicate-data/ajax/'+section[1];
 					if (section[1]) $.post(url, data, function(html2) {
+						$('#'+section[2]).html(html2);
 						url = '/admin/seo/duplicate-data/ajax/'+section[2];
 						if (section[2]) $.post(url, data, function(html3) {
-							$('#'+section[2]).html(html3);
-							$('#'+section[2]).fadeIn('fast');
-							
+							$('#'+section[2]).html(html3);							
 						});
 					});
 				}
