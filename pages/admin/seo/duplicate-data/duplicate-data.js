@@ -105,18 +105,20 @@ $(function() {
 				phrase_id: phrase_id
 			};
 			url = '/admin/seo/duplicate-data/ajax/'+section[0];
-			$.post(url, data, function(html1) {
-				alert(data);
+			$.post(url, data, function(html1) { // first post
+			
 				$('#'+section[0]).html(html1);
 				url = '/admin/seo/duplicate-data/ajax/'+section[1];
 				
-				if (section[1]) $.post(url, data, function(html2) {
+				if (section[1]) $.post(url, data, function(html2) { // second post
 					$('#'+section[2]).html(html2);
 					url = '/admin/seo/duplicate-data/ajax/'+section[2];
-					if (section[2]) $.post(url, data, function(html3) {
+					
+					if (section[2]) $.post(url, data, function(html3) { // third post
 						$('#'+section[2]).html(html3);							
 					});
 				});
+			
 			});
 			for (i=0;i<count;i++) {
 				$('#'+section[i]).fadeIn('fast');		
