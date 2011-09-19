@@ -93,7 +93,7 @@ $(function() {
 				phrase_id = $(this).attr('phrase_id');
 				if ($(this).attr('checked')) ids.push(phrase_id);
 			});
-			data = { 
+			var data = { 
 				ids: ids,
 				market: market,
 				volume: volume, 
@@ -106,17 +106,18 @@ $(function() {
 			};
 			url = '/admin/seo/duplicate-data/ajax/'+section[0];
 			$.post(url, data, function(html1) {
-					$('#'+section[0]).html(html1);
-					url = '/admin/seo/duplicate-data/ajax/'+section[1];
-					if (section[1]) $.post(url, data, function(html2) {
-						$('#'+section[2]).html(html2);
-						url = '/admin/seo/duplicate-data/ajax/'+section[2];
-						if (section[2]) $.post(url, data, function(html3) {
-							$('#'+section[2]).html(html3);							
-						});
+				alert(data);
+				$('#'+section[0]).html(html1);
+				url = '/admin/seo/duplicate-data/ajax/'+section[1];
+				if (section[1]) $.post(url, data, function(html2) {
+					alert(data);
+					$('#'+section[2]).html(html2);
+					url = '/admin/seo/duplicate-data/ajax/'+section[2];
+					if (section[2]) $.post(url, data, function(html3) {
+						$('#'+section[2]).html(html3);							
 					});
-				}
-			);
+				});
+			});
 			for (i=0;i<count;i++) {
 				$('#'+section[i]).fadeIn('fast');		
 			}
