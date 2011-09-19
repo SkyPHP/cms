@@ -47,7 +47,7 @@
 		'Keywords'
 	);
 ?>	
-	<input type="hidden" name="type" value="H1" />
+	<input type="hidden" name="type" value="" />
 	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a></div>
 	<div style="padding-top:10px; float:left; margin-right: 20px;">
 		<div class="filter" type="type" filter="type">Type<span id="type_selected"></span></div>

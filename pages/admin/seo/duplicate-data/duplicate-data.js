@@ -175,6 +175,7 @@ function saveDisableCheck() {
 		if ($(this).attr('checked')) cb2 = true;
 		if (cb2) return false;			
 	});
-	if (!cb1 || !cb2) $('.save').attr('disabled','disabled');
+	type = $('#type').val();
+	if (!cb1 || !cb2 || !type) $('.save').attr('disabled','disabled');
 	else $('.save').removeAttr('disabled');
 }
