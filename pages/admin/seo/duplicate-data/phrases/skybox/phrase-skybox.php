@@ -39,7 +39,7 @@
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
 		<div class="clear"></div>
-		<div class="field float-left">
+		<div class="field float-left" style="margin-right:20px;">
 			<? $field = "holiday" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
