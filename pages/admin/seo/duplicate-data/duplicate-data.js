@@ -76,28 +76,32 @@ $(function() {
 			var filter = $(this).attr('name');
 			if (value) $('#'+filter+'_selected').html(' - ' + value);
 			else $('#'+filter+'_selected').html('');
-			var count = section.length;
-			for (i = 0; i < count; i++) { 
-				x = i;
-				url = '/admin/seo/duplicate-data/ajax/'+section[x];
-				$('#'+section[x]).html('<img src="/images/loading.gif" />');
-				$.post(url,
-					{ 
-						market: market,
-						volume: volume, 
-						market_name: market_name,  
-						category: category,
-						base: base,
-						value: value,
-						filter: filter,
-						phrase_id: phrase_id
-					}, 
-					function(html){
-						$('#'+section[x]).html(html);
-					}
-				);
-			}
+			x = 1;
+			data = 
+			{ 
+					market: market,
+					volume: volume, 
+					market_name: market_name,  
+					category: category,
+					base: base,
+					value: value,
+					filter: filter,
+					phrase_id: phrase_id
+				};
+			url = '/admin/seo/duplicate-data/ajax/'+section[x];
+			$('#'+section[0]).html('<img src="/images/loading.gif" />');
+			$.post(url, data, function(html1) {
+					$('#'+section[0]).html(html1);
+					if (section[1]) $.post(url, data, function(html2) {
+						$('#'+section[1]).html(html2);
+						if (section[2]) $.post(url, data, function(html3) {
+							$('#'+section[2]).html(html3);
+						});
+					});
+				}
+			);
 		}
+		
 		//$.post('/admin/seo/duplicate-data/ajax/auto-permetate',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
 		//	$('#auto').html(data);
 		//});
