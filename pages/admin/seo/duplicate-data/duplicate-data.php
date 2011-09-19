@@ -49,7 +49,7 @@
 ?>	
 	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases">Phrase Listing</a></div>
 	<h1><?=$p->title?></h1>
-	<div style="font-size:16px; margin-bottom: 10px;">Note: Save button will be disabled until you have selected a phrase1 & a phrase2.</div>
+	<div style="font-size:16px; margin-bottom: 10px;">Note: Save button will be disabled until you have selected a phrase from part 1 & part 2.</div>
 	<input type="hidden" name="type" value="Title" />	
 	<div style="padding-top:10px; float:left; margin-right: 20px;">
 		<div class="filter" type="type" filter="type">Type<span id="type_selected"> - Title</span></div>

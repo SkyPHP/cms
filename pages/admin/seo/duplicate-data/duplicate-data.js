@@ -116,6 +116,7 @@ $(function() {
 					
 					if (section[2]) $.post(url, data, function(html3) { // third post
 						$('#'+section[2]).html(html3);							
+						showSections(section);
 					});
 					else showSections(section);
 				});
