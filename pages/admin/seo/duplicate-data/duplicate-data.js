@@ -60,7 +60,8 @@ $(function() {
 		if ($('#phrase1-filter-cb').attr('checked')) section.push('listing1');
 		if ($('#phrase2-filter-cb').attr('checked')) section.push('listing2');
 		if ($('#mod-filter-cb').attr('checked')) section.push('modifier');
-		if (!section.length) {
+		count = section.length;
+		if (!count) {
 			$(this).removeAttr('checked');
 			alert('Pick a group to filter');
 			$('.filter-area').slideUp('fast');
@@ -76,7 +77,9 @@ $(function() {
 			var filter = $(this).attr('name');
 			if (value) $('#'+filter+'_selected').html(' - ' + value);
 			else $('#'+filter+'_selected').html('');
-			x = 1;
+			for (i=0;i<count;i++) {
+				$('#'+section[i]).html('<img src="/images/loading.gif" />');		
+			}
 			data = 
 			{ 
 					market: market,
@@ -89,7 +92,6 @@ $(function() {
 					phrase_id: phrase_id
 				};
 			url = '/admin/seo/duplicate-data/ajax/'+section[x];
-			$('#'+section[0]).html('<img src="/images/loading.gif" />');
 			$.post(url, data, function(html1) {
 					$('#'+section[0]).html(html1);
 					if (section[1]) $.post(url, data, function(html2) {
