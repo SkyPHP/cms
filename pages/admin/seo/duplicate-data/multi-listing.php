@@ -17,7 +17,7 @@
 	<input type="hidden" id="person_id" value="<?=PERSON_ID?>" />
 <div class="has-floats">	
 	<div style="float:left">
-		<div style="margin-bottom:5px"><input type="checkbox" id="phrase1-filter-cb" /> Select to Filter Phrase 1</div>
+		<div><input type="checkbox" id="phrase1-filter-cb" /> Select to Filter Phrase 1</div>
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Phrase Part 1</legend>
 			<div id="listing1">
@@ -35,7 +35,7 @@
 		</fieldset>
 	</div>
 	<div style="float:left;">
-		<div style="margin-bottom:5px"><input type="checkbox" id="phrase2-filter-cb" /> Select to Filter Phrase 2</div>
+		<div><input type="checkbox" id="phrase2-filter-cb" /> Select to Filter Phrase 2</div>
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Phrase Part 2</legend>
 			<div id="listing2">
@@ -53,7 +53,7 @@
     	</fieldset>
 	</div>
 	<div style="float:left;">
-	<div style="margin-bottom:5px"><input type="checkbox" id="mod-filter-cb" /> Select to Filter Modifier (category only)</div>
+	<div><input type="checkbox" id="mod-filter-cb" /> Select to Filter Modifier (category only)</div>
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Modifier</legend>
 			<div id="modifier">
