@@ -78,8 +78,9 @@ $(function() {
 			else $('#'+filter+'_selected').html('');
 			var count = section.length;
 			for (i = 0; i < count; i++) { 
-				url = '/admin/seo/duplicate-data/ajax/'+section[i];
-				$('#'+section[i]).html('<img src="/images/loading.gif" />');
+				x = i;
+				url = '/admin/seo/duplicate-data/ajax/'+section[x];
+				$('#'+section[x]).html('<img src="/images/loading.gif" />');
 				$.post(url,
 					{ 
 						market: market,
@@ -91,8 +92,8 @@ $(function() {
 						filter: filter,
 						phrase_id: phrase_id
 					}, 
-					function(data){
-						$('#'+section[i]).html(data);
+					function(html){
+						$('#'+section[x]).html(html);
 					}
 				);
 			}
