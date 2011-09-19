@@ -79,7 +79,7 @@ $(function() {
 			var url = '/admin/seo/duplicate-data/ajax/'+section;
 			var count = section.length;
 			for (i = 0; i < count; i++) { 
-				$('#'+sections[i]).html('<img src="/images/loading.gif" />');
+				$('#'+section[i]).html('<img src="/images/loading.gif" />');
 				$.post(url,
 					{ 
 						market: market,
