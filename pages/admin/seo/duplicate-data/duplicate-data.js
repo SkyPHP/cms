@@ -76,9 +76,9 @@ $(function() {
 			var filter = $(this).attr('name');
 			if (value) $('#'+filter+'_selected').html(' - ' + value);
 			else $('#'+filter+'_selected').html('');
-			var url = '/admin/seo/duplicate-data/ajax/'+section;
 			var count = section.length;
 			for (i = 0; i < count; i++) { 
+				url = '/admin/seo/duplicate-data/ajax/'+section[i];
 				$('#'+section[i]).html('<img src="/images/loading.gif" />');
 				$.post(url,
 					{ 
