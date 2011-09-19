@@ -52,7 +52,6 @@ $(function() {
 		var val = $(this).val();
 		$('#type').val(val);
 		$('#type_selected').html(' - ' + val);
-		saveDisableCheck();
 	});
 		
 	$('.phrase-filter-radio').live('click',function() {
@@ -61,6 +60,7 @@ $(function() {
 		if ($('#phrase1-filter-cb').attr('checked')) section.push('listing1');
 		if ($('#phrase2-filter-cb').attr('checked')) section.push('listing2');
 		if ($('#mod-filter-cb').attr('checked')) section.push('modifier');
+		if (!section.length) alert('Pick a group to filter');
 		var market = $("input[name=market]:checked").val();
 		var volume = $("input[name=volume]:checked").val();
 		var market_name = $("input[name=market_name]:checked").val();
@@ -170,7 +170,6 @@ function saveDisableCheck() {
 		if ($(this).attr('checked')) cb2 = true;
 		if (cb2) return false;			
 	});
-	type = $('#type').val();
-	if (!cb1 || !cb2 || !type) $('.save').attr('disabled','disabled');
+	if (!cb1 || !cb2) $('.save').attr('disabled','disabled');
 	else $('.save').removeAttr('disabled');
 }
