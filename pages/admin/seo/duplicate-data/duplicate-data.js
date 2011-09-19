@@ -117,12 +117,11 @@ $(function() {
 					if (section[2]) $.post(url, data, function(html3) { // third post
 						$('#'+section[2]).html(html3);							
 					});
+					else showSections(section);
 				});
+				else showSections(section);
 			
 			});
-			for (i=0;i<count;i++) {
-				$('#'+section[i]).fadeIn('fast');		
-			}
 		}
 		
 		//$.post('/admin/seo/duplicate-data/ajax/auto-permetate',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
@@ -207,4 +206,10 @@ function saveDisableCheck() {
 	});
 	if (!cb1 || !cb2) $('.save').attr('disabled','disabled');
 	else $('.save').removeAttr('disabled');
+}
+
+function showSections(section) {
+	for (i=0;i<count;i++) {
+		$('#'+section[i]).fadeIn('fast');		
+	}	
 }
