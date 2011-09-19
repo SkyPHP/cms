@@ -13,6 +13,8 @@ class vf_gallery_inc {
 		'enlarge' => true
 	);
 
+	public $db_field;
+	public $db_row_id;
 	public $caption;
 	public $class;
 	public $crop;

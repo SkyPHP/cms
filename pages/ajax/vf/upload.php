@@ -36,13 +36,13 @@ if (!$errors) {
 	if (!$re['success']) {
 		$errors[] = 'There was an error uploading the file.';
 	}
-	if ($params['dbField'] && $params['dbRowID'] && !$errors) {
-		$dot = strpos($params['dbField'], '.');
-		$table = substr($params['dbField'], 0, $dot);
-		$field = substr($params['dbField'], $dot + 1);
+	if ($params['db_field'] && $params['db_row_id'] && !$errors) {
+		$dot = strpos($params['db_field'], '.');
+		$table = substr($params['db_field'], 0, $dot);
+		$field = substr($params['db_field'], $dot + 1);
 		aql::update($table, array(
 			$field => $re['items_id']
-		), $params['dbRowID']);
+		), $params['db_row_id']);
 	}
 }
 
