@@ -109,8 +109,8 @@ $(function() {
 				alert(data);
 				$('#'+section[0]).html(html1);
 				url = '/admin/seo/duplicate-data/ajax/'+section[1];
+				
 				if (section[1]) $.post(url, data, function(html2) {
-					alert(data);
 					$('#'+section[2]).html(html2);
 					url = '/admin/seo/duplicate-data/ajax/'+section[2];
 					if (section[2]) $.post(url, data, function(html3) {
