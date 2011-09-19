@@ -78,7 +78,7 @@ $(function() {
 			if (value) $('#'+filter+'_selected').html(' - ' + value);
 			else $('#'+filter+'_selected').html('');
 			for (i=0;i<count;i++) {
-				$('#'+section[i]).html('<img src="/images/loading.gif" />');		
+				$('#'+section[i]).fadeOut('fast');		
 			}
 			data = 
 			{ 
@@ -96,14 +96,18 @@ $(function() {
 					$('#'+section[0]).html(html1);
 					url = '/admin/seo/duplicate-data/ajax/'+section[1];
 					if (section[1]) $.post(url, data, function(html2) {
-						$('#'+section[1]).html(html2);
 						url = '/admin/seo/duplicate-data/ajax/'+section[2];
 						if (section[2]) $.post(url, data, function(html3) {
 							$('#'+section[2]).html(html3);
+							$('#'+section[2]).fadeIn('fast');
+							
 						});
 					});
 				}
 			);
+			for (i=0;i<count;i++) {
+				$('#'+section[i]).fadeIn('fast');		
+			}
 		}
 		
 		//$.post('/admin/seo/duplicate-data/ajax/auto-permetate',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
