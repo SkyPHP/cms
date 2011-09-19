@@ -16,8 +16,8 @@
 			<th class="title">Market Name</th>
 			<th class="title">Keyword</th>
 			<th class="title">Base</th>
-			<th class="title">Edit</th>
 			<th class="title">Holiday</th>
+			<th class="title">Edit</th>
 		</tr>
 <?		
 		$x = 0;
