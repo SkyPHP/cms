@@ -47,6 +47,7 @@
 		'Keywords'
 	);
 ?>	
+	<div style="font-size:16px;margin-bottom: 10px;">Note: Save button will be disabled until you have selected a type, a phrase1 & a phrase2.</div>
 	<input type="hidden" name="type" value="" />
 	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a></div>
 	<div style="padding-top:10px; float:left; margin-right: 20px;">
