@@ -56,7 +56,7 @@ $(function() {
 		
 	$('.phrase-filter-radio').live('click',function() {
 		var phrase_id = $('#final-phrase').attr('p1');
-		var section = new array();
+		var section = new Array();
 		if ($('#phrase1-filter-cb').attr('checked')) section.push('listing1');
 		if ($('#phrase2-filter-cb').attr('checked')) section.push('listing2');
 		if ($('#mod-filter-cb').attr('checked')) section.push('modifier');
