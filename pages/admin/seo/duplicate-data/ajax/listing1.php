@@ -1,6 +1,7 @@
 <?
 	if (!$num) $num = 1;
 	$where=array();
+	if (is_array($_POST['ids'])) $where[] = "dup_phrase_data.id not in (".implode(',',$ids).")";	
 	if ($_POST['market']) $where[] = "market = '{$_POST['market']}'";
 	if ($_POST['market_name']) $where[] = "market_name = '{$_POST['market_name']}'";
 	if ($_POST['volume']) $where[] = "volume >= {$_POST['volume']}";

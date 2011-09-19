@@ -77,20 +77,33 @@ $(function() {
 			var filter = $(this).attr('name');
 			if (value) $('#'+filter+'_selected').html(' - ' + value);
 			else $('#'+filter+'_selected').html('');
+			l1 = false;
+			l2 = false;
+			ids = new Array();
 			for (i=0;i<count;i++) {
-				$('#'+section[i]).fadeOut('fast');		
+				$('#'+section[i]).fadeOut('fast');
+				if (section[i]=='listing1')	l1 = true;
+				if (section[i]=='listing2') l2 = true;
 			}
-			data = 
-			{ 
-					market: market,
-					volume: volume, 
-					market_name: market_name,  
-					category: category,
-					base: base,
-					value: value,
-					filter: filter,
-					phrase_id: phrase_id
-				};
+			if (!l1 && l2) $('.listing1-cb').each(function() {
+				phrase_id = $(this).attr('phrase_id');
+				if ($(this).attr('checked')) ids.push(phrase_id);
+			});
+			else if (l1 && !l2) $('.listing2-cb').each(function() {
+				phrase_id = $(this).attr('phrase_id');
+				if ($(this).attr('checked')) ids.push(phrase_id);
+			});
+			data = { 
+				ids: ids,
+				market: market,
+				volume: volume, 
+				market_name: market_name,  
+				category: category,
+				base: base,
+				value: value,
+				filter: filter,
+				phrase_id: phrase_id
+			};
 			url = '/admin/seo/duplicate-data/ajax/'+section[0];
 			$.post(url, data, function(html1) {
 					$('#'+section[0]).html(html1);
