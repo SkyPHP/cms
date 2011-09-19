@@ -108,21 +108,21 @@ $(function() {
 			$.post(url, data, function(html1) { // first post
 			
 				$('#'+section[0]).html(html1);
-				$('#'+section[0]).fadeIn('fast');
 				url = '/admin/seo/duplicate-data/ajax/'+section[1];
 				
 				if (section[1]) $.post(url, data, function(html2) { // second post
 					$('#'+section[1]).html(html2);
-					$('#'+section[1]).fadeIn('fast');
 					url = '/admin/seo/duplicate-data/ajax/'+section[2];
 					
 					if (section[2]) $.post(url, data, function(html3) { // third post
-						$('#'+section[2]).html(html3);
-						$('#'+section[2]).fadeIn('fast');							
+						$('#'+section[2]).html(html3);							
 					});
 				});
 			
 			});
+			for (i=0;i<count;i++) {
+				$('#'+section[i]).fadeIn('fast');		
+			}
 		}
 		
 		//$.post('/admin/seo/duplicate-data/ajax/auto-permetate',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
