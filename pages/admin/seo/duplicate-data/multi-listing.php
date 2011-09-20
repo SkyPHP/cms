@@ -1,4 +1,4 @@
-<input type="button" class="save" value="Save" style="margin-top:10px;" disabled /> <div id="multi-saved" style="margin-top:10px;"></div>
+<input type="text" id="group_name" /> <input type="button" class="save" value="Save" style="margin-top:10px;" disabled /> <div id="multi-saved" style="margin-top:10px;"></div>
 
 <?
 	$where=array();

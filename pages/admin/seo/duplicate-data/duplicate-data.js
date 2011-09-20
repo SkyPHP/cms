@@ -160,6 +160,7 @@ $(function() {
 		var phrase2_ids = new Array();
 		var mod_ids = new Array();
 		var category = $("input[name=category]:checked").val();
+		alert (category);
 		
 		
 		$('.listing1-cb').each(function(index) {
@@ -189,6 +190,7 @@ $(function() {
 		else { 
 			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',
 			{ 
+				group_name: group_name,
 				seo_field: seo_field,
 				category: category,
 				volume1: volume1,
