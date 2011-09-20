@@ -251,14 +251,8 @@ function saveDisableCheck() {
 		if ($(this).attr('checked')) cb2 = true;
 		if (cb2) return false;			
 	});
-	if (!cb1 || !cb2 || !name || !page) $('.save').attr('disabled','disabled').css('background-color','#eceef0');
-	else $('.save').removeAttr('disabled').css('background-color','#c1d7dd');
-	console.log(name);
-	console.log(page);
-	if (cb1) console.log('true');
-	else console.log('false');
-	if (cb2) console.log('true');
-	else console.log('false');
+	if (!cb1 || !cb2 || !name || !page) $('.save').attr('disabled','disabled');
+	else $('.save').removeAttr('disabled');
 }
 
 function showSections(section) {
