@@ -23,11 +23,12 @@
 	$p->template('seo','top');
 		
 	$filters = array(
-		'category'=>'both',
-		'market_name'=>'both',
-		'market'=>'both',
-		'base'=>'both',
+		'category'=>'phrase',
+		'market_name'=>'phrase',
+		'market'=>'phrase',
+		'base'=>'phrase',
 		'volume'=>'phrase',
+		'page'=>'modifier',
 		'modifier'=>'modifier'
 	);
 	$width = 310;

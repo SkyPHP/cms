@@ -158,6 +158,7 @@ $(function() {
 	$('.save').livequery('click',function(){
 		$('#multi-saved').html('<img src="/images/loading.gif" />');
 		var text;
+		var group_name = $('#group_name').val();
 		var type = $('#seo_field').val();
 		var volume1 = new Array();
 		var volume2 = new Array();

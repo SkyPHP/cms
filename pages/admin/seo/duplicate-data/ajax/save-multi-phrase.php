@@ -44,13 +44,15 @@
 		if ($rs || ($split[0] == $split[1])) $exists[$key] = true;
 		else {
 			$data = array(
+				'name' => $_POST['group_name'],
 				'seo_field' => $_POST['seo_field'],
 				'phrase1__dup_phrase_data_id' => $split[0],
 				'phrase2__dup_phrase_data_id' => $split[1],
 				'dup_modifier_id' => $split[2],
 				'mod__person_id' => PERSON_ID,
 				'total_volume' => $total_volume[$key],
-				'category' => $_POST['category']
+				'category' => $_POST['category'],
+				//'page'=>$_POST['page_type']
 			);
 			aql::insert('dup_phrase_group',$data);
 		}	
