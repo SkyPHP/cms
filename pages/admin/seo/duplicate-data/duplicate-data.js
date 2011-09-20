@@ -241,6 +241,10 @@ $(function() {
 		}
 	});
 	
+	$('#clear-results').live('click',function() {
+		$('#multi-saved').html('');
+	});
+	
 });
 
 function saveDisableCheck() {
