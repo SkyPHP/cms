@@ -30,7 +30,17 @@
 		<div class="field float-left" style="margin-right:20px;">
 			<? $field = "website_id" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
-			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
+			<select name="<?=$field?>">
+				<option value="">- Website -</option>
+<?
+				$rs = aql::select("website { name order by name }");
+				foreach ($rs as $r) {
+?>	
+					<option value="<?=$r['website_id']?>"><?=$r['name']?></option>
+<?
+				}
+?>
+			</select>
 		</div>
 		<div class="field float-left">
 			<? $field = "market_name" ?>
