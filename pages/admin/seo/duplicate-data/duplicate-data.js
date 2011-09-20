@@ -1,5 +1,6 @@
 var mouse_is_inside = false;
 var char_count_limit = $('#char_count_limit').val();
+
 String.prototype.capitalize = function(){
     return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } );
 };
@@ -77,9 +78,9 @@ $(function() {
 			var filter = $(this).attr('name');
 			if (value) $('#'+filter+'_selected').html(' - ' + value);
 			else $('#'+filter+'_selected').html('');
-			l1 = false;
-			l2 = false;
-			ids = new Array();
+			var l1 = false;
+			var l2 = false;
+			var ids = new Array();
 			for (i=0;i<count;i++) {
 				$('#'+section[i]).fadeOut('fast');
 				if (section[i]=='listing1')	l1 = true;
@@ -104,7 +105,7 @@ $(function() {
 				filter: filter,
 				phrase_id: phrase_id
 			};
-			url = '/admin/seo/duplicate-data/ajax/'+section[0];
+			var url = '/admin/seo/duplicate-data/ajax/'+section[0];
 			$.post(url, data, function(html1) { // first post
 			
 				$('#'+section[0]).html(html1);
@@ -133,14 +134,14 @@ $(function() {
 
 	$('.listing1-cb').livequery('click',function() {		
 		
-		phrase_id = $(this).attr('phrase_id');
+		var phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) $('#listing2_'+phrase_id).hide();
 		else $('#listing2_'+phrase_id).show();
 		saveDisableCheck();
 	});
 	
 	$('.listing2-cb').livequery('click',function() {
-		phrase_id = $(this).attr('phrase_id');
+		var phrase_id = $(this).attr('phrase_id');
 		if ($(this).attr('checked')) $('#listing1_'+phrase_id).hide();
 		else $('#listing1_'+phrase_id).show();
 		saveDisableCheck();
@@ -149,16 +150,16 @@ $(function() {
 	$('.save').livequery('click',function(){
 		$('#multi-saved').html('<img src="/images/loading.gif" />');
 		var text;
-		type = $('#type').val();
-		volume1 = new Array();
-		volume2 = new Array();
-		phrase1 = new Array();
-		phrase2 = new Array();
-		mods = new Array();
-		phrase1_ids = new Array();
-		phrase2_ids = new Array();
-		mod_ids = new Array();
-		category = $("input[name=category]:checked").val();
+		var type = $('#seo_field').val();
+		var volume1 = new Array();
+		var volume2 = new Array();
+		var phrase1 = new Array();
+		var phrase2 = new Array();
+		var mods = new Array();
+		var phrase1_ids = new Array();
+		var phrase2_ids = new Array();
+		var mod_ids = new Array();
+		var category = $("input[name=category]:checked").val();
 		
 		
 		$('.listing1-cb').each(function(index) {
@@ -188,7 +189,7 @@ $(function() {
 		else { 
 			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',
 			{ 
-				type: type,
+				seo_field: seo_field,
 				category: category,
 				volume1: volume1,
 				volume2: volume2,

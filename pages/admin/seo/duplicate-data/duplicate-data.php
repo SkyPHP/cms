@@ -50,7 +50,7 @@
 	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases">Phrase Listing</a></div>
 	<h1><?=$p->title?></h1>
 	<div style="font-size:16px; margin-bottom: 10px;">Note: Save button will be disabled until you have selected a phrase from part 1 & part 2.</div>
-	<input type="hidden" name="type" value="Title" />	
+	<input type="hidden" id="seo_field" value="Title" />	
 	<div style="padding-top:10px; float:left; margin-right: 20px;">
 		<div class="filter" type="type" filter="type">Type<span id="type_selected"> - Title</span></div>
 		<div id="type" class="filter-area">
@@ -70,7 +70,6 @@
 	<div style="padding-top:10px; float:left">
 		<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
 		<input type="hidden" id="char_count_limit" value="<?=$char_count_limit?>" />
-		<input type="hidden" id="seo_field" value="<?=str_replace('-','_',IDE)?>" />
 <?
 		foreach ($filters as $filter) {
 ?>			<div style="float:left; margin-right:40px;">
