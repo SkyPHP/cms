@@ -80,7 +80,7 @@ $(function() {
 		section = new Array();
 		if ($(this).attr('name') == 'category') {
 			section.push('listing1');
-			section.push('listing2');	
+			section.push('listing2');
 		}
 		else section.push($('#filter-this').val());		
 		count = section.length;
