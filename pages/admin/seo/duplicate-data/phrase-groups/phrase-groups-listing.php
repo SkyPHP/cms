@@ -24,7 +24,7 @@
 		$x = 0;
 		foreach($phrases as $phrase_id) {
 			$x++;
-			$o = new dup_phrase_data($phrase_id);	
+			$o = new dup_phrase_group($phrase_id);	
 ?>
 			<tr class="<?=$x%2?'alternate':'row'?>">
 				<td class="column" valign="middle"><?=$o['name']?></td>
