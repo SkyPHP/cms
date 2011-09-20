@@ -1,6 +1,6 @@
 <?
 	$where = array();
-	if ($_POST['page']) $where[] = "( category = '{$_POST['page']}' OR page = 'general' )";
+	if ($_POST['page']) $where[] = "( page = '{$_POST['page']}' OR page = 'general' )";
 	if ($_POST['modifier']) $where[] = "modifier = '{$_POST['modifier']}'";
 	$mods = aql::select("dup_modifier { id as mod_id, lower(phrase) as lower_phrase, phrase order by phrase asc }", array('dup_modifier'=>array('where'=>$where)));
 	if ($mods) foreach ($mods as $data) {
