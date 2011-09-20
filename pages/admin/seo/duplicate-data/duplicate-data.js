@@ -186,7 +186,20 @@ $(function() {
 		else if (phrase2_ids.length < 1) text = 'Check a Phrase from Phrase Part 2';
 		if (text) $('#multi-saved').html(text);
 		else { 
-			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',{ type: type, category: category, volume1: volume1, volume2: volume2, phrase1: phrase1, phrase2: phrase2, mods: mods, phrase1_ids: phrase1_ids, phrase2_ids: phrase2_ids, mod_ids: mod_ids },function(data) {
+			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',
+			{ 
+				type: type,
+				category: category,
+				volume1: volume1,
+				volume2: volume2,
+				phrase1: phrase1,
+				phrase2: phrase2,
+				mods: mods,
+				phrase1_ids: phrase1_ids,
+				phrase2_ids: phrase2_ids,
+				mod_ids: mod_ids 
+			},
+			function(data) {
 				$('#multi-saved').html(data);
 			});
 		}
@@ -211,6 +224,6 @@ function saveDisableCheck() {
 
 function showSections(section) {
 	for (i=0;i<count;i++) {
-		$('#'+section[i]).fadeIn('fast');		
+		$('#'+section[i]).fadeIn('fast');
 	}	
 }
