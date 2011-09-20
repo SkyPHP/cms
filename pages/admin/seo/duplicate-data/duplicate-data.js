@@ -58,7 +58,8 @@ $(function() {
 	$('input[name=filter-selected]').live('change',function() {
 		var new_filter = $(this).val();
 		var prev_filter = $('#filter-this').val();		
-		$('input[name=category]:checked,input[name=volume]:checked,input[name=market]:checked,input[name=market_name]:checked,input[name=base]:checked').removeAttr('checked');
+		$('input[name=volume]:checked,input[name=market]:checked,input[name=market_name]:checked,input[name=base]:checked').removeAttr('checked');
+		$('#volume_selected,#market_selected,#market_name_selected,#base_selected').html('');
 		$('#filter-this').val(new_filter);
 		if (prev_filter == 'mods') {
 			$('.modifier-filter-container').fadeOut('fast', function() {
@@ -77,7 +78,10 @@ $(function() {
 	$('.phrase-filter-radio').live('click',function() {
 		phrase_id = $('#final-phrase').attr('p1');
 		section = new Array();
-		section.push($('#filter-this').val());
+		if ($(this).attr('name') == 'category') {
+			section.push('listing1').push('listing2');	
+		}
+		else section.push($('#filter-this').val());		
 		count = section.length;
 		if (!count) {
 			$(this).removeAttr('checked');
