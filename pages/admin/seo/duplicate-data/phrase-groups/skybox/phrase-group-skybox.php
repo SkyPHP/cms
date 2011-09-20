@@ -36,7 +36,7 @@
 				$rs = aql::select("website { name order by name }");
 				foreach ($rs as $r) {
 ?>	
-					<option value="<?=$r['website_id']?>"><?=$r['name']?></option>
+					<option value="<?=$r['website_id']?>" <?=$r['website_id'] == $o['website_id']?'selected':''?>><?=$r['name']?></option>
 <?
 				}
 ?>
