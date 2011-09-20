@@ -4,7 +4,7 @@ fieldset {
 legend {
 	background:#ffffff;
 }
-.filter, .filter-on {
+.filter {
 	background: #eceef0;
 	font-weight:bold;
 	width: 175px;
@@ -13,6 +13,17 @@ legend {
 	border: 1px solid #999;
 	border-bottom: 2px solid #999;
 }
+
+.filter-on {
+	background: #eceed6;
+	font-weight:bold;
+	width: 175px;
+	padding-left:5px;
+	cursor:pointer;
+	border: 1px solid #999;
+	border-bottom: 2px solid #999;
+}
+
 .filter-area {
 	position:absolute;
 	display:none;
