@@ -29,7 +29,7 @@
 		</div>
 		<div class="field float-left">
 			<? $field = "website_id" ?>
-			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
+			<label class="label" for="<?=$field?>">Website</label><br>
 			<select name="<?=$field?>" style="width:200px;">
 				<option value="">- Website -</option>
 <?
