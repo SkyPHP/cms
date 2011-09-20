@@ -1,5 +1,5 @@
-<div style="margin-top:10px;"><span style="width:100px;">Group Name:</span> <input type="text" id="group_name" /></div>
-<div><span style="width: 100px;">Page:</span> <input type="text" id="page" /></div>
+<div style="margin-top:10px;"><div class="label-for-field">Group Name:</div> <input type="text" id="group_name" /></div><div class="clear"></div>
+<div><div class="label-for-field">Page:</div><div style="float:left;"><input type="text" id="page" /></div><div class="clear"></div>
 <div><input type="button" class="save" value="Create Group" disabled /></div>
 <div id="multi-saved" style="margin-top:10px;"></div>
 
