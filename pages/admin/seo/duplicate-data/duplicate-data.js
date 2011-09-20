@@ -58,6 +58,7 @@ $(function() {
 	$('input[name=filter-selected]').live('change',function() {
 		var new_filter = $(this).val();
 		var prev_filter = $('#filter-this').val();		
+		$('input[name=category]:checked,input[name=volume]:checked,input[name=market]:checked,input[name=market_name]:checked,input[name=base]:checked').removeAttr('checked');
 		$('#filter-this').val(new_filter);
 		if (prev_filter == 'mods') {
 			$('.modifier-filter-container').fadeOut('fast', function() {
