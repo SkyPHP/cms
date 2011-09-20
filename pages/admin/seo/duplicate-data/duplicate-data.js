@@ -175,7 +175,7 @@ $(function() {
 		
 		var text;
 		var group_name = $('#group_name').val();
-		var page = $('#page').val();
+		var page = $('#page-field').val();
 		var seo_fiels = $('#seo_field').val();
 		var category = $("input[name=category]:checked").val();
 		var market_name = $("input[name=market_name]:checked").val();
@@ -240,7 +240,7 @@ $(function() {
 
 function saveDisableCheck() {
 	var name = $('#group_name').val();
-	var page = $('#page').val();
+	var page = $('#page-field').val();
 	cb1 = false;
 	$('.listing1-cb').each(function() {
 		if ($(this).attr('checked')) cb1 = true;
