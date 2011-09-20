@@ -72,10 +72,10 @@ $(function() {
 	});
 	
 	$('.phrase-filter-radio').live('click',function() {
-		var phrase_id = $('#final-phrase').attr('p1');
-		var section = new Array();
+		phrase_id = $('#final-phrase').attr('p1');
+		section = new Array();
 		section.push($('#filter-this').val());
-		var count = section.length;
+		count = section.length;
 		if (!count) {
 			$(this).removeAttr('checked');
 			alert('Pick a group to filter');
