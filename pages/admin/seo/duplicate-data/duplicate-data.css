@@ -28,4 +28,13 @@ legend {
 .label-for-field {
 	float:left;
 	width: 100px;	
+	margin-top:5px;
+}
+.field {
+	margin-top:5px;
+	background:#eceef0;
+	border:none;
+	height: 16px;
+	font-size:14;
+	padding: 1px;
 }
