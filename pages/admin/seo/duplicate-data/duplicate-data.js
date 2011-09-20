@@ -1,5 +1,7 @@
 var mouse_is_inside = false;
 var char_count_limit = $('#char_count_limit').val();
+var bgcolor_on='#c1d7dd';
+var bgcolor_off='#c1d7dd';
 
 String.prototype.capitalize = function(){
     return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } );
@@ -151,8 +153,10 @@ $(function() {
 		//});
 	});
 
-	$('#page-field,#group_name').live('keyup',function() {
-		saveDisableCheck();		
+	$('#page-field,#group_name').live('keyup focusin focusout',function(e) {
+		if (e.type == 'focusin') $(this).css('background-color',bgcolor_on);
+		else if (e.type == 'focusout') $(this).css('background-color',bgcolor_off);
+		else saveDisableCheck();		
 	});
 
 	$('.listing1-cb').livequery('click',function() {		
