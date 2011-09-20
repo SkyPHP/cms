@@ -54,14 +54,28 @@ $(function() {
 		$('#type').val(val);
 		$('#type_selected').html(' - ' + val);
 	});
-		
+	
+	$('input[name=filter-selected]').live('change',function() {
+		var new_filter = $(this).val();
+		var prev_filter = $('#filter-this').val();		
+		$('#filter-this').val(new_filter);
+		if (prev_filter == 'modifier') {
+			$('.modifier-filter-container').fadeOut('fast', function() {
+				$('.phrase-filter-container').fadeIn('fast');
+			});
+		}
+		else if (new_filter == 'modifier') {
+			$('.phrase-filter-container').fadeOut('fast', function() {
+				$('.modifier-filter-container').fadeIn('fast');
+			});
+		}
+	});
+	
 	$('.phrase-filter-radio').live('click',function() {
 		var phrase_id = $('#final-phrase').attr('p1');
 		var section = new Array();
-		if ($('#phrase1-filter-cb').attr('checked')) section.push('listing1');
-		if ($('#phrase2-filter-cb').attr('checked')) section.push('listing2');
-		if ($('#mod-filter-cb').attr('checked')) section.push('modifier');
-		count = section.length;
+		section.push($('#filter-this').val());
+		var count = section.length;
 		if (!count) {
 			$(this).removeAttr('checked');
 			alert('Pick a group to filter');
@@ -113,13 +127,7 @@ $(function() {
 				
 				if (section[1]) $.post(url, data, function(html2) { // second post
 					$('#'+section[1]).html(html2);
-					url = '/admin/seo/duplicate-data/ajax/'+section[2];
-					
-					if (section[2]) $.post(url, data, function(html3) { // third post
-						$('#'+section[2]).html(html3);							
-						showSections(section);
-					});
-					else showSections(section);
+					showSections(section);
 				});
 				else showSections(section);
 			
