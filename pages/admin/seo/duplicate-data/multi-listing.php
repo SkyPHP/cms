@@ -53,10 +53,10 @@
     	</fieldset>
 	</div>
 	<div style="float:left;">
-	<div><input type="radio" name="filter-selected" id="mod-filter-cb" value="modifier" /> <label for="mod-filter-cb">Filter Modifier</label></div>
+	<div><input type="radio" name="filter-selected" id="mod-filter-cb" value="mods" /> <label for="mod-filter-cb">Filter Modifier</label></div>
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Modifier</legend>
-			<div id="modifier">
+			<div id="mods">
 <?
 				$where = array();
 				if ($_POST['category']) $where[] = "( category = '{$_POST['category']}' OR category = 'general' )";

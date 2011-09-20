@@ -59,12 +59,12 @@ $(function() {
 		var new_filter = $(this).val();
 		var prev_filter = $('#filter-this').val();		
 		$('#filter-this').val(new_filter);
-		if (prev_filter == 'modifier') {
+		if (prev_filter == 'mods') {
 			$('.modifier-filter-container').fadeOut('fast', function() {
 				$('.phrase-filter-container').fadeIn('fast');
 			});
 		}
-		else if (new_filter == 'modifier') {
+		else if (new_filter == 'mods') {
 			$('.phrase-filter-container').fadeOut('fast', function() {
 				$('.modifier-filter-container').fadeIn('fast');
 			});
