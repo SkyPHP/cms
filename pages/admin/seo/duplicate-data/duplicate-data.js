@@ -235,8 +235,8 @@ $(function() {
 });
 
 function saveDisableCheck() {
-	var name = ($('#group_name').val());
-	var page = ($('#page').val());
+	var name = $('#group_name').val();
+	var page = $('#page').val();
 	cb1 = false;
 	$('.listing1-cb').each(function() {
 		if ($(this).attr('checked')) cb1 = true;
