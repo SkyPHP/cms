@@ -17,7 +17,7 @@
 			<input style="width:500px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
 		<div class="field float-left" style="margin-right:20px;">
-			<? $field = "phrase1__dup_phrase_data_id" ?>
+			<? $field = "phrase2__dup_phrase_data_id" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
