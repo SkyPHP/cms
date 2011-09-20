@@ -11,7 +11,7 @@
 	<table width="95%">
 		<tr class="header">
 			<th class="title">Name</th>
-			<th class="title">Phrase 1</th>0
+			<th class="title">Phrase 1</th>
 			<th class="title">Phrase 2</th>
 			<th class="title">Modifier</th>
 			<th class="title">Total Volume</th>
