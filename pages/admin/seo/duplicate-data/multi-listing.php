@@ -1,4 +1,6 @@
-<div style="margin-top:10px;">Group Name: <input type="text" id="group_name" style="marigin-right: 10px; " /> <input type="button" class="save" value="Create Group" disabled /></div>
+<div style="margin-top:10px;"><span style="width:100px;">Group Name:</span> <input type="text" id="group_name" /></div>
+<div><span style="width: 100px;">Page:</span> <input type="text" id="page" /></div>
+<div><input type="button" class="save" value="Create Group" disabled /></div>
 <div id="multi-saved" style="margin-top:10px;"></div>
 
 <?
@@ -72,4 +74,4 @@
     	</fieldset>
 	</div>
 </div>
-<input type="button" class="save" value="Save" style="margin-top:10px;" disabled />
+<input type="button" class="save" value="Create Group" style="margin-top:10px;" disabled />

@@ -170,9 +170,14 @@ $(function() {
 		
 	$('.save').livequery('click',function(){
 		$('#multi-saved').html('<img src="/images/loading.gif" />');
+		
 		var text;
 		var group_name = $('#group_name').val();
-		var type = $('#seo_field').val();
+		var page = $('#page').val();
+		var seo_fiels = $('#seo_field').val();
+		var category = $("input[name=category]:checked").val();
+		var market_name = $("input[name=market_name]:checked").val();
+		
 		var volume1 = new Array();
 		var volume2 = new Array();
 		var phrase1 = new Array();
@@ -181,8 +186,6 @@ $(function() {
 		var phrase1_ids = new Array();
 		var phrase2_ids = new Array();
 		var mod_ids = new Array();
-		var category = $("input[name=category]:checked").val();
-		var market_name = $("input[name=market_name]:checked").val();
 			
 		$('.listing1-cb').each(function(index) {
             if ($(this).attr('checked')) {
@@ -234,6 +237,8 @@ $(function() {
 });
 
 function saveDisableCheck() {
+	var name = ($('#group_name').val());
+	var page = ($('#page').val());
 	cb1 = false;
 	$('.listing1-cb').each(function() {
 		if ($(this).attr('checked')) cb1 = true;
@@ -244,7 +249,7 @@ function saveDisableCheck() {
 		if ($(this).attr('checked')) cb2 = true;
 		if (cb2) return false;			
 	});
-	if (!cb1 || !cb2) $('.save').attr('disabled','disabled');
+	if (!cb1 || !cb2 || !name || !page) $('.save').attr('disabled','disabled');
 	else $('.save').removeAttr('disabled');
 }
 

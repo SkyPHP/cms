@@ -51,7 +51,7 @@
 ?>	
 	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases">Phrase Listing</a></div>
 	<h1><?=$p->title?></h1>
-	<div style="font-size:16px; margin-bottom: 10px;">Note: Save button will be disabled until you have selected a phrase from part 1 & part 2.</div>
+	<div style="font-size:16px; margin-bottom: 10px;">Note: Save button will be disabled until you have selected a phrase from part 1 & part 2 as well as entered values for both Group Name & Page.</div>
 	<input type="hidden" id="filter-this" value="listing1" />
 	<input type="hidden" id="seo_field" value="Title" />	
 	<div style="padding-top:10px; float:left; margin-right: 20px;">
