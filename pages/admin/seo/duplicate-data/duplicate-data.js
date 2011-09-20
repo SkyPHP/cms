@@ -216,7 +216,8 @@ $(function() {
         });
 		if (phrase1_ids.length < 1 && phrase2_ids.length < 1) text = 'Please Select The Phrases and Modifiers You Wish to Use';
 		else if (phrase1_ids.length < 1) text = 'Check a Phrase from Phrase Part 1';
-		else if (phrase2_ids.length < 1) text = 'Check a Phrase from Phrase Part 2'; 
+		else if (phrase2_ids.length < 1) text = 'Check a Phrase from Phrase Part 2';
+		text = group_name + ', ' + page + ', ' +  seo_field + ', ' + category + ', ' + market_name;
 		if (text) $('#multi-saved').html(text);
 		else { 
 			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',
