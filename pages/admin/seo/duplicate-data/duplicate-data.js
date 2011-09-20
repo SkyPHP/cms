@@ -1,7 +1,7 @@
 var mouse_is_inside = false;
 var char_count_limit = $('#char_count_limit').val();
 var bgcolor_on='#c1d7dd';
-var bgcolor_off='#c1d7dd';
+var bgcolor_off='#eceef0';
 
 String.prototype.capitalize = function(){
     return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } );
