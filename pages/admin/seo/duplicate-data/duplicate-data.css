@@ -25,7 +25,7 @@ legend {
 .modifier-filter-container {
 	display:none;	
 }
-.label=for-field {
+.label-for-field {
 	float:left;
 	width: 100px;	
 }
