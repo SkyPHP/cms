@@ -28,7 +28,7 @@ $(function() {
 
     $("#container").mouseup(function(){ 
         if(! mouse_is_inside) $('.filter-area').slideUp('fast',function() {
-			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');	
+			setTimeout("$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');	",250);
 		});
     });
 
@@ -160,9 +160,7 @@ $(function() {
 		var phrase2_ids = new Array();
 		var mod_ids = new Array();
 		var category = $("input[name=category]:checked").val();
-		alert (category);
-		
-		
+			
 		$('.listing1-cb').each(function(index) {
             if ($(this).attr('checked')) {
 				volume1.push($(this).attr('volume'));
@@ -186,7 +184,6 @@ $(function() {
 		if (phrase1_ids.length < 1 && phrase2_ids.length < 1) text = 'Please Select The Phrases and Modifiers You Wish to Use';
 		else if (phrase1_ids.length < 1) text = 'Check a Phrase from Phrase Part 1';
 		else if (phrase2_ids.length < 1) text = 'Check a Phrase from Phrase Part 2';
-		text = 'test';
 		if (text) $('#multi-saved').html(text);
 		else { 
 			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',
