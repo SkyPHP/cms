@@ -1,12 +1,11 @@
 <?	
-	$p->title = "SEO Phrase Manager";
+	$p->title = "SEO Phrase Groups";
 	$p->template('seo','top');
 
 		$a = array();
-		$phrases = dup_phrase_data::getList($a);
+		$phrases = dup_phrase_group::getList($a);
 ?>
-	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data">Phrase Manager</a> | <a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases">Phrase Groups</a></div>
-	<h1><?=$p->title?></h1>
+	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data">Phrase Manager</a> | <a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases">Phrase Listing</a> <h1><?=$p->title?></h1>
 	<div id="count"><?=count($phrases)?> Records</div>
 	<table width="95%">
 		<tr class="header">
