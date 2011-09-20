@@ -1,6 +1,6 @@
 <div style="margin-top:10px;"><div class="label-for-field">Group Name:</div><div style="float:left;"><input type="text" id="group_name" class="phrase-field" /></div><div class="clear"></div>
 <div><div class="label-for-field">Page:</div><div style="float:left;"><input type="text" id="page" class="phrase-field" /></div><div class="clear"></div>
-<div><input type="button" class="save" value="Create Group" disabled /></div>
+<div style="margin-top:5px;"><input type="button" class="save" value="Create Group" disabled /></div>
 <div id="multi-saved" style="margin-top:10px;"></div>
 
 <?
