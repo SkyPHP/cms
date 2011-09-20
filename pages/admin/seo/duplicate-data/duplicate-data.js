@@ -247,8 +247,8 @@ function saveDisableCheck() {
 		if ($(this).attr('checked')) cb2 = true;
 		if (cb2) return false;			
 	});
-	if (!cb1 || !cb2 || !name || !page) $('.save').attr('disabled','disabled');
-	else $('.save').removeAttr('disabled');
+	if (!cb1 || !cb2 || !name || !page) $('.save').attr('disabled','disabled').css('background-color','#eceef0');
+	else $('.save').css('background-color','#c1d7dd').removeAttr('disabled');
 }
 
 function showSections(section) {
