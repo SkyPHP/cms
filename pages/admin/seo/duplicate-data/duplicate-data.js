@@ -58,18 +58,18 @@ $(function() {
 	$('input[name=filter-selected]').live('change',function() {
 		var new_filter = $(this).val();
 		var prev_filter = $('#filter-this').val();		
-		$('input[name=volume]:checked,input[name=market]:checked,input[name=market_name]:checked,input[name=base]:checked').removeAttr('checked');
-		$('#volume_selected,#market_selected,#market_name_selected,#base_selected').html('');
+		$('input[name=volume]:checked,input[name=market]:checked,input[name=base]:checked').removeAttr('checked');
+		$('#volume_selected,#market_selected,#base_selected').html('');
 		$('#filter-this').val(new_filter);
 		if (prev_filter == 'mods') {
 			$('.modifier-filter-container').fadeOut('fast', function() {
-				$('input[name=category]').removeAttr('disabled');
+				$('input[name=category],input[name=market_name]').removeAttr('disabled');
 				$('.phrase-filter-container').fadeIn('fast');
 			});
 		}
 		else if (new_filter == 'mods') {
 			$('.phrase-filter-container').fadeOut('fast', function() {
-				$('input[name=category]').attr('disabled','disabled');
+				$('input[name=category],input[name=market_name]').attr('disabled','disabled');
 				$('.modifier-filter-container').fadeIn('fast');
 			});
 		}
@@ -78,7 +78,7 @@ $(function() {
 	$('.phrase-filter-radio').live('click',function() {
 		phrase_id = $('#final-phrase').attr('p1');
 		section = new Array();
-		if ($(this).attr('name') == 'category') {
+		if ($(this).attr('name') == 'category' || $(this).attr('name') == 'market_name') {
 			section.push('listing1');
 			section.push('listing2');
 		}
@@ -182,6 +182,7 @@ $(function() {
 		var phrase2_ids = new Array();
 		var mod_ids = new Array();
 		var category = $("input[name=category]:checked").val();
+		var market_name = $("input[name=market_name]:checked").val();
 			
 		$('.listing1-cb').each(function(index) {
             if ($(this).attr('checked')) {
@@ -211,6 +212,8 @@ $(function() {
 			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',
 			{ 
 				group_name: group_name,
+				page: page,
+				market_name: market_name,
 				seo_field: seo_field,
 				category: category,
 				volume1: volume1,

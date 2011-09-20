@@ -24,7 +24,7 @@
 		
 	$filters = array(
 		'category'=>'both',
-		'market_name'=>'phrase',
+		'market_name'=>'both',
 		'market'=>'phrase',
 		'base'=>'phrase',
 		'volume'=>'phrase',

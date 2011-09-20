@@ -52,7 +52,8 @@
 				'mod__person_id' => PERSON_ID,
 				'total_volume' => $total_volume[$key],
 				'category' => $_POST['category'],
-				//'page'=>$_POST['page_type']
+				'market_name' => $_POST['market_name'],
+				'page'=>$_POST['page']
 			);
 			aql::insert('dup_phrase_group',$data);
 		}	
