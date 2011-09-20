@@ -11,26 +11,26 @@
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:500px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
-		<div class="field">
-			<? $field = "phrase1__dup_phrase_data_id" ?>
-			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
-			<input style="width:500px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
-		</div>
 		<div class="field float-left" style="margin-right:20px;">
-			<? $field = "phrase2__dup_phrase_data_id" ?>
+			<? $field = "phrase1__dup_phrase_data_id" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
 		<div class="field float-left">
-			<? $field = "dup_modifier_id" ?>
+			<? $field = "phrase2__dup_phrase_data_id" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
 		<div class="clear"></div>
 		<div class="field float-left" style="margin-right:20px;">
+			<? $field = "dup_modifier_id" ?>
+			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
+			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
+		</div>
+		<div class="field float-left">
 			<? $field = "website_id" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
-			<select name="<?=$field?>">
+			<select name="<?=$field?>" style="width:200px;">
 				<option value="">- Website -</option>
 <?
 				$rs = aql::select("website { name order by name }");
@@ -42,17 +42,18 @@
 ?>
 			</select>
 		</div>
-		<div class="field float-left">
+		<div class="clear"></div>
+		<div class="field float-left" style="margin-right:20px;">
 			<? $field = "market_name" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
-		<div class="clear"></div>
-		<div class="field" style="margin-right:20px;">
+		<div class="field float-left">
 			<? $field = "page" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
+		<div class="clear"></div>
 		<div class="field">
 			<input type="button" value="Save" id="save" />
 		</div>
