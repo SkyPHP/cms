@@ -181,7 +181,7 @@ $(function() {
 		var text;
 		var group_name = $('#group_name').val();
 		var page = $('#page-field').val();
-		var seo_fiels = $('#seo_field').val();
+		var seo_field = $('#seo_field').val();
 		var category = $("input[name=category]:checked").val();
 		var market_name = $("input[name=market_name]:checked").val();
 		
@@ -216,7 +216,7 @@ $(function() {
         });
 		if (phrase1_ids.length < 1 && phrase2_ids.length < 1) text = 'Please Select The Phrases and Modifiers You Wish to Use';
 		else if (phrase1_ids.length < 1) text = 'Check a Phrase from Phrase Part 1';
-		else if (phrase2_ids.length < 1) text = 'Check a Phrase from Phrase Part 2';
+		else if (phrase2_ids.length < 1) text = 'Check a Phrase from Phrase Part 2'; 
 		if (text) $('#multi-saved').html(text);
 		else { 
 			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',
