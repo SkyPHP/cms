@@ -83,10 +83,13 @@ $(function() {
 			$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');	
 		}
 		else {
+			// GET THE VALUES OF THE DROPDOWNS
 			var market = $("input[name=market]:checked").val();
 			var volume = $("input[name=volume]:checked").val();
 			var market_name = $("input[name=market_name]:checked").val();
 			var category = $("input[name=category]:checked").val();
+			var page = $("input[name=page]:checked").val();
+			var modifier = $("input[name=modifier]:checked").val();
 			var base = $("input[name=base]:checked").val();
 			var value = $(this).val();
 			var filter = $(this).attr('name');
