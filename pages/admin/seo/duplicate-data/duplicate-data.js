@@ -150,6 +150,9 @@ $(function() {
 		//});
 	});
 
+	$('#page','#group_name').live('keyup',function() {
+		saveDisableCheck();		
+	});
 
 	$('.listing1-cb').livequery('click',function() {		
 		
