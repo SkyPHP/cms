@@ -79,7 +79,8 @@ $(function() {
 		phrase_id = $('#final-phrase').attr('p1');
 		section = new Array();
 		if ($(this).attr('name') == 'category') {
-			section.push('listing1').push('listing2');	
+			section.push('listing1');
+			section.push('listing2');	
 		}
 		else section.push($('#filter-this').val());		
 		count = section.length;
