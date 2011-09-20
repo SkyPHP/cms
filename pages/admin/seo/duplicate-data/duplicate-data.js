@@ -143,6 +143,7 @@ $(function() {
 				else showSections(section);
 			
 			});
+			saveDisableCheck();
 		}
 		
 		//$.post('/admin/seo/duplicate-data/ajax/auto-permetate',{ sw: sw, filter: filter, type: type, value: value, or: or }, function(data){
@@ -251,7 +252,7 @@ function saveDisableCheck() {
 		if (cb2) return false;			
 	});
 	if (!cb1 || !cb2 || !name || !page) $('.save').attr('disabled','disabled').css('background-color','#eceef0');
-	else $('.save').css('background-color','#c1d7dd').removeAttr('disabled');
+	else $('.save').removeAttr('disabled').css('background-color','#c1d7dd');
 }
 
 function showSections(section) {
