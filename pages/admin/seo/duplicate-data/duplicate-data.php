@@ -23,7 +23,7 @@
 	$p->template('seo','top');
 		
 	$filters = array(
-		'category'=>'phrase',
+		'category'=>'both',
 		'market_name'=>'phrase',
 		'market'=>'phrase',
 		'base'=>'phrase',

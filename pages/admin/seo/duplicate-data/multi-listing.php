@@ -1,4 +1,5 @@
-<label for="group_name" style="margin-top:10px;">Group Name: </label><input type="text" id="group_name" style="margin:10px 10px 0 0; " /> <input type="button" class="save" value="Create Group" style="margin-top:10px;" disabled /> <div id="multi-saved" style="margin-top:10px;"></div>
+<div style="margin-top:10px;">Group Name: <input type="text" id="group_name" style="marigin-right: 10px; " /> <input type="button" class="save" value="Create Group" disabled /></div>
+<div id="multi-saved" style="margin-top:10px;"></div>
 
 <?
 	$where=array();
@@ -17,7 +18,7 @@
 	<input type="hidden" id="person_id" value="<?=PERSON_ID?>" />
 <div class="has-floats">	
 	<div style="float:left">
-		<div><input type="radio" name="filter-selected" checked id="phrase1-filter-cb" /> <label for="phrase1-filter-cb">Filter Phrase 1</label></div>
+		<div><input type="radio" name="filter-selected" checked id="phrase1-filter-radio" /> <label for="phrase1-filter-radio">Filter Phrase 1</label></div>
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Phrase Part 1</legend>
 			<div id="listing1">
@@ -35,7 +36,7 @@
 		</fieldset>
 	</div>
 	<div style="float:left;">
-		<div><input type="radio" name="filter-selected" id="phrase2-filter-cb" value="listing2" /> <label for="phrase2-filter-cb">Filter Phrase 2</label></div>
+		<div><input type="radio" name="filter-selected" id="phrase2-filter-radio" value="listing2" /> <label for="phrase2-filter-radio">Filter Phrase 2</label></div>
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Phrase Part 2</legend>
 			<div id="listing2">
@@ -53,7 +54,7 @@
     	</fieldset>
 	</div>
 	<div style="float:left;">
-	<div><input type="radio" name="filter-selected" id="mod-filter-cb" value="mods" /> <label for="mod-filter-cb">Filter Modifier</label></div>
+	<div><input type="radio" name="filter-selected" id="mod-filter-radio" value="mods" /> <label for="mod-filter-radio" class="filter-radio">Filter Modifier</label></div>
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Modifier</legend>
 			<div id="mods">

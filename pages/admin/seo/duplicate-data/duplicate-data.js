@@ -61,11 +61,13 @@ $(function() {
 		$('#filter-this').val(new_filter);
 		if (prev_filter == 'mods') {
 			$('.modifier-filter-container').fadeOut('fast', function() {
+				$('input[name=category]').removeAttr('disabled');
 				$('.phrase-filter-container').fadeIn('fast');
 			});
 		}
 		else if (new_filter == 'mods') {
 			$('.phrase-filter-container').fadeOut('fast', function() {
+				$('input[name=category]').attr('disabled','disabled');
 				$('.modifier-filter-container').fadeIn('fast');
 			});
 		}
