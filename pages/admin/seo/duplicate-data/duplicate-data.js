@@ -97,7 +97,7 @@ $(function() {
 			var market_name = $("input[name=market_name]:checked").val();
 			var category = $("input[name=category]:checked").val();
 			var page = $("input[name=page]:checked").val();
-			var modifier = $("input[name=modifier]:checked").val();
+			var sub_category = $("input[name=modifier]:checked").val();
 			var base = $("input[name=base]:checked").val();
 			
 			var value = $(this).val();
@@ -126,7 +126,7 @@ $(function() {
 				volume: volume, 
 				market_name: market_name,  
 				category: category,
-				modifier: modifier,
+				sub_category: sub_category,
 				page: page,
 				base: base,
 				value: value,

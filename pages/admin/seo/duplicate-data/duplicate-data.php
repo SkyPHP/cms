@@ -29,7 +29,7 @@
 		'base'=>'phrase',
 		'volume'=>'phrase',
 		'page'=>'modifier',
-		'modifier'=>'modifier'
+		'sub_category'=>'modifier'
 	);
 	$width = 310;
 	$listing = aql::select("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume order by volume DESC, phrase asc }"); 
