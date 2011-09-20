@@ -28,7 +28,7 @@ $(function() {
 
     $("#container").mouseup(function(){ 
         if(! mouse_is_inside) $('.filter-area').slideUp('fast',function() {
-			setTimeout("$('.filter-on').css('border-bottom', '2px solid #999').removeClass('filter-on').addClass('filter');	",250);
+			setTimeout("$('.filter-on').removeClass('filter-on').addClass('filter');",250);
 		});
     });
 
