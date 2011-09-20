@@ -23,11 +23,12 @@
 	$p->template('seo','top');
 		
 	$filters = array(
-		'category',
-		'market_name',
-		'market',
-		'base',
-		'volume',		
+		'category'=>'both',
+		'market_name'=>'both',
+		'market'=>'both',
+		'base'=>'both',
+		'volume'=>'phrase',
+		'modifier'=>'modifier'
 	);
 	$width = 310;
 	$listing = aql::select("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume order by volume DESC, phrase asc }"); 
@@ -71,8 +72,8 @@
 		<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
 		<input type="hidden" id="char_count_limit" value="<?=$char_count_limit?>" />
 <?
-		foreach ($filters as $filter) {
-?>			<div style="float:left; margin-right:40px;">
+		foreach ($filters as $filter => $class) {
+?>			<div style="float:left; margin-right:40px;" <?=($class!='both')?'class="'.$class.'-filter-container"':''?>>
 				<div class="filter" type="<?=$type?>" filter="<?=$filter?>"><?=str_replace('_',' ',$filter)?><span id="<?=$filter?>_selected" style="text-transform:lowercase"></span></div>
 				<div id="<?=$filter?>" class="filter-area"><? include('pages/admin/seo/duplicate-data/filter.php') ?></div>
 			</div>
