@@ -220,14 +220,10 @@ $(function() {
 		//text = group_name + ', ' + page + ', ' +  seo_field + ', ' + category + ', ' + market_name;
 		if (text) $('#multi-saved').html(text);
 		else { 
-					
-			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',
-			{ 
+			data = {
 				group_name: group_name,
 				page: page,
-				market_name: market_name,
 				seo_field: seo_field,
-				category: category,
 				volume1: volume1,
 				volume2: volume2,
 				phrase1: phrase1,
@@ -235,10 +231,12 @@ $(function() {
 				mods: mods,
 				phrase1_ids: phrase1_ids,
 				phrase2_ids: phrase2_ids,
-				mod_ids: mod_ids 
-			},
-			function(data) {
-				$('#multi-saved').html(data);
+				mod_ids: mod_ids
+			}	
+			if (market_name) data.market_name = market_name;
+			if (category) data.category = category;
+			$.post('/admin/seo/duplicate-data/ajax/save-multi-phrase',data,function(html) {
+				$('#multi-saved').html(html);
 			});
 		}
 	});
