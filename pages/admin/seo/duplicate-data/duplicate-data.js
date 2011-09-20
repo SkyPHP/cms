@@ -117,6 +117,8 @@ $(function() {
 				volume: volume, 
 				market_name: market_name,  
 				category: category,
+				modifier: modifier,
+				page: page,
 				base: base,
 				value: value,
 				filter: filter,
