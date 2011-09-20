@@ -20,7 +20,7 @@
 	<input type="hidden" id="person_id" value="<?=PERSON_ID?>" />
 <div class="has-floats">	
 	<div style="float:left">
-		<div><input type="radio" name="filter-selected" checked id="phrase1-filter-radio" /> <label for="phrase1-filter-radio">Filter Phrase 1</label></div>
+		<div><input type="radio" name="filter-selected" checked id="phrase1-filter-radio" value="listing1" /> <label for="phrase1-filter-radio">Filter Phrase 1</label></div>
 		<fieldset style="width:520px; border: solid 1px #CCCCCC; padding: 15px; margin-right:15px;">
 			<legend class="legend">Phrase Part 1</legend>
 			<div id="listing1">
