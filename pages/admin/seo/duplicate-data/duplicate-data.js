@@ -150,7 +150,7 @@ $(function() {
 		//});
 	});
 
-	$('#page','#group_name').live('keyup',function() {
+	$('#page,#group_name').live('keyup',function() {
 		saveDisableCheck();		
 	});
 
