@@ -151,7 +151,7 @@ $(function() {
 		//});
 	});
 
-	$('#page,#group_name').live('keyup',function() {
+	$('#page-field,#group_name').live('keyup',function() {
 		saveDisableCheck();		
 	});
 
