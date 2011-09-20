@@ -113,7 +113,6 @@ form.standard_form label.checkbox_label {
 	height: 100%; /* IE6: treaded as min-height*/
 
 	min-height: 100%; /* real browsers */
-	background: url('/images/page_border.png') top center repeat-y;
 }
 
 #wrapper-top{
@@ -141,7 +140,6 @@ form.standard_form label.checkbox_label {
 	width: 90%;
 	padding: 0 50px;
 	height: 100px;
-	background: url('/images/header_main_bg.jpg') no-repeat;
 }
 #header-right {
 	float: right;
