@@ -99,6 +99,7 @@ $(function() {
 			var page = $("input[name=page]:checked").val();
 			var modifier = $("input[name=modifier]:checked").val();
 			var base = $("input[name=base]:checked").val();
+			
 			var value = $(this).val();
 			var filter = $(this).attr('name');
 			if (value) $('#'+filter+'_selected').html(' - ' + value);
