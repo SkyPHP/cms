@@ -1,5 +1,5 @@
 <?
-	$o = new dup_phrase_data(IDE);
+	$o = new dup_phrase_group(IDE);
 	$p->title = "Duplicate Data - Phrase Skybox (dup_phrase_group: ".$o['dup_phrase_group_id'].")";
 	$p->template('skybox','top');
 ?>
@@ -28,7 +28,7 @@
 		</div>
 		<div class="clear"></div>
 		<div class="field float-left" style="margin-right:20px;">
-			<? $field = "category" ?>
+			<? $field = "website_id" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
@@ -38,19 +38,8 @@
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
 		<div class="clear"></div>
-		<div class="field float-left" style="margin-right:20px;">
-			<? $field = "holiday" ?>
-			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
-			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
-		</div>
-		<div class="field float-left">
-			<? $field = "base" ?>
-			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
-			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
-		</div>
-		<div class="clear"></div>
-		<div class="field">
-			<? $field = "keyword" ?>
+		<div class="field" style="margin-right:20px;">
+			<? $field = "page" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
