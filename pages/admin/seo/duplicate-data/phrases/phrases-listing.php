@@ -37,7 +37,7 @@
 				<td class="column" valign="middle"><?=$o['holiday']?></td>
 				<td class="column" valign="middle"><?=$o['base']?></td>
 				<td class="column" valign="middle"><?=$o['keyword']?></td>
-				<td class="column" valign="middle" style="text-align:center;"><input class="edit" type="button" phrase_ide="<?=$o['dup_phrase_data_ide']?>" value="edit"></td>		
+				<td class="column" valign="middle" style="text-align:center;"><input class="edit" type="button" href="/admin/seo/duplicate-data/phrases/skybox/phrase-skybox/" ide="<?=$o['dup_phrase_data_ide']?>" value="edit"></td>		
 			</tr>
 <?
 		}

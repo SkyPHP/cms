@@ -10,10 +10,11 @@
 	<table width="95%">
 		<tr class="header">
 			<th class="title">Name</th>
-			<th class="title">Phrase 1</th>
+			<th class="title">Phrase 1</th>0
 			<th class="title">Phrase 2</th>
 			<th class="title">Modifier</th>
 			<th class="title">Total Volume</th>
+			<th class="title">Website</th>
 			<th class="title">Category</th>
 			<th class="title">Market Name</th>
 			<th class="title">Page</th>
@@ -32,11 +33,12 @@
 				<td class="column" valign="middle"><?=aql::value('dup_phrase_data.phrase',$o['phrase2__dup_phrase_data_id'])?></td>
 				<td class="column" valign="middle"><?=aql::value('dup_modifier.phrase',$o['dup_modifier_id'])?></td>
 				<td class="column" valign="middle"><?=$o['total_volume']?></td>
+				<td class="column" valign="middle"><?=aql::value('website.name',$o['website_id'])?></td>
 				<td class="column" valign="middle"><?=$o['category']?></td>
 				<td class="column" valign="middle"><?=$o['market_name']?></td>
 				<td class="column" valign="middle"><?=$o['page']?></td>
 				<td class="column" valign="middle" style="text-align:center;"><input class="assign" type="button" group_ide="<?=$o['dup_phrase_group_ide']?>" value="assign"></td>
-				<td class="column" valign="middle" style="text-align:center;"><input class="edit" type="button" group_ide="<?=$o['dup_phrase_group_ide']?>" value="edit"></td>		
+				<td class="column" valign="middle" style="text-align:center;"><input class="edit" type="button" href="/admin/seo/duplicate-data/phrase-groups/skybox/phrase-group-skybox/" ide="<?=$o['dup_phrase_group_ide']?>" value="edit"></td>		
 			</tr>
 <?
 		}

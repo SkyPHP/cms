@@ -1,34 +1,34 @@
 <?
 	$o = new dup_phrase_data(IDE);
-	$p->title = "Duplicate Data - Phrase Skybox (dup_phrase_data: ".$o['dup_phrase_data_id'].")";
+	$p->title = "Duplicate Data - Phrase Skybox (dup_phrase_group: ".$o['dup_phrase_group_id'].")";
 	$p->template('skybox','top');
 ?>
 	<form model="dup_phrase_data" class="aqlForm">
-		<input type="hidden" name="dup_phrase_data_ide" value="<?=$o['dup_phrase_data_ide']?>" />
+		<input type="hidden" name="dup_phrase_data_ide" value="<?=$o['dup_phrase_group_ide']?>" />
 		<input type="hidden" name="_token" value="<?=$o->_token?>" />
 		<div class="field">
-			<? $field = "phrase" ?>
+			<? $field = "name" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:500px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
 		<div class="field">
-			<? $field = "seo_formula" ?>
+			<? $field = "phrase1__dup_phrase_data_id" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:500px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
 		<div class="field float-left" style="margin-right:20px;">
-			<? $field = "category" ?>
+			<? $field = "phrase1__dup_phrase_data_id" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
 		<div class="field float-left">
-			<? $field = "sub_category" ?>
+			<? $field = "dup_modifier_id" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
 		<div class="clear"></div>
 		<div class="field float-left" style="margin-right:20px;">
-			<? $field = "market" ?>
+			<? $field = "category" ?>
 			<label class="label" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label><br>
 			<input style="width:200px;" type="text" id="<?=$field?>" value="<?=$o[$field]?>" name="<?=$field?>" />
 		</div>
@@ -67,7 +67,7 @@
 		
 		$('#save').live('click',function() { 
 			data = $('form').serializeArray();
-			$('#save-message').aqlSave("dup_phrase_data",data);
+			$('#save-message').aqlSave("dup_phrase_group",data);
 		});
 	});
 </script>
