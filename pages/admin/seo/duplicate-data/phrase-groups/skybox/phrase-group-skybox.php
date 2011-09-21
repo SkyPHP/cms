@@ -68,7 +68,6 @@
 		$('#save').live('click',function() { 
 			var data = $('form').serializeArray();
 			var ide = $('input[name=dup_phrase_group_ide]').val();
-			$('#row_'+ide).html(html);
 			$('#save-message').aqlSave("dup_phrase_group",data);
 			$.post ('/admin/seo/duplicate-data/ajax/row/'+ide,function(html) {
 				$('#row_'+ide).html(html);
