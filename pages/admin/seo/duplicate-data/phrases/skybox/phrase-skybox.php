@@ -69,12 +69,13 @@
 			var data = $('form').serializeArray();
 			var ide = $('input[name=dup_phrase_data_ide]').val();
 			alert(ide);
-			$('#save-message').aqlSave("dup_phrase_data",data,{ success: function() {
+			$('#save-message').aqlSave("dup_phrase_data",data, { success: function() {
 					$.post ('/admin/seo/duplicate-data/phrases/ajax/row/'+ide,function(html) {
 						$('#row_'+ide).html(html);
 					});	
-				}
-			});
+				},
+				successMessage: 'Saved'
+			} );
 		});
 	});
 </script>
