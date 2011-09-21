@@ -68,14 +68,8 @@
 		$('#save').live('click',function() { 
 			var data = $('form').serializeArray();
 			var ide = $('input[name=dup_phrase_data_ide]').val();
-			alert(ide);
-			$('#save-message').aqlSave("dup_phrase_data",data, { success: function() {
-					$.post ('/admin/seo/duplicate-data/phrases/ajax/row/'+ide,function(html) {
-						$('#row_'+ide).html(html);
-					});	
-				},
-				successMessage: 'Saved'
-			} );
+			$('#save-message').aqlSave("dup_phrase_data",data);
+			setTimeout("$.post ('/admin/seo/duplicate-data/phrases/ajax/row/'+ide,function(html) { $('#row_'+ide).html(html); });",500);
 		});
 	});
 </script>
