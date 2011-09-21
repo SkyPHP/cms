@@ -66,7 +66,6 @@
 	$(function() {
 		
 		$('#save').live('click',function() { 
-			data = $('form').serializeArray();
 			$('#save-message').aqlSave("dup_phrase_group",data);
 		});
 	});
