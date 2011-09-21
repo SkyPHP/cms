@@ -29,8 +29,7 @@
 			$x++;
 			$o = new dup_phrase_group($phrase_id);	
 ?>
-			<tr class="<?=$x%2?'alternate':'row'?>">
-				<div id="row_<?=$o['dup_phrase_group_ide']?>">
+			<tr class="<?=$x%2?'alternate':'row'?>" id="row_<?=$o['dup_phrase_group_ide']?>">
 				<td class="column" valign="middle"><?=$o['name']?></td>
 				<td class="column" valign="middle"><?=aql::value('dup_phrase_data.phrase',$o['phrase1__dup_phrase_data_id'])?></td>
 				<td class="column" valign="middle"><?=aql::value('dup_phrase_data.phrase',$o['phrase2__dup_phrase_data_id'])?></td>
@@ -41,8 +40,7 @@
 				<td class="column" valign="middle"><?=$o['market_name']?></td>
 				<td class="column" valign="middle"><?=$o['page']?></td>
 				<td class="column" valign="middle" style="text-align:center;"><input class="assign" type="button" group_ide="<?=$o['dup_phrase_group_ide']?>" value="assign"></td>
-				<td class="column" valign="middle" style="text-align:center;"><input class="edit" type="button" href="/admin/seo/duplicate-data/phrase-groups/skybox/phrase-group-skybox/" ide="<?=$o['dup_phrase_group_ide']?>" value="edit"></td>	
-				</div>
+				<td class="column" valign="middle" style="text-align:center;"><input class="edit" type="button" href="/admin/seo/duplicate-data/phrase-groups/skybox/phrase-group-skybox/" ide="<?=$o['dup_phrase_group_ide']?>" value="edit"></td>		
 			</tr>
 <?
 		}
