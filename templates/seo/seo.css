@@ -10,7 +10,7 @@ h1, h2, h3, h4, h5, p {
 }
 h1 {
 	font-size:1.7em;
-    margin-bottom: 1em;
+    margin: 1em 0;
 }
 h2 {
 	font-size:1.5em;
@@ -113,7 +113,6 @@ form.standard_form label.checkbox_label {
 	height: 100%; /* IE6: treaded as min-height*/
 
 	min-height: 100%; /* real browsers */
-	background: url('/images/page_border.png') top center repeat-y;
 }
 
 #wrapper-top{
@@ -141,7 +140,6 @@ form.standard_form label.checkbox_label {
 	width: 90%;
 	padding: 0 50px;
 	height: 100px;
-	background: url('/images/header_main_bg.jpg') no-repeat;
 }
 #header-right {
 	float: right;
@@ -399,4 +397,7 @@ a.close {
 	display: inline;
 	padding: 0;
 	margin: 0;
+}
+.field {
+	margin-bottom: 10px;	
 }

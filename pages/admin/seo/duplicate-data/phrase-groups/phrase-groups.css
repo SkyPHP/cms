@@ -1,0 +1,34 @@
+/* CSS Document */
+.header {
+	width:100%;
+	font-size: 16px;
+	font-weight:bold;
+	border-bottom:double #CCC;
+}
+	.title {
+		border: 1px solid #CCC;
+		text-align:center;
+		padding: 3px 10px;
+	}
+
+.row {
+	width: 100%;
+}
+.alternate {
+	background: #eceef0;	
+}
+
+	.column {
+		border: 1px solid #CCC;
+		padding: 5px;
+	}
+#count {
+	width: 94%;
+	text-align:right;
+	margin-bottom: 5px;
+	font-size:14px;
+	font-weight:bold;
+}
+table {
+	clear: both;	
+}

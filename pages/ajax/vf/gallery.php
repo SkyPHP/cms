@@ -7,16 +7,19 @@ if (!$gallery) {
 	if (!$_POST['_token']) exit;
 	$params = mem('vf_gallery:'.$_POST['_token']);
 	$gallery = vf::gallery($params);
-	$gallery->folder = $folder = vf::getFolder($gallery->folder->folders_id);
+	$gallery->folder = $folder = vf::getFolder($gallery->folder->folders_path, null, array(
+		'refresh_memcached' => true
+	));
 	$items = $folder->items;
 } else {
 	$items = $gallery->folder->items;
 	if (!$items) $items = $gallery->items;
 }
 
+if ($gallery->db_field && $gallery->db_row_id) {
+	$items = array(aql::value($gallery->db_field, $gallery->db_row_id));
+}
 $empty = (count($items) == 0);
-
-// krumo($gallery);
 ?>
 <div class="vf-gallery has-floats <?=($empty)?'vf-gallery-empty':''?>" id="<?=$gallery->identifier?>" 
 	token="<?=$gallery->_token?>"

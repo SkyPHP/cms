@@ -1,5 +1,5 @@
 <?
-	$p->title = 'Duplicate Data System ';
+	$p->title = 'Phrase Manager';
 	
 	switch($_GET['type']) {
 		
@@ -23,11 +23,13 @@
 	$p->template('seo','top');
 		
 	$filters = array(
-		'category',
-		'market_name',
-		'market',
-		'base',
-		'volume',		
+		'category'=>'both',
+		'market_name'=>'both',
+		'market'=>'phrase',
+		'base'=>'phrase',
+		'volume'=>'phrase',
+		'page'=>'modifier',
+		'sub_category'=>'modifier'
 	);
 	$width = 310;
 	$listing = aql::select("dup_phrase_data { id as phrase_id, lower(phrase) as lower_phrase, phrase, volume order by volume DESC, phrase asc }"); 
@@ -47,10 +49,13 @@
 		'Keywords'
 	);
 ?>	
-	<input type="hidden" name="type" value="H1" />
-	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a></div>
+	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases">Phrase Listing</a></div>
+	<h1><?=$p->title?></h1>
+	<div style="font-size:16px; margin-bottom: 10px;">Note: Save button will be disabled until you have selected a phrase from Part 1 & Part 2 as well as entered values for both Group Name & Page.</div>
+	<input type="hidden" id="filter-this" value="listing1" />
+	<input type="hidden" id="seo_field" value="Title" />	
 	<div style="padding-top:10px; float:left; margin-right: 20px;">
-		<div class="filter" type="type" filter="type">Type<span id="type_selected"></span></div>
+		<div class="filter" type="type" filter="type">Type<span id="type_selected"> - Title</span></div>
 		<div id="type" class="filter-area">
 			<div style="padding-top:5px;">
 <?
@@ -68,10 +73,9 @@
 	<div style="padding-top:10px; float:left">
 		<div style="float:left; margin-right:15px; font-weight:bold;">Filters:</div>
 		<input type="hidden" id="char_count_limit" value="<?=$char_count_limit?>" />
-		<input type="hidden" id="seo_field" value="<?=str_replace('-','_',IDE)?>" />
 <?
-		foreach ($filters as $filter) {
-?>			<div style="float:left; margin-right:40px;">
+		foreach ($filters as $filter => $class) {
+?>			<div style="float:left; margin-right:40px;" <?=($class!='both')?'class="'.$class.'-filter-container"':''?>>
 				<div class="filter" type="<?=$type?>" filter="<?=$filter?>"><?=str_replace('_',' ',$filter)?><span id="<?=$filter?>_selected" style="text-transform:lowercase"></span></div>
 				<div id="<?=$filter?>" class="filter-area"><? include('pages/admin/seo/duplicate-data/filter.php') ?></div>
 			</div>

@@ -44,13 +44,16 @@
 		if ($rs || ($split[0] == $split[1])) $exists[$key] = true;
 		else {
 			$data = array(
-				'seo_field' => $_POST['type'],
+				'name' => $_POST['group_name'],
+				'seo_field' => $_POST['seo_field'],
 				'phrase1__dup_phrase_data_id' => $split[0],
 				'phrase2__dup_phrase_data_id' => $split[1],
 				'dup_modifier_id' => $split[2],
 				'mod__person_id' => PERSON_ID,
 				'total_volume' => $total_volume[$key],
-				'category' => $_POST['category']
+				'category' => $_POST['category'],
+				'market_name' => $_POST['market_name'],
+				'page'=>$_POST['page']
 			);
 			aql::insert('dup_phrase_group',$data);
 		}	
@@ -91,3 +94,4 @@
 			echo '<div class="has-floats"><div style="margin-bottom:2px; float:left; margin-right: 15px; width: 600px">'.ucwords($phrase_final).'</div><div style="float:left;">'.$status.'</div></div>';
 		}
 ?>
+<div style="margin: 10px 0;"><a style="cursor:pointer" id="clear-results" >Clear Results</a></div>

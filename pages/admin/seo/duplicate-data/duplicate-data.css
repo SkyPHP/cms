@@ -4,7 +4,7 @@ fieldset {
 legend {
 	background:#ffffff;
 }
-.filter, .filter-on {
+.filter {
 	background: #eceef0;
 	font-weight:bold;
 	width: 175px;
@@ -13,12 +13,49 @@ legend {
 	border: 1px solid #999;
 	border-bottom: 2px solid #999;
 }
+
+.filter:hover {
+	background: #c1d7dd;
+}
+
+.filter-on {
+	background: #c1d7dd;
+	font-weight:bold;
+	width: 175px;
+	padding-left:5px;
+	cursor:pointer;
+	border-top: 1px solid #999;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	
+}
+
 .filter-area {
 	position:absolute;
 	display:none;
 	min-width:180px;
-	background-color: #eceef0;
+	background-color: #c1d7dd;
 	border-bottom: 1px solid #999;
 	border-left: 1px solid #999;
 	border-right: 1px solid #999;	
+}
+.modifier-filter-container {
+	display:none;	
+}
+.label-for-field {
+	float:left;
+	width: 100px;	
+	margin-top:5px;
+}
+.phrase-field {
+	margin-top:5px;
+	background:#eceef0;
+	border:1px solid #999;
+	width: 200px;
+	height: 16px;
+	font-size:14;
+	padding: 1px;
+}
+.phrase-field:hover {
+	background:	#c1d7dd;
 }
