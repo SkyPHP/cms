@@ -3,8 +3,8 @@
 	$p->title = "Duplicate Data - Phrase Skybox (dup_phrase_group: ".$o['dup_phrase_group_id'].")";
 	$p->template('skybox','top');
 ?>
-	<form model="dup_phrase_data" class="aqlForm">
-		<input type="hidden" name="dup_phrase_data_ide" value="<?=$o['dup_phrase_group_ide']?>" />
+	<form model="dup_phrase_group" class="aqlForm">
+		<input type="hidden" name="dup_phrase_group_ide" value="<?=$o['dup_phrase_group_ide']?>" />
 		<input type="hidden" name="_token" value="<?=$o->_token?>" />
 		<div class="field">
 			<? $field = "name" ?>
@@ -66,6 +66,7 @@
 	$(function() {
 		
 		$('#save').live('click',function() { 
+			data = $('form').serializeArray();
 			$('#save-message').aqlSave("dup_phrase_group",data);
 		});
 	});
