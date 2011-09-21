@@ -10,7 +10,7 @@ class vf_gallery extends vf_gallery_inc {
 
 	public static $defaults = array(
 		'html_include' => 'pages/ajax/vf/gallery.php',
-		'contextMenu' => false,
+		'contextMenu' => true,
 		'fileName' => false,
 		'width' => 100,
 		'height' => 100,

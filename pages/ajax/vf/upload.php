@@ -25,7 +25,7 @@ if (!$errors) {
 
 
 if (!$errors) {
-	$folder = (is_string($params['folder'])) ? $params['folder'] : $params['folder']->folders_id;
+	$folder = (is_string($params['folder'])) ? $params['folder'] : $params['folder']->folders_path;
 	if ($folder == '/' || !$folder) $errors[] = 'Folders Path was not set.';
 }
 
