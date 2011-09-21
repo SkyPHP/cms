@@ -3,6 +3,7 @@
 	$p->template('seo','top');
 
 		$a = array();
+		$a['order_by'] = "name";
 		$phrases = dup_phrase_group::getList($a);
 ?>
 	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data">Phrase Manager</a> | <a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases">Phrase Listing</a></div>
