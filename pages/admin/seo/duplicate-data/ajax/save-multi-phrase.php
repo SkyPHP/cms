@@ -94,3 +94,4 @@
 			echo '<div class="has-floats"><div style="margin-bottom:2px; float:left; margin-right: 15px; width: 600px">'.ucwords($phrase_final).'</div><div style="float:left;">'.$status.'</div></div>';
 		}
 ?>
+<div style="margin: 10px 0;"><a style="cursor:pointer" id="clear-results" >Clear Results</a></div>

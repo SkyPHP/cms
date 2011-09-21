@@ -3,6 +3,7 @@
 	$p->template('seo','top');
 
 		$a = array();
+		$a['order_by'] = "name";
 		$phrases = dup_phrase_group::getList($a);
 ?>
 	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data">Phrase Manager</a> | <a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases">Phrase Listing</a></div>
@@ -28,7 +29,7 @@
 			$x++;
 			$o = new dup_phrase_group($phrase_id);	
 ?>
-			<tr class="<?=$x%2?'alternate':'row'?>">
+			<tr class="<?=$x%2?'alternate':'row'?>" id="row_<?=$o['dup_phrase_group_ide']?>">
 				<td class="column" valign="middle"><?=$o['name']?></td>
 				<td class="column" valign="middle"><?=aql::value('dup_phrase_data.phrase',$o['phrase1__dup_phrase_data_id'])?></td>
 				<td class="column" valign="middle"><?=aql::value('dup_phrase_data.phrase',$o['phrase2__dup_phrase_data_id'])?></td>
