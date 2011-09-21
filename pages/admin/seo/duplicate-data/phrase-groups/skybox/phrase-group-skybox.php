@@ -66,11 +66,11 @@
 	$(function() {
 		
 		$('#save').live('click',function() { 
-			data = $('form').serializeArray();
+			var data = $('form').serializeArray();
+			var ide = $('input[name=dup_phrase_data_ide]').val();
 			$('#save-message').aqlSave("dup_phrase_group",data);
-			ide = $('input[name=dup_phrase_data_ide]').val();
 			$.post ('/admin/seo/duplicate-data/ajax/row/'+ide,function(html) {
-				$('#row_'+data.dup_phrase_data_ide).html(html);
+				$('#row_'+ide).html(html);
 			});
 		});
 	});
