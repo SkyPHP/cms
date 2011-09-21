@@ -69,9 +69,11 @@
 			var data = $('form').serializeArray();
 			var ide = $('input[name=dup_phrase_data_ide]').val();
 			alert(ide);
-			$('#save-message').aqlSave("dup_phrase_data",data);
-			$.post ('/admin/seo/duplicate-data/phrases/ajax/row/'+ide,function(html) {
-				$('#row_'+ide).html(html);
+			$('#save-message').aqlSave("dup_phrase_data",data,{ success: function() {
+					$.post ('/admin/seo/duplicate-data/phrases/ajax/row/'+ide,function(html) {
+						$('#row_'+ide).html(html);
+					});	
+				}
 			});
 		});
 	});
