@@ -1,4 +1,4 @@
-<? $o = new dup_phrase_group(IDE); ?>
+<? if (!$o) $o = new dup_phrase_group(IDE); ?>
 	<td class="column" valign="middle"><?=$o['name']?></td>
 	<td class="column" valign="middle"><?=aql::value('dup_phrase_data.phrase',$o['phrase1__dup_phrase_data_id'])?></td>
 	<td class="column" valign="middle"><?=aql::value('dup_phrase_data.phrase',$o['phrase2__dup_phrase_data_id'])?></td>

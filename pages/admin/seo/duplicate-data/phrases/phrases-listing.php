@@ -3,6 +3,7 @@
 	$p->template('seo','top');
 
 		$a = array();
+		$a['order_by']="category, phrase";
 		$phrases = dup_phrase_data::getList($a);
 ?>
 	<div style="margin: 15px;"><a href="/admin/seo/duplicate-data">Phrase Manager</a> | <a href="/admin/seo/duplicate-data/split-paragraph" >Paragraph Splitter</a> | <a href="/admin/seo/duplicate-data/phrases">Phrase Groups</a></div>
@@ -27,17 +28,8 @@
 			$x++;
 			$o = new dup_phrase_data($phrase_id);	
 ?>
-			<tr class="<?=$x%2?'alternate':'row'?>">
-				<td class="column" valign="middle"><?=$o['phrase']?></td>
-				<td class="column" valign="middle"><?=$o['category']?></td>
-				<td class="column" valign="middle"><?=$o['sub_category']?></td>
-				<td class="column" valign="middle"><?=$o['volume']?></td>
-				<td class="column" valign="middle"><?=$o['market']?></td>
-				<td class="column" valign="middle"><?=$o['market_name']?></td>
-				<td class="column" valign="middle"><?=$o['holiday']?></td>
-				<td class="column" valign="middle"><?=$o['base']?></td>
-				<td class="column" valign="middle"><?=$o['keyword']?></td>
-				<td class="column" valign="middle" style="text-align:center;"><input class="edit" type="button" href="/admin/seo/duplicate-data/phrases/skybox/phrase-skybox/" ide="<?=$o['dup_phrase_data_ide']?>" value="edit"></td>		
+			<tr class="<?=$x%2?'alternate':'row'?>" id="row_<?=$o['dup_phrase_data_ide']?>">
+				<? include ('pages/admin/seo/duplicate-data/phrases/ajax/row.php'); ?>		
 			</tr>
 <?
 		}
