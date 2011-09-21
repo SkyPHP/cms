@@ -67,11 +67,9 @@
 		
 		$('#save').live('click',function() { 
 			var data = $('form').serializeArray();
-			var ide = $('input[name=dup_phrase_group_ide]').val();
+			ide = $('input[name=dup_phrase_group_ide]').val();
 			$('#save-message').aqlSave("dup_phrase_group",data);
-			$.post ('/admin/seo/duplicate-data/phrase-groups/ajax/row/'+ide,function(html) {
-				$('#row_'+ide).html(html);
-			});
+			setTimeout("$.post ('/admin/seo/duplicate-data/phrase-groups/ajax/row/'+ide,function(html) { $('#row_'+ide).html(html); });",500);
 		});
 	});
 </script>
