@@ -1,6 +1,6 @@
 <?
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Headers: x-requested-with");
+//header('Access-Control-Allow-Origin: *');
+//header("Access-Control-Allow-Headers: x-requested-with");
 
 if (is_numeric(Login::get('person_id'))) {
 	if (Login::get('activation_required')) {
