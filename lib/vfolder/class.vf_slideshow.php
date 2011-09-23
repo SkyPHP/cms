@@ -7,6 +7,7 @@ if (!class_exists('vf_gallery_inc')) {
 class vf_slideshow extends vf_gallery_inc {
 	
 	public static $defaults = array(
+		'crop' => true,
 		'autostart' => true,
 		'delay' => 5000,
 		'html_include' => 'pages/ajax/vf/slideshow.php',

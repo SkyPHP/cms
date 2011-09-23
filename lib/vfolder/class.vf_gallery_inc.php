@@ -3,7 +3,7 @@
 class vf_gallery_inc {
 	
 	public static $defaults = array(
-		'crop' => true,
+		'crop' => false,
 		'caption' => false,
 		'enlarge' => true,
 		'enlarge_width' => 800,
