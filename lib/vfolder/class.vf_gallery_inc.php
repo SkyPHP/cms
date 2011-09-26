@@ -50,7 +50,7 @@ class vf_gallery_inc {
 			throw new Exception('class: <strong>vf_uploader</strong> requires a folder parameter or items to be set');
 		} else if (!is_object($this->folder) && !$this->items) {
 			$e = ($c == 'gallery') ? array('refresh_memcached' => true) : null;
-			$this->folder = vf::getFolder($this->folder, $this->limit, $e);
+			$this->folder = vf::getFolder($this->folder, array('limit' => $this->limit), $e);
 		}
 
 		$this->validate();
