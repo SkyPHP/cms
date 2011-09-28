@@ -1,5 +1,5 @@
     // login
-    $('#login_username').livequery(function(){
+    $('#login_username:visible').livequery(function(){
         $(this).focus();
     });
     $('#login_password').die().live('keyup',function(e){
