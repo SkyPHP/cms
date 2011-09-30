@@ -51,6 +51,8 @@ class vf_gallery_inc {
 		} else if (!is_object($this->folder) && !$this->items) {
 			$e = ($c == 'gallery') ? array('refresh_memcached' => true) : null;
 			$this->folder = vf::getFolder($this->folder, array('limit' => $this->limit), $e);
+		} else {
+			$this->folder->items = array_slice($this->folder->items, 0, $this->limit);
 		}
 
 		$this->validate();
