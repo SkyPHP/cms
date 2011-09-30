@@ -30,11 +30,11 @@ class vf {
       return($client->initialized);
    }
 
-   public static function getItem($items_id = NULL, $params = NULL, $width = NULL, $gravity = NULL){
+   public static function getItem($items_id = NULL, $params = NULL, $height = NULL, $gravity = NULL){
       $operations = array();
  
       if($params && !is_array($params)){
-         $params = array('height' => $height = $params, 'width' => $width, 'crop' => $gravity);
+         $params = array('height' => $height, 'width' => $width = $params, 'crop' => $gravity);
       }
 
       if($params || ($params = NULL)){
@@ -82,7 +82,16 @@ class vf {
          $extra_params = array('files_domain' => self::$filesDomain);
       }
 
-      return((object)self::$client->get_item($items_id, $params));
+      $response = (object) self::$client->get_item($items_id, $params);
+      if (!is_array($items_id)) return $response;
+
+      $response->items = array_map(function($i) {
+         return (object) $i;   
+      }, $response->items);
+
+      return $response;
+
+      // return((object)self::$client->get_item($items_id, $params));
    }
 
    public static function getFolder($folders_id = NULL, $params = NULL){

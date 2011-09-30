@@ -5,6 +5,15 @@ if (!$items) $items = $gallery->items;
 if (!$items) exit;
 // print_r($items);
 // krumo($gallery);
+$items_arr = array_map(function($i) {
+	return $i['_id'];
+}, $items);
+
+
+// krumo($gallery);
+
+// krumo($items_arr);
+
 ?>
 <div class="vf-slideshow has-floats" 
 	 transition="<?=$gallery->transition?>" 
@@ -13,13 +22,15 @@ if (!$items) exit;
 	 <?=($gallery->autostart)?'autostart="true"':''?>>
 	<div class="vf-slideshow-main">
 		<div class="vf-slideshow-image"><?
-			foreach ($items as $i) {
-				$item = vf::getItem($i['_id'], array(
-					'width' => $gallery->width,
-					'height' => $gallery->height, 
-					'crop' => $gallery->crop
-				));
-				echo $item->html;
+			$fetched = vf::getItem($items_arr, array(
+				'width' => $gallery->width, 
+				'height' => $gallery->height, 
+				'crop' => $gallery->crop
+			));
+			// krumo($fetched);
+			foreach ($fetched->items as $i) {
+				if (!$i->html) continue;
+				echo $i->html;
 			}
 		?></div>
 		<div class="vf-slideshow-controls has-floats">
@@ -39,17 +50,18 @@ if (!$items) exit;
 		</div>
 	</div>
 	<div class="vf-slideshow-thumbs has-floats"><?
-		foreach ($items as $k => $i) {
-			$item = vf::getItem($i['_id'], array(
-				'width' => $gallery->thumb_width,
-				'height' => $gallery->thumb_height, 
-				'crop' => true
-			));
+		$fetched = vf::getItem($items_arr, array(
+			'width' => $gallery->thumb_width,
+			'height' => $gallery->thumb_height,
+			'crop' => $gallery->crop
+		));
+		// krumo($fetched);
+		foreach ($fetched->items as $k => $i) {
 			if ($k == 0) $class = 'first selected';
 			else if ($k == $gallery->folder->items_count - 1) $class = 'last';
 			else $class = null;
-			?><div class="vf-slideshow-thumb <?=$class?>" caption="<?=$item->extra['caption']?>" ide="<?=encrypt($item->items_id)?>"><?
-				echo $item->html;
+			?><div class="vf-slideshow-thumb <?=$class?>" caption="<?=$i->extra['caption']?>" ide="<?=encrypt($i->items_id)?>"><?
+				echo $i->html;
 			?></div><?
 		}
 	?></div>
