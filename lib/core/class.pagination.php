@@ -93,7 +93,15 @@ class array_pagination {
 
     private $limits = array(10,25,50,100,250,500);
 
-    function __construct($array) {
+    /*
+     *  params array:
+     *  default_limit
+     *  limits
+     */
+    function __construct($array,$params) {
+
+        if ( is_array($params['limits']) ) $this->limits = $params['limits'];
+
         $GLOBALS['pagination_count'][] = true;
         $this->i = count($GLOBALS['pagination_count']);
         if (!$_GET['page'.$this->i] || $_GET['page'.$this->i] < 1) {
@@ -101,7 +109,7 @@ class array_pagination {
         }
 
         //pagination settings
-        $default_limit = 25;
+        $default_limit = $params['default_limit'] ?: 25;
         if (!$_GET['limit'.$this->i]) $_GET['limit'.$this->i] = $default_limit;
         $this->offset = $_GET['page'.$this->i] * $_GET['limit'.$this->i] - $_GET['limit'.$this->i];
 
