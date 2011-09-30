@@ -98,7 +98,7 @@ class array_pagination {
      *  default_limit
      *  limits
      */
-    function __construct($array,$params) {
+    function __construct($array,$params=null) {
 
         if ( is_array($params['limits']) ) $this->limits = $params['limits'];
 
@@ -109,7 +109,7 @@ class array_pagination {
         }
 
         //pagination settings
-        $default_limit = $params['default_limit'] ?: 25;
+        $default_limit = $params['default_limit'] ?: $this->limits[0];
         if (!$_GET['limit'.$this->i]) $_GET['limit'.$this->i] = $default_limit;
         $this->offset = $_GET['page'.$this->i] * $_GET['limit'.$this->i] - $_GET['limit'.$this->i];
 
