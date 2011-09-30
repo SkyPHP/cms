@@ -2,6 +2,9 @@
 
 //  gallery
 
+global $dev, $is_dev;
+
+$show_vf = ($dev || $is_dev);
 
 if (!$gallery) {
 	if (!$_POST['_token']) exit;
@@ -16,13 +19,18 @@ if (!$gallery) {
 	if (!$items) $items = $gallery->items;
 }
 
+// print_pre($gallery);
+
 if ($gallery->db_field && $gallery->db_row_id) {
-	$items = array(aql::value($gallery->db_field, $gallery->db_row_id));
+	$items = array(
+		array('_id' => aql::value($gallery->db_field, $gallery->db_row_id))
+	);
 }
 $empty = (count($items) == 0);
 ?>
 <div class="vf-gallery has-floats <?=($empty)?'vf-gallery-empty':''?>" id="<?=$gallery->identifier?>" 
 	token="<?=$gallery->_token?>"
+	<?=($show_vf) ? 'folders_path="'.$gallery->folder->folders_path.'"' : '' ?>
 	<?=($gallery->contextMenu) ? 'context_menu="true"' : ''?>
 ><?
 	if ($empty) {
@@ -30,14 +38,18 @@ $empty = (count($items) == 0);
 			echo $gallery->empty_message;
 		?></div><?
 	} else {
+		$items = vf::getItem(vf_gallery_inc::itemsToFlatArray($items), array(
+			'width' => $gallery->width,
+			'height' => $gallery->height,
+			'crop' => $gallery->crop	
+		));
+		$items = call_user_func(function() use($items) {
+			if ($items->items) return $items->items;
+			return array($items);
+		});
 		foreach ($items as $i) {
-			$item = vf::getItem($i['_id'], array(
-				'width' => $gallery->width,
-				'height' => $gallery->height,
-				'crop' => $gallery->crop
-			));
-			?><div class="vf-gallery-item" ide="<?=$item->items_id?>"><?
-				echo $item->html;
+			?><div class="vf-gallery-item" ide="<?=$i->items_id?>"><?
+				echo $i->html;
 			?></div><?
 		}
 	}

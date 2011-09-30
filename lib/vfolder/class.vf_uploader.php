@@ -57,13 +57,18 @@ class vf_uploader {
 	}
 
 	public function makeButton() {
-		global $p;
+		global $p, $dev, $is_dev;
+		$show_vf = ($dev || $is_dev);
 		if (!in_array('/lib/vfolder/css/vf.css', $p->css)) $p->css[] = '/lib/vfolder/css/vf.css';
 		if (!in_array('/lib/vfolder/js/vf.js', $p->js)) $p->js[] = '/lib/vfolder/js/vf.js';
 		
 		if ($this->gallery) {
 			$gallery_attr = 'refresh_gallery="'.$this->gallery->identifier.'"';
 		}
+		if ($show_vf) {
+			$gallery_attr .= ' folders_path="'.$this->folder->folders_path.'"';
+		}
+
 		$this->button = '<div class="vf-uploader-button-container"><button type="button" class="vf-uploader '.$this->class.'" '
 				.'uploader_token="'.$this->_token.'" '.$gallery_attr.'>' . $this->buttonText . '</button></div>';
 	}

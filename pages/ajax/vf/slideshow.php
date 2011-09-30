@@ -1,5 +1,9 @@
 <?
 
+global $dev, $is_dev;
+
+$show_vf = ($dev || $is_dev);
+
 $items = $gallery->folder->items;
 if (!$items) $items = $gallery->items;
 if (!$items) exit;
@@ -16,10 +20,12 @@ $items_arr = array_map(function($i) {
 
 ?>
 <div class="vf-slideshow has-floats" 
-	 transition="<?=$gallery->transition?>" 
-	 delay="<?=$gallery->delay?>"
-	 autohide="<?=($gallery->auto_hide_toolbar)?'yes':'no'?>"
-	 <?=($gallery->autostart)?'autostart="true"':''?>>
+	<?=($show_vf) ? 'folders_path="'.$gallery->folder->folders_path.'"':''?>
+	transition="<?=$gallery->transition?>" 
+	delay="<?=$gallery->delay?>"
+	autohide="<?=($gallery->auto_hide_toolbar)?'yes':'no'?>"
+	<?=($gallery->autostart)?'autostart="true"':''?>
+	>
 	<div class="vf-slideshow-main">
 		<div class="vf-slideshow-image"><?
 			$fetched = vf::getItem($items_arr, array(

@@ -47,11 +47,13 @@ class vf_gallery_inc {
 		}
 
 		if (!$this->folder && !$this->items) {
-			throw new Exception('class: <strong>vf_uploader</strong> requires a folder parameter or items to be set');
+			throw new Exception('class: <strong>vf_gallery</strong> requires a folder parameter or items to be set');
 		} else if (!is_object($this->folder) && !$this->items) {
 			$e = ($c == 'gallery') ? array('refresh_memcached' => true) : null;
 			$this->folder = vf::getFolder($this->folder, array('limit' => $this->limit), $e);
-		} else {
+		} 
+
+		if (is_array($this->folder->items)) {
 			$this->folder->items = array_slice($this->folder->items, 0, $this->limit);
 		}
 
@@ -79,6 +81,12 @@ class vf_gallery_inc {
 		include $this->html_include;
 		$this->html = ob_get_contents();
 		ob_end_clean();
+	}
+
+	public static function itemsToFlatArray($arr) {
+		return array_map(function($i) {
+			return $i['_id'];
+		}, $arr);
 	}
 
 }
