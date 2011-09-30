@@ -83,11 +83,14 @@ class vf {
       }
 
       $response = (object) self::$client->get_item($items_id, $params);
+      
       if (!is_array($items_id)) return $response;
 
-      $response->items = array_map(function($i) {
-         return (object) $i;   
-      }, $response->items);
+      if (is_array($response->items)) {
+         $response->items = array_map(function($i) {
+            return (object) $i;   
+         }, $response->items);
+      }
 
       return $response;
 
