@@ -1,7 +1,5 @@
 <?
 
-include('lib/class/class.vfolder_client.php');
-
 array_walk(vf::$deps, function($dep) {
    if (!class_exists($dep)) include 'lib/vfolder/class.'.$dep.'.php';
 });
