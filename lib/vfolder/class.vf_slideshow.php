@@ -38,10 +38,9 @@ class vf_slideshow extends vf_gallery_inc {
 	}
 
 	public function validate() {
-		if ($this->transi)
-		if ($this->crop) return;
-		if ($this->width) return;
-		if ($this->height) return;
+		if ($this->crop) return $this;
+		if ($this->width) return $this;
+		if ($this->height) return $this;
 		throw new Exception('vf_slideshow expects a width or a height to be provided if crop is set to false.');
 
 		return $this;

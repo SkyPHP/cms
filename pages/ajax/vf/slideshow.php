@@ -28,11 +28,14 @@ $items_arr = array_map(function($i) {
 	>
 	<div class="vf-slideshow-main">
 		<div class="vf-slideshow-image"><?
+			elapsed('before getting main images in batch');
 			$fetched = vf::getItem($items_arr, array(
 				'width' => $gallery->width, 
 				'height' => $gallery->height, 
 				'crop' => $gallery->crop
 			));
+			krumo(vf::$client);
+			elapsed('after main images in batch');
 			// krumo($fetched);
 			foreach ($fetched->items as $i) {
 				if (!$i->html) continue;
@@ -56,11 +59,14 @@ $items_arr = array_map(function($i) {
 		</div>
 	</div>
 	<div class="vf-slideshow-thumbs has-floats"><?
+		elapsed('before getting thumbnails in batch');
 		$fetched = vf::getItem($items_arr, array(
 			'width' => $gallery->thumb_width,
 			'height' => $gallery->thumb_height,
 			'crop' => $gallery->crop
 		));
+		krumo(vf::$client);
+		elapsed('after getting thunbnails in batch');
 		// krumo($fetched);
 		foreach ($fetched->items as $k => $i) {
 			if ($k == 0) $class = 'first selected';
