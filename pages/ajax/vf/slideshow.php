@@ -13,6 +13,15 @@ $items_arr = array_map(function($i) {
 	return $i['_id'];
 }, $items);
 
+$single_to_multiple = function($i) {
+	if ($i->items_id) {
+		return (object) array(
+			'items' => array($i)
+		);
+	}
+	return $i;
+}
+
 
 // krumo($gallery);
 
@@ -37,6 +46,7 @@ $items_arr = array_map(function($i) {
 			// krumo(vf::$client);
 			// elapsed('after main images in batch');
 			// krumo($fetched);
+			$fetched = $single_to_multiple($fetched);
 			foreach ($fetched->items as $i) {
 				if (!$i->html) continue;
 				echo $i->html;
@@ -68,6 +78,7 @@ $items_arr = array_map(function($i) {
 		// krumo(vf::$client);
 		// elapsed('after getting thunbnails in batch');
 		// krumo($fetched);
+		$fetched = $single_to_multiple($fetched);
 		foreach ($fetched->items as $k => $i) {
 			if ($k == 0) $class = 'first selected';
 			else if ($k == $gallery->folder->items_count - 1) $class = 'last';
