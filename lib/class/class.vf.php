@@ -95,8 +95,8 @@ class vf {
       // return((object)self::$client->get_item($items_id, $params));
    }
 
-   public static function getFolder($folders_id = NULL, $params = NULL){
-      return((object)self::$client->get_folder($folders_id, $params));
+   public static function getFolder($folders_id = NULL, $params = NULL, $extra_params = NULL){
+      return((object)self::$client->get_folder($folders_id, $params, $extra_params));
    }
 
    public static function getRandomItemId($folders_id = NULL){
