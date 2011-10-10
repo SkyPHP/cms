@@ -43,6 +43,7 @@ $empty = (count($items) == 0);
 			'height' => $gallery->height,
 			'crop' => $gallery->crop	
 		));
+		// krumo($items);
 		$items = call_user_func(function() use($items) {
 			if ($items->items) return $items->items;
 			return array($items);

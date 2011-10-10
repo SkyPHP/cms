@@ -2,6 +2,13 @@
 
 // this is the new upload script
 
+// clean up filenames if they have parenthesis, spaces, etc.
+$sanitize_filename = function($n) {
+	return slugize(str_replace(array(
+		')', '(', '{', '}'
+		), '', $n));
+};
+
 $errors = array();
 
 $params = mem('vf_uploader:' . $_POST['_token']);
@@ -16,7 +23,7 @@ if (!$errors) {
 		$_FILES['file']['error'] != 0 ) {
 		$errors[] = 'Invalid upload.';
 	} else if ($_FILES['file']['tmp_name']) {
-		$uploaded_file = ini_get('upload_tmp_dir') .'/'. $_FILES['file']['name'];
+		$uploaded_file = ini_get('upload_tmp_dir') .'/'. $sanitize_filename($_FILES['file']['name']);
 		move_uploaded_file($_FILES['file']['tmp_name'], $uploaded_file);
 	} else {
 		$errors[] = 'No file uploaded';

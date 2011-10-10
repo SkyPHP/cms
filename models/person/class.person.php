@@ -21,6 +21,17 @@ class person extends model {
         //we don't give direct access to the person's password field
         //we take password1/password2 (and current password if it's person)
 
+        if ($this->isInsert()) {
+            $this->addProperty('post_save_password');
+            if (!$this->password1 || !$this->password2) {
+                $this->_errors[] = 'Please enter a password and confirm it.';
+            } else if ($this->password1 != $this->password2) {
+                $this->_errors[] = 'The password you entered do not match.';
+            }
+            return;
+        }
+
+
         if ($this->password1) { //is there a password change request?
             if ($this->password1 != $this->password2) {
                 $this->_errors[] = "Passwords do not match";
@@ -55,6 +66,7 @@ class person extends model {
                     }
                 }
             } else {
+               
                 // trying to reset your own password but not logged in
                 if ($this->password_reset_hash != aql::value( 'person.password_reset_hash', $this->person_id ) ) {
                     $this->_errors[] = 'Request another password reset, this token is no longer valid.';
@@ -67,7 +79,6 @@ class person extends model {
                 }
                 $this->password = $this->password1;
             }
-               
         }
 
         //check for current password. if not, then check that users has access to change password
@@ -82,6 +93,15 @@ class person extends model {
         //if original password is not set, return
         //
 
+    }
+
+    public function after_save($arr = array()) {
+        if ($this->propertyExists('post_save_password')) $this->_postSavePassword();
+        return parent::after_save($arr);
+    }
+
+    private function _postSavePassword() {
+        
     }
 
     public function generateUserSalt() {
@@ -109,25 +129,7 @@ class person extends model {
         if ($re['status'] == 'OK') $this->last_login_time = $o->last_login_time;
     }
 
-    //fetches all the (quick) logins to promoters that this person has
-    //as an array of hashed each with promoter_name, ct_promoter_user_id/e, ct_promoter_id/e)
-    public function getLogins(){
-        $aql =  "ct_promoter_user {
-                    where person_id = {$this->person_id}
-                    order by ct_promoter_user.iorder asc 
-                    }
-                    ct_promoter {
-                    name as promoter_name
-                }";
-        return aql::select($aql);
-    }
+    
 
-    //add quick login to some promoter to this person given that promoter_ide
-    public function addLogin($ct_promoter_ide = null){
-        $new_login = new ct_promoter_user();
-        return $new_login->loadArray(array(
-            'person_id' => $this->person_id,
-            'ct_promoter_ide' => $ct_promoter_ide
-        ))->save();
-    }
+
 }
