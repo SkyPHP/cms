@@ -23,6 +23,14 @@ class vf_uploader {
 
 	public function __construct($args = array()) {
 		
+		global $disable_vf;
+		if ($disable_vf) {
+
+			?><strong style="color:red;">The Uploader Is Temporarily Disabled Due to Technical Difficulties.</strong><?
+
+			return;
+		}
+
 		$this->setByArray(self::$defaults)->setByArray($args);
 
 		if ($this->gallery && !$this->folder) {

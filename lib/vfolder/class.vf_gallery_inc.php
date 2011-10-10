@@ -34,6 +34,9 @@ class vf_gallery_inc {
 	public $width;
 
 	public function __construct($args) {
+		global $disable_vf;
+		if ($disable_vf) return;
+		
 		$c = get_class($this);
 		$this->setByArray(vf_gallery_inc::$defaults)
 			->setByArray($c::$defaults)

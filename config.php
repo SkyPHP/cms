@@ -34,7 +34,6 @@ $seo_field_array=array(
 
 $sky_media_src_path = '/media';
 
-$includes[] = 'lib/core/class.media.php';
 $includes[] = 'lib/core/class.snippet.php';
 $includes[] = 'lib/core/class.pagination.php';
 $includes[] = 'lib/core/class.validation.php';
