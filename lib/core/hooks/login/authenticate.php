@@ -6,7 +6,7 @@ if ($_GET['logout']) {
     Login::unsetLogin();
 }
 
-if (!Login::isLoggedIn() && $_POST['login_username'] && $_POST['login_password']) {
+if ($_POST['login_username'] && $_POST['login_password']) {
     $o = new Login($_POST['login_username'], $_POST['login_password'], $_POST['remember_me']);
     $re = $o->checkLogin();
     if ($re['status'] == 'OK') {

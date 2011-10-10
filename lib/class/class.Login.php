@@ -79,6 +79,7 @@ class Login {
 	}
 
 	public function doLogin() {
+		Login::unsetLogin();
 		$login = array(
 			'person_id' => $this->person->person_id,
 			'person_ide' => $this->person->person_ide,
@@ -87,7 +88,6 @@ class Login {
 			'email' => $this->person->email_address
 		);
 		$this->person->updateLastLoginTime();
-		unset($_SESSION[Login::$session_key]);
 		Login::mset($login);
 		if ($this->post_remember_me) {
 			person_cookie::create($this->person->person_id);
@@ -117,7 +117,6 @@ class Login {
 		Login::$session = array();
 		$o = person_cookie::getByCookie();
 		if ($o) $o->delete();
-		self::unsetConstants();
 		unset($_SESSION['login'], $_SESSION[self::$session_key], $_SESSION['remember_uri'], $_COOKIE['cookie'], $_COOKIE['person_ide'], $_COOKIE['token']);
 		foreach (array('cookie', 'person_ide', 'token') as $c) {
 			person_cookie::unsetCookie($c);	
@@ -172,11 +171,6 @@ class Login {
 	public static function setConstants() {
 		define('PERSON_ID', self::get('person_id'));
 		define('PERSON_IDE', self::get('person_ide'));
-	}
-
-	public static function unsetConstants() {
-		define('PERSON_ID', null);
-		define('PERSON_IDE', null);
 	}
 
 	public static function update() {
