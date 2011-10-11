@@ -22,11 +22,10 @@ class person extends model {
         //we take password1/password2 (and current password if it's person)
 
         if ($this->isInsert()) {
-            $this->addProperty('post_save_password');
             if (!$this->password1 || !$this->password2) {
-                $this->_errors[] = 'Please enter a password and confirm it.';
+                $this->_errors[] = 'Please enter a password.';
             } else if ($this->password1 != $this->password2) {
-                $this->_errors[] = 'The password you entered do not match.';
+                $this->_errors[] = 'The passwords you entered do not match.';
             }
             return;
         }
@@ -81,27 +80,23 @@ class person extends model {
             }
         }
 
-        //check for current password. if not, then check that users has access to change password
-        //person logged in either a ct_admin (auth('ct_admin:*'))
-        //or that this person shares a ct_promoter with the user
-        //
-
-        //same password
-
-        //$this->password = password1
-
-        //if original password is not set, return
-        //
-
     }
 
-    public function after_save($arr = array()) {
-        if ($this->propertyExists('post_save_password')) $this->_postSavePassword();
-        return parent::after_save($arr);
+    // public function after_save($arr = array()) {
+    //     return parent::after_save($arr);
+    // }
+
+    public function after_insert() {
+        $this->_postSavePassword();
+        $this->reload();
     }
 
     private function _postSavePassword() {
-        
+        $tmp = new person;
+        $tmp->person_id = $this->person_id;
+        $tmp->password = $this->password1;
+        $tmp->_token = $this->getToken();
+        return $tmp->save();
     }
 
     public function generateUserSalt() {
