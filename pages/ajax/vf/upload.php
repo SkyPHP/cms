@@ -4,9 +4,9 @@
 
 // clean up filenames if they have parenthesis, spaces, etc.
 $sanitize_filename = function($n) {
-	return slugize(str_replace(array(
-		')', '(', '{', '}'
-		), '', $n));
+	return str_replace(array(
+		')', '(', '{', '}', ' '
+		), '', $n);
 };
 
 $errors = array();
