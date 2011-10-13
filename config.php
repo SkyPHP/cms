@@ -41,3 +41,6 @@ $includes[] = 'lib/krumo/class.krumo.php';
 
 $quick_serve['media'] = 'lib/core/quick-serve/media.php';
 $quick_serve['media-zip'] = 'lib/core/quick-serve/media-zip.php';
+
+$sky_content_type['psd'] = 'image/vnd.adobe.photoshop';
+$sky_content_type['pdf'] = 'application/pdf';
