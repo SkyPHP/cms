@@ -2,7 +2,7 @@
 
 // this is the new upload script
 
-include 'lib/vfolder/vf_upload_handler.php';
+include 'lib/vfolder/class.vf_upload_handler.php';
 
 $handler = new vf_upload_handler($_POST, $_FILES);
 $handler->validate(); // makes sure that upload is proper

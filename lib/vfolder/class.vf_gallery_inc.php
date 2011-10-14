@@ -52,7 +52,7 @@ class vf_gallery_inc {
 		if (!$this->folder && !$this->items) {
 			throw new Exception('class: <strong>vf_gallery</strong> requires a folder parameter or items to be set');
 		} else if (!is_object($this->folder) && !$this->items) {
-			$e = ($c == 'vf_gallery') ? array('refresh_memcached' => true) : null;
+			// $e = ($c == 'vf_gallery') ? array('refresh_memcached' => true) : null;
 			$this->folder = vf::getFolder($this->folder, array('limit' => $this->limit), $e);
 		} 
 

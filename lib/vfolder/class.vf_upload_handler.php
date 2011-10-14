@@ -165,6 +165,4 @@ class vf_upload_handler {
 		}
 	}
 
-
-
 }
