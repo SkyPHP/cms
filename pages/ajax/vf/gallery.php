@@ -10,9 +10,7 @@ if (!$gallery) {
 	if (!$_POST['_token']) exit;
 	$params = mem('vf_gallery:'.$_POST['_token']);
 	$gallery = vf::gallery($params);
-	$gallery->folder = $folder = vf::getFolder($gallery->folder->folders_path, null, array(
-		'refresh_memcached' => true
-	));
+	$folder = $gallery->initFolder(true);
 	$items = $folder->items;
 } else {
 	$items = $gallery->folder->items;
@@ -25,6 +23,7 @@ if ($gallery->db_field && $gallery->db_row_id) {
 	$items = array(
 		array('_id' => aql::value($gallery->db_field, $gallery->db_row_id))
 	);
+	if (!$items[0]['_id']) $items = array();
 }
 $empty = (count($items) == 0);
 ?>
