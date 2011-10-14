@@ -1,3 +1,19 @@
+$(function(){
+
+    $('.pagination-limit').live('change',function() {
+        url1 = location.href.split('?');
+		url1 = url1[0];
+
+		url2 = location.href;
+        url2 = removeParam($(this).attr('name'),url2); // remove limit
+        url2 = removeParam('page'+$(this).attr('i'),url2); // remove page
+		url2 = removeParam('limit'+$(this).attr('i'),url2);
+        location.href = url2 + (url2==url1?'?':'&') + $(this).attr('name') + '=' + $(this).val();
+    });
+
+});
+
+
 jQuery.fn.animateChange = function() {
     var $thing = jQuery(this), 
         orig_color = $thing.css('backgroundColor');
