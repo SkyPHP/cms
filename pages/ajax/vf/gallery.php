@@ -23,6 +23,7 @@ if ($gallery->db_field && $gallery->db_row_id) {
 	$items = array(
 		array('_id' => aql::value($gallery->db_field, $gallery->db_row_id))
 	);
+	if (!$items[0]['_id']) $items = array();
 }
 $empty = (count($items) == 0);
 ?>

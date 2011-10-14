@@ -98,7 +98,11 @@ class vf_upload_handler {
 	public function updateDBRecord($id) {
 		$dot = strpos($this->params['db_field'], '.');
 		$table = substr($this->params['db_field'], 0, $dot);
-		$field = substr($params['db_field'], $dot + 1);
+		$field = substr($this->params['db_field'], $dot + 1);
+		if (!$table || !$field) {
+			$this->errors[] = 'There was an error updating the record for this item. Please contact your system administrator.';
+			return;
+		}
 		aql::update(
 			$table, 
 			array($field => $id),
