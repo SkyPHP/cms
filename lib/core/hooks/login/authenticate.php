@@ -1,5 +1,7 @@
 <?
 
+$access_denied = ($access_groups) ? true : false;
+
 Login::make();
 
 if ($_GET['logout']) {
@@ -26,5 +28,10 @@ if (!Login::isLoggedIn()) {
 }
 
 if (Login::isLoggedIn()) {
+    if ($access_groups) { 
+        if (auth_person($access_groups, $_SESSION['login']['person_id'])) {
+            $access_denied = false;
+        }
+    } 
     Login::setConstants();
 }

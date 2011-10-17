@@ -55,20 +55,20 @@ class Login {
 				";
 		$rs_logins = aql::select($aql);
 		if ($this->post_password) {
-			$granted = true;
+			$granted = false;
 			foreach ($rs_logins as $p) {
 				$this->person = new person($p['person_id'], null, true);
 				if (!$this->person->person_id) continue;
-				if ($access_groups) { $granted = auth($access_groups, $this->person->person_id); }
-				if (!$granted) continue;
-				if ($this->_checkLogin($this->post_password) && $granted) {
-					return $this->r(array('person_ide' => $this->person->person_ide));
-				} 
+				if ($this->_checkLogin($this->post_password)) {
+					if (auth_person($access_groups, $this->person->person_id) || !$access_groups) {
+						$access_denied = false;
+						return $this->r(array('person_ide' => $this->person->person_ide));
+					}
+				}
 			}
 		}
 		$this->_errors[] = 'Invalid Login';
 		return $this->r();
-		$this->person = new person($rs_logins[0]['person_id'], null, true);
 	}
 
 	public function _checkLogin($password) {
