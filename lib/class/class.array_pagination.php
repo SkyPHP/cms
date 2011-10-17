@@ -1,37 +1,37 @@
 <?
 
-class pagination {
+class array_pagination {
 
     private $limits = array(10,25,50,100,250,500);
 
-    function __construct($aql=null,$clause=null) {
-        $this->aql = $aql;
-        $this->clause = $clause;
+    /*
+     *  params array:
+     *  default_limit
+     *  limits
+     */
+    function __construct($array,$params=null) {
+
+        if ( is_array($params['limits']) ) $this->limits = $params['limits'];
+
         $GLOBALS['pagination_count'][] = true;
         $this->i = count($GLOBALS['pagination_count']);
         if (!$_GET['page'.$this->i] || $_GET['page'.$this->i] < 1) {
             $_GET['page'.$this->i] = 1;
         }
-        if ($aql) $this->rs = $this->select();
-    }
 
-    function select($aql=null,$clause=null) {
-        if ($aql) $this->aql = $aql;
-        if ($clause) $this->clause = $clause;
         //pagination settings
-        $default_limit = 25;
+        $default_limit = $params['default_limit'] ?: $this->limits[0];
         if (!$_GET['limit'.$this->i]) $_GET['limit'.$this->i] = $default_limit;
         $this->offset = $_GET['page'.$this->i] * $_GET['limit'.$this->i] - $_GET['limit'.$this->i];
 
-        $this->clause['limit'] = $_GET['limit'.$this->i];
-        $this->clause['offset'] = $this->offset;
-        $this->rs = aql::select($this->aql,$this->clause);
+        $this->total_rows = count($array);
+
+        $this->rs = array_slice($array,$this->offset,$_GET['limit'.$this->i],true);
 
         $this->first_row = $this->offset + 1;
         $this->last_row = count($this->rs) + $this->first_row - 1;
-        $c = aql::sql($this->aql,$this->clause);
-        $c = sql($c['sql_count']);
-        $this->total_rows = $c->Fields('count');
+
+
         $this->num_pages = ceil($this->total_rows / $_GET['limit'.$this->i]);
         return $this->rs;
     }
@@ -84,4 +84,4 @@ class pagination {
     }//pages
 
 
-}//pagination class
+}//array_pagination class

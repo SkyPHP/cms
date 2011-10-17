@@ -4,6 +4,7 @@ class grid {
 
     public  $aql,
             $model,
+            $data,
             $pagination,
             $columns,
             $where,
@@ -37,6 +38,8 @@ class grid {
             $this->pagination = new pagination($this->aql,array(
                 'where' => $this->where
             ));
+        } else if ( $this->data ) {
+            $this->pagination = new array_pagination($this->data);
         }
     }
 
@@ -118,8 +121,18 @@ class grid {
 
     public function get_incpath() {
         if ( !$this->incpath ) {
-            global $p;
-            $this->incpath = $p->incpath;
+            // find the page that called the grid funciton
+            $bt = debug_backtrace();
+            foreach ( $bt as $t ) {
+                $file = $t['file'];
+                $needle = DIRECTORY_SEPARATOR . 'pages' . DIRECTORY_SEPARATOR;
+                $start = strpos($file, $needle);
+                if ( $start !== false ) break;
+            }
+            $incpath = $file;
+            $incpath = substr($incpath,$start+1);
+            $incpath = substr($incpath,0,strrpos($incpath,DIRECTORY_SEPARATOR));
+            $this->incpath = $incpath;
         }
     }
 
