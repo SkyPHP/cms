@@ -189,4 +189,11 @@
 	});
 </script>
 
-<? } ?>
+<? 
+} else {
+	echo "no posted page path";
+}
+
+
+
+ ?>
