@@ -44,10 +44,12 @@ class Login {
 			return $this->r();
 		}
 
+		$username = trim(strtolower($this->post_username));
+
 		$aql = 	"
 					person {
 						where (
-							email_address ilike '{$this->post_username}' or username ilike '{$this->post_username}'
+							lower(email_address) like '{$username}' or lower(username) like '{$username}'
 							and password_hash is not null
 						)
 						order by id desc
