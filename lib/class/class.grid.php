@@ -15,6 +15,12 @@ class grid {
             $style;
 
     public function __construct( $a ) {
+        // order by fix
+        if ( $a['order by'] ) {
+            $a['order_by'] = $a['order by'];
+            unset( $a['order by'] );
+        }
+
         if (is_array($a))
         foreach( $a as $key => $val ) {
             $this->$key = $val;
