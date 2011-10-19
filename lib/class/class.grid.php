@@ -42,12 +42,12 @@ class grid {
         if ( $this->pagination ) return;
         if ( $this->aql ) {
             $this->pagination = new pagination($this->aql,array(
-                'where' => $this->where
+                'where' => $this->where,
+                'order by' => $this->order_by
             ));
         } else if ( $this->data ) {
             $this->pagination = new array_pagination($this->data,array(
-                'default_limit' => $this->default_limit,
-                'order by' => $this->order_by
+                'default_limit' => $this->default_limit
             ));
         }
     }
