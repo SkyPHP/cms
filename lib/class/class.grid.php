@@ -39,7 +39,9 @@ class grid {
                 'where' => $this->where
             ));
         } else if ( $this->data ) {
-            $this->pagination = new array_pagination($this->data);
+            $this->pagination = new array_pagination($this->data,array(
+                'default_limit' => $this->default_limit
+            ));
         }
     }
 
