@@ -40,7 +40,8 @@ class grid {
             ));
         } else if ( $this->data ) {
             $this->pagination = new array_pagination($this->data,array(
-                'default_limit' => $this->default_limit
+                'default_limit' => $this->default_limit,
+                'order by' => $this->order_by
             ));
         }
     }
