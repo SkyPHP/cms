@@ -16,6 +16,12 @@ class Login {
 		$this->post_username = addslashes(trim($username));
 		$this->post_password = addslashes(trim($password));
 		$this->post_remember_me = ($remember_me) ? true : false;
+
+		global $person_encryption_key;
+		if (!$person_encryption_key) {
+			throw new Exception('class Login requries a <strong>$person_encryption_key</strong> to be set in your configuration to use as a salt.');
+		}
+
 	}
 
 	public static function make() {
@@ -44,10 +50,12 @@ class Login {
 			return $this->r();
 		}
 
+		$username = trim(strtolower($this->post_username));
+
 		$aql = 	"
 					person {
 						where (
-							email_address ilike '{$this->post_username}' or username ilike '{$this->post_username}'
+							lower(email_address) like '{$username}' or lower(username) like '{$username}'
 							and password_hash is not null
 						)
 						order by id desc

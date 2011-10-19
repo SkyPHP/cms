@@ -22,8 +22,8 @@ class person extends model {
         //we take password1/password2 (and current password if it's person)
 
         if ($this->isInsert()) {
-            if (!$this->password1 || !$this->password2) {
-                $this->_errors[] = 'Please enter a password.';
+            if (!$this->password1 && !$this->password2) {
+                // do nothing
             } else if ($this->password1 != $this->password2) {
                 $this->_errors[] = 'The passwords you entered do not match.';
             }
@@ -91,7 +91,25 @@ class person extends model {
         $this->reload();
     }
 
+    public function generateResetHash() {
+        if (!$this->person_id) return;
+        $o = new person;
+        $o->person_id = $this->person_id;
+        $o->_token = $o->getToken();
+        $o->password_reset_hash = $this->makeResetHash();
+        $re = $o->save();
+        if ($re['status'] == 'OK') {
+            $this->password_reset_hash = $o->password_reset_hash;
+        }
+        return $re;
+    }
+
+    public function makeResetHash() {
+        return sha1(mt_rand());
+    }
+
     private function _postSavePassword() {
+        if (!$this->password1) return;
         $tmp = new person;
         $tmp->person_id = $this->person_id;
         $tmp->password = $this->password1;

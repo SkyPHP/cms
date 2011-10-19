@@ -189,4 +189,13 @@
 	});
 </script>
 
-<? } ?>
+<? 
+} else {
+	$p->template('skybox','top');
+	echo "no posted page path";
+	$p->template('skybox','bottom');
+}
+
+
+
+ ?>

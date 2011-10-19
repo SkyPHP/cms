@@ -1,7 +1,7 @@
 <?
 if ( $template_area == 'top' ) {
 ?>
-<div id="skybox_template" class="has-floats" style="border: 2px #333 solid; padding: 15px;">
+<div id="skybox_template" class="has-floats" style="border: 2px #333 solid; padding: 15px;color:#000;">
 	<div id="skybox_template_title" style="float:left; font-weight:bold; margin-right: 15px;">
 		<?=$this->title?>
 	</div>

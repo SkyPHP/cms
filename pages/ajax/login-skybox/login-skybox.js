@@ -2,13 +2,8 @@
     $('#login_username:visible').livequery(function(){
         $(this).focus();
     });
-    $('#login_password').die().live('keyup',function(e){
-        if(e.which == 13){
-            $('#login_form').submit();
-            return false;
-        }
-    });
-    $('#login_form').die().live('submit',function(){
+
+    $('#login_form:visible').die().live('submit',function(){
         $('#login_button').val('Authenticating...').css('color','gray');
         if ($('#login_message').is(":visible")) $('#login_message').fadeTo('fast',0.01);
         $.post(
@@ -16,10 +11,7 @@
             $(this).serialize(),
             function(data){
                 if (data=='true') {
-                    url = window.location.href;
-                    url = removeParam('skybox',url);
-                    url = removeParam('logout',url);
-                    window.location.href = url;
+                    window.location.href = location.pathname;
                 } else {
                     if (data=='false') {
                         $('#login_message').html('Incorrect login.  Try again.');
