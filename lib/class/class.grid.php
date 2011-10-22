@@ -88,6 +88,7 @@ class grid {
 ?>
             </tr>
 <?
+        if ( $this->pagination->rs )
         foreach ( $this->pagination->rs as $r ) {
 ?>
             <tr>
