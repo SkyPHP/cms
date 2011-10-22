@@ -14,7 +14,7 @@ class grid {
             $table_class = 'listing',
             $style;
 
-    public function __construct( $a ) {
+    public function __construct( $a = array() ) {
         // order by fix
         if ( $a['order by'] ) {
             $a['order_by'] = $a['order by'];
@@ -31,6 +31,20 @@ class grid {
                 $this->aql = $model::getAQL();
             }
         }
+    }
+
+    public function __call($method, $args) {
+        if (substr($method, 0, 4) == 'set_') {
+            array_unshift($args, substr($method, 4));
+            return call_user_func_array(array($this, '_setter'), $args);
+        } else {
+            throw new Exception('Method does not exist');
+        }
+    }
+
+    private function _setter($field, $value) {
+        $this->$field = $value;
+        return $this;
     }
 
     public function krumo() {
