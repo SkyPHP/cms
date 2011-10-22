@@ -134,12 +134,12 @@ class grid {
 
     public function showing() {
         $this->run();
-        $this->pagination->showing();
+        if ($this->pagination) $this->pagination->showing();
     }
 
     public function pages() {
         $this->run();
-        $this->pagination->pages();
+        if ($this->pagination) $this->pagination->pages();
     }
 
     public function get_incpath() {
