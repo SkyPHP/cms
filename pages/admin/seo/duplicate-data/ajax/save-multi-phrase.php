@@ -36,8 +36,8 @@
 		else $mod_where = "";
 		$rs = aql::select("
 			dup_phrase_group { 
-				where ( phrase1__dup_phrase_data_id = ".$split[0]." or phrase2__dup_phrase_data_id = ".$split[0].") 
-				and ( phrase1__dup_phrase_data_id = ".$split[1]." or phrase2__dup_phrase_data_id = ".$split[1].")
+				where phrase1__dup_phrase_data_id = ".$split[0]."
+				and phrase2__dup_phrase_data_id = ".$split[1]."
 				{$mod_where}
 			}
 		");
