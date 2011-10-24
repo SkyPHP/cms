@@ -8,10 +8,6 @@ class person extends model {
         'email_address' => 'Email Address'
     );
 
-    public $_ignore = array(
-        'fields' => array('password')
-    );
-
     public function construct(){
         $this->addProperty('password1', 'password2', 'current_password'); //password field 1 and 2 (validate same)
     }
