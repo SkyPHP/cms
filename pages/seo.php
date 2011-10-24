@@ -3,10 +3,12 @@
 	global $seo_field_array;
 	global $website_id;
 
+    if (!$website_id) $website_id = $p->vars['seo']['website']['website_id'];
+
 	if ($website_id) {
 		$mem_key = "seo:".$website_id.":".$p->page_path;
 		$page_data = mem($mem_key);
-		$page_data = NULL;
+//		$page_data = NULL;
 		if (!$page_data) {
 			$rs = aql::select("website_page { url_specific where page_path = '{$p->page_path}' and website_id = {$website_id} }");
 			if (is_numeric($rs[0]['website_page_id'])) {
