@@ -3,6 +3,8 @@
 	global $seo_field_array;
 	global $website_id;
 
+    if (!$website_id) $website_id = $p->vars['seo']['website']['website_id'];
+
 	if ($website_id) {
 		$mem_key = "seo:".$website_id.":".$p->page_path;
 		$page_data = mem($mem_key);
