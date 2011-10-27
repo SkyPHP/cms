@@ -9,10 +9,14 @@ if ($_GET['logout']) {
 }
 
 if ($_POST['login_username'] && $_POST['login_password']) {
-    $o = new Login($_POST['login_username'], $_POST['login_password'], $_POST['remember_me']);
+    $o = new Login($_POST['login_username'], $_POST['login_password'], array(
+        'remember_me' => $_POST['remember_me'],
+        'login_path' => $_POST['login_referer']
+    ));
     $re = $o->checkLogin();
     if ($re['status'] == 'OK') {
         $o->doLogin();
+
     }
 }
 
