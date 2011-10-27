@@ -1,4 +1,4 @@
-<?
+<?php
 
 class pagination {
 
@@ -19,7 +19,8 @@ class pagination {
         if ($aql) $this->aql = $aql;
         if ($clause) $this->clause = $clause;
         //pagination settings
-        $default_limit = 25;
+        $default_limit = if_not($this->clause['default_limit'], 25);
+        
         if (!$_GET['limit'.$this->i]) $_GET['limit'.$this->i] = $default_limit;
         $this->offset = $_GET['page'.$this->i] * $_GET['limit'.$this->i] - $_GET['limit'.$this->i];
 

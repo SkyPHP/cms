@@ -1,10 +1,11 @@
-<?
+<?php
 
 class grid {
 
     public  $aql,
             $model,
             $data,
+            $default_limit,
             $pagination,
             $columns,
             $where,
@@ -58,6 +59,7 @@ class grid {
         if ( $this->aql ) {
             $this->pagination = new pagination($this->aql,array(
                 'where' => $this->where,
+                'default_limit' => $this->default_limit,
                 'order by' => $this->order_by
             ));
         } else if ( $this->data ) {
