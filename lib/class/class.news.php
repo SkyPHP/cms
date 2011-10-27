@@ -86,8 +86,8 @@ class news {
                         and news_hide.person_id = $person_id
                         and news_hide.active = 1
                     LEFT JOIN news_item on news_item.id = news_who.news_item_id
-                        and news_item.active = 1
                     WHERE news_who.active = 1
+                    AND news_item.active = 1
                     AND news_hide.id is null
                     AND {$where}
                     ORDER BY {$order_by}
