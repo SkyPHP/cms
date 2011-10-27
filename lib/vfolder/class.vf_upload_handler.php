@@ -8,6 +8,7 @@ class vf_upload_handler {
 	public $filename;
 	public $folders_path;
 	public $uploaded_file;
+	public $upload_dir;
 	public $params = array();
 	public $errors = array();
 
@@ -67,10 +68,37 @@ class vf_upload_handler {
 			$this->errors[] = 'No file uploaded.';
 			return;
 		}
+		$this->checkUploadDirectory();
+		if ($this->errors) return;
+
+		$tmp_dir = ini_get('upload_tmp_dir');
+		if (!$tmp_dir) {
+			$this->errors[] = 'Internal Error: The temporary upload directory was not defined. Please contact the system administrator.';
+			return;
+		}
 		$this->filename = $this->file['name'];
 		$this->sanitizeFilename();
-		$this->uploaded_file = ini_get('upload_tmp_dir') .'/'. $this->filename;
-		move_uploaded_file($this->file['tmp_name'], $this->uploaded_file);
+		$this->uploaded_file = $this->upload_dir .'/'. $this->filename;
+		if (!move_uploaded_file($this->file['tmp_name'], $this->uploaded_file)) {
+			$this->errors[] = 'Error moving file to upload directory. Please try again. If the problem persists, contact the system administrator.';
+		}
+	}
+
+	public function checkUploadDirectory() {
+		$tmp_dir = ini_get('upload_timp_dir');
+		if (!$tmp_dir) {
+			$this->errors[] = 'Internal Error: Temporary upload directory not defined. Please contact the system administrator.';
+			return;
+		}
+		if (!is_dir($tmp_dir)) {
+			$this->errors[] = 'Internal Error: Temporary upload directory not a directory. Please contact the system administrator.';
+			return;
+		}
+		if (!is_writable($tmp_dir)) {
+			$this->errors[] = 'Internal Error: Temporary upload directory is not writable. Please contact the system administrator.';
+			return;
+		}
+		$this->upload_dir = $tmp_dir;
 	}
 
 	public function validate() {
@@ -85,6 +113,7 @@ class vf_upload_handler {
 		$re = vf::$client->upload_to_server($this->uploaded_file, array(
 			'folders_path' => $this->folders_path
 		));
+		unlink($this->uploaded_file); // delete file from tmpdir
 		if (!$re['success']) {
 			$this->errors[] = 'There was an error uploading the file. If it persists, contact the system administrator.';
 			return $this->respond();

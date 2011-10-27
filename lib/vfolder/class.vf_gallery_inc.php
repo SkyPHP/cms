@@ -52,7 +52,8 @@ class vf_gallery_inc {
 		if (!$this->folder && !$this->items) {
 			throw new Exception('class: <strong>vf_gallery</strong> requires a folder parameter or items to be set');
 		} else if (!is_object($this->folder) && !$this->items) {
-			$this->folder = vf::getFolder($this->folder, array('limit' => $this->limit));
+			$this->initFolder();
+			// $this->folder = vf::getFolder($this->folder, array('limit' => $this->limit));
 		} 
 
 		if (is_array($this->folder->items)) {
@@ -64,8 +65,9 @@ class vf_gallery_inc {
 	}
 
 	public function initFolder($refresh = false) {
+
 		$path = (is_object($this->folder)) ? $this->folder->folders_path : $this->folder;
-		$e = ($refresh) ? array('refresh_memcached' => true) : null;
+		$e = ($refresh || is_ajax_request()) ? array('refresh_memcached' => true) : null;
 		return $this->folder = vf::getFolder($path, array(
 			'limit' => $this->limit
 		), $e);
