@@ -85,7 +85,7 @@ class vf_upload_handler {
 	}
 
 	public function checkUploadDirectory() {
-		$tmp_dir = ini_get('upload_timp_dir');
+		$tmp_dir = ini_get('upload_tmp_dir');
 		if (!$tmp_dir) {
 			$this->errors[] = 'Internal Error: Temporary upload directory not defined. Please contact the system administrator.';
 			return;
