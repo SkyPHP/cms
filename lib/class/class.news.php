@@ -73,7 +73,7 @@ class news {
 
         // return a distinct field in a table with an order by
         $where = "who in ( $who_csv )";
-        $order_by = 'insert_time desc';
+        $order_by = 'news_who.insert_time desc';
         $person_id = PERSON_ID ? PERSON_ID : 0;
         $sql = "
             SELECT news_item_id FROM (
