@@ -9,13 +9,16 @@ class Login {
 	public $post_username;
 	public $post_password;
 
+	public $login_path;
+
 	public $_errors;
 	public $person;
 
-	public function __construct($username = null, $password = null, $remember_me = false) {
+	public function __construct($username = null, $password = null, $extra = array()) {
 		$this->post_username = addslashes(trim($username));
 		$this->post_password = addslashes(trim($password));
-		$this->post_remember_me = ($remember_me) ? true : false;
+		$this->post_remember_me = $extra['remember_me'];
+		$this->login_path = strtolower($extra['login_path']);
 
 		global $person_encryption_key;
 		if (!$person_encryption_key) {
@@ -36,8 +39,33 @@ class Login {
 		return (Login::get('person_id'));
 	}
 
+	public function checkLoginPath() {
+		$n = $_SERVER['SERVER_NAME'];
+		$this->login_path = reset(explode('?', $this->login_path));
+		if (stripos($this->login_path, $n) === false) return;
+		if ('http://'.$n.$_SERVER['REQUEST_URI'] == $this->login_path) return;
+		$name = str_replace(array($n, 'http://'), '', $this->login_path);
+		$dirs = array_filter(explode('/', $name));
+
+		global $access_groups;
+
+		$path = null;
+		foreach ($dirs as $dir) {
+			if (!$path) $path = 'pages/'.$dir.'/';
+			else $path .= $dir.'/';
+			$settings_file = $path .$dir. '-settings.php';
+			if (file_exists_incpath($settings_file)) {
+				include $settings_file;
+			}
+		}
+	}
+
 	public function checkLogin() {
 		global $access_groups, $access_denied, $rs_logins;
+
+		if ($this->login_path) {
+			$this->checkLoginPath();
+		}
 
 		if (!$this->post_password) {
 			$this->_errors[] = 'You need to enter a password.';

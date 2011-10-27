@@ -7,6 +7,7 @@ $p->template('skybox','top');
 ?>
 
 <form id="login_form" method="post">
+    <input type="hidden" name="login_referer" value="<?=$_SERVER['HTTP_REFERER']?>" />
     <div id="login_message"></div>
     <div class="field">
         <div class="field-label">
