@@ -15,7 +15,7 @@
 				$pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]['website_page_id']} } ");
 				if (is_array($pd)) {			
 					foreach ($pd as $data) {
-						$page_data[$data['field']] = '<span class="wud_'.$u['website_uri_data_ide'].'">'.$data['value'].'</span>';	
+						$page_data[$data['field']] = '<span class="wud_'.$u['website_page_data_ide'].'">'.$data['value'].'</span>';	
 					}
 					if ($rs[0]['url_specific'] == 1) $page_data['url_specific']=true;
 					mem($mem_key, $page_data);
