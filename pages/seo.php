@@ -6,7 +6,7 @@
     if (!$website_id) $website_id = $p->vars['seo']['website']['website_id'];
 
 	if ($website_id) {
-		$mem_key = "seo:".$website_id.":".$p->page_path;
+		//$mem_key = "seo:".$website_id.":".$p->page_path;
 		$page_data = mem($mem_key);
 //		$page_data = NULL;
 		if (!$page_data) {
@@ -15,10 +15,10 @@
 				$pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]['website_page_id']} } ");
 				if (is_array($pd)) {			
 					foreach ($pd as $data) {
-						$page_data[$data['field']] = '<span class="wud_'.$u['website_page_data_ide'].'">'.$data['value'].'</span>';	
+						$page_data[$data['field']] = '<span class="wpd_'.$u['website_page_data_ide'].'">'.$data['value'].'</span>';	
 					}
 					if ($rs[0]['url_specific'] == 1) $page_data['url_specific']=true;
-					mem($mem_key, $page_data);
+					//mem($mem_key, $page_data);
 				}
 			}
 		}
@@ -31,14 +31,14 @@
 			//print_a($_SERVER);
 			if ($page_data['url_specific']) {
 				$mem_key = "seo:".$website_id.":".$p->urlpath;
-				$uri_data = mem($mem_key);
+				//$uri_data = mem($mem_key);
 				$uri_data =  NULL;
 				if (!$uri_data) {
 					$ud = aql::select("website_uri_data { field, value where website_id = {$website_id} and uri = '{$p->urlpath}' and on_website = 1 and value is not null }");
 					foreach($ud as $u) {
 						$uri_data[$u['field']] = '<span class="wud_'.$u['website_uri_data_ide'].'">'.$u['value'].'</span>';
 					}
-					mem($mem_key, $uri_data);
+					//mem($mem_key, $uri_data);
 				}
 				
 				if (is_array($uri_data)) foreach($uri_data as $field => $value) {
