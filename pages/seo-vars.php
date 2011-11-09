@@ -74,8 +74,8 @@ $contract_open_bar_start = $ct_contract['open_bar_start'];
 $contract_open_bar_end = $ct_contract['open_bar_end'];
 }
 
-$website=aql::profile('website',$website_id);
-$website_name = $website['name'];
+$website_arr=aql::profile('website',$website_id);
+$website_name = $website_arr['name'];
 $year = date('Y');
 if ($ct_campaign_id == 1 || $ct_holiday_id == 1) $year++;
 
