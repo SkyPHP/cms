@@ -2,7 +2,7 @@
 	if ($_POST['page_path']) { 
 		
 		$title="SEO - ".$_POST['page_path'];
-		template::inc('skybox','top');
+		$p->template('skybox','top');
 		$uri = $_POST['uri'];
 		if ($_POST['website_ide']) $website_id = decrypt($_POST['website_ide'],'website');		
 		else {
