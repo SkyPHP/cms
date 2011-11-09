@@ -1,6 +1,5 @@
 person {
 	email_address,
-    fbuid,
    	fname,
    	last_login_time,
 	lname,
