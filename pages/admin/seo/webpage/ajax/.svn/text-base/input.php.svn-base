@@ -1,0 +1,1 @@
+<input type="text" style="width:850px;" field="<?=$_POST['field']?>" page_ide="<?=$_POST['website_page_ide']?>" value="<?=aql::value('website_page.'.$_POST['field'],$_POST['website_page_ide'])?>" id="input_field" />
