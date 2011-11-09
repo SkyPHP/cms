@@ -36,7 +36,7 @@ $name_alt1 = $market['name_alt1'];
 $name_alt2 = $market['name_alt2'];
 $name_alt3 = $market['name_alt3'];
 $market_county = $market['county'];
-
+echo $market_id."zzz";
 if (!$GLOBALS['seo']['ICBM']) {
 $GLOBALS['seo']['ICBM'] = $market['latitude'].','.$market['longitude'];
 $GLOBALS['seo']['geo-position'] = $market['latitude'].';'.$market['longitude'];
