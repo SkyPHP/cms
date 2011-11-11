@@ -36,7 +36,8 @@ class Login {
 	}
 
 	public static function isLoggedIn() {
-		return (Login::get('person_id'));
+		if ( is_numeric($_SESSION['login']['person_id']) ) return true;
+		else return false;
 	}
 
 	public function checkLoginPath() {
@@ -124,7 +125,8 @@ class Login {
 			'email' => $this->person->email_address
 		);
 		$this->person->updateLastLoginTime();
-		Login::mset($login);
+		//Login::mset($login);
+		$_SESSION['login'] = $login;
 		if ($this->post_remember_me) {
 			person_cookie::create($this->person->person_id);
 		}
@@ -150,10 +152,19 @@ class Login {
 	}
 
 	public function unsetLogin() {
-		Login::$session = array();
+		//Login::$session = array();
 		$o = person_cookie::getByCookie();
 		if ($o) $o->delete();
-		unset($_SESSION['login'], $_SESSION[self::$session_key], $_SESSION['remember_uri'], $_COOKIE['cookie'], $_COOKIE['person_ide'], $_COOKIE['token']);
+		$subdomain = page::getSubdomainName();
+		unset(
+			$_SESSION['login'], 
+			//$_SESSION[self::$session_key], 
+			$_SESSION['multi-session'][$subdomain]['login'],
+			$_SESSION['remember_uri'], 
+			$_COOKIE['cookie'], 
+			$_COOKIE['person_ide'], 
+			$_COOKIE['token']
+		);
 		foreach (array('cookie', 'person_ide', 'token') as $c) {
 			person_cookie::unsetCookie($c);	
 		}
@@ -190,7 +201,7 @@ class Login {
 		if (!$k) return;
 		// $_SESSION[self::$session_key][$k] = $v;
 		$_SESSION['login'][$k] = $v;
-		self::$session[$k] = $v;
+		//self::$session[$k] = $v;
 	}
 
 	public static function mset($arr = array()) {
@@ -201,7 +212,8 @@ class Login {
 	}
 
 	public static function get($k) {
-		return self::$session[$k];
+		//return self::$session[$k];
+		return $_SESSION['login'][$k];
 	}
 
 	public static function setConstants() {
