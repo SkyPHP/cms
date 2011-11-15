@@ -99,7 +99,7 @@
 						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' )  {
 							$width = 410;
 	?>	
-							<textarea uri_enabled="<?=$uri_enabled?1:0?>" id="field_<?=$field?>" style="width:410px; height:150px;" max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
+							<textarea uri_enabled="<?=$uri_enabled?1:0?>" id="field_<?=$field?>" style="width:850px; height:150px;" max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
 	<?
 						} else {
 							$width = 850;
