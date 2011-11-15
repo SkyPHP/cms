@@ -105,8 +105,8 @@ if ($ct_contract_id) {
 	$contract_open_bar_end = $ct_contract['open_bar_end'];
 }
 
-$website_arr=aql::profile('website',$website_id);
-$website_name = $website_arr['name'];
+$website_arr = $website->website;
+$website_name = $website->website['domain'];
 $year = date('Y');
 if ($ct_campaign_id == 1 || $ct_holiday_id == 1) $year++;
 
