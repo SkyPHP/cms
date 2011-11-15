@@ -33,7 +33,7 @@ if ($market_id) {
 	$market_name = $market['name'];
 	$market_state = $market['state'];
 	$market_state_full = $market['state_full'];
-	$market1 = $market['market1'];
+	$market1 = $market['market1'].$website_id;
 	$market2 = $market['market2'];
 	$market3 = $market['market3'];
 	$market4 = $market['market4'];
