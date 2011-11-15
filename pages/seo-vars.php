@@ -1,7 +1,7 @@
 <?
 //seo variables
 $GLOBALS['seo']['country'] = 'US';
-
+krumo($website, $p);
 //LOOK FOR THE CATEGORY OR THE HOLIDAY
 if(sizeof($website->categories) == 1) {
 	foreach ($website->categories as $cat) {
