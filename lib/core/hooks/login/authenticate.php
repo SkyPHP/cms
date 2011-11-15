@@ -2,7 +2,9 @@
 
 $access_denied = ($access_groups) ? true : false;
 
-Login::make();
+
+
+//Login::make();
 
 if ($_GET['logout']) {
     Login::unsetLogin();
@@ -39,3 +41,4 @@ if (Login::isLoggedIn()) {
     } 
     Login::setConstants();
 }
+
