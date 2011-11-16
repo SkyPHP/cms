@@ -56,7 +56,7 @@ if ($market_id) {
 
 if ($venue_id) {
 	$venue=aql::profile('venue',$venue_id);
-	$venue_name = ucwords(strtolower($venue['name']));
+	$venue_name = ucwords(strtolower($venue['venue_name']));
 	$venue_name_modifier = ucwords(strtolower($venue['name_modifier']));
 	$place_type = ucwords(strtolower($venue['place_type']));
 	$address = ucwords(strtolower($venue['address1']));
