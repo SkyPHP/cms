@@ -51,7 +51,7 @@ if ($market_id) {
 		$p->seo['state'] = $market['state'];
 		$p->seo['geo-region'] = 'US-'.$market['state'];
 	}
-	echo $p->seo['state'].'y';
+	echo $p->seo['state'].'x';
 }
 
 if ($venue_id) {
@@ -72,7 +72,7 @@ if ($venue_id) {
 		$p->seo['state'] = $venue['state'];
 	$p->seo['geo-region'] = 'US-'.$venue['state'];
 	$p->seo['zipcode'] = $venue['zipcode'];
-	echo $p->seo['state'].'z';
+	echo $p->seo['state'].'y';
 
 }
 // Reset Placename is market neighborhood is set.
@@ -145,3 +145,4 @@ $seo_field_array=array(
 	
 	
 );
+	echo $p->seo['state'].'z';
