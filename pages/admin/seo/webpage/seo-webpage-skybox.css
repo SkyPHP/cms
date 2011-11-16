@@ -14,12 +14,12 @@
 	background-color:#fff;
 }
 
-table {
+.ids {
 	background-color:#f3f3f3;
 	border:1px solid #ccc;
 	padding:10px;
 	margin-bottom:20px;
 }
-td {
+.ids td {
 	padding:10px;
 }

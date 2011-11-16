@@ -1,4 +1,4 @@
-<table>
+<table class="ids">
 	<tr>
     	<td>website_id</td>
         <td><?=$website_id?$website_id:$_POST['website_id']?></td>

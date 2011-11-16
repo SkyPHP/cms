@@ -68,7 +68,8 @@ if ($venue_id) {
 	$p->seo['geo-position'] = $venue['latitude'].';'.$venue['longitude'];
 	$p->seo['placename'] = $venue['city'];
 	$p->seo['city'] = $venue['city'];
-	$p->seo['state'] = $venue['state'];
+	if ($venue['state'])
+		$p->seo['state'] = $venue['state'];
 	$p->seo['geo-region'] = 'US-'.$venue['state'];
 	$p->seo['zipcode'] = $venue['zipcode'];
 }
