@@ -27,8 +27,8 @@ if ($p->vars['ct_event_id']) {
 	$venue_name = $seo_event->venue['venue_name'];
 	$venue_name_modifier = $seo_event->venue['name_modifier'];
 	$market_id = $seo_event->venue->market_id;
+	echo $venue_name;
 }
-krumo($p);
 
 if ($market_id) {
 	$market=aql::profile('market',$market_id);
