@@ -1,6 +1,6 @@
 <?
 //seo variables
-$GLOBALS['seo']['country'] = 'US';
+$p->seo['country'] = 'US';
 
 //LOOK FOR THE CATEGORY OR THE HOLIDAY
 if(sizeof($website->categories) == 1) {
@@ -42,13 +42,13 @@ if ($market_id) {
 	$name_alt3 = $market['name_alt3'];
 	$market_county = $market['county'];
 
-	if (!$GLOBALS['seo']['ICBM']) {
-		$GLOBALS['seo']['ICBM'] = $market['latitude'].','.$market['longitude'];
-		$GLOBALS['seo']['geo-position'] = $market['latitude'].';'.$market['longitude'];
-		$GLOBALS['seo']['geo-placename'] = $market['city'];
-		$GLOBALS['seo']['city'] = $market['city'];
-		$GLOBALS['seo']['state'] = $market['state'];
-		$GLOBALS['seo']['geo-region'] = 'US-'.$market['state'];
+	if (!$p->seo['ICBM']) {
+		$p->seo['ICBM'] = $market['latitude'].','.$market['longitude'];
+		$p->seo['geo-position'] = $market['latitude'].';'.$market['longitude'];
+		$p->seo['geo-placename'] = $market['city'];
+		$p->seo['city'] = $market['city'];
+		$p->seo['state'] = $market['state'];
+		$p->seo['geo-region'] = 'US-'.$market['state'];
 	}
 
 }
@@ -64,15 +64,23 @@ if ($venue_id) {
 	$venue_zipcode = $venue['zipcode'];
 	$venue_fulladdress = $address.' '.$venue_city.', '.$venue_state.' '.$venue_zipcode;
 	
-	$GLOBALS['seo']['ICBM'] = $venue['latitude'].','.$venue['longitude'];
-	$GLOBALS['seo']['geo-position'] = $venue['latitude'].';'.$venue['longitude'];
-	$GLOBALS['seo']['placename'] = $venue['city'];
-	$GLOBALS['seo']['city'] = $venue['city'];
-	$GLOBALS['seo']['state'] = $venue['state'];
-	$GLOBALS['seo']['geo-region'] = 'US-'.$venue['state'];
-	$GLOBALS['seo']['zipcode'] = $venue['zipcode'];
+	$p->seo['ICBM'] = $venue['latitude'].','.$venue['longitude'];
+	$p->seo['geo-position'] = $venue['latitude'].';'.$venue['longitude'];
+	$p->seo['placename'] = $venue['city'];
+	$p->seo['city'] = $venue['city'];
+	$p->seo['state'] = $venue['state'];
+	$p->seo['geo-region'] = 'US-'.$venue['state'];
+	$p->seo['zipcode'] = $venue['zipcode'];
 }
-
+// Reset Placename is market neighborhood is set.
+if ($venue['market_nbhd_id'])
+	$market_nbhd_id = $venue['market_nbhd_id'];
+if ($p->vars['market_nbhd_id'])
+	$market_nbhd_id = $p->vars['market_nbhd_id'];
+if($market_nbhd_id)
+	$p->seo['placename'] = aql::value('market_nbhd.name',$market_nbhd_id);
+	
+	
 if ($ct_category_id) {
 	$ct_category=aql::profile('ct_category',$ct_category_id);
 	$category_name = $ct_category['name'];
