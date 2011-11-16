@@ -72,7 +72,15 @@ if ($venue_id) {
 	$GLOBALS['seo']['geo-region'] = 'US-'.$venue['state'];
 	$GLOBALS['seo']['zipcode'] = $venue['zipcode'];
 }
-
+// Reset Placename is market neighborhood is set.
+if ($venue['market_nbhd_id'])
+	$market_nbhd_id = $venue['market_nbhd_id'];
+if ($p->vars['market_nbhd_id'])
+	$market_nbhd_id = $p->vars['market_nbhd_id'];
+if($market_nbhd_id)
+	$GLOBALS['seo']['placename'] = aql::value('market_nbhd.name',$market_nbhd_id);
+	
+	
 if ($ct_category_id) {
 	$ct_category=aql::profile('ct_category',$ct_category_id);
 	$category_name = $ct_category['name'];
