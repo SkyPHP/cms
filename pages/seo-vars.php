@@ -25,7 +25,7 @@ if ($p->vars['ct_event_id']) {
 	$seo_event = new ct_event($p->vars['ct_event_id']);
 	$venue_id = $seo_event->venue->venue_id;
 	$venue_name = $seo_event->venue->venue_name;
-	$venue_name_modifier = $seo_event->venue->venue_name_modifier;
+	$venue_name_modifier = $seo_event->venue->name_modifier;
 	$market_id = $seo_event->venue->market_id;
 }
 
