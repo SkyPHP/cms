@@ -25,8 +25,9 @@
 		
 		if (is_array($page_data)) {
 			foreach ($page_data as $field => $value)  {
-				if ($field == 'title') eval('$p->title = stripslashes("'.addslashes($value).'");');
-				else eval('$p->seo[$field] = stripslashes("'.addslashes($value).'");');
+				//if ($field == 'title') eval('$p->title = stripslashes("'.addslashes($value).'");');
+				//else 
+				eval('$p->seo[$field] = stripslashes("'.addslashes($value).'");');
 			}
 			//print_a($_SERVER);
 			if ($page_data['url_specific']) {
