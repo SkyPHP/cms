@@ -113,7 +113,8 @@ if ($ct_contract_id) {
 	$contract_open_bar_end = $ct_contract['open_bar_end'];
 }
 
-$website_name = $website->website['domain'];
+$website_name = $p->seo['domain'] = $website->website['domain'];
+
 $seo_phone =  $website->website['seo_phone'];
 
 $year = date('Y');
