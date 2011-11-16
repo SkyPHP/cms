@@ -64,7 +64,7 @@ if ($venue_id) {
 	$venue_state = strtoupper($venue['state']);
 	$venue_zipcode = $venue['zipcode'];
 	$venue_fulladdress = $address.' '.$venue_city.', '.$venue_state.' '.$venue_zipcode;
-	
+	echo $venue_name;
 	$p->seo['ICBM'] = $venue['latitude'].','.$venue['longitude'];
 	$p->seo['geo-position'] = $venue['latitude'].';'.$venue['longitude'];
 	$p->seo['placename'] = $venue['city'];
