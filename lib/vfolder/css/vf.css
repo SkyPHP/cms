@@ -104,7 +104,8 @@
 	background: #fff;
 	border-top: 5px solid #555;
 	padding: 10px 10px 0;
-	width: 300px;
+	width: 340px;
+	overflow:hidden;
 }
 	.vf-uploader-status {
 		margin-bottom:10px;

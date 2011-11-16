@@ -113,10 +113,13 @@ class vf_upload_handler {
 		$re = vf::$client->upload_to_server($this->uploaded_file, array(
 			'folders_path' => $this->folders_path
 		));
+
 		unlink($this->uploaded_file); // delete file from tmpdir
-		if (!$re['success']) {
-			$this->errors[] = 'There was an error uploading the file. If it persists, contact the system administrator.';
-			return $this->respond();
+
+		if (!$re['success'] && $re['last_error'] != 'Can not get item, improper items_id given') {
+			$this->errors[] = 'There was an error uploading the file:';
+			$this->errors[] = $re['last_error'];
+			return $this->respond($re);
 		}
 		if ($this->params['db_field'] && $this->params['db_row_id']) {
 			$this->updateDBRecord($re['items_id']);
@@ -187,6 +190,7 @@ class vf_upload_handler {
 			return array(
 				'status' => 'Error',
 				'errors' => $this->errors,
+				're' => $re,
 				'params' => $this->params
 			);
 		} else {
