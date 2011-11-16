@@ -45,7 +45,7 @@ if ($market_id) {
 	if (!$p->seo['ICBM']) {
 		$p->seo['ICBM'] = $market['latitude'].','.$market['longitude'];
 		$p->seo['geo-position'] = $market['latitude'].';'.$market['longitude'];
-		$p->seo['geo-placename'] = $market['city'];
+		$p->seo['placename'] = $market['city'];
 		$p->seo['city'] = $market['city'];
 		$p->seo['state'] = $market['state'];
 		$p->seo['geo-region'] = 'US-'.$market['state'];
