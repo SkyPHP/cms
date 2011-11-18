@@ -14,8 +14,9 @@ $(function(){
 });
 
 
-jQuery.fn.animateChange = function() {
-    var $thing = jQuery(this), 
+jQuery.fn.animateChange = function(fn) {
+    var that = this,
+        $thing = jQuery(this), 
         orig_color = $thing.css('backgroundColor');
     $thing.animate({
         'backgroundColor' : 'yellow',
@@ -25,6 +26,9 @@ jQuery.fn.animateChange = function() {
         'duration' : 400
     }, function() {
         $(this).css('backgroundColor', '');
+        if (typeof fn == 'function') {
+            aql._callback(fn, that);
+        }
     });
     return this;
 }

@@ -28,6 +28,7 @@ class getList_pagination {
 		
 		$this->params['limit'] = $this->limit;
 		$this->params['page'] = $this->page;
+		$this->params['offset'] = ($this->page - 1) * $this->limit;
 		
 		$cl = $this->class;
 		$this->rs = $cl::getList($this->params);
