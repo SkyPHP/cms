@@ -27,6 +27,8 @@ class person extends model {
                 // do nothing
             } else if ($this->password1 != $this->password2) {
                 $this->_errors[] = 'The passwords you entered do not match.';
+            } else {
+                $this->password = $this->password1;
             }
             return;
         }
@@ -110,12 +112,13 @@ class person extends model {
     }
 
     private function _postSavePassword() {
-        if (!$this->password1) return;
-        $tmp = new person;
-        $tmp->person_id = $this->person_id;
-        $tmp->password = $this->password1;
-        $tmp->_token = $this->getToken();
-        return $tmp->save();
+        if (!$this->password) {
+            return;
+        }
+        
+        return $this->saveProperties(array(
+            'password' => $this->password
+        ));
     }
 
     public function generateUserSalt() {
