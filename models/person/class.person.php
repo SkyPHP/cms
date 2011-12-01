@@ -12,6 +12,11 @@ class person extends model {
         $this->addProperty('password1', 'password2', 'current_password'); //password field 1 and 2 (validate same)
     }
 
+    public function set_email_address($val) {
+        if (!$val) return;
+        $this->_data['email_address'] = trim($val);
+    }
+
     public function preValidate(){
         //password validation
         //we don't give direct access to the person's password field
