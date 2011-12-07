@@ -8,6 +8,7 @@ class vf_uploader {
 		'buttonText' => 'Upload File(s)'
 	);
 
+	public $id;
 	public $button;
 	public $buttonText;
 	public $class;
@@ -77,8 +78,19 @@ class vf_uploader {
 			$gallery_attr .= ' folders_path="'.$this->folder->folders_path.'"';
 		}
 
-		$this->button = '<div class="vf-uploader-button-container"><button type="button" class="vf-uploader '.$this->class.'" '
-				.'uploader_token="'.$this->_token.'" '.$gallery_attr.'>' . $this->buttonText . '</button></div>';
+		if ($this->id) {
+			$id = 'id="'. $this->id .'"';
+		}
+
+		$this->button = <<<EOF
+<div class="vf-uploader-button-container">
+	<button type="button" class="vf-uploader $this->class"
+		uploader_token="$this->_token"
+		$gallery_attr
+		$id
+	>$this->buttonText</button>
+</div>
+EOF;
 	}
 
 }
