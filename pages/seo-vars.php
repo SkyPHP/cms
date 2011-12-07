@@ -118,7 +118,7 @@ $website_name = $p->seo['domain'] = $website->website['domain'];
 
 $seo_phone =  $website->website['seo_phone'];
 
-$year = date('Y');
+$seo_year = date('Y');
 if ($ct_campaign_id == 1 || $ct_holiday_id == 1) $year++;
 
 $seo_field_array=array(
