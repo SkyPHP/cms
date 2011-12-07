@@ -49,26 +49,8 @@ class person extends model {
                     //otherwise, self password change is valid
                     //set it up for the set_password() method below
                     $this->password = $this->password1;
-                } else { //user trying to change someone else's password
-                    //does this person have the rights to change the other person's password?
-                    $aql =  "
-                                ct_promoter_user {
-                                    count(*)
-                                    where person_id = ".PERSON_ID." and access_group ilike '%admin%'
-                                }
-                                ct_promoter_user as u on ct_promoter_user.ct_promoter_id = u.ct_promoter_id {
-                                    where person_id = {$this->person_id} and access_group not ilike '%admin%'
-                                }
-                            ";
-                    $rs = aql::select( $aql );
-                    if ($rs[0]['count'] != 0 or auth('ct_admin:*') ){
-                        $this->password = $this->password1;
-                    } else {
-                        $this->_errors[] = "Access to change password denied";
-                    }
-                }
+                } 
             } else {
-               
                 // trying to reset your own password but not logged in
                 if ($this->password_reset_hash != aql::value( 'person.password_reset_hash', $this->person_id ) ) {
                     $this->_errors[] = 'Request another password reset, this token is no longer valid.';
@@ -122,16 +104,13 @@ class person extends model {
     }
 
     public function generateUserSalt() {
-        if (!$this->person_ide) return;
-        return Login::generateUserSalt($this->person_ide);
+        if (!$this->getIDE()) return;
+        return Login::generateUserSalt($this->getIDE());
     }
 
     public function set_password($val) {
         if (!$val) return;
-        if (!$this->person_ide) {
-            if (!$this->person_id) return;
-            $this->person_ide = $ide = encrypt($this->person_id, 'person');
-        }
+        if (!$this->getIDE()) return;
         $this->_data['password_hash'] = Login::generateHash($val, $this->generateUserSalt());
     }
 
