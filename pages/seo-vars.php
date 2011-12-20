@@ -147,3 +147,6 @@ $seo_field_array=array(
 	
 	
 );
+if ($_GET['seo']) {
+		krumo($website->markets);
+	}
