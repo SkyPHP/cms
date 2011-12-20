@@ -148,5 +148,5 @@ $seo_field_array=array(
 	
 );
 if ($_GET['seo']) {
-		krumo($website->markets);
+		echo $market_id.'zz';
 	}
