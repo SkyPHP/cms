@@ -14,11 +14,12 @@ if(sizeof($website->categories) == 1) {
 }
 
 //LOOK FOR THE MARKET
-if ($_GET['seo']) {
-	krumo($website->markets);
-}
+
 if(sizeof($website->markets) == 1) {
 	$market_id = $website->markets[0]['ct_category_id'];
+	if ($_GET['seo']) {
+		krumo($website->markets);
+	}
 } elseif ($p->vars['market_id']) {
 	$market_id = $p->vars['market_id'];
 }
