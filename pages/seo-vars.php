@@ -14,8 +14,9 @@ if(sizeof($website->categories) == 1 && !$p->vars['ct_category_id']) {
 }
 
 //LOOK FOR THE MARKET
+
 if(sizeof($website->markets) == 1) {
-	$market_id = $website->markets[0]['ct_category_id'];
+	$market_id = $website->markets[0]['market_id'];
 } elseif ($p->vars['market_id']) {
 	$market_id = $p->vars['market_id'];
 }
@@ -143,3 +144,6 @@ $seo_field_array=array(
 	
 	
 );
+if ($_GET['seo']) {
+		echo $market_id.'zz';
+	}
