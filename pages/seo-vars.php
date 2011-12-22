@@ -3,7 +3,7 @@
 $p->seo['country'] = 'US';
 
 //LOOK FOR THE CATEGORY OR THE HOLIDAY
-if(sizeof($website->categories) == 1) {
+if(sizeof($website->categories) == 1 && !$p->vars['ct_category_id']) {
 	foreach ($website->categories as $cat) {
 		$ct_category_id = $cat['ct_category_id'];
 	}
