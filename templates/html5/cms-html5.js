@@ -11,6 +11,11 @@ $(function(){
         location.href = url2 + (url2==url1?'?':'&') + $(this).attr('name') + '=' + $(this).val();
     });
 
+    $('#skybox_error .ui-icon-circle-close').die().live('click', function() {
+        $.skyboxHide();
+        return false;
+    });
+
 });
 
 
@@ -31,6 +36,10 @@ jQuery.fn.animateChange = function(fn) {
         }
     });
     return this;
+}
+
+function ui_error_skybox(html) {
+    $.skyboxShow('<div id="skybox_error">' + ui_error(html) + '</div>');
 }
 
 function replace_with_load($div, w, h) {

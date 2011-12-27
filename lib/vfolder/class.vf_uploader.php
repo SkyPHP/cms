@@ -68,6 +68,8 @@ class vf_uploader {
 	public function makeButton() {
 		global $p, $dev, $is_dev;
 		$show_vf = ($dev || $is_dev);
+
+		if (!in_array('/lib/plupload/js/plupload.full.js', $p->js)) $p->js[] = '/lib/plupload/js/plupload.full.js';
 		if (!in_array('/lib/vfolder/css/vf.css', $p->css)) $p->css[] = '/lib/vfolder/css/vf.css';
 		if (!in_array('/lib/vfolder/js/vf.js', $p->js)) $p->js[] = '/lib/vfolder/js/vf.js';
 		
