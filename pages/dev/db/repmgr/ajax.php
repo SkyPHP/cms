@@ -1,4 +1,8 @@
 <?
+
+unset($repmgr);
+$repmgr = new repmgr($db_host, true);
+
 if(!$repmgr || !$repmgr->initialized){
    die('no cluster installed');
 }
