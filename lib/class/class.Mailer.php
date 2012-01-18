@@ -5,6 +5,8 @@
 class Mailer {
 
 	public static $from_default = null;
+	public static $inc_dir = null;
+
 	public static $contents = array(
 		'html' => "MIME-Verson: 1.0\r\nContent-type: text/html; charset=iso-8859-1\r\n",
 		'text' => ''
@@ -100,6 +102,32 @@ class Mailer {
 
 	public function send() {
 		return @mail($this->makeTo(), $this->makeSubject(), $this->body, $this->makeHeaders());
+	}
+
+	public function inc($name, $data) {
+		
+		if (!self::$inc_dir) {
+			throw new Exception('Mailer::$inc_dir not set.');
+			return;
+		}
+
+		$include = self::$inc_dir . $name . '.php';
+
+		if (!file_exists_incpath($include)) {
+			throw new Exception('Template ' . $name . ' does not exist');
+			return;
+		}
+
+		return $this->setBody($this->_includeTemplate($include, $data));
+		
+	}
+
+	private function _includeTemplate($_include, $data) {
+		ob_start();
+		include $_include;
+		$r = ob_get_contents();
+		ob_end_clean();
+		return $r;
 	}
 
 }
