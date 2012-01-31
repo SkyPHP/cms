@@ -38,12 +38,12 @@
 	
 		if (is_array($seo_field_array)) {
 	?>
-    		<fieldset style="width:872px; background:#f3f3f3; margin-bottom:20px; border: 1px solid #ccc; padding:10px;">
+    		<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:10px;">
                 <div id="opt_phrase">
                     <a id="opt_phrase_change" title="Change Opt Phrase" page_ide="<?=$page['website_page_ide']?>" field="opt_phrase" style="cursor:pointer;" ><?=aql::value('website_page.opt_phrase',$page['website_page_id'])?aql::value('website_page.opt_phrase',$page['website_page_id']):'Set Opt Phrase'?></a>
                 </div>
             </fieldset>
-			<fieldset style="width:872px; background:#f3f3f3; margin-bottom:20px; border: 1px solid #ccc; padding:10px;">
+			<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:10px;">
 	<? /*
 				$url = $_POST['url'];
 				$post = array('_ajax'=>1);
@@ -82,7 +82,7 @@
 				
 				if (!isset($header)) {
 	?>
-					<fieldset style="width:872px; background:#f3f3f3; margin-bottom:20px; border: 1px solid #ccc; padding:10px;">
+					<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:10px;">
 						<legend style="border: 1px solid #ccc; background:#ffffff; font-weight:bold; padding:2px 5px 2px 5px;"><?=strtoupper(str_replace('_',' ',$type))?></legend>
 	<?
 					$header = $type;
@@ -90,7 +90,10 @@
 				else if ($header != $type) {
 	?>
 						</fieldset>
-						<fieldset style="width:872px; background:#f3f3f3; margin-bottom:20px; border: 1px solid #ccc; padding:10px;">
+						<fieldset style="width:872px; background:#f3f3f3; margin-bottom:2
+                        
+                        
+                        0px; border: 1px solid #ccc; padding:10px;">
 							<legend style="border: 1px solid #ccc; background:#ffffff; font-weight:bold; padding:2px 5px 2px 5px;"><?=strtoupper(str_replace('_',' ',$type))?></legend>
 	<?				
 					$header = $type;	
