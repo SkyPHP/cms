@@ -37,12 +37,12 @@
 	
 		if (is_array($seo_field_array)) {
 	?>
-    		<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:10px;">
+    		<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:5px;">
                 <div id="opt_phrase">
                     <a id="opt_phrase_change" title="Change Opt Phrase" page_ide="<?=$page['website_page_ide']?>" field="opt_phrase" style="cursor:pointer;" ><?=aql::value('website_page.opt_phrase',$page['website_page_id'])?aql::value('website_page.opt_phrase',$page['website_page_id']):'Set Opt Phrase'?></a>
                 </div>
             </fieldset>
-			<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:10px;">
+			<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:5px;">
 	<? /*
 				$url = $_POST['url'];
 				$post = array('_ajax'=>1);
@@ -58,7 +58,7 @@
 				else echo "Vars are not set";
 		*/
 	?>
-					<div id="nickname"><a title="Change Nickname" page_ide="<?=$page['website_page_ide']?>" style="cursor:pointer; padding-bottom:10px;" id="nickname_change"><?=$page['nickname']?$page['nickname']:'Name This Page'?></a></div>
+					<div id="nickname"><a title="Change Nickname" page_ide="<?=$page['website_page_ide']?>" style="cursor:pointer; padding-bottom:5px;" id="nickname_change"><?=$page['nickname']?$page['nickname']:'Name This Page'?></a></div>
 					
 				</fieldset>
 	<?
@@ -81,7 +81,7 @@
 				
 				if (!isset($header)) {
 	?>
-					<fieldset style="width:872px; background:#f3f3f3; margin-bottom:4px; border: 1px solid #ccc; padding:10px;">
+					<fieldset style="width:872px; background:#f3f3f3; margin-bottom:4px; border: 1px solid #ccc; padding:5px;">
 						<legend style="border: 1px solid #ccc; background:#ffffff; font-weight:bold; padding:2px 5px 2px 5px;"><?=strtoupper(str_replace('_',' ',$type))?></legend>
 	<?
 					$header = $type;
@@ -92,7 +92,7 @@
 						<fieldset style="width:872px; background:#f3f3f3; margin-bottom:2
                         
                         
-                        0px; border: 1px solid #ccc; padding:10px;">
+                        0px; border: 1px solid #ccc; padding:5px;">
 							<legend style="border: 1px solid #ccc; background:#ffffff; font-weight:bold; padding:2px 5px 2px 5px;"><?=strtoupper(str_replace('_',' ',$type))?></legend>
 	<?				
 					$header = $type;	
