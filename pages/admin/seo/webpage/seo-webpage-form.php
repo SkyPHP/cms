@@ -1,10 +1,9 @@
 <table class="ids">
 	<tr>
-    	<td>website_id</td>
-        <td><?=$website_id?$website_id:$_POST['website_id']?></td>
-        <td>website name</td>
-        <td>website_page_id</td>
-        <td><?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?></td>
+    	<td>website_id = <?=$website_id?$website_id:$_POST['website_id']?></td>
+        <td>website name = </td>
+        <td>website_page_id = <?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?></td>
+        <td>website_page.type = </td>
     </tr>
 
 </table>
