@@ -82,7 +82,7 @@
 				
 				if (!isset($header)) {
 	?>
-					<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:10px;">
+					<fieldset style="width:872px; background:#f3f3f3; margin-bottom:6px; border: 1px solid #ccc; padding:10px;">
 						<legend style="border: 1px solid #ccc; background:#ffffff; font-weight:bold; padding:2px 5px 2px 5px;"><?=strtoupper(str_replace('_',' ',$type))?></legend>
 	<?
 					$header = $type;
