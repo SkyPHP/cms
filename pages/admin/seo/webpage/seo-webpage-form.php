@@ -2,11 +2,11 @@
 	<tr>
     	<td>website_id</td>
         <td><?=$website_id?$website_id:$_POST['website_id']?></td>
-    </tr>
-    <tr>
-    	<td>website_page_id</td>
+        <td>website name</td>
+        <td>website_page_id</td>
         <td><?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?></td>
     </tr>
+
 </table>
 
 <link rel="stylesheet" href="/admin/seo/webpage/seo-webpage-skybox.css">
