@@ -1,27 +1,6 @@
 <?
 
-$seo_field_array=array(
-	'html'=>array(
-		'title'=>69,
-		'h1'=>100,
-		'h1_blurb'=>300,
-		'footer_blurb'=>1150
-	),
-	'meta'=>array(
-		'meta_title'=>100,
-		'meta_description'=>300,
-		'meta_keywords'=>100,
-		'meta_subject'=>100
-	)
-	//'Open Graph'=>array(
-	//	'og:title'=>100,
-	//	'og:type'=>50,
-	//	'og:description'=>300,
-	//	'og:site_name'=>100
-	//)
-	
-	
-);
+
 
 
 

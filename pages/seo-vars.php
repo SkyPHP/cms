@@ -122,28 +122,7 @@ $seo_phone =  $website->website['seo_phone'];
 $seo_year = date('Y');
 if ($ct_campaign_id == 1 || $ct_holiday_id == 1) $seo_year++;
 
-$seo_field_array=array(
-	'html'=>array(
-		'title'=>69,
-		'h1'=>100,
-		'h1_blurb'=>300,
-		'footer_blurb'=>1150
-	),
-	'meta'=>array(
-		'meta_title'=>100,
-		'meta_description'=>300,
-		'meta_keywords'=>100,
-		'meta_subject'=>100
-	)
-	//'Open Graph'=>array(
-	//	'og:title'=>100,
-	//	'og:type'=>50,
-	//	'og:description'=>300,
-	//	'og:site_name'=>100
-	//)
-	
-	
-);
+
 if ($_GET['seo']) {
 		echo $market_id.'zz';
 	}
