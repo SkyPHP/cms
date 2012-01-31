@@ -2,12 +2,13 @@
 $seo_field_array=array(
 	'html'=>array(
 		'title'=>75,
+		'meta_description'=>175,		
 		'h1'=>100,
 		'h1_blurb'=>300
 	),
 	'meta'=>array(
+		'subject'=>200,
 		'meta_title'=>75,
-		'meta_description'=>165,
 		'meta_keywords'=>250,
 		'ICBM'=>100,
 		'geo-position'=>100,
@@ -18,7 +19,6 @@ $seo_field_array=array(
 		'city'=>70,
 		'state'=>2,
 		'country'=>100,
-		'subject'=>165,
 		'author'=>100,
 		'copyright'=>100
 	)
