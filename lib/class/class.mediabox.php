@@ -6,7 +6,10 @@ class mediabox {
 			$interval,
 			$data;
 
-	function __construct( $vars = null ) {
+	function __construct( $vars = null, page $p ) {
+		$p->js[] = '/lib/mediabox/standard/standard.js';
+		$p->css[] = '/lib/mediabox/standard/standard.css';
+		
 		if(!$vars['width'])	$this->width = 667;
 		else $this->width =  $vars['width'];
 		
@@ -25,14 +28,19 @@ class mediabox {
 	}
 
 
-	static function render( $vars = null ) {
-		$o = new mediabox($vars);
+	static function render( $vars = null, page $page= null ) {
+		if (!$page) {
+			global $p;
+		} else {
+			$p = $page;
+		}
+		$o = new mediabox($vars, $p);
 		$o->display_html();
 		//return $o; 	
 	}
 	
 	function display_html() {
-		include('/lib/mediabox/template.php');
+		include('/lib/mediabox/standard/standard.php');
 	}
 
 }

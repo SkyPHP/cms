@@ -5,26 +5,28 @@ $large_conf = array(
 	'crop' => 'center'
 );
 
-$thumb_height = $this->height-2-2*$this->num_thumbs;
+$thumb_height = $this->height-2-(2*$this->num_thumbs);
 
 ?>
 <script type="text/javascript">
-	$(document).ready(function() {
-		
-		
-		$(".thumb").live("click", function(event){
-			t_out = newInterval(t_out);
 
-			parent = $(this).closest('.mediabox');	
-			tmp_next = parent.find('.img_'+$(this).attr('num'));
+$.fn.mediabox = function() {
+	return this.each(function() {
+		var $this = $(this),
+			t_out = null;
+		
+		$(".thumb",$this).click(function() {
+			t_out = newInterval(t_out);
+			var parent = $this;	
+			var tmp_next = parent.find('.img_'+$(this).attr('num'));
 			// make sure user didn't click on the current image and the the animation isn't in progress 
 			if(!tmp_next.hasClass('selected') && !parent.hasClass('working') ) {
-				parent.addClass('working');
+				var num = $(this).attr('num');
+				var next = parent.find('.img_'+num);
+				var prev = parent.find('.selected');
+
 				// reset some of the variables. problems happen otherwise if the user clicks too fast.
-				num = $(this).attr('num');
-				next = parent.find('.img_'+num);
-				prev = parent.find('.selected');
-				
+				parent.addClass('working');
 				next.css('z-index',20);
 				prev.css('z-index',19);
 				next.css('top',parent.height()+'px');
@@ -35,7 +37,6 @@ $thumb_height = $this->height-2-2*$this->num_thumbs;
 				}, 1000, function() {
 					prev.css('z-index',1)
 				});
-				
 				//move the next image to the bottom and animate it up
 				next.css('top',parent.height()+'px');
 				next.animate({
@@ -45,32 +46,36 @@ $thumb_height = $this->height-2-2*$this->num_thumbs;
 					parent.find('.big_image img').removeClass('selected');
 					next.addClass('selected');
 					parent.removeClass('working');
-					parent.find('.caption').html(parent.find('.caption_'+num).html());
-				
-					
+					parent.find('.caption').html(parent.find('.caption_'+num).html());					
 				});
 			}
 		});
+		
+		function newInterval(itval) {
+			if (itval) clearInterval(itval);
+			return setInterval(function() {
+				var current = $('.selected', $this);
+				var current_number = current.attr('num');
+				var number = current.siblings().length;
+				var next_img = null;
+				
+				if (current_number == number-1) {
+					next_img = 0;
+				} else {
+					next_img = parseInt(current_number)+1;
+				}
+				$this.find('.thumb_'+next_img).click();
+			}, 5000);
+		}		
+		t_out = newInterval();	
+		});
+};
+
+$(document).ready(function() {
+	$('.mediabox').livequery(function() {
+		$(this).mediabox();
 	});
-	
-	function newInterval(itval) {
-		if (itval) clearInterval(itval);
-		return setInterval(function() {
-			current = $('.mediabox .selected');
-			current_number = current.attr('num');
-			number = current.siblings().length;
-			if (current_number == number-1) {
-				next_img = 0;
-			} else {
-				next_img = parseInt(current_number)+1;
-			}
-			$('.mediabox').find('.thumb_'+next_img).click();
-		}, 4000);
-	}
-	
-	t_out = newInterval();
-	
-	
+});
 	
 </script>
 
