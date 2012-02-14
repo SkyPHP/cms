@@ -9,9 +9,17 @@ if (!$items) $items = $gallery->items;
 if (!$items) exit;
 // print_r($items);
 // krumo($gallery);
+
 $items_arr = array_map(function($i) {
+	if (is_object($i)) return $i->items_id;
 	return $i['_id'];
 }, $items);
+
+$l = count($items_arr);
+if ($gallery->limit && $l > $gallery->limit) {
+	shuffle($items_arr);
+	$items_arr = array_slice($items_arr, 0, $gallery->limit);
+}
 
 $single_to_multiple = function($i) {
 	if ($i->items_id) {
@@ -22,9 +30,7 @@ $single_to_multiple = function($i) {
 	return $i;
 }
 
-
 // krumo($gallery);
-
 // krumo($items_arr);
 
 ?>
@@ -80,6 +86,7 @@ $single_to_multiple = function($i) {
 		// krumo($fetched);
 		$fetched = $single_to_multiple($fetched);
 		foreach ($fetched->items as $k => $i) {
+			if (!$i->html) continue;
 			if ($k == 0) $class = 'first selected';
 			else if ($k == $gallery->folder->items_count - 1) $class = 'last';
 			else $class = null;
