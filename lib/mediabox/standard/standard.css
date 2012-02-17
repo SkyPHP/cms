@@ -42,13 +42,14 @@
 				text-transform:uppercase;
 				font-weight:bold;
 			}
-			.caption .blog_title {
+			.caption .media_title {
 				font-size:28px;
 				line-height:22px;
-				margin-top:5px;
+				margin:5px 0;
 			}
-			.caption .blog_subtitle {
+			.caption .media_subtitle {
 				font-size:14px;
+				margin-bottom:5px;
 			}
 				.caption > div a {
 					color:#fff;
@@ -59,10 +60,13 @@
 				}	
 	.thumbnails {
 		float:right;
-		margin:2px;
-		margin-bottom:0px;
+		margin:1px;
 	}
 		.thumbnails img {
-			margin-bottom:2px;
+			margin:1px;
 			float:left;
 		}
+			.thumbnails img.dimmed {
+				opacity:0.3;
+				filter:alpha(opacity=30);
+			}

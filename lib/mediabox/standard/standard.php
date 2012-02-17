@@ -1,6 +1,5 @@
 <?
-$p->js[] = '/lib/mediabox/standard/standard.js';
-$p->css[] = '/lib/mediabox/standard/standard.css';
+
 
 
 $large_conf = array(
@@ -24,8 +23,8 @@ $thumb_height = $this->height-2-(2*$this->num_thumbs);
 	?>
     	<div class="caption">
         	<? if($this->data[0]['tag']) { ?><div class="tag"><?=$this->data[0]['tag']?></div><? } ?>
-            <div class="blog_title"><a href="<?=$this->data[0]['href']?>"><?=$this->data[0]['title']?></a></div>
-            <div class="blog_subtitle"><a href="<?=$this->data[0]['href']?>"><?=$this->data[0]['subtitle']?></a></div>
+            <div class="media_title"><a href="<?=$this->data[0]['href']?>"><?=$this->data[0]['title']?></a></div>
+            <div class="media_subtitle"><a href="<?=$this->data[0]['href']?>"><?=$this->data[0]['subtitle']?></a></div>
         </div>
     </div>
     <div class="thumbnails">
@@ -46,9 +45,10 @@ $thumb_height = $this->height-2-(2*$this->num_thumbs);
 	<? foreach($this->data as $key => $img_data) { ?>
         <div class="caption_<?=$key?>">
         	<? if($img_data['tag']) { ?><div class="tag"><?=$img_data['tag']?></div><? } ?>
-            <div class="blog_title"><a href="<?=$img_data['href']?>"><?=$img_data['title']?></a></div>
-            <div class="blog_subtitle"><a href="<?=$img_data['href']?>"><?=$img_data['subtitle']?></a></div>
+            <div class="media_title"><a href="<?=$img_data['href']?>"><?=$img_data['title']?></a></div>
+            <div class="media_subtitle"><a href="<?=$img_data['href']?>"><?=$img_data['subtitle']?></a></div>
         </div>
-    <? } ?>	
+    <? } ?>
+    	<div class="interval"><?=$this->interval?></div>
     </div>
 </div>

@@ -19,8 +19,12 @@ class mediabox {
 		if(!$vars['thumb_width']) $this->thumb_width = 75;
 		else $this->thumb_width = $vars['thumb_width'];
 		
-		if(!$vars['interval']) $this->interval = 4000;
-		else $this->interval = $vars['interval'];
+		if(!$vars['interval'])
+			$this->interval = 4000;
+		elseif($vars['interval']<100)
+			$this->interval = $vars['interval']*1000;
+		else
+			$this->interval = $vars['interval'];
 		
 		$this->data = $vars['data'];
 		
@@ -42,5 +46,13 @@ class mediabox {
 	function display_html() {
 		include('/lib/mediabox/standard/standard.php');
 	}
+	
+	static function getProperties() {
+		$reflection = new ReflectionClass('mediabox');
+		return array_map( function($p) {
+			return $p->getName();
+		}, $reflection->getProperties());
+	}
+
 
 }
