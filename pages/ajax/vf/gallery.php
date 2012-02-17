@@ -6,51 +6,85 @@ global $dev, $is_dev;
 
 $show_vf = ($dev || $is_dev);
 
-if (!$gallery) {
-	if (!$_POST['_token']) exit;
-	$params = mem('vf_gallery:'.$_POST['_token']);
-	$gallery = vf::gallery($params);
-	$folder = $gallery->initFolder(true);
-	$items = $folder->items;
-} else {
-	$items = $gallery->folder->items;
-	if (!$items) $items = $gallery->items;
-}
+try {
 
-// print_pre($gallery);
+	if (!$gallery) {
 
-if ($gallery->db_field && $gallery->db_row_id) {
-	$items = array(
-		array('_id' => aql::value($gallery->db_field, $gallery->db_row_id))
-	);
-	if (!$items[0]['_id']) $items = array();
-}
-$empty = (count($items) == 0);
-?>
-<div class="vf-gallery has-floats <?=($empty)?'vf-gallery-empty':''?>" id="<?=$gallery->identifier?>" 
-	token="<?=$gallery->_token?>"
-	<?=($show_vf) ? 'folders_path="'.$gallery->folder->folders_path.'"' : '' ?>
-	<?=($gallery->contextMenu) ? 'context_menu="true"' : ''?>
-><?
-	if ($empty) {
-		?><div class="vf-gallery-empty-message"><?
-			echo $gallery->empty_message;
-		?></div><?
-	} else {
-		$items = vf::getItem(vf_gallery_inc::itemsToFlatArray($items), array(
-			'width' => $gallery->width,
-			'height' => $gallery->height,
-			'crop' => $gallery->crop	
-		));
-		// krumo($items);
-		$items = call_user_func(function() use($items) {
-			if ($items->items) return $items->items;
-			return array($items);
-		});
-		foreach ($items as $i) {
-			?><div class="vf-gallery-item" ide="<?=$i->items_id?>"><?
-				echo $i->html;
-			?></div><?
+		if (!$_POST['_token']) {
+			throw new Exception('AJAX request for a vFolder gallery requires a token');
 		}
+
+		$key = sprintf('vf_gallery:%s', $_POST['_token']);
+		$get_params = function() use($key) {
+			return mem($key);
+		};
+
+		// try to fetch mem_key 3 times
+		for ($i = 0; $i < 3; $i++) {
+			$params = $get_params();
+			if ($params) break;
+		}
+		
+		if (!$params) {
+			$error = sprintf('Invalid gallery token: <strong>%s</strong>. Could not get params to generate gallery.', $_POST['_token']);
+			throw new Exception($error);
+		}
+
+		$gallery = vf::gallery($params);
+		$folder = $gallery->initFolder(true);
+		$items = $folder->items;
+
+	} else {
+		$items = $gallery->folder->items;
+		if (!$items) $items = $gallery->items;
 	}
-?></div>
+
+	if ($gallery->db_field && $gallery->db_row_id) {
+		$items = array(
+			array('_id' => aql::value($gallery->db_field, $gallery->db_row_id))
+		);
+		if (!$items[0]['_id']) $items = array();
+	}
+	$empty = (count($items) == 0);
+?>
+	<div class="vf-gallery has-floats <?=($empty)?'vf-gallery-empty':''?>" id="<?=$gallery->identifier?>" 
+		token="<?=$gallery->_token?>"
+		<?=($show_vf) ? 'folders_path="'.$gallery->folder->folders_path.'"' : '' ?>
+		<?=($gallery->contextMenu) ? 'context_menu="true"' : ''?>
+		>
+<?
+		if ($empty) {
+?>
+			<div class="vf-gallery-empty-message">
+				<?=$gallery->empty_message?>
+			</div>
+<?			
+		} else {
+			
+			$items = vf::getItem(vf_gallery_inc::itemsToFlatArray($items), array(
+				'width' => $gallery->width,
+				'height' => $gallery->height,
+				'crop' => $gallery->crop	
+			));
+
+			$items = call_user_func(function() use($items) {
+				if ($items->items) return $items->items;
+				return array($items);
+			});
+
+			foreach ($items as $i) {
+?>
+				<div class="vf-gallery-item" ide="<?=$i->items_id?>">
+					<?=$i->html?>
+				</div>
+<?				
+			} 
+		} // end if there are items
+?>
+	</div>
+<?
+} catch (Exception $e) {
+
+	echo $e->getMessage();
+
+}
