@@ -44,7 +44,7 @@ class mediabox {
 	}
 	
 	function display_html() {
-		include('/lib/mediabox/standard/standard.php');
+		include('lib/mediabox/standard/standard.php');
 	}
 	
 	static function getProperties() {
