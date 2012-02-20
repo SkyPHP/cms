@@ -1,13 +1,10 @@
 <?
-
-
-
 $large_conf = array(
 	'width' => $this->width - $this->thumb_width,
 	'height' => $this->height,
 	'crop' => 'center'
 );
-$thumb_height = $this->height-2-(2*$this->num_thumbs);
+$sidebar_height = $this->height-2-(2*$this->num_thumbs);
 
 ?>
 <div class="mediabox" style="height:<?=$this->height?>px;width:<?=$this->width?>px;">
@@ -30,8 +27,8 @@ $thumb_height = $this->height-2-(2*$this->num_thumbs);
     <div class="thumbnails">
     <?
 	foreach ($this->data as $key => $img) {
-		$temp_height = ceil($thumb_height/($this->num_thumbs-$key));
-		$thumb_height = $thumb_height-$temp_height;
+		$temp_height = ceil($sidebar_height/($this->num_thumbs-$key));
+		$thumb_height = $sidebar_height-$temp_height;
 		$small_conf = array('height' => $temp_height,
 							'width' => $this->thumb_width - 4,
 							'crop' =>  'center' );

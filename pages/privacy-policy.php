@@ -1,7 +1,7 @@
 <?
 $page_id = 'privacy-policy';
-$title = "Privacy Policy";
-template::inc('website', 'top');
+$p->title = "Privacy Policy";
+$p->template('website','top');
 
 ?>
 
@@ -48,5 +48,5 @@ This Privacy Policy does not cover the information  practices exercised by other
 <p>Last updated: <?=$last_updated_policy?>.</p>
 
 <?
-template::inc('website', 'bottom');
+$p->template('website','bottom');
 ?>

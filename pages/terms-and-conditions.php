@@ -1,7 +1,7 @@
 <?
 $page_id = 'terms-and-conditions';
-$title = "Terms & Conditions";
-template::inc('website', 'top');
+$p->title = "Terms & Conditions";
+$p->template('website','top');
 ?>
 
 <h1 class="module-bar">Terms &amp; Conditions</h1>
@@ -60,5 +60,5 @@ By email: <a href="mailto:<?=$support_email?>"><?=$support_email?></a>&nbsp; </p
 <p>Last updated: <?=$last_updated_terms?>.</p>
 
 <?
-template::inc('website', 'bottom');
+$p->template('website','bottom');
 ?>
