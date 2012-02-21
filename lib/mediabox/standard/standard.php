@@ -28,7 +28,7 @@ $sidebar_height = $this->height-2-(2*$this->num_thumbs);
     <?
 	foreach ($this->data as $key => $img) {
 		$temp_height = ceil($sidebar_height/($this->num_thumbs-$key));
-		$thumb_height = $sidebar_height-$temp_height;
+		$sidebar_height = $sidebar_height-$temp_height;
 		$small_conf = array('height' => $temp_height,
 							'width' => $this->thumb_width - 4,
 							'crop' =>  'center' );
