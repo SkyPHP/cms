@@ -16,7 +16,7 @@ class mediabox {
 		if(!$vars['height']) $this->height = 270;
 		else $this->height = $vars['height'];
 		
-		if(!$vars['thumb_width']) $this->thumb_width = 75;
+		if(!$vars['thumb_width'] && $vars['thumb_width'] !== 0 ) $this->thumb_width = 75;
 		else $this->thumb_width = $vars['thumb_width'];
 		
 		if(!$vars['interval'])
