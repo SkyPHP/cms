@@ -1,5 +1,8 @@
 <?
 
+// krumo($this->data);
+// return;
+
 $large_conf = array(
 	'width' => $this->width - $this->thumb_width,
 	'height' => $this->height,
@@ -7,22 +10,16 @@ $large_conf = array(
 );
 
 $sidebar_height = $this->height-2-(2*$this->num_thumbs);
-
-$big_image_style = $large_conf;
-unset($big_image_style['crop']);
-foreach ($big_image_style as $k=>$v) {
-    $big_image_css .= sprintf('%s="%spx;"', $k, $v);
-}
-
-
 ?>
 <div class="mediabox" style="height:<?=$this->height?>px;width:<?=$this->width?>px;">
-    <div class="big_image" style="<?=$big_image_css?>">
+    <div class="big_image" style="width:<?=$large_conf['width']?>px;height:<?=$large_conf['height']?>px;">
 <?
 	foreach ($this->data as $key => $img) {
 		$big_img = vf::getItem($img['media_item_id'], $large_conf);
 ?>
-		<img src="<?=$big_img->src?>" class="img_<?=$key?> <?=$key==0?'selected':''?>" num="<?=$key?>"  />
+		<img src="<?=$big_img->src?>" 
+            class="img_<?=$key?> <?=$key==0?'selected':''?>" 
+            num="<?=$key?>"  />
 <?
     } // end foreach large image?>
     	<div class="caption">
@@ -35,8 +32,12 @@ foreach ($big_image_style as $k=>$v) {
 <?        
         } // end if tab
 ?>
-            <div class="media_title"><a href="<?=$this->data[0]['href']?>"><?=$this->data[0]['title']?></a></div>
-            <div class="media_subtitle"><a href="<?=$this->data[0]['href']?>"><?=$this->data[0]['subtitle']?></a></div>
+            <div class="media_title">
+                <a href="<?=$this->data[0]['href']?>"><?=$this->data[0]['title']?></a>
+            </div>
+            <div class="media_subtitle">
+                <a href="<?=$this->data[0]['href']?>"><?=$this->data[0]['subtitle']?></a>
+            </div>
         </div>
     </div>
     <div class="thumbnails">
@@ -76,7 +77,7 @@ foreach ($big_image_style as $k=>$v) {
 <?
         if ($img_data['tag']) {
 ?>
-            <div clsas="tag">
+            <div class="tag">
                 <?=$img_data['tag']?>
             </div>
 <?            
@@ -91,7 +92,7 @@ foreach ($big_image_style as $k=>$v) {
         </div>
 <? 
     } 
-?>
-    	<div class="interval"><?=$this->interval?></div>
+?>  
     </div>
+	<div class="interval"><?=$this->interval?></div>
 </div>
