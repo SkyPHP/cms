@@ -7,6 +7,7 @@ class mediabox {
 			$data;
 
 	function __construct( $vars = null, page $p ) {
+		
 		$p->js[] = '/lib/mediabox/standard/standard.js';
 		$p->css[] = '/lib/mediabox/standard/standard.css';
 		
@@ -29,6 +30,7 @@ class mediabox {
 		$this->data = $vars['data'];
 		
 		$this->num_thumbs = sizeof($vars['data']);
+
 	}
 
 
@@ -44,7 +46,7 @@ class mediabox {
 	}
 	
 	function display_html() {
-		include('lib/mediabox/standard/standard.php');
+		include 'lib/mediabox/standard/standard.php';
 	}
 	
 	static function getProperties() {
