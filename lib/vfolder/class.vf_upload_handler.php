@@ -39,10 +39,13 @@ class vf_upload_handler {
 	}
 
 	public function checkIfUpload() {
-		if (!isset($this->FILES['file']) || !is_uploaded_file($this->FILES['file']['tmp_name']) || $this->FILES['file']['error'] != 0) {
+		
+		if (!isset($this->FILES['file']) 
+			|| !is_uploaded_file($this->FILES['file']['tmp_name']) 
+			|| $this->FILES['file']['error'] != 0) {
 			switch ($this->FILES['file']['error']) {
 				case 1:
-					$e = 'The uploaded file is greater than '.ini_get('upload_max_filesize');
+					$e = 'The uploaded file is greater than ' . ini_get('upload_max_filesize');
 					break;
 				case 2: 
 					$e = 'The upload size is greater than the size specified.';
@@ -63,39 +66,54 @@ class vf_upload_handler {
 			$this->errors[] = $e;
 			return;
 		}
+
 		$this->file = $this->FILES['file'];
 		if (!$this->file['tmp_name']) {
 			$this->errors[] = 'No file uploaded.';
 			return;
 		}
+
 		$this->checkUploadDirectory();
+		
 		if ($this->errors) return;
 
 		$tmp_dir = ini_get('upload_tmp_dir');
+
 		if (!$tmp_dir) {
-			$this->errors[] = 'Internal Error: The temporary upload directory was not defined. Please contact the system administrator.';
+			$this->errors[] = 'Internal Error: ' .
+				'The temporary upload directory was not defined. '.
+				'Please contact the system administrator.';
 			return;
 		}
+
 		$this->filename = $this->file['name'];
 		$this->sanitizeFilename();
 		$this->uploaded_file = $this->upload_dir .'/'. $this->filename;
 		if (!move_uploaded_file($this->file['tmp_name'], $this->uploaded_file)) {
-			$this->errors[] = 'Error moving file to upload directory. Please try again. If the problem persists, contact the system administrator.';
+			$this->errors[] = 'Error moving file to upload directory. ' .
+				'Please try again. ' .
+				'If the problem persists, contact the system administrator.';
 		}
 	}
 
 	public function checkUploadDirectory() {
 		$tmp_dir = ini_get('upload_tmp_dir');
 		if (!$tmp_dir) {
-			$this->errors[] = 'Internal Error: Temporary upload directory not defined. Please contact the system administrator.';
+			$this->errors[] = 'Internal Error: ' .
+				'Temporary upload directory not defined. '.
+				'Please contact the system administrator.';
 			return;
 		}
 		if (!is_dir($tmp_dir)) {
-			$this->errors[] = 'Internal Error: Temporary upload directory not a directory. Please contact the system administrator.';
+			$this->errors[] = 'Internal Error: '.
+				'Temporary upload directory not a directory. '.
+				'Please contact the system administrator.';
 			return;
 		}
 		if (!is_writable($tmp_dir)) {
-			$this->errors[] = 'Internal Error: Temporary upload directory is not writable. Please contact the system administrator.';
+			$this->errors[] = 'Internal Error: '.
+				'Temporary upload directory is not writable. '.
+				'Please contact the system administrator.';
 			return;
 		}
 		$this->upload_dir = $tmp_dir;
@@ -109,37 +127,53 @@ class vf_upload_handler {
 	}
 
 	public function doUpload() {
-		if ($this->errors) return $this->respond();
-		$re = vf::$client->upload_to_server($this->uploaded_file, array(
+		
+		if ($this->errors) {
+			return $this->respond();
+		}
+		
+		$upload_opts = array(
 			'folders_path' => $this->folders_path
-		));
+		);
+
+		$re = vf::$client->upload_to_server($this->uploaded_file, $upload_opts);
 
 		unlink($this->uploaded_file); // delete file from tmpdir
 
-		if (!$re['success'] && $re['last_error'] != 'Can not get item, improper items_id given') {
+		if (!$re['success']) {
 			$this->errors[] = 'There was an error uploading the file:';
 			$this->errors[] = $re['last_error'];
 			return $this->respond($re);
 		}
+
 		if ($this->params['db_field'] && $this->params['db_row_id']) {
 			$this->updateDBRecord($re['items_id']);
 		}
+
 		return $this->respond($re);
+
 	}
 
 	public function updateDBRecord($id) {
+		
+		// split db_field
 		$dot = strpos($this->params['db_field'], '.');
 		$table = substr($this->params['db_field'], 0, $dot);
 		$field = substr($this->params['db_field'], $dot + 1);
+		
 		if (!$table || !$field) {
-			$this->errors[] = 'There was an error updating the record for this item. Please contact your system administrator.';
+			$this->errors[] = 'There was an error updating the record for this item. 
+				Please contact your system administrator.';
+			
 			return;
 		}
+
 		aql::update(
 			$table, 
 			array($field => $id),
 			$this->params['db_row_id']
 		);
+
 	}
 
 	public function checkFileTypes() {
