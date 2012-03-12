@@ -1,6 +1,6 @@
 <?
 class mediabox {
-	
+
 	public  $width,
 			$height,
 			$thumb_width,
@@ -11,27 +11,20 @@ class mediabox {
 		
 		$p->js[] = '/lib/mediabox/standard/standard.js';
 		$p->css[] = '/lib/mediabox/standard/standard.css';
-		
-		if(!$vars['width'])	$this->width = 667;
-		else $this->width =  $vars['width'];
-		
-		if(!$vars['height']) $this->height = 270;
-		else $this->height = $vars['height'];
-		
-		if(!$vars['thumb_width'] && $vars['thumb_width'] !== 0 ) $this->thumb_width = 75;
-		else $this->thumb_width = $vars['thumb_width'];
-		
-		if(!$vars['interval'])
-			$this->interval = 4000;
-		elseif($vars['interval']<100)
-			$this->interval = $vars['interval']*1000;
-		else
-			$this->interval = $vars['interval'];
-		
-		$this->data = $vars['data'];
-		
-		$this->num_thumbs = sizeof($vars['data']);
 
+		// set defaults if 
+		$this->width = ($vars['width']) ?: 667;
+		$this->height = ($vars['height']) ?: 270;
+		$this->thumb_width = (!$vars['thumb_width'] && $vars['thumb_width'] !== 0)
+			? 75 
+			: $vars['thumb_width'];
+
+		$this->interval = ($vars['interval']) ?: 4000;
+		if ($this->interval < 100) $this->interval *= 1000;
+
+		$this->data = $vars['data'];
+		$this->num_thumbs = count($vars['data']);
+		
 	}
 
 
@@ -58,6 +51,20 @@ class mediabox {
 		}, $reflection->getProperties());
 	}
 
+
+	/*
+		used by subclasses of mediabox to separate 
+			mediabox specific configuration (based on defined properties)
+			from child class specs
+
+			ie: blog_mediabox takes the same params as mediabox + blog_article::getList()
+
+			this would return 
+				array(
+					'mediabox' => $mediabox_vars,
+					'other' => $blog_articlegetlist_vars
+				);
+	*/
 	public static function separateProperties($vars, $data = array()) {
 
 		$props = self::getProperties();
@@ -73,7 +80,5 @@ class mediabox {
 		);
 
 	}
-
-
 
 }
