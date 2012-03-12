@@ -1,12 +1,13 @@
 <?
 class mediabox {
+	
 	public  $width,
 			$height,
 			$thumb_width,
 			$interval,
 			$data;
 
-	function __construct( $vars = null, page $p ) {
+	public function __construct( $vars = null, page $p ) {
 		
 		$p->js[] = '/lib/mediabox/standard/standard.js';
 		$p->css[] = '/lib/mediabox/standard/standard.css';
@@ -34,7 +35,7 @@ class mediabox {
 	}
 
 
-	static function render( $vars = null, page $page= null ) {
+	public static function render( $vars = null, page $page= null ) {
 		if (!$page) {
 			global $p;
 		} else {
@@ -42,19 +43,37 @@ class mediabox {
 		}
 		$o = new mediabox($vars, $p);
 		$o->display_html();
-		//return $o; 	
+		return $o; 	
 	}
 	
-	function display_html() {
+	public function display_html() {
 		include 'lib/mediabox/standard/standard.php';
+		return $this;
 	}
 	
-	static function getProperties() {
+	public static function getProperties() {
 		$reflection = new ReflectionClass('mediabox');
 		return array_map( function($p) {
 			return $p->getName();
 		}, $reflection->getProperties());
 	}
+
+	public static function separateProperties($vars, $data = array()) {
+
+		$props = self::getProperties();
+		foreach ($vars as $key => $var) {
+			if (in_array($key, $props)) continue;
+			$data[$key] = $var;
+			unset($vars[$key]);
+		}
+
+		return array(
+			'mediabox' => $vars,
+			'other' => $data
+		);
+
+	}
+
 
 
 }
