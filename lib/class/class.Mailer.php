@@ -39,12 +39,18 @@ class Mailer {
 		return $this;
 	}
 
+	public function setReplyTo($s) {
+		$this->reply_to = $s;
+		return $this;
+	}
+
 	public function setSubject($s) {
 		$this->subject = $s;
 		return $this;
 	}
 
 	public function makeHeaders() {
+		
 		if ($this->headers) return $this->headers;
 
 		if (!$this->from) {
@@ -52,14 +58,25 @@ class Mailer {
 		}
 
 		$this->headers = $this->content_type;
-		if ($this->from) $this->headers .= 'From: '.$this->from."\r\n";
+
+		if ($this->from) {
+			$this->headers .= 'From: '.$this->from."\r\n";
+		}
+
+		if ($this->reply_to) {
+			$this->headers .= 'Reply-To: ' . $this->reply_to . "\r\n";
+		}
+
 		foreach ($this->cc as $cc) {
 			$this->headers .= 'Cc: '.$cc."\r\n";
 		}
+
 		foreach ($this->bcc as $bcc) {
 			$this->headers .= 'Bcc: '.$bcc."\r\n";
 		}
+		
 		return $this->headers;
+
 	}
 
 	public function setContentType($var) {
