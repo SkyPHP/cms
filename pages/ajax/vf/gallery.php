@@ -60,12 +60,31 @@ try {
 			</div>
 <?			
 		} else {
-			
+		
+                        #getItem will strip the data we have already if the item is not an image, we need to preserve non-image items' data	
+                        $_items = $items;
+
 			$items = vf::getItem(vf_gallery_inc::itemsToFlatArray($items), array(
 				'width' => $gallery->width,
 				'height' => $gallery->height,
 				'crop' => $gallery->crop	
 			));
+
+                        global $sky_content_type;
+                        foreach($_items as $index => $_i){
+                           #if we have items that are not images, we need to restore the data to our items array and generate an appropriate html representation (vfolder server file icons)
+                           if($_i['media_type'] != 'image'){
+                              $_item_src = sprintf('%s://%s/images/file-icons/%s.jpg', vf::$client->secure?'https':'http', vf::getFilesDomain(), array_search($_i['media_type'] . '/' . $_i['media_subtype'], $sky_content_type)?:'file');
+                              $_item_html = sprintf('<img width="%s" heigh="%s" src="%s" />', $gallery->width, $gallery->height, $_item_src);
+                            
+                              $items->items[$index] = (object)array(
+                                 '_id' => $_i['_id'],
+                                 'items_id' => $_i['_id'],
+                                 'src' => $_item_src,
+                                 'html' => $_item_html
+                              );
+                           }
+                        }
 
 			$items = call_user_func(function() use($items) {
 				if ($items->items) return $items->items;
