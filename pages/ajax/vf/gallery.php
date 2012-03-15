@@ -74,7 +74,7 @@ try {
                         foreach($_items as $index => $_i){
                            #if we have items that are not images, we need to restore the data to our items array and generate an appropriate html representation (vfolder server file icons)
                            if($_i['media_type'] != 'image'){
-                              $_item_src = sprintf((vf::$client->secure?'https':'http') . '://%s/images/file-icons/%s.jpg', vf::getFilesDomain(), array_search($_i['media_type'] . '/' . $_i['media_subtype'], $sky_content_type)?:'file');
+                              $_item_src = sprintf('%s://%s/images/file-icons/%s.jpg', vf::$client->secure?'https':'http', vf::getFilesDomain(), array_search($_i['media_type'] . '/' . $_i['media_subtype'], $sky_content_type)?:'file');
                               $_item_html = sprintf('<img width="%s" heigh="%s" src="%s" />', $gallery->width, $gallery->height, $_item_src);
                             
                               $items->items[$index] = (object)array(
