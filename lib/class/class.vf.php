@@ -151,6 +151,51 @@ class vf {
       return((object) self::$client->alter_item($items_id, $operations));
    }
 
+   #returns the files_domain as determined bt the vfolder_client
+   public static function getFilesDomain(){
+      #if a files_domain can be determined, it is stored here
+      static $files_domain = NULL;
+
+      if($files_domain){
+         #if we have previously determined files_domain, return it
+         return($files_domain);
+      }
+
+      if(is_object(self::$client) && get_class(self::$client) == 'vfolder_client'){
+         if(is_array(self::$client->func_boilerplate)){
+            if(is_array(self::$client->func_boilerplate['all']) && self::$client->func_boilerplate['all']['files_domain']){
+               #first seek the files_domain in the func_boilerplate of 'all'
+               return($files_domain = self::$client->func_boilerplate['all']['files_domain']);
+            }else{
+               #if 'all' does not contain a files_domain (this would indicate poor config) seek files_domain in any of the func_boilerplates
+               foreach(self::$client->func_boilerplate as $boilerplate_config){
+                  if($boilerplate_config['files_domain']){
+                     #return the first files_domain found in func_boilerplate
+                     return($files_domain = $boilerplate_config['files_domain']);
+                  }
+               }
+               #if the func_boilerplate does not have any files_domain, we need to parse server_url
+               #goto is convinient here
+               goto server_url;
+            }
+         }else{
+            server_url:
+            #parse the server_url for the files_domain if func_boilerplate can not be used to determine the files_domain
+            if(self::$client->server_url){
+               $matches = array();
+               if(preg_match('#^https*://([^/]+)/#', self::$client->server_url, $matches)){
+                  #the current host string in use is not stored in the client, therefore we need to retrieve the current host string in this way
+                  return($files_domain = $matches[1]);
+               }
+               #should the above if fail, this would indicate that the server_url is malformed (and no requests to vfolder should succeed)
+            }
+         } 
+      }
+      #if there is no client, or there is no means of determining the files_domain within the client, return NULL
+ 
+      return(NULL);
+   }
+
    public static function slideshow($args) {
       return new vf_slideshow($args);
    }
