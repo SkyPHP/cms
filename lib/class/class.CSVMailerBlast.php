@@ -5,6 +5,9 @@ class CSVMailerBlast extends MailerBlast {
 	private $map = array();
 	private $has_headers = false;
 	private $delimiter = ',';
+	private $distinct_field = null;
+
+	public $distincts = array();
 
 	/*
 		@setRecipients
@@ -16,6 +19,7 @@ class CSVMailerBlast extends MailerBlast {
 				where the values are the positions in the csv
 			- has_headers: if has_headers, we skip the first row
 			- delimiter: defaults to ','
+			- distinct_field: if this is set we do a fake distinct on that field in the map
 
 	*/
 	public function setRecipients($a) {
@@ -96,15 +100,23 @@ class CSVMailerBlast extends MailerBlast {
 		}
 		
 		fclose($file);
-		return $csv;
+		return array_filter($csv);
 
 	}
 
 	// map a row's num field to associative
 	private function _map($row) {
-		return array_map(function($r) use($row) {
+		
+		$row = array_map(function($r) use($row, $o) {
 			return $row[$r];
 		}, $this->map);
+		
+		if (!$this->distinct_field) return $row;
+		if ($this->distincts[$row[$this->distinct_field]]) return null;
+		
+		$this->distincts[$row[$this->distinct_field]] = true;
+		return $row;
+
 	}
 
 }
