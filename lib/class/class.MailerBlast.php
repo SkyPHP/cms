@@ -16,7 +16,7 @@ class MailerBlast {
 	// instead of just to: email
 	public $use_full_name = false;
 	
-	public function getRecipients($arr) {
+	public function setRecipients($arr) {
 		$this->recipients = $arr;
 	}
 
@@ -27,7 +27,7 @@ class MailerBlast {
 	public function sendBlast() {
 
 		if (!$this->recipients) {
-			throw new Exception('getRecipients should set $this->recipients');
+			throw new Exception('setRecipients should set $this->recipients');
 		}
 
 		if (!$this->mailer_config['template']) {
