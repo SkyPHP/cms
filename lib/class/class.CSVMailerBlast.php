@@ -1,5 +1,36 @@
 <?
 
+/*
+
+	SAMPLE USAGE:
+
+	$mlr = new CSVMailerBlast;
+	
+	$mlr->setRecipients(array(
+		'path' => 'path/to/csv',
+		'distinct_field' => 'email',
+		'map' => array(
+			'fname' => 2,
+			'lname' => 3,
+			'email' => 4
+		),
+		'has_headers' => true
+	));
+
+	$mlr->configureMailer(array(
+		'template' => 'path/to/template'
+	));
+	
+	try {
+		$mlr->sendBlast();
+	} catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
+	
+
+*/
+
 class CSVMailerBlast extends MailerBlast {
 	
 	private $map = array();
@@ -47,7 +78,7 @@ class CSVMailerBlast extends MailerBlast {
 		}
 
 		if (!$this->delimiter) {
-			throw new Exception('Deliiter is required!');
+			throw new Exception('Delimiter is required!');
 		}
 	}
 
