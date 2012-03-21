@@ -33,13 +33,6 @@
 
 class CSVMailerBlast extends MailerBlast {
 	
-	private $map = array();
-	private $has_headers = false;
-	private $delimiter = ',';
-	private $distinct_field = null;
-
-	public $distincts = array();
-
 	/*
 		@setRecipients
 		params include: 
@@ -53,101 +46,10 @@ class CSVMailerBlast extends MailerBlast {
 			- distinct_field: if this is set we do a fake distinct on that field in the map
 
 	*/
+			
 	public function setRecipients($a) {
-
-		// sets private properties
-		$this->_mapProperties($a);
-		$this->recipients = ($a['remote'])
-			? $this->_getRemoteCSV($a['path'])
-			: $this->_getLocalCSV($a['path']);
-		
-	}
-
-	private function _mapProperties($a) {
-		$reflection = new ReflectionClass($this);
-		$props = $reflection->getProperties(ReflectionProperty::IS_PRIVATE);
-		$props = array_map(function($r) { return $r->getName(); }, $props);
-		foreach ($a as $k => $v) {
-			if (in_array($k, $props)) $this->{$k} = $v;
-		}
-	}
-
-	private function validate() {
-		if (!$this->map) {
-			throw new Exception('Map must be passed to setRecipients');
-		}
-
-		if (!$this->delimiter) {
-			throw new Exception('Delimiter is required!');
-		}
-	}
-
-	private function _getRemoteCSV($path) {
-		
-		if (!$path) {
-			throw new Exception('CSVMailerBlast::_getRemoteCSV() requires a path.');
-		}
-
-		$this->validate();
-
-		$contents = file_get_contents($path);
-		$contents = explode("\n", $contents);
-
-		$csv = array();
-		$i = 0;
-		foreach ($contents as $row) {
-			if (!$i && $this->has_headers)  {
-				$i++; 
-				continue;
-			}
-			$csv[] = $this->_map(explode($this->delimiter, $row));
-		}
-		return $csv;
-	}
-
-	private function _getLocalCSV($path) {
-		$csv = array();
-		
-		if (!$path) {
-			throw new Exception('CSVMailerBlast::_getLocalCSV() requires a path.');
-		}
-
-		$this->validate();
-
-		$file = fopen($path, 'r');
-
-		if ($file === FALSE) {
-			throw new Exception('Cannot open file at: ' . $path);
-		}
-
-		$i = 0;
-		while ( ($tmp = fgetcsv($file, 0, $this->delimiter)) !== FALSE) {
-			// skip the first row if has_headers
-			if (!$i && $this->has_headers) {
-				$i++;
-				continue;
-			}
-			$csv[] = $this->_map($tmp);
-		}
-		
-		fclose($file);
-		return array_filter($csv);
-
-	}
-
-	// map a row's num field to associative
-	private function _map($row) {
-		
-		$row = array_map(function($r) use($row, $o) {
-			return $row[$r];
-		}, $this->map);
-		
-		if (!$this->distinct_field) return $row;
-		if ($this->distincts[$row[$this->distinct_field]]) return null;
-		
-		$this->distincts[$row[$this->distinct_field]] = true;
-		return $row;
-
+		$parser = new CSVParser($a);
+		$this->recipients = $parser->parse();
 	}
 
 }
