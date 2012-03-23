@@ -1,12 +1,12 @@
 <?
 $seo_field_array=array(
-	'html'=>array(
+	'target'=>array(
 		'title'=>75,
 		'meta_description'=>175,		
 		'h1'=>100,
 		'h1_blurb'=>300
 	),
-	'meta'=>array(
+	'extras'=>array(
 		'subject'=>200,
 		'meta_title'=>75,
 		'meta_keywords'=>250,

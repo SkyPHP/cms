@@ -1,7 +1,7 @@
 <? 	
 	if ($_POST['page_path']) { 
 		
-		$title="SEO - ".$_POST['page_path'];
+		$p->title=$_SERVER['SERVER_NAME'];
 		$p->template('skybox','top');
 		$uri = $_POST['uri'];
 		if ($_POST['website_ide']) $website_id = decrypt($_POST['website_ide'],'website');		
@@ -10,11 +10,12 @@
 			$website_id = $rs[0]['website_id'];
 		}
 		//echo $website_id;
-
-		// Still don't have a website_id after checking config and website table so display a question to add it
+		?>
+		<h2></h2>
+		<?
+        // Still don't have a website_id after checking config and website table so display a question to add it
 		if (!$website_id) { 
 ?>					
-			<h2><?=$_SERVER['SERVER_NAME']?></h2>
             <br>
             This Website Cannot Be Optimized Until it is Set Up in the System
             <br><br>
@@ -22,11 +23,10 @@
 			
 <?		// The website exists... move forward to the check if website_page record is entered	
 		} else {
-			$aql="website_page { url_specific, nickname where page_path = '{$_POST['page_path']}' and website_id = {$website_id} }";
+			$aql="website_page { url_specific, page_type, nickname where page_path = '{$_POST['page_path']}' and website_id = {$website_id} }";
 			$rs = aql::select($aql);
 			$page = $rs[0];
 			if ($page['website_page_id']) {
-				
 				if ($page['url_specific']) {
 					$rs_uri = aql::select("website_uri_data { where website_id = ".$website_id." and uri = '".$uri."' and on_website = 1 }");
 					if ($rs_uri) $url_specific_flag = true;
@@ -42,7 +42,7 @@
 				if ($url_specific_flag) { 
 					$uri_enabled = true;
 ?>
-					This page is set as URL SPECIFIC. The URL is <?=$_SERVER['HTTP_HOST'].$uri?>
+					The URL is <?=$_SERVER['HTTP_HOST'].$uri?>
 					<input type="hidden" id="uri_enabled" value="<?=$uri?>" /> 
 <?				
 				} 
