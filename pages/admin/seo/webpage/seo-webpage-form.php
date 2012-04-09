@@ -1,9 +1,8 @@
 <table class="ids">
 	<tr>
     	<td>website_id = <?=$website_id?$website_id:$_POST['website_id']?></td>
-        <td>website name = </td>
         <td>website_page_id = <?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?></td>
-        <td>website_page.type = </td>
+        <td>website_page.page_type = <?=$page['page_type']?> </td>
     </tr>
 
 </table>
@@ -37,11 +36,11 @@
 	
 		if (is_array($seo_field_array)) {
 	?>
-    		<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:5px;">
+    		<!--<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:5px;">
                 <div id="opt_phrase">
                     <a id="opt_phrase_change" title="Change Opt Phrase" page_ide="<?=$page['website_page_ide']?>" field="opt_phrase" style="cursor:pointer;" ><?=aql::value('website_page.opt_phrase',$page['website_page_id'])?aql::value('website_page.opt_phrase',$page['website_page_id']):'Set Opt Phrase'?></a>
                 </div>
-            </fieldset>
+            </fieldset> -->
 			<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:5px;">
 	<? /*
 				$url = $_POST['url'];
@@ -112,7 +111,7 @@
 						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' )  {
 							$width = 410;
 	?>	
-							<textarea uri_enabled="<?=$uri_enabled?1:0?>" id="field_<?=$field?>" style="width:850px; height:150px;" max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
+							<textarea uri_enabled="<?=$uri_enabled?1:0?>" id="field_<?=$field?>" style="width:850px; " max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
 	<?
 						} else {
 							$width = 850;
