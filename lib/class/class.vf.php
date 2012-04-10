@@ -151,6 +151,60 @@ class vf {
       return((object) self::$client->alter_item($items_id, $operations));
    }
 
+   public static function hasClient(){
+      return(is_object(self::$client) && get_class(self::$client) == 'vfolder_client');
+   }
+
+   #returns the files_domain as determined bt the vfolder_client
+   public static function getFilesDomain(){
+      #if a files_domain can be determined, it is stored here
+      static $files_domain = NULL;
+
+      if($files_domain){
+         #if we have previously determined files_domain, return it
+         return($files_domain);
+      }
+
+      if(!self::hasClient()){
+         #if there is no valid client, return NULL
+         return(NULL);
+      }
+
+      #function for extracting the host string from a given url
+      $get_host_from_url = function($url){
+         $matches = array();
+         if(preg_match('#^https*://([^/]+)/#', $url, $matches)){
+            return($matches[1]);
+         }
+         return(NULL);
+      };
+
+      if(is_array(self::$client->func_boilerplate)){
+         if(is_array(self::$client->func_boilerplate['all']) && self::$client->func_boilerplate['all']['files_domain']){
+            #first seek the files_domain in the func_boilerplate of 'all'
+            return($files_domain = self::$client->func_boilerplate['all']['files_domain']);
+         }else{
+            #if 'all' does not contain a files_domain (this would indicate poor config) seek files_domain in any of the func_boilerplates
+            foreach(self::$client->func_boilerplate as $boilerplate_config){
+               if($boilerplate_config['files_domain']){
+                  #return the first files_domain found in func_boilerplate
+                  return($files_domain = $boilerplate_config['files_domain']);
+               }
+            }
+         }
+      }
+
+      #if there is no func_boilerplate or the func_boilerplate does not have a files_domain, we need to get it from the server_url
+      #the current host string in use is not stored in the client, therefore we need to retrieve the current host string from the server_url
+      $_files_domain = $get_host_from_url(self::$client->server_url);
+      if($_files_domain){
+         return($files_domain = $_files_domain);
+      }
+   
+      #if there is no means of determining the files_domain from the client, return NULL 
+      return(NULL);
+   }
+
    public static function slideshow($args) {
       return new vf_slideshow($args);
    }

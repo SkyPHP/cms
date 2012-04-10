@@ -10,6 +10,8 @@ $large_conf = array(
 );
 
 $sidebar_height = $this->height-2-(2*$this->num_thumbs);
+
+if($this->data){
 ?>
 <div class="mediabox" style="height:<?=$this->height?>px;width:<?=$this->width?>px;">
     <div class="big_image" style="width:<?=$large_conf['width']?>px;height:<?=$large_conf['height']?>px;">
@@ -96,3 +98,5 @@ $sidebar_height = $this->height-2-(2*$this->num_thumbs);
     </div>
 	<div class="interval"><?=$this->interval?></div>
 </div>
+<?
+}
