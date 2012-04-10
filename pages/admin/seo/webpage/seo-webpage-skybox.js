@@ -1,13 +1,12 @@
 $('#skybox:visible').livequery(function(){
 	$('textarea').autoResize({
+		// Documentation: https://github.com/padolsey/jQuery.fn.autoResize
 		extraSpace:0,
 		onBeforeResize: function(){
-			console.log('Before');
-			$(this).css('background', '');
+			//$(this).css('background', '');
 		},
 		onAfterResize: function(){
-			console.log('After');
-			$(this).css('background', '');
+			//$(this).css('background', '');
 		}
 	});
 
@@ -16,7 +15,7 @@ $('#skybox:visible').livequery(function(){
 			History.back();
 		});
 		$('.seo-input').each(function(index, element) {
-           	f = $(this).attr('field');
+           	var f = $(this).attr('field');
 			var max_length = $(this).attr('max');
 			var length = $(this).val().length;
 			$('#'+f+'_char_count').html(length);
@@ -27,7 +26,7 @@ $('#skybox:visible').livequery(function(){
 		
 		
 		$('.seo-input').die().live('keyup focusout', function(e) {
-			f = $(this).attr('field');
+			var f = $(this).attr('field');
 			var max_length = $(this).attr('max');
 			var length = $(this).val().length;
 			$('#'+f+'_char_count').html(length);
@@ -35,12 +34,12 @@ $('#skybox:visible').livequery(function(){
 			else $('#'+f+'_counter').css('color','#000');
 			
 			if (e.keyCode == 13 || e.type == 'focusout') {
-				uri = $('#url_specific').attr('uri');
-				uri_enabled = $(this).attr('uri_enabled');
-				v = $(this).val();
-				w = $(this).attr('wp_id');
-                s = $(this).attr('saved_id');
-				website_id = $('#url_specific').attr('website_id');
+				var uri = $('#url_specific').attr('uri');
+				var uri_enabled = $(this).attr('uri_enabled');
+				var v = $(this).val();
+				var w = $(this).attr('wp_id');
+                var s = $(this).attr('saved_id');
+				var website_id = $('#url_specific').attr('website_id');
 				$('#'+s).html('saving');
 				$('#'+s).fadeOut('slow',function() {
 					$.post('/admin/seo/webpage/ajax/save-seo', { field: f, value: v, wp_id: w, uri: uri, uri_enabled: uri_enabled, website_id: website_id }, function (data){
@@ -59,7 +58,7 @@ $('#skybox:visible').livequery(function(){
 				
 		$('#nickname_change').die().live('click', function() {
 			$('#nickname').fadeOut();
-			page_ide = $(this).attr('page_ide');
+			var page_ide = $(this).attr('page_ide');
 			$.post('/admin/seo/webpage/ajax/input', { field: 'nickname', website_page_ide: page_ide }, function(data) {
 				$('#nickname').html(data);
 				$('#nickname').fadeIn(800);
@@ -68,7 +67,7 @@ $('#skybox:visible').livequery(function(){
 		
 		$('#opt_phrase_change').die().live('click', function() {
 			$('#opt_phrase').fadeOut();
-			page_ide = $(this).attr('page_ide');
+			var page_ide = $(this).attr('page_ide');
 			$.post('/admin/seo/webpage/ajax/input', { field: 'opt_phrase', website_page_ide: page_ide }, function(data) {
 				$('#opt_phrase').html(data);
 				$('#opt_phrase').fadeIn(800);
@@ -77,10 +76,10 @@ $('#skybox:visible').livequery(function(){
 		
 		$('#input_field').die().live('focusout keyup',function(e) {
 			if (e.keyCode == 13 || e.type == 'focusout') {
-				f = $(this).attr('field');
+				var f = $(this).attr('field');
 				$('#'+f).fadeOut();
-				val = $(this).val();
-				page_ide = $(this).attr('page_ide');
+				var val = $(this).val();
+				var page_ide = $(this).attr('page_ide');
 				$.post('/admin/seo/webpage/ajax/change_field', { value: val, field: f, website_page_ide: page_ide }, function(data) {
 					$('#'+f).html(data);
 					$('#'+f).fadeIn(800);
@@ -91,9 +90,9 @@ $('#skybox:visible').livequery(function(){
 		$('#url_specific').die().live('click',function() {
 			if ($(this).attr('checked')) val = 1;
 			else val = 0;
-			uri = $(this).attr('uri');
-			website_page_id = $(this).attr('website_page_id');
-			website_id = $(this).attr('website_id');
+			var uri = $(this).attr('uri');
+			var website_page_id = $(this).attr('website_page_id');
+			var website_id = $(this).attr('website_id');
 			$.post('/admin/seo/webpage/ajax/set_url_specific',{ website_page_id: website_page_id, uri: uri, val: val }, function(data) {
 				$('#url_cb').html(data);	
 			});
