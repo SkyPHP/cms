@@ -1,6 +1,6 @@
 <?php
 
-class person extends model {
+class person extends Model {
 
     public $_required_fields = array(
         'fname' => 'First Name',
