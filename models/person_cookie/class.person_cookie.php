@@ -1,6 +1,6 @@
 <?
 
-class person_cookie extends model {
+class person_cookie extends Model {
 	
 	public $_required_fields = array(
 		'cookie' => 'Cookie',
@@ -18,11 +18,10 @@ class person_cookie extends model {
 			$cookie = addslashes(trim($_COOKIE['cookie']));
 			if (preg_match('/[^a-zA-Z0-9]/im', $cookie)) return;
 		}
-		return model::getByClause(array(
+		return person_cookie::getByClause(array(
 			'where' => "cookie = '{$cookie}' and person_id = {$person_id}",
 			'limit' => 1
-		), 'person_cookie');
-
+		));
 	}
 
 	public static function create($person_id) {
@@ -65,9 +64,9 @@ class person_cookie extends model {
 	}
 
 	public function unsetAllSessions($person_id) {
-		$os = model::getByClause(array(
+		$os = person_cookie::getByClause(array(
 			'where' => 'person_id = '.$person_id
-		), 'person_cookie');
+		));
 		foreach ($os as $o) {
 			$o->delete();
 		}

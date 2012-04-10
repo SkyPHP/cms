@@ -1,6 +1,6 @@
 <?
 
-class news_hide extends model {
+class news_hide extends Model {
 
     public function preValidate() {
         if ( !$this->person_id ) {

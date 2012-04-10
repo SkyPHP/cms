@@ -1,5 +1,5 @@
 <?
-	class website_uri_data extends model {
-		
-	}
-?>
+
+class website_uri_data extends Model {
+	
+}
