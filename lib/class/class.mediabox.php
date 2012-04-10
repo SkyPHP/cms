@@ -7,7 +7,7 @@ class mediabox {
 			$interval,
 			$data;
 
-	public function __construct( $vars = null, page $p ) {
+	public function __construct( $vars = null, Page $p ) {
 		
 		$p->js[] = '/lib/mediabox/standard/standard.js';
 		$p->css[] = '/lib/mediabox/standard/standard.css';
@@ -28,7 +28,7 @@ class mediabox {
 	}
 
 
-	public static function render( $vars = null, page $page= null ) {
+	public static function render( $vars = null, Page $page= null ) {
 		if (!$page) {
 			global $p;
 		} else {
