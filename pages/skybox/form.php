@@ -1,9 +1,11 @@
 <?
 
-$model = $p->queryfolders[0];
-$ide = $p->queryfolders[1];
-$p->title = ($ide) ? 'Edit' : 'Add New';
-$p->template('skybox', 'top');
+$model = $this->queryfolders[0];
+$ide = $this->queryfolders[1];
+
+$this->template('skybox', 'top', array(
+	'title' => ($ide) ? 'Edit' : 'Add New'
+));
 
 ?>
 
@@ -14,7 +16,11 @@ $p->template('skybox', 'top');
 	action="/aql/save/<?=$model?>"
 	>
 <?
-	aql::form($model, $ide);
+	
+	$o = ($ide) ? new $model($ide) : new $model;
+
+	$this->form($o);
+
 ?>
 	<div class="top-padding float-right">
 		<button type="submit" class="button">Save</button>
@@ -22,4 +28,5 @@ $p->template('skybox', 'top');
 </form>
 
 <?
-$p->template('skybox', 'bottom');
+
+$this->template('skybox', 'bottom');
