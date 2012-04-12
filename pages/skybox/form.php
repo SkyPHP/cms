@@ -17,8 +17,7 @@ $this->template('skybox', 'top', array(
 	>
 <?
 	
-	$o = new $model;
-	if ($ide) $o->loadDB($ide);
+	$o = ($ide) ? new $model($ide) : new $model;
 
 	$this->form($o);
 
