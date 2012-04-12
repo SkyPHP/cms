@@ -1,8 +1,5 @@
 <? 		
 	if ($_POST['page_path']) { 
-		
-	
-		
 		$title="SEO - ".$_POST['page_path'];
 		$p->title = $_SERVER['HTTP_HOST'];
 		$p->template('skybox','top');
@@ -92,12 +89,4 @@
 			}
 		}
 		$p->template('skybox','bottom');
-	
-?>
-
-<script language="javascript">		
-
-
-</script>
-
-<? } ?>
+}
