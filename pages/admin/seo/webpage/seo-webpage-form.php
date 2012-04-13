@@ -1,10 +1,8 @@
 <table class="ids">
 	<tr>
-    	<td>website.id = <?=$website_id?$website_id:$_POST['website_id']?></td>
-        <td>website_page.id = <?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?></td>
-        <td>website_page.page_type = <?=$page['page_type']?></td>
-        <!--<td>website_page.data_id = </td>
-        <td>website_page.uri_data_id = </td>-->
+    	<td>website_id = <?=$website_id?$website_id:$_POST['website_id']?></td>
+        <td>website_page_id = <?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?></td>
+        <td>website_page.page_type = <?=$page['page_type']?> </td>
     </tr>
 
 </table>
@@ -42,7 +40,7 @@
                 <div id="opt_phrase">
                     <a id="opt_phrase_change" title="Change Opt Phrase" page_ide="<?=$page['website_page_ide']?>" field="opt_phrase" style="cursor:pointer;" ><?=aql::value('website_page.opt_phrase',$page['website_page_id'])?aql::value('website_page.opt_phrase',$page['website_page_id']):'Set Opt Phrase'?></a>
                 </div>
-            </fieldset>-->
+            </fieldset> -->
 			<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:5px;">
 	<? /*
 				$url = $_POST['url'];
@@ -112,11 +110,8 @@
 	<?
 						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' )  {
 							$width = 410;
-							if ($field == 'meta_description') $height = 32;
-							elseif ($field = 'h1_blurb') $height = 190;
-							else $height = 150
 	?>	
-							<textarea uri_enabled="<?=$uri_enabled?1:0?>" id="field_<?=$field?>" style="width:850px; height:<?=$height?>px;" max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
+							<textarea uri_enabled="<?=$uri_enabled?1:0?>" id="field_<?=$field?>" style="width:850px; " max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
 	<?
 						} else {
 							$width = 850;

@@ -2,7 +2,7 @@
 $seo_field_array=array(
 	'target'=>array(
 		'title'=>75,
-		'meta_description'=>175,		
+		'meta_description'=>55,		
 		'h1'=>100,
 		'h1_blurb'=>300
 	),
