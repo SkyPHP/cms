@@ -4,8 +4,11 @@
 		$p->title = $_SERVER['HTTP_HOST'];
 		$p->template('skybox','top');
 		$uri = $_POST['uri'];
-		$p->js[] = '/pages/admin/seo/webpage/js/jquery.autoresize.js';
+		$p->js[] = '/lib/js/jquery.autoresize.js';
 		$p->js[] = '/pages/admin/seo/webpage/seo-webpage-skybox.js';
+		
+		if($_SERVER['SERVER_NAME'] == 'reseller.dev')
+			$_SERVER['SERVER_NAME'] = 'newyearsevecentral.com';
 
 		if ($_POST['website_ide']) $website_id = decrypt($_POST['website_ide'],'website');		
 		else {
