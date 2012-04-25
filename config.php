@@ -4,7 +4,8 @@ $seo_field_array=array(
 		'title'=>75,
 		'meta_description'=>55,		
 		'h1'=>100,
-		'h1_blurb'=>300
+		'h1_blurb'=>300,
+		'footer_blurb'=>300
 	),
 	'extras'=>array(
 		'subject'=>200,

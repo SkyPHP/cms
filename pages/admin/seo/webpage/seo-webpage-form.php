@@ -4,8 +4,9 @@
         <td>website_page_id = <?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?></td>
         <td>website_page.page_type = <?=$page['page_type']?> </td>
     </tr>
-
 </table>
+
+
 
 <link rel="stylesheet" href="/admin/seo/webpage/seo-webpage-skybox.css">
 <div style="width:900px">
@@ -108,7 +109,7 @@
                     	<? /*<span class="uri_field_cb" <?=!$uri_enabled?'style="display:none;"':''?>><input class="url_cb_click" field="<?=$field?>" type="checkbox" id="uri_cb_<?=$field?>" style="margin-bottom:2px;" <?=($fields2[$field] && $on_website[$field])?'checked="checked"':'' ?> /> URL Specific</span> */ ?> <label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
 						<span style="font-size:10px;	color:#060;	margin-left:10px;" id="saved_<?=$y?>"></span><br>
 	<?
-						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' )  {
+						if ($field == 'h1_blurb' || $field == 'meta_description' || $field =='meta_keywords' || $field == 'footer_blurb' )  {
 							$width = 410;
 	?>	
 							<textarea uri_enabled="<?=$uri_enabled?1:0?>" id="field_<?=$field?>" style="width:850px; " max="<?=$char_max?>" class="seo-input" wp_id="<?=$page['website_page_id']?>" saved_id="saved_<?=$y?>" field="<?=$field?>"><?=$uri_enabled?htmlspecialchars($fields2[$field]):htmlspecialchars($fields[$field])?></textarea>
