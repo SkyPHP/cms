@@ -46,7 +46,7 @@ jQuery.fn.animateChange = function(fn) {
 	
 	$thing.animate(animation.start).animate(animation.end, function() {
 		$(this).css('backgroundColor', '');
-		if (typeof fn == 'function') aql._callback(fn, that);
+		if (typeof fn == 'function') sky.call(fn, that);
 	});
 
 	return this;
