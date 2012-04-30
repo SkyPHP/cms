@@ -6,6 +6,8 @@ $p->template('website','top');
 ?>
 
 <h1 class="module-bar">Privacy Policy</h1>
+
+<div class="subcontent">
 <p>The use of the <?=$company_name?> website(s) and/or <?=$company_name?> software and any <?=$company_name?>  services and products (collectively, the "Website") provided by <?=$company_legal_name?> ("<?=$company_name?>")  are subject to the provisions of this Privacy Policy, including any amendments or  updates hereto. This Privacy Policy is incorporated into and is subject to the <?=$company_name?> <a href="/terms-and-conditions">Terms &amp; Conditions</a>. If you do not agree to this Privacy Policy, please do not use the  Website.</p>
 <p><b>General</b></p>
 <p><?=$company_name?> takes your privacy seriously. We gather certain types of information  about our users and we want to help you understand the terms related to the collection  and use of the information which we collect. This Privacy Policy discloses the types  of information we gather, how we use it, and what choices you have regarding the  collection of such information. </p>
@@ -46,6 +48,7 @@ This Privacy Policy does not cover the information  practices exercised by other
 <p><b>Non-U.S. Users</b></p>
 <p>The Website is hosted in the United States. If you are accessing the Website  from a jurisdiction with privacy laws or regulations that differ from United States  laws, please be advised that through your continued use of the Website, you are  transferring your personal information to the United States and you consent to that  transfer.</p>
 <p>Last updated: <?=$last_updated_policy?>.</p>
+</div>
 
 <?
 $p->template('website','bottom');
