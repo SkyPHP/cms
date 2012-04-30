@@ -29,9 +29,9 @@ $seo_field_array=array(
 	//	'og:description'=>300,
 	//	'og:site_name'=>100
 	//)
-	
-	
 );
+
+$seo_textarea = array('h1_blurb','meta_description','meta_keywords','footer_blurb');
 
 $sky_media_src_path = '/media';
 
