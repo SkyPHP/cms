@@ -7,8 +7,6 @@
 		$p->js[] = '/lib/js/jquery.autoresize.js';
 		$p->js[] = '/pages/admin/seo/webpage/seo-webpage-skybox.js';
 		
-		if($_SERVER['SERVER_NAME'] == 'reseller.dev')
-			$_SERVER['SERVER_NAME'] = 'newyearsevecentral.com';
 
 		if ($_POST['website_ide']) $website_id = decrypt($_POST['website_ide'],'website');		
 		else {
@@ -48,7 +46,7 @@
 				if ($url_specific_flag) { 
 					$uri_enabled = true;
 ?>
-					This page is set as URL SPECIFIC. The URL is <?=$_SERVER['HTTP_HOST'].$uri?>
+					URL: <?=$_SERVER['HTTP_HOST'].$uri?>
 					<input type="hidden" id="uri_enabled" value="<?=$uri?>" /> 
 <?				
 				} 
