@@ -1,11 +1,3 @@
-<table class="ids">
-	<tr>
-    	<td>website_id = <?=$website_id?$website_id:$_POST['website_id']?></td>
-        <td>website_page_id = <?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?></td>
-        <td>website_page.page_type = <?=$page['page_type']?> </td>
-    </tr>
-</table>
-
 
 
 <link rel="stylesheet" href="/admin/seo/webpage/seo-webpage-skybox.css">
@@ -26,17 +18,30 @@
  	if (is_numeric($page['website_page_id'])) {
 		$page['website_page_ide'] = encrypt($page['website_page_id'],'website_page');
 		$rs = aql::select("website_page_data { field, value where website_page_id = {$page['website_page_id']} }");
-		if ($rs) foreach($rs as $r) $fields[$r['field']]=$r['value'];
-
+		if ($rs) foreach($rs as $r) {
+			 $fields[$r['field']]=$r['value'];
+			 if($r['field'] == 'title') $title_id_info = "website_page_data.id (title) = ".$r['website_page_data_id'];
+		}
 		if ($uri_enabled) {
 			$rs2 = aql::select("website_uri_data { field, value, on_website where website_id = {$website_id} and uri = '{$uri}' }");
 			if ($rs2) foreach($rs2 as $r) {
 				$fields2[$r['field']] = $r['value'];
+					if($r['field'] == 'title') $title_id_info = "website_uri_data.id (title) = ".$r['website_uri_data_id'];
 			}
 		}
 	
 		if (is_array($seo_field_array)) {
-	?>
+?>
+    		<table class="ids">
+                <tr>
+                    <td>website_id = <?=$website_id?$website_id:$_POST['website_id']?></td>
+                    <td>website_page_id = <?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?></td>
+                    <td>website_page.page_type = <?=$page['page_type']?> </td>
+					<td><?=$title_id_info?> </td>
+                </tr>
+            </table>
+
+    
     		<!--<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:5px;">
                 <div id="opt_phrase">
                     <a id="opt_phrase_change" title="Change Opt Phrase" page_ide="<?=$page['website_page_ide']?>" field="opt_phrase" style="cursor:pointer;" ><?=aql::value('website_page.opt_phrase',$page['website_page_id'])?aql::value('website_page.opt_phrase',$page['website_page_id']):'Set Opt Phrase'?></a>
@@ -105,7 +110,7 @@
 					$y++;
 					
 	?>			
-					<div style="float:left; padding:10px;">
+					<div style="float:left; padding:4px 10px;">
                     	<? /*<span class="uri_field_cb" <?=!$uri_enabled?'style="display:none;"':''?>><input class="url_cb_click" field="<?=$field?>" type="checkbox" id="uri_cb_<?=$field?>" style="margin-bottom:2px;" <?=($fields2[$field] && $on_website[$field])?'checked="checked"':'' ?> /> URL Specific</span> */ ?> <label style="font-weight:bold; font-size:14px" for="<?=$field?>"><?=ucwords(str_replace('_',' ',$field))?></label>
 						<span style="font-size:10px;	color:#060;	margin-left:10px;" id="saved_<?=$y?>"></span><br>
 	<?

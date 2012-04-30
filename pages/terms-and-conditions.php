@@ -5,6 +5,7 @@ $p->template('website','top');
 ?>
 
 <h1 class="module-bar">Terms &amp; Conditions</h1>
+<div class="subcontent">
 
 <p><strong>1. Your Acceptance </strong></p>
 <p>BY USING OR VISITING THIS WEBSITE (together with all Content available through  the <?=$domain?> domain name and other sites owned, operated or controlled by <?=$company_legal_name?>, the "Website"), OR SUBMITTING CONTENT TO THIS WEBSITE, YOU SIGNIFY YOUR ASSENT  TO (1) THESE TERMS AND CONDITIONS (the "Terms &amp; Conditions"), AND (2) <?=strtoupper($company_name)?>'S PRIVACY  POLICY at <a href="/privacy-policy">www.<?=$domain?>/privacy-policy</a>.  These Terms &amp; Conditions apply to all users of the Website.  If you do not agree to these Terms &amp; Conditions or the Privacy Policy, then please do not use  the Website. </p>
@@ -58,7 +59,7 @@ By email: <a href="mailto:<?=$support_email?>"><?=$support_email?></a>&nbsp; </p
 <p><strong>12. General </strong></p>
 <p>You agree that: (i) the Website shall be deemed solely based in <?=$legal_state?>; and  (ii) the Website shall be deemed a passive website that does not give rise to personal  jurisdiction over <?=$company_name?>, either specific or general, in jurisdictions other than  the State of <?=$legal_state?>. These Terms &amp; Conditions shall be governed by the internal substantive  laws of the State of <?=$legal_state?>, without respect to its conflict of laws principles.  Any claim or dispute between you and <?=$company_name?> that arises in whole or in part from  the Website or these Terms &amp; Conditions shall be decided exclusively by a federal or state  court of competent jurisdiction located in <?=$legal_city?>, <?=$legal_state?>. These Terms &amp; Conditions,  together with the Privacy Policy at <a href="/privacy-policy">www.<?=$domain?>/privacy-policy</a> and one of the following two terms and conditions: Terms for any Program, and any other legal notices  published by <?=$company_name?> on the Website, shall constitute the entire agreement between  you and <?=$company_name?> concerning the Website. If any provision of these Terms &amp; Conditions  is deemed invalid by a court of competent jurisdiction, the invalidity of such provision  shall not affect the validity of the remaining provisions of these Terms &amp; Conditions,  which shall remain in full force and effect. No waiver of any term of this these  Terms &amp; Conditions shall be deemed a further or continuing waiver of such term or any  other term, and a party's failure to assert any right or provision under these Terms  of Use shall not constitute a waiver of such right or provision. <?=$company_name?> reserves  the right to amend these Terms &amp; Conditions at any time and without notice, and it is  your responsibility to review these Terms &amp; Conditions for any changes. Your use of the  Website following any amendment of these Terms &amp; Conditions will signify your assent to  and acceptance of its revised terms. YOU AND <?=strtoupper($company_name)?> AGREE THAT ANY CAUSE OF ACTION  ARISING OUT OF OR RELATED TO THE <?=strtoupper($company_name)?> WEBSITE MUST COMMENCE WITHIN ONE (1) YEAR  AFTER THE CAUSE OF ACTION ACCRUES. OTHERWISE, SUCH CAUSE OF ACTION IS PERMANENTLY  BARRED. </p>
 <p>Last updated: <?=$last_updated_terms?>.</p>
-
+</div>
 <?
 $p->template('website','bottom');
 ?>
