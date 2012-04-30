@@ -10,7 +10,7 @@ if (is_numeric($_SESSION['login']['person_id'])) {
         Click <a href="javascript:activation('<?=Login::get('person_ide')?>');">here</a> to resend activation email.
         </font>
 <?
-		include('pages/login/logout.php');
+		include 'pages/login/logout.php';
 	}
 	else {
 		echo 'true';

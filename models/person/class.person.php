@@ -62,6 +62,7 @@ class person extends Model {
                     return;
                 }
                 $this->password = $this->password1;
+                $this->password_reset_hash = null;
             }
         }
 
