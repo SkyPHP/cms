@@ -14,8 +14,8 @@ if ($template_area == 'top') {
 	);
 
 	# make sure that these files are the first ones loaded
-	$this->css = array_merge($css, $this->css);
-	$this->js = array_merge($js, $this->js);
+	$this->template_css = array_merge($this->template_css, $css);
+	$this->template_js = array_merge($this->template_js, $js);
 
 }
 
