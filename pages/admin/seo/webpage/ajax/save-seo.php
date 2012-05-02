@@ -7,8 +7,14 @@
 	//$mem_key = "seo:".$rs[0]['website_id'].":".$_POST['uri'];
 	//$data = mem($mem_key);
 	//if ($data) mem($mem_key,'');
-
-	if (!$_POST['uri_enabled']) {
+	$website_page_fields = array('nickname', 'page_type');
+	if( in_array($_POST['field'],$website_page_fields) ) {
+		$data = array(
+			$_POST['field'] => $_POST['value']
+		);
+		$update = aql::update('website_page',$data,$_POST['wp_id']);
+		if($update) exit('saved');
+	} elseif (!$_POST['uri_enabled']) {
 		$rs = aql::select("website_page_data { where website_page_id = {$_POST['wp_id']} and field = '{$_POST['field']}' }");
 		$data = array(
 			'field' => $_POST['field'],

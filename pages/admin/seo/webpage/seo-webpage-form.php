@@ -20,55 +20,61 @@
 		$rs = aql::select("website_page_data { field, value where website_page_id = {$page['website_page_id']} }");
 		if ($rs) foreach($rs as $r) {
 			 $fields[$r['field']]=$r['value'];
-			 if($r['field'] == 'title') $title_id_info = "website_page_data.id (title) = ".$r['website_page_data_id'];
 		}
 		if ($uri_enabled) {
 			$rs2 = aql::select("website_uri_data { field, value, on_website where website_id = {$website_id} and uri = '{$uri}' }");
 			if ($rs2) foreach($rs2 as $r) {
 				$fields2[$r['field']] = $r['value'];
-					if($r['field'] == 'title') $title_id_info = "website_uri_data.id (title) = ".$r['website_uri_data_id'];
 			}
 		}
+
+
+		$uri_data_id = aql::select("website_uri_data{ uri where field = 'title' and website_page_id = ".$page['website_page_id']." and uri = '".$uri."' } ");
+		foreach($uri_data_id as $key =>  $uri_data) {
+			if ($key != 0) {
+				$uri_data_id_str = $uri_data_id_str.', ';
+				$uri_data_uri_str = $uri_data_uri_str.', ';
+			}
+			$uri_data_id_str = $uri_data_id_str.$uri_data['website_uri_data_id'];
+			$uri_data_uri_str = $uri_data_uri_str.$uri_data['uri'];
+		}
+		$page_data_id = aql::select("website_page_data{ where field = 'title' and website_page_id = ".$page['website_page_id']."}");
+		foreach($page_data_id as $key => $page_data) {
+			if ($key != 0) $page_data_id_str = $page_data_id_str.', ';
+			$page_data_id_str = $page_data_id_str.$page_data['website_page_data_id'];
+		}
+				
 	
 		if (is_array($seo_field_array)) {
+			if($uri_data_id_str || $uri_data_uri_str) {
 ?>
-    		<table class="ids">
+            <table class="ids">
+                <tr>
+                    <td>website_uri_data.id = <?=$uri_data_id_str?></td>
+                    <td>url = <?=$uri_data_uri_str?></td>
+                </tr>
+            </table>
+<?
+			}
+?>
+			<table class="ids">
                 <tr>
                     <td>website_id = <?=$website_id?$website_id:$_POST['website_id']?></td>
                     <td>website_page_id = <?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?></td>
-                    <td>website_page.page_type = <?=$page['page_type']?> </td>
-					<td><?=$title_id_info?> </td>
+					<td>website_page_data.id (title) = <?=$page_data_id_str?></td>
                 </tr>
             </table>
-
-    
-    		<!--<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:5px;">
-                <div id="opt_phrase">
-                    <a id="opt_phrase_change" title="Change Opt Phrase" page_ide="<?=$page['website_page_ide']?>" field="opt_phrase" style="cursor:pointer;" ><?=aql::value('website_page.opt_phrase',$page['website_page_id'])?aql::value('website_page.opt_phrase',$page['website_page_id']):'Set Opt Phrase'?></a>
-                </div>
-            </fieldset> -->
-			<fieldset style="width:872px; background:#f3f3f3; margin-bottom:5px; border: 1px solid #ccc; padding:5px;">
-	<? /*
-				$url = $_POST['url'];
-				$post = array('_ajax'=>1);
-				$json = GetCurlPage($url,$post);
-				$seo_page = json_decode($json,true);
-				if (is_array($seo_page) && is_array($page['vars'])) {
-					foreach ( $page['vars'] as $var => $val ) {
-						echo $var;
-						if (!$val) echo ' (blank)';
-						echo '<br />';
-					}
-				}
-				else echo "Vars are not set";
-		*/
-	?>
-					<div id="nickname"><a title="Change Nickname" page_ide="<?=$page['website_page_ide']?>" style="cursor:pointer; padding-bottom:5px;" id="nickname_change"><?=$page['nickname']?$page['nickname']:'Name This Page'?></a></div>
-					
-				</fieldset>
+            
+            <table class="ids">
+                <tr>
+                    <td>Nickname = <input type="text" saved_id="saved_0" max="100" id="field_nickname" class="seo-input" field="nickname" wp_id="<?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?>" value="<?=$page['nickname']?>" /><span style="font-size: 10px; color: rgb(0, 102, 0); margin-left: 4px; display: inline; " id="saved_0"></span></td>
+                    <td>page_type = <input type="text" saved_id="saved_1" max="100" id="field_page_type" class="seo-input" field="page_type" wp_id="<?=$page['website_page_id']?$page['website_page_id']:$_POST['website_page_id']?>" value="<?=$page['page_type']?>" /><span style="font-size: 10px; color: rgb(0, 102, 0); margin-left: 4px; display: inline; " id="saved_1"></span></td>
+                    <td>page_path = <?=$page['page_path']?></td>
+                </tr>
+            </table>
 	<?
 			// Insert the blank field records in the db for website_page fields that don't already exist
-			$y=0;	
+			$y=2;	
 			foreach($seo_field_array as $type => $field_array) {
 				
 				foreach($field_array as $field => $max) {
