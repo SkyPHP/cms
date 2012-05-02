@@ -26,7 +26,7 @@
 			
 <?		// The website exists... move forward to the check if website_page record is entered	
 		} else {
-			$aql="website_page { url_specific, page_type, page_path, nickname where page_path = '{$_POST['page_path']}' and website_id = {$website_id} }";
+			$aql="website_page { url_specific, page_type, page_path, nickname where page_path = '".addslashes($_POST['page_path'])."' and website_id = {$website_id} }";
 			$rs = aql::select($aql);
 			$page = $rs[0];
 			if ($page['website_page_id']) {
