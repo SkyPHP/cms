@@ -1,35 +1,46 @@
 <?
-$title = "Terms & Conditions";
-$p->template('website', 'top');
+
+$template = ($this->is_ajax_request) ? 'skybox' : 'website';
+
+$this->title = "Reset Your Password";
+$this->template($template, 'top');
+
+$person_id = decrypt($this->queryfolders[0], 'person');
+
 ?>
 
 <div class="center">
 
 <?
-if(decrypt($p->queryfolders[0],'person')) {
-	$reset_hash = aql::value('person.password_reset_hash', $p->queryfolders[0]);
-	if ($reset_hash == $p->queryfolders[1]) {
-		include('pages/reset-password/includes/set_password_form.php');
-	}
-	else {
-		$o = new person;
-		$o->person_ide = $p->queryfolders[0];
-		$o->_token = $o->getToken();
-		$o->password_reset_hash = "";
-		$re = $o->save();
-		$hash_mismatch = TRUE;
-		include('pages/reset-password/includes/set_hash_form.php');
-	}
-}
-else {
-	include('pages/reset-password/includes/set_hash_form.php');
-}
 
+if (!$person_id) {
+	
+	include 'pages/reset-password/includes/set_hash_form.php';
+
+} else {
+	
+	$o = new person($person_id);
+
+	if ($this->queryfolders[1] == $o->password_reset_hash) {
+		
+		include 'pages/reset-password/includes/set_password_form.php';
+
+	} else {
+		
+		$has_mismatch = true;
+		
+		$o->saveProperties(array( 'password_reset_hash' => null ));
+		
+		include 'pages/reset-password/includes/set_hash_form.php';
+
+	}
+
+}
 
 ?>
 
 </div>
 
 <?
-$p->template('website', 'bottom');
-?>
+
+$this->template($template, 'bottom');
