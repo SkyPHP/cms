@@ -9,7 +9,12 @@
 		$rs = aql::select("website { where domain = '{$_SERVER['HTTP_HOST']}' }");	
 		$website_id = $rs[0]['website_id'];
 	}
-	if (!$page['website_page_id']) $page['website_page_id'] = $_POST['website_page_id'];
+	if (!$page['website_page_id']) {
+		$page['website_page_id'] = $_POST['website_page_id'];
+		$aql="website_page { url_specific, page_type, page_path, nickname where website_page.id = ".$page['website_page_id']." }";
+		$rs = aql::select($aql);
+		$page = $rs[0];
+	}
 	$uri = $_POST['uri'];
 	
 	if ($_POST['uri_enabled'] == 1 || $url_specific_flag) $uri_enabled = true;
@@ -22,7 +27,7 @@
 			 $fields[$r['field']]=$r['value'];
 		}
 		if ($uri_enabled) {
-			$rs2 = aql::select("website_uri_data { field, value, on_website where website_id = {$website_id} and uri = '{$uri}' }");
+			$rs2 = aql::select("website_uri_data { field, value, on_website where website_id = {$website_id} and uri = '{$uri}' and website_page_id = {$page['website_page_id']} }");
 			if ($rs2) foreach($rs2 as $r) {
 				$fields2[$r['field']] = $r['value'];
 			}
