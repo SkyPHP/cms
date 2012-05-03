@@ -34,7 +34,6 @@
 		}
 		
 ?>
-		This page is set to URL SPECIFIC. The URL is <?=$_SERVER['HTTP_HOST'].$_POST['uri']?>
 		<input type="hidden" id="uri_enabled" value="<?=$_POST['uri']?>" />
 <?		
 	}

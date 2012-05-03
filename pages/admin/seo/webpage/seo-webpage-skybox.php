@@ -46,7 +46,6 @@
 				if ($url_specific_flag) { 
 					$uri_enabled = true;
 ?>
-					URL: <?=$_SERVER['HTTP_HOST'].$uri?>
 					<input type="hidden" id="uri_enabled" value="<?=$uri?>" /> 
 <?				
 				} 
