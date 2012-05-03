@@ -13,7 +13,6 @@ if ($template_area == 'top') {
 		'/lib/js/aqlForm.js'
 	);
 
-	# make sure that these files are the first ones loaded
 	$this->template_css = array_merge($this->template_css, $css);
 	$this->template_js = array_merge($this->template_js, $js);
 
