@@ -8,7 +8,7 @@ $seo_field_array=array(
 		'footer_blurb'=>300
 	),
 	'extras'=>array(
-		'subject'=>200,
+		'meta_subject'=>200,
 		'meta_title'=>75,
 		'meta_keywords'=>250,
 		//'ICBM'=>100,
