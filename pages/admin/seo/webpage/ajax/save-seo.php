@@ -31,9 +31,10 @@
 		$data = array(
 			'field' => $_POST['field'],
 			'value' => $_POST['value'],
+			'website_id' => $_POST['website_id'],
+			'website_page_id' => $_POST['wp_id'],
 			'mod__person_id' => PERSON_ID,
-			'update_time' => 'now()',
-			'website_id' => $rs[0]['website_id']
+			'update_time' => 'now()'
 		);	
 		if (is_numeric($rs[0]['website_page_data_id'])) {
 			$update=aql::update('website_page_data',$data,$rs[0]['website_page_data_ide']);
@@ -52,9 +53,9 @@
 			'field' => $_POST['field'],
 			'value' => $_POST['value'],
 			'website_id' => $_POST['website_id'],
+			'website_page_id' => $_POST['wp_id'],
 			'mod__person_id' => PERSON_ID,
-			'update_time' => 'now()',
-			'website_id' => $rs[0]['website_id']
+			'update_time' => 'now()'
 		);	
 		if (is_numeric($rs[0]['website_uri_data_id'])) {
 			$update=aql::update('website_uri_data',$data,$rs[0]['website_uri_data_ide']);
