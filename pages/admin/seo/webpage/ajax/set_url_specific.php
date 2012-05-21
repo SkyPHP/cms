@@ -26,11 +26,13 @@
 		//sql("update website_uri_data set on_website = 1 where uri = '".$_POST['uri']."' and website_id = ".$website_id);
 		$aql = "website_uri_data { where uri = '".$_POST['uri']."' and website_id = ".$website_id."}";
 		$rs = aql::select($aql);
-		foreach ($rs as $r) {
-			$website_uri_data = array(
-				'on_website' => '1'
-			);
-			$rs = aql::update( 'website_uri_data', $website_uri_data, $r['website_uri_data_id'] );
+		if($rs) {
+			foreach ($rs as $r) {
+				$website_uri_data = array(
+					'on_website' => '1'
+				);
+				$rs = aql::update( 'website_uri_data', $website_uri_data, $r['website_uri_data_id'] );
+			}
 		}
 		
 ?>
@@ -41,11 +43,13 @@
 		//$update = sql("update website_uri_data set on_website = 0 where uri = '".$_POST['uri']."' and website_id = ".$website_id);
 		$aql = "website_uri_data { where uri = '".$_POST['uri']."' and website_id = ".$website_id."}";
 		$rs = aql::select($aql);
-		foreach ($rs as $r) {
-			$website_uri_data = array(
-				'on_website' => '0'
-			);
-			$rs = aql::update( 'website_uri_data', $website_uri_data, $r['website_uri_data_id'] );
+		if($rs) {
+			foreach ($rs as $r) {
+				$website_uri_data = array(
+					'on_website' => '0'
+				);
+				$rs = aql::update( 'website_uri_data', $website_uri_data, $r['website_uri_data_id'] );
+			}
 		}
 	}
 ?>
