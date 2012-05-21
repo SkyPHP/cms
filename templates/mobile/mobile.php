@@ -1,6 +1,6 @@
 <?
 
-global $dev, $jquery_version;
+global $dev;
 
 if ( $template_area == 'top' ) {
 
