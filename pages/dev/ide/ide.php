@@ -1,4 +1,6 @@
 <?
+global $db;
+
 ob_start();
 $p->title = 'Developer Dashboard / IDE';
 $p->template('intranet','top');
