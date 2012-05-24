@@ -144,7 +144,7 @@ class Login {
 	public function getSessionLoginKey() {
 		global $login_session_key_type;
 		if (!$login_session_key_type) $login_session_key_type = 'person';
-		$subdomain = Page::getSubdomainName();
+		$subdomain = \Sky\Page::getSubdomainName();
 		if (!$subdomain) return '_login';
 		$ide = self::keyTypeToIDE($subdomain);
 		$id = decrypt($ide, $login_session_key_type);
@@ -155,7 +155,7 @@ class Login {
 		//Login::$session = array();
 		$o = person_cookie::getByCookie();
 		if ($o) $o->delete();
-		$subdomain = Page::getSubdomainName();
+		$subdomain = \Sky\Page::getSubdomainName();
 		unset(
 			$_SESSION['login'], 
 			//$_SESSION[self::$session_key], 

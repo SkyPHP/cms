@@ -1,6 +1,6 @@
 <?php
 
-class person extends model {
+class person extends Model {
 
     public $_required_fields = array(
         'fname' => 'First Name',
@@ -62,6 +62,7 @@ class person extends model {
                     return;
                 }
                 $this->password = $this->password1;
+                $this->password_reset_hash = null;
             }
         }
 
