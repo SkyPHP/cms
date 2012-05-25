@@ -48,7 +48,8 @@
 			if ($key != 0) $page_data_id_str = $page_data_id_str.', ';
 			$page_data_id_str = $page_data_id_str.$page_data['website_page_data_id'];
 		}
-				
+		
+		if(!$website_id) $website_id = $_POST['website_id'];	
 	
 		if (is_array($seo_field_array)) {
 			if($uri_data_id_str || $uri_data_uri_str) {
@@ -87,6 +88,7 @@
 					if (!$rs2) {
 						$data = array(
 							'field'=>$field,
+							'website_id' => $website_id,
 							'website_page_id'=>$page['website_page_id'],
 							'mod__person_id'=>PERSON_ID
 						);

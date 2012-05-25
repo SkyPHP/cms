@@ -16,13 +16,15 @@ if ( $template_area == 'top' ) {
 <html>
 <head>
     <title><?=$this->title?></title>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
 <?
     if ( true ) echo $this->stylesheet();
     else echo $this->consolidated_stylesheet();
+	
 
 ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+	
 	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
 <?
@@ -39,9 +41,12 @@ if ( $template_area == 'top' ) {
 </head>
 <body>
 <div data-role="page" data-title="<?=$p->title?>">
-	<div data-role="header"><h1><?=$p->heading?$p->heading:$p->title?></h1></div> 
+	<div data-role="header">
+    	<?=$p->heading_left?$p->heading_left:''?>
+        <h1><?=$p->heading?$p->heading:$p->title?></h1>
+    </div> 
 	<div data-role="content"> 
-
+		
 <?
 
 } else if ( $template_area == 'bottom' ) {
