@@ -92,7 +92,6 @@
 							'website_page_id'=>$page['website_page_id'],
 							'mod__person_id'=>PERSON_ID
 						);
-						krumo($data);
 						aql::insert('website_page_data',$data);
 					}
 				}
