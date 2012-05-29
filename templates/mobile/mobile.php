@@ -1,8 +1,20 @@
 <?
 
+
+
 global $dev;
 
 if ( $template_area == 'top' ) {
+	
+
+	$js = array(
+		'/templates/html5/html5.js',
+		'/templates/html5/cms-html5.js',
+		'/lib/js/aqlForm.js',
+		'/lib/js/jquery.livequery.min.js'
+	);
+
+	$this->template_js = array_merge($this->template_js, $js);
 
     $attrs  = '';
     if ($this->html_attrs) {
@@ -25,8 +37,7 @@ if ( $template_area == 'top' ) {
 ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	
-	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+
 <?
     // echo the items in the $head_arr
 	if (is_array($this->head)) {
@@ -63,10 +74,16 @@ if ( $template_area == 'top' ) {
         if ( file_exists_incpath($file) ) {
 ?>
     <link rel="stylesheet" href="<?=$file?>" />
+    	
 <?
         }
     }
-	
+?>
+
+	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+    
+<?
     if (true) echo $this->javascript();
     else echo $this->consolidated_javascript();
 
