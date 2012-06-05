@@ -18,7 +18,7 @@ if ( $template_area == 'top' ) {
 
 ?>
 <!doctype html>
-<html <?=$attrs?> lang="en" class="no-js">
+<html <?=$attrs?> lang="en">
 <head>
     <title><?=$this->title?></title>
     <link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
