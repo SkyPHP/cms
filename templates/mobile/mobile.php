@@ -14,14 +14,11 @@ if ( $template_area == 'top' ) {
 
     $this->template_js = array_merge($this->template_js, $js);
 
-    $attrs  = '';
-    if ($this->html_attrs) {
-        $attrs = $this->getHTMLAttrString();
-    }
+    $attrs = $this->getHTMLAttrString();
 
 ?>
 <!doctype html>
-<html>
+<html <?=$attrs?> lang="en" class="no-js">
 <head>
     <title><?=$this->title?></title>
     <link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
