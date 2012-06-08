@@ -70,7 +70,7 @@ class Login {
 
 		if (!$this->post_password) {
 			$this->_errors[] = 'You need to enter a password.';
-		} 
+		}
 		if (!$this->post_username) {
 			$this->_errors[] = 'You need to enter a username or email address';
 		}
@@ -122,7 +122,8 @@ class Login {
 			'person_ide' => $this->person->person_ide,
 			'fname' => $this->person->fname,
 			'lname' => $this->person->lname,
-			'email' => $this->person->email_address
+			'email' => $this->person->email_address,
+			'access_group' => $this->person->access_group
 		);
 		$this->person->updateLastLoginTime();
 		//Login::mset($login);
@@ -157,16 +158,16 @@ class Login {
 		if ($o) $o->delete();
 		$subdomain = \Sky\Page::getSubdomainName();
 		unset(
-			$_SESSION['login'], 
-			//$_SESSION[self::$session_key], 
+			$_SESSION['login'],
+			//$_SESSION[self::$session_key],
 			$_SESSION['multi-session'][$subdomain]['login'],
-			$_SESSION['remember_uri'], 
-			$_COOKIE['cookie'], 
-			$_COOKIE['person_ide'], 
+			$_SESSION['remember_uri'],
+			$_COOKIE['cookie'],
+			$_COOKIE['person_ide'],
 			$_COOKIE['token']
 		);
 		foreach (array('cookie', 'person_ide', 'token') as $c) {
-			person_cookie::unsetCookie($c);	
+			person_cookie::unsetCookie($c);
 		}
 	}
 
