@@ -1,5 +1,4 @@
 person {
-    access_group,
     email_address,
     fname,
     last_login_time,

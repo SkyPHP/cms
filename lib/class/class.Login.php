@@ -122,8 +122,7 @@ class Login {
 			'person_ide' => $this->person->person_ide,
 			'fname' => $this->person->fname,
 			'lname' => $this->person->lname,
-			'email' => $this->person->email_address,
-			'access_group' => $this->person->access_group
+			'email' => $this->person->email_address
 		);
 		$this->person->updateLastLoginTime();
 		//Login::mset($login);
