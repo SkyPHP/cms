@@ -1,5 +1,5 @@
 <?
-//header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: *');
 //header("Access-Control-Allow-Headers: x-requested-with");
 
 if (is_numeric($_SESSION['login']['person_id'])) {
