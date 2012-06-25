@@ -1,7 +1,7 @@
 <?php
 
-// allow cross domain ajax requests
-header('Access-Control-Allow-Origin: *');
+// this is commented out because it is pointless.  you need to use easyXDM to do this.
+// header('Access-Control-Allow-Origin: *');
 
 if (is_numeric($_SESSION['login']['person_id'])) {
 	if ($_SESSION['login']['activation_required']) {
