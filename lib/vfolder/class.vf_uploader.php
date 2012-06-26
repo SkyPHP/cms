@@ -215,7 +215,7 @@ class vf_uploader {
 			<button
 				type="button"
 				class="vf-uploader <?=$this->class?>"
-				uploader-token="<?=$this->_token?>"
+				uploader_token="<?=$this->_token?>"
 				<?=$gallery_attr?>
 				>
 				<?=$this->buttonText?>
