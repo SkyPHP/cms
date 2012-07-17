@@ -152,12 +152,15 @@ class vf {
       }
 
       $mem_key = 'getRandomItems:' . $folders_id . ':' . md5(serialize($request_array));
+      $no_items_value = 'no items';
       $items = mem($mem_key);
       if (!$items) {
          $folder = self::$client->get_folder($folders_id, $request_array);
          $items = $folder['items'];
+         if (!$items) $items = $no_items_value;
          mem($mem_key, $items, '1 day');
       }
+      if ($items == $no_items_value) $items = null;
       return $items;
    }
 
