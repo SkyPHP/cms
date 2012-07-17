@@ -151,8 +151,14 @@ class vf {
          }
       }
 
-      $folder = self::$client->get_folder($folders_id, $request_array);
-      return $folder['items'];
+      $mem_key = 'getRandomItems:' . $folders_id . ':' . md5(serialize($request_array));
+      $items = mem($mem_key);
+      if (!$items) {
+         $folder = self::$client->get_folder($folders_id, $request_array);
+         $items = $folder['items'];
+         mem($mem_key, $items, '1 day');
+      }
+      return $items;
    }
 
    public static function removeItem($items_id = NULL) {
