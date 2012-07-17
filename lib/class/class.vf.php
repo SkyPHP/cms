@@ -101,25 +101,28 @@ class vf {
 
    public static function getRandomItemId($folders_id = NULL) {
 
+      $mem_key = 'getRandomItemId:' . $folders_id;
+      $no_items_value = 'no items';
+
       // get the random item from cache
-      $items_id = mem('getRandomItemId:' . $folders_id);
+      $items_id = mem($mem_key);
 
       // if it's not in the cache, get a truly random item
       if (!$items_id) {
 
          $folder = self::$client->get_folder($folders_id, array('random' => 1, 'limit' => 1));
-
          if(!(is_array($folder) && is_array($folder['items']) && is_array($folder['items'][0]))){
             return(false);
          }
-
          $items_id = $folder['items'][0]['_id'];
 
+         if (!$items_id) $items_id = $no_items_value;
+
          // save the random item to cache for a day
-         mem('getRandomItemId:' . $folders_id, $items_id, '1 day');
+         mem($mem_key, $items_id, '1 day');
 
       }
-
+      if ($items_id == $no_items_value) $items = null;
       return $items_id;
    }
 
