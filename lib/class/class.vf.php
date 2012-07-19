@@ -98,7 +98,7 @@ class vf {
    public static function getFolder($folders_id = NULL, $params = NULL, $extra_params = NULL){
 
       // check to see if this has been cached as an empty folder
-      $mem_key = 'vf:empty-folder:' . $folders_id;
+      $mem_key = vf::getEmptyFolderKey($folders_id);
       $folder = mem($mem_key);
       if ($folder && !$_GET['refresh_empty_folders']) {
          return $folder;
@@ -254,6 +254,8 @@ class vf {
       return new vf_gallery($args);
    }
 
-}
+   public static function getEmptyFolderKey($folders_id) {
+      return 'vf:empty-folder:' . $folders_id;
+   }
 
-?>
+}

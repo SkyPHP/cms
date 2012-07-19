@@ -216,6 +216,10 @@ class vf_upload_handler {
             return $this->respond($re);
         }
 
+        // clear empty folder cache
+        $key = vf::getEmptyFolderKey($this->folders_path);
+        mem($key, null);
+
         if ($this->params['db_field'] && $this->params['db_row_id']) {
             $this->updateDBRecord($re['items_id']);
         }
