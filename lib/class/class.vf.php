@@ -97,17 +97,17 @@ class vf {
 
    public static function getFolder($folders_id = NULL, $params = NULL, $extra_params = NULL){
 
-      // serialize and hash the params to get a unique key for this getFolder request
-      $key = hash('md5', serialize(array($folders_id, $params, $extra_params)));
-      $mem_key = 'getFolder:' . $key;
-
-      // get the folder from cache
+      // check to see if this has been cached as an empty folder
+      $mem_key = 'vf:empty-folder:' . $folders_id;
       $folder = mem($mem_key);
-
-      if (!$folder || $_GET['folder_refresh']) {
-         $folder = (object) self::$client->get_folder($folders_id, $params, $extra_params);
-         mem($mem_key, $folder, '5 hours');
+      if ($folder && !$_GET['refresh_empty_folders']) {
+         return $folder;
       }
+      // it's not a known empty folder (or we are refreshing)
+      // get the folder
+      $folder = (object) self::$client->get_folder($folders_id, $params, $extra_params);
+      // if the folder is empty/error, cache the empty folder
+      if ($folder->error) mem($mem_key, $folder, '6 hours');
       return $folder;
    }
 
