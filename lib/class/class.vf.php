@@ -30,7 +30,7 @@ class vf {
 
    public static function getItem($items_id = NULL, $params = NULL, $height = NULL, $gravity = NULL){
       $operations = array();
- 
+
       if($params && !is_array($params)){
          $params = array('height' => $height, 'width' => $width = $params, 'crop' => $gravity);
       }
@@ -48,7 +48,7 @@ class vf {
                      'type' => 'crop',
                      'width' => $params['width'],
                      'height' => $params['height'],
-                     'gravity' => $params['crop']?$params['crop']:'Center'                
+                     'gravity' => $params['crop']?$params['crop']:'Center'
                   );
                }else{
                   $operation = array(
@@ -75,18 +75,18 @@ class vf {
       }
 
       $extra_params = NULL;
-      
+
       if(self::$filesDomain){
          $extra_params = array('files_domain' => self::$filesDomain);
       }
 
       $response = (object) self::$client->get_item($items_id, $params);
-      
+
       if (!is_array($items_id)) return $response;
 
       if (is_array($response->items)) {
          $response->items = array_map(function($i) {
-            return (object) $i;   
+            return (object) $i;
          }, $response->items);
       }
 
@@ -96,18 +96,46 @@ class vf {
    }
 
    public static function getFolder($folders_id = NULL, $params = NULL, $extra_params = NULL){
-      return((object)self::$client->get_folder($folders_id, $params, $extra_params));
+
+      // check to see if this has been cached as an empty folder
+      $mem_key = vf::getEmptyFolderKey($folders_id);
+      $folder = mem($mem_key);
+      if ($folder && !$_GET['refresh_empty_folders']) {
+         return $folder;
+      }
+      // it's not a known empty folder (or we are refreshing)
+      // get the folder
+      $folder = (object) self::$client->get_folder($folders_id, $params, $extra_params);
+      // if the folder is empty/error, cache the empty folder
+      if ($folder->error) mem($mem_key, $folder, '6 hours');
+      return $folder;
    }
 
-   public static function getRandomItemId($folders_id = NULL){
-      $folder = self::$client->get_folder($folders_id, array('random' => 1, 'limit' => 1));
+   public static function getRandomItemId($folders_id = NULL) {
 
-      if(!(is_array($folder) && is_array($folder['items']) && is_array($folder['items'][0]))){ 
-         return(false);
+      $mem_key = 'getRandomItemId:' . $folders_id;
+      $no_items_value = 'no items';
+
+      // get the random item from cache
+      $items_id = mem($mem_key);
+
+      // if it's not in the cache, get a truly random item
+      if (!$items_id) {
+
+         $folder = self::$client->get_folder($folders_id, array('random' => 1, 'limit' => 1));
+         if(!(is_array($folder) && is_array($folder['items']) && is_array($folder['items'][0]))){
+            return(false);
+         }
+         $items_id = $folder['items'][0]['_id'];
+
+         if (!$items_id) $items_id = $no_items_value;
+
+         // save the random item to cache for a day
+         mem($mem_key, $items_id, '1 day');
+
       }
-
-      $items_id = $folder['items'][0]['_id'];
-      return($items_id);
+      if ($items_id == $no_items_value) $items = null;
+      return $items_id;
    }
 
    public static function getRandomItem($folders_id = NULL, $width = NULL, $height = NULL, $crop = NULL){
@@ -128,24 +156,33 @@ class vf {
          }else{
             if($width){
                $operations = array();
- 
+
                $operations[] = array('type' => ($crop?'smart_crop':'resize'), 'height' => $height, 'width' => $width);
 
-               $crop && ($operations[0]['gravity'] = $crop !== true?$crop:'Center');            
+               $crop && ($operations[0]['gravity'] = $crop !== true?$crop:'Center');
 
                $request_array['operations'] = $operations;
             }
          }
       }
 
-      $folder = self::$client->get_folder($folders_id, $request_array);
-      return $folder['items'];
+      $mem_key = 'getRandomItems:' . $folders_id . ':' . md5(serialize($request_array));
+      $no_items_value = 'no items';
+      $items = mem($mem_key);
+      if (!$items) {
+         $folder = self::$client->get_folder($folders_id, $request_array);
+         $items = $folder['items'];
+         if (!$items) $items = $no_items_value;
+         mem($mem_key, $items, '1 day');
+      }
+      if ($items == $no_items_value) $items = null;
+      return $items;
    }
 
    public static function removeItem($items_id = NULL) {
       return ((object) self::$client->remove_item($items_id));
    }
- 
+
    #this is a pretty specialized and dangerous function, it is best not to allow any syntax variations
    public static function alterItem($items_id = NULL, $operations = NULL){
       return((object) self::$client->alter_item($items_id, $operations));
@@ -200,8 +237,8 @@ class vf {
       if($_files_domain){
          return($files_domain = $_files_domain);
       }
-   
-      #if there is no means of determining the files_domain from the client, return NULL 
+
+      #if there is no means of determining the files_domain from the client, return NULL
       return(NULL);
    }
 
@@ -217,6 +254,8 @@ class vf {
       return new vf_gallery($args);
    }
 
-}
+   public static function getEmptyFolderKey($folders_id) {
+      return 'vf:empty-folder:' . $folders_id;
+   }
 
-?>
+}

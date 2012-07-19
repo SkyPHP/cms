@@ -1,6 +1,7 @@
-<?
-//header('Access-Control-Allow-Origin: *');
-//header("Access-Control-Allow-Headers: x-requested-with");
+<?php
+
+// this is commented out because it is pointless.  you need to use easyXDM to do this.
+// header('Access-Control-Allow-Origin: *');
 
 if (is_numeric($_SESSION['login']['person_id'])) {
 	if ($_SESSION['login']['activation_required']) {
@@ -9,7 +10,7 @@ if (is_numeric($_SESSION['login']['person_id'])) {
         You must activate your account before signing in. <br />
         Click <a href="javascript:activation('<?=Login::get('person_ide')?>');">here</a> to resend activation email.
         </font>
-<?
+<?php
 		include 'pages/login/logout.php';
 	}
 	else {
