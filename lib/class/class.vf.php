@@ -100,18 +100,14 @@ class vf {
       // serialize and hash the params to get a unique key for this getFolder request
       $key = hash('md5', serialize(array($folders_id, $params, $extra_params)));
       $mem_key = 'getFolder:' . $key;
-      $no_folder_value = 'no items';
 
       // get the folder from cache
       $folder = mem($mem_key);
 
-      if (!$folder || $_GET['refresh']) {
+      if (!$folder || $_GET['folder_refresh']) {
          $folder = (object) self::$client->get_folder($folders_id, $params, $extra_params);
-
-         if (!$folder) $folder = $no_folder_value;
          mem($mem_key, $folder, '5 hours');
       }
-      if ($folder == $no_folder_value) $folder = null;
       return $folder;
    }
 
