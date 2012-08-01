@@ -7,5 +7,5 @@ person {
     password_hash,
     password_reset_hash,
     phone_mobile,
-    username,
+    username
 }
