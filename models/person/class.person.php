@@ -12,12 +12,12 @@ class person extends Model {
         $this->addProperty('password1', 'password2', 'current_password'); //password field 1 and 2 (validate same)
     }
 
-    public function set_email_address($val) {
+    public function validate_email_address($val) {
         if (!$val) return;
         $this->_data['email_address'] = trim($val);
     }
 
-    public function preValidate(){
+    public function beforeCheckRequiredFields(){
         //password validation
         //we don't give direct access to the person's password field
         //we take password1/password2 (and current password if it's person)
@@ -49,7 +49,7 @@ class person extends Model {
                     //otherwise, self password change is valid
                     //set it up for the set_password() method below
                     $this->password = $this->password1;
-                } 
+                }
             } else {
                 // trying to reset your own password but not logged in
                 if ($this->password_reset_hash != aql::value( 'person.password_reset_hash', $this->person_id ) ) {
@@ -68,11 +68,7 @@ class person extends Model {
 
     }
 
-    // public function after_save($arr = array()) {
-    //     return parent::after_save($arr);
-    // }
-
-    public function after_insert() {
+    public function afterInsert() {
         $this->_postSavePassword();
         $this->reload();
     }
@@ -98,7 +94,7 @@ class person extends Model {
         if (!$this->password) {
             return;
         }
-        
+
         return $this->saveProperties(array(
             'password' => $this->password
         ));
@@ -109,7 +105,7 @@ class person extends Model {
         return Login::generateUserSalt($this->getIDE());
     }
 
-    public function set_password($val) {
+    public function validate_password($val) {
         if (!$val) return;
         if (!$this->getIDE()) return;
         $this->_data['password_hash'] = Login::generateHash($val, $this->generateUserSalt());
@@ -126,7 +122,7 @@ class person extends Model {
         if ($re['status'] == 'OK') $this->last_login_time = $o->last_login_time;
     }
 
-    
+
 
 
 }
