@@ -72,6 +72,16 @@ class person extends Model {
     }
 
     /**
+     * Run password validation
+     */
+    public function beforeCheckRequiredFields()
+    {
+        // if the passsword is being changed this method sets $this->password
+        // validate_password takes care of the rest.
+        $this->validatePassword();
+    }
+
+    /**
      * Validates Email
      * @param string $val
      */
