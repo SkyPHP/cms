@@ -1,91 +1,103 @@
 <?php
 
-class vf_upload_handler {
+/**
+ * @package VF
+ */
+class vf_upload_handler
+{
 
     /**
-     *  @var array
+     * @var array
      */
     public $POST = array();
 
     /**
-     *  @var array
+     * @var array
      */
     public $FILES = array();
 
     /**
-     *  @var array
+     * @var array
      */
     public $file = array();
 
     /**
-     *  @var string
+     * @var string
      */
     public $filename = '';
 
     /**
-     *  @var string
+     * @var string
      */
     public $folders_path = '';
 
     /**
-     *  @var string
+     * @var string
      */
     public $uploaded_file;
 
     /**
-     *  @var string
+     * @var string
      */
     public $upload_dir = '';
 
      /**
-     *  @var array
+     * @var array
      */
     public $params = array();
 
      /**
-     *  @var array
+     * @var array
      */
     public $errors = array();
 
     /**
-     *  @param  array   $post
-     *  @param  array   $file
+     * If params are empty, default to superglobals
+     * @param  array   $post
+     * @param  array   $file
      */
-    public function __construct(array $post = array(), array $file = array()) {
+    public function __construct(array $post = array(), array $file = array())
+    {
         $this->POST = ($post) ?: $_POST;
         $this->FILES = ($file) ?: $_FILES;
     }
 
     /**
-     *  @param  array   $p
+     * @param  array   $p
      */
-    public function setPOST(array $p) {
+    public function setPOST(array $p)
+    {
         $this->POST = $p;
     }
 
     /**
-     *  @param  array   $f
+     * @param  array   $f
      */
-    public function setFILES(array $f) {
+    public function setFILES(array $f)
+    {
         $this->FILES = $f;
     }
 
     /**
-     *  @return array
+     * Gets the params based on the uploader token
+     * @return array
      */
-    public function getParams() {
+    public function getParams()
+    {
         $this->params = mem('vf_uploader:' . $this->POST['_token']);
         if (!$this->params) {
             $this->errors[] = 'Invalid upload token passed.';
         }
+
         return $this->params;
     }
 
     /**
-     *  checks if we have a folders_path to continue with the upload
-     *  and sets it
+     * Checks if we have a folders_path to continue with the upload
+     * and sets it
      */
-    public function checkIfFoldersPathSet() {
+    public function checkIfFoldersPathSet()
+    {
         $folder = (is_string($this->params['folder']))
             ? $this->params['folder']
             : $this->params['folder']->folders_path;
@@ -98,10 +110,12 @@ class vf_upload_handler {
     }
 
     /**
-     *  @param  int $code
-     *  @return string
+     * Returns error message based on the error code
+     * @param  int $code
+     * @return string
      */
-    public static function errorCodeHandler($code) {
+    public static function errorCodeHandler($code)
+    {
         $codes = array(
             1 => 'The uploaded file is greater than ' . ini_get('upload_max_filesize'),
             2 => 'The upload size is greater than the size specified.',
@@ -109,16 +123,18 @@ class vf_upload_handler {
             6 => 'Internal Error: Missing Temporary Folder.',
             7 => 'Internal Error: Cannot write to disk.'
         );
+
         $def = 'Could not upload file. Error unknown. Invalid Upload.';
+
         return ($codes[$code]) ?: $def;
     }
 
     /**
-     *  checks if we are actually handling an upload, with FILES
-     *  sets errors based on error code
+     * Checks if we are actually handling an upload, with FILES
+     * sets errors based on error code
      */
-    public function checkIfUpload() {
-
+    public function checkIfUpload()
+    {
         if (!isset($this->FILES['file'])
             || !is_uploaded_file($this->FILES['file']['tmp_name'])
             || $this->FILES['file']['error'] != 0)
@@ -157,9 +173,10 @@ class vf_upload_handler {
     }
 
     /**
-     *  makes sure that the upload directory is set and is writeable
+     * Makes sure that the upload directory is set and is writeable
      */
-    public function checkUploadDirectory() {
+    public function checkUploadDirectory()
+    {
         $tmp_dir = ini_get('upload_tmp_dir');
         if (!$tmp_dir) {
             $this->errors[] = 'Internal Error: ' .
@@ -179,13 +196,15 @@ class vf_upload_handler {
                 'Please contact the system administrator.';
             return;
         }
+
         $this->upload_dir = $tmp_dir;
     }
 
     /**
-     *  runs check* methods
+     * runs check* methods
      */
-    public function validate() {
+    public function validate()
+    {
         $this->getParams();
         $this->checkIfFoldersPathSet();
         $this->checkIfUpload();
@@ -193,11 +212,11 @@ class vf_upload_handler {
     }
 
     /**
-     *  does the upload if there are no errors, and uploads the db_field if necessary
-     *  @return array   response array
+     * Does the upload if there are no errors, and uploads the db_field if necessary
+     * @return array   response array
      */
-    public function doUpload() {
-
+    public function doUpload()
+    {
         if ($this->errors) {
             return $this->respond();
         }
@@ -228,10 +247,10 @@ class vf_upload_handler {
     }
 
     /**
-     *  @param  int $id
+     * @param  int $id
      */
-    public function updateDBRecord($id) {
-
+    public function updateDBRecord($id)
+    {
         // split db_field
         $dot = strpos($this->params['db_field'], '.');
         $table = substr($this->params['db_field'], 0, $dot);
@@ -248,84 +267,85 @@ class vf_upload_handler {
             array($field => $id),
             $this->params['db_row_id']
         );
-
     }
 
     /**
-     *  makes sure the file type / extension is valid using a couple of methods
+     * Makes sure the file type / extension is valid using a couple of methods
      */
-    public function checkFileTypes() {
-        if ($this->errors) return;
-        if (!$this->params['fileTypes']) return;
+    public function checkFileTypes()
+    {
+        if ($this->errors || !$this->params['fileTypes']) {
+            return;
+        }
+
         $ext = $this->getExtFromFilename();
-        if (function_exists('finfo_open') && function_exists('finfo_file')) {
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mime = finfo_file($finfo, $this->uploaded_file);
-        }
-        if (!$mime) $mime = $this->getMimeByExtension($ext);
+        $types = $this->params['fileTypes'] = array_filter($this->params['fileTypes']);
+
+        $mime = getMimeType($this->uploaded_file) ?: $this->getMimeByExtension($ext);
+
         $in_filetypes = false;
-        $this->params['fileTypes'] = array_filter($this->params['fileTypes']);
-        if ($mime) foreach ($this->params['fileTypes'] as $v) {
-            $v = $this->getMimeByExtension($v);
-            if ($v != $mime) continue;
-            $in_filetypes = true;
-            break;
+
+        if ($mime) {
+            foreach ($types as $v) {
+                $v = $this->getMimeByExtension($v);
+                if ($v == $mime) {
+                    $in_filetypes = true;
+                    break;
+                }
+            }
         }
+
         if (!$in_filetypes) {
             $this->errors[] = 'You cannot upload type: <strong>'.$ext.'</strong>';
         }
     }
 
     /**
-     *  returns mime type for the extension
-     *  @param  string  $ext
-     *  @return string
+     * returns mime type for the extension
+     * @param  string  $ext
+     * @return string
      */
-    public function getMimeByExtension($ext) {
-        $contents = self::getContentTypes();
+    public function getMimeByExtension($ext)
+    {
+        $contents = getMimeTypes();
         return $contents[$ext];
     }
 
     /**
-     *  @param  string  $mime
-     *  @return string
+     * @param  string  $mime
+     * @return string
      */
-    public function getExtByMime($mime) {
-        return array_search($mime, self::getContentTypes());
+    public function getExtByMime($mime)
+    {
+        return array_search($mime, getMimeTypes());
     }
 
     /**
-     *  @return array
-     *  @global $sky_content_type
+     * gets the extension from the file
+     * @return string
      */
-    public static function getContentTypes() {
-        global $sky_content_type;
-        return $sky_content_type;
-    }
-
-    /**
-     *  gets the extension from the file
-     *  @return string
-     */
-    public function getExtFromFilename() {
+    public function getExtFromFilename()
+    {
         $f = explode('.', $this->uploaded_file);
         array_filter($f);
         return end($f);
     }
 
     /**
-     *  removes parentheses, braces and spaces from filename
+     * removes parentheses, braces and spaces from filename
      */
-    public function sanitizeFilename() {
+    public function sanitizeFilename()
+    {
         $arr = array('(', ')', '{', '}', ' ');
         $this->filename = str_replace($arr, '', $this->filename);
     }
 
     /**
-     *  @param  mixed   $re
-     *  @return array
+     * @param  mixed   $re
+     * @return array
      */
-    public function respond($re = null) {
+    public function respond($re = null)
+    {
         if ($this->errors) {
             return array(
                 'status' => 'Error',
