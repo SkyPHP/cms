@@ -1,3 +1,5 @@
+<h1>{{title}}</h1>
+
 <table class="listing">
 
     <tr>

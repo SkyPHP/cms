@@ -78,7 +78,7 @@ foreach ($data as $k => $base) {
         if (!$all[$b['name']]) {
             $data[$k]['found']['status']['class'] = 'error';
             $data[$k]['found']['status']['text'] = $b['name'].' not found.';
-            break 2;
+            break;
         }
 
         $found = $all[$b['name']];
@@ -96,9 +96,12 @@ foreach ($data as $k => $base) {
 }
 
 $this->template('intranet', 'top', array(
-    'title' => 'Version'
+    'title' => 'Codebase Versions and Dependencies'
 ));
 
-echo $this->mustache('version.m', array('codebases' => $data), $this->incpath);
+echo $this->mustache('version.m', array(
+    'title' => $this->title,
+    'codebases' => $data
+), $this->incpath);
 
 $this->template('intranet', 'bottom');
