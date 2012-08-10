@@ -1,0 +1,39 @@
+.error, .ok {
+    font-size:10px;
+    padding: 10px;
+    border-left: 2px solid red;
+    border-right: 2px solid red;
+    background: #f3f3f3;
+    text-align: center;
+}
+
+.ok {
+    background: #d8f2c2;
+    border-left: 2px solid #99dd60;
+    border-right: 2px solid #99dd60;
+    font-weight: bold;
+}
+
+.codebase-name, .version, .status.error {
+    font-family: monospace;
+}
+
+.codebase-name {
+    text-decoration: underline;
+}
+
+dl {
+    overflow: hidden;
+    width: 160px;
+}
+
+    dt {
+        float:left;
+        clear: both;
+    }
+
+    dd {
+        float:right;
+    }
+
+
