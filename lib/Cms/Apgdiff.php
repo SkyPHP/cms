@@ -71,7 +71,7 @@ class Apgdiff
         // keep replacing matches until no more matches remain
         $continue = 1;
         while ($continue) {
-            // remove DROP statements
+            // remove one DROP statement
             $sql = preg_replace('#\;\s*DROP.*?\;#', ';', $sql, 1, $continue);
         }
         // remove DROP statement that happens to be the first statement
