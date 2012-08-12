@@ -21,10 +21,8 @@
             var rpc = new easyXDM.Rpc({},{
                 local: {
                     getDiffs: function(post, successFn, errorFn){
-                        console.log('authenticating...');
                         // check to see if logged in
                         $.post('/ajax/login-skybox/authenticate',function(data){
-                            console.log(data);
                             if (data=='true') {
                                 // get the diffs
                                 $.post(
@@ -36,7 +34,7 @@
                                 );
                             } else {
                                 var domain = window.location.origin;
-                                alert('You need to be logged in at ' . domain);
+                                alert('You need to be logged in at ' + domain);
                             }
                         });
                     },
