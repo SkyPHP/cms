@@ -1,6 +1,6 @@
 <?php
 
-global $dev_db_sync_diff;
+global $dev_db_sync_providers;
 
 $sql = \Cms\Apgdiff::getDump();
 $db_name = \Cms\Apgdiff::getDatabaseName();
@@ -27,7 +27,7 @@ $this->template('intranet','top');
 
         <select id="remote-url">
 <?
-        foreach ($dev_db_sync_diff as $db => $url) {
+        foreach ($dev_db_sync_providers as $db => $url) {
 ?>
             <option value="<?=$url?>"><?=$db?></option>
 <?
@@ -39,7 +39,7 @@ $this->template('intranet','top');
     </div>
 
     <input type="hidden" name="db_name" value="<?=$db_name?>" />
-    <textarea id="local-dump" name="sql">--<?=$sql2?></textarea>
+    <textarea id="local-dump" name="sql"><?=$sql?></textarea>
 
 </form>
 

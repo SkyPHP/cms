@@ -17,7 +17,6 @@ $(function(){
 
         // establish the cross domain rpc socket
         $.getScript('/lib/easyXDM/easyXDM.min.js', function(){
-            console.log($('#remote-url').val());
             rpc = new easyXDM.Rpc({
                 // remote config
                 remote: $('#remote-url').val()

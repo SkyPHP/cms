@@ -39,7 +39,10 @@
                 {{remote_database}}
             </h2>
             {{^dump}}
-            <h3>{{tab_caps}} -- add new objects and drop objects not on remote</h3>
+            <h3>{{tab_caps}} -- add new objects and
+                <span style="color: red; font-weight: bold;">drop</span>
+                extra tables/columns/etc.
+            </h3>
             {{/dump}}
             <textarea>{{right_sql}}</textarea>
         </div>

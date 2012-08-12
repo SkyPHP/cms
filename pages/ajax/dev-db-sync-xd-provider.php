@@ -26,7 +26,7 @@
                             if (data=='true') {
                                 // get the diffs
                                 $.post(
-                                    '/dev/db/sync/diff',
+                                    '/dev/db/sync/diff.json',
                                     post,
                                     function(data){
                                         rpc.renderDiffs(data);
