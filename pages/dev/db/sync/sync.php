@@ -39,7 +39,7 @@ $this->template('intranet','top');
     </div>
 
     <input type="hidden" name="db_name" value="<?=$db_name?>" />
-    <textarea id="local-dump" name="sql"><?=$sql?></textarea>
+    <textarea id="local-dump" name="sql">--<?=$s5ql?></textarea>
 
 </form>
 

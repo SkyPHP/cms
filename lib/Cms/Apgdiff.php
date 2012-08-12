@@ -66,6 +66,11 @@ class Apgdiff
         return implode("\n", $output);
     }
 
+    public static function stripDrops($sql)
+    {
+        return preg_replace('#DROP.*?;#s', '', $sql);
+    }
+
     public static function validJarPath()
     {
         // TODO: check if jar exists

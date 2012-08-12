@@ -18,8 +18,10 @@ $sql = \Cms\Apgdiff::getDump();
 $db_name = \Cms\Apgdiff::getDatabaseName();
 
 $pull = \Cms\Apgdiff::getUpgradeScript($_POST['sql'], $sql);
-$push = \Cms\Apgdiff::getUpgradeScript($sql, $_POST['sql']);
+$pull_filtered = \Cms\Apgdiff::stripDrops($pull);
 
+$push = \Cms\Apgdiff::getUpgradeScript($sql, $_POST['sql']);
+$push_filtered = \Cms\Apgdiff::stripDrops($push);
 
 
 $data = array(
@@ -52,4 +54,5 @@ $data = array(
     )
 );
 
-exit_json($data);
+json_headers();
+exit(json_beautify(json_encode($data)));
