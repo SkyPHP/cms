@@ -5,7 +5,7 @@ global $dev_db_sync_providers;
 $sql = \Cms\Apgdiff::getDump();
 $db_name = \Cms\Apgdiff::getDatabaseName();
 
-$this->title = 'Database Sync';
+$this->title = 'Sync Database Schema';
 $this->css[] = '/lib/jquery-ui/themes/smoothness/custom.css';
 $this->js[] = '/lib/jquery-ui/jquery.ui.core.min.js';
 $this->js[] = '/lib/jquery-ui/jquery.ui.widget.min.js';
