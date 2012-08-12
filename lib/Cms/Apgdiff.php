@@ -2,6 +2,9 @@
 
 namespace Cms;
 
+/**
+ * SkyPHP wrapper for apgdiff
+ */
 class Apgdiff
 {
 
