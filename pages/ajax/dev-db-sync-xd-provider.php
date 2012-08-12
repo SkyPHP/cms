@@ -33,6 +33,7 @@
                                     }
                                 );
                             } else {
+                                rpc.resetButton();
                                 var domain = window.location.origin;
                                 alert('You need to be logged in at ' + domain);
                             }
@@ -58,7 +59,8 @@
                     }
                 },
                 remote: {
-                    renderDiffs:{}
+                    renderDiffs:{},
+                    resetButton:{}
                 }
             });
 
