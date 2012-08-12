@@ -96,8 +96,9 @@ class Apgdiff
         $pattern = '#ALTER TABLE \w*?;\s*#';
         $sql = preg_replace($pattern, '', $sql);
 
-        // remove temporary leading semi-colon
-        $sql = substr($sql, 1);
+        // remove temporary leading semi-colon and whitespace
+        $pattern = '#^\;\s*#s';
+        $sql = preg_replace($pattern, '', $sql);
 
         return $sql;
     }
