@@ -23,7 +23,7 @@
                     getDiffs: function(post, successFn, errorFn){
                         console.log('authenticating...');
                         // check to see if logged in
-                        $.get('/ajax/login-skybox/authenticate',function(data){
+                        $.post('/ajax/login-skybox/authenticate',function(data){
                             if (data=='true') {
                                 alert(data);
                                 // get the diffs
