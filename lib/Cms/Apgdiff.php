@@ -72,7 +72,7 @@ class Apgdiff
 
         // keep replacing matches until no more matches remain
         $continue = 1;
-        while ($count) {
+        while ($continue) {
             $sql = preg_replace('#\;\s*DROP.*?;\s*#', ';', $sql, 1, $continue);
         }
         $sql = preg_replace('#^DROP.*?;\s*#', '', $sql);
