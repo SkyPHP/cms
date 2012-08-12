@@ -24,8 +24,8 @@
                         console.log('authenticating...');
                         // check to see if logged in
                         $.post('/ajax/login-skybox/authenticate',function(data){
+                            console.log(data);
                             if (data=='true') {
-                                alert(data);
                                 // get the diffs
                                 $.post(
                                     '/dev/db/sync/diff',
