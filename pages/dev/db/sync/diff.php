@@ -7,7 +7,12 @@ if (!$_POST['sql'] || !$_POST['db_name']) {
     ));
 }
 
-\Cms\Apgdiff::$jar_path = '/share/codebases/github-will123195/cms/lib/apgdiff-2.3.jar';
+$needle = '/cms/';
+$end = strrpos(__FILE__, $needle) + strlen($needle);
+$prefix =  substr(__FILE__, 0, $end);
+$jar_path = $prefix . 'lib/db/apgdiff-2.3.jar';
+
+\Cms\Apgdiff::$jar_path = $jar_path;
 
 $sql = \Cms\Apgdiff::getDump();
 $db_name = \Cms\Apgdiff::getDatabaseName();

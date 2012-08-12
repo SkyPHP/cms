@@ -13,6 +13,8 @@ $this->js[] = '/lib/jquery-ui/jquery.ui.tabs.min.js';
 $this->js[] = '/lib/js/mustache.js';
 $this->template('intranet','top');
 
+echo __FILE__;
+
 ?>
 
 <h1><?=$this->title?></h1>
