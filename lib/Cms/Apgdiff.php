@@ -68,7 +68,7 @@ class Apgdiff
 
     public static function stripDrops($sql)
     {
-        return preg_replace('#DROP.*?;\s*#s', '', $sql);
+        return preg_replace('#;\s*DROP.*?;#s', ';', $sql);
     }
 
     public static function validJarPath()
