@@ -29,6 +29,7 @@
                                     '/dev/db/sync/diff.json',
                                     post,
                                     function(data){
+                                        rpc.resetButton();
                                         rpc.renderDiffs(data);
                                     }
                                 );
@@ -37,24 +38,6 @@
                                 var domain = window.location.origin;
                                 alert('You need to be logged in at ' + domain);
                             }
-                        });
-                    },
-                    logIn: function(post, brand, successFn, errorFn){
-                        $.post('/ajax/login-skybox/authenticate', post, function(data){
-                            if (data=='true') {
-                                $.post('/toolbar?brand='+brand, function(html){
-                                    rpc.refreshToolbarHTML(html);
-                                });
-                            } else {
-                                console.log('unsuccessful login');
-                            }
-                        });
-                    },
-                    logOut: function(brand, successFn, errorFn){
-                        $.post('/ajax/login-skybox/authenticate?logout=1', function(data){
-                            $.post('/toolbar?brand='+brand, function(html){
-                                rpc.refreshToolbarHTML(html);
-                            });
                         });
                     }
                 },

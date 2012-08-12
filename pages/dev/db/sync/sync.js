@@ -23,8 +23,6 @@ $(function(){
             },{
                 // remote function stubs
                 remote: {
-                    logIn: {},
-                    logOut: {},
                     getDiffs: {}
                 },
                 // local functions
@@ -34,7 +32,6 @@ $(function(){
                         $.get(mustache_file + '?' + Math.random(), function(m){
                             var html = Mustache.render(m, data);
                             $('#diffs').html(html);
-                            btn.val(btn.attr('bval'));
                         });
                     },
                     resetButton: function() {

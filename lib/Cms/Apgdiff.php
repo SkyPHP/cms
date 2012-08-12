@@ -72,6 +72,8 @@ class Apgdiff
         $sql = preg_replace('#DROP SEQUENCE.*?;\s*#', '', $sql);
         $sql = preg_replace('#DROP VIEW.*?;\s*#', '', $sql);
         $sql = preg_replace('#DROP COLUMN.*?[\,\;]\s*#s', '', $sql);
+        // remove ALTER TABLE if it no longer has any alterations
+        $sql = preg_replace('#ALTER TABLE[^\;]*?ALTER|CREATE|GRANT\s*#s', '', $sql);
         return $sql;
     }
 
