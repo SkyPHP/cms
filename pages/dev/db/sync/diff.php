@@ -31,16 +31,24 @@ $data = array(
             'tab' => 'Pull',
             'tab_caps' => 'PULL',
             'left_arrow' => true,
-            'create' => $pull_filtered,
-            'create_drop' => $pull
+            'left_sql' => $pull_filtered,
+            'right_sql' => $pull
         ),
         array(
             'tab' => 'Push',
             'tab_caps' => 'PUSH',
             'right_arrow' => true,
-            'create' => $push_filtered,
-            'create_drop' => $push
+            'left_sql' => $push_filtered,
+            'right_sql' => $push
+        ),
+        array(
+            'tab' => 'Dump',
+            'tab_caps' => 'DUMP',
+            'dump' => true,
+            'left_sql' => $_POST['sql'],
+            'right_sql' => $sql
         )
+
     )
 );
 

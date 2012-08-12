@@ -20,20 +20,28 @@
                 {{local_database}}
                 {{#left_arrow}} &larr; {{/left_arrow}}
                 {{#right_arrow}} &rarr; {{/right_arrow}}
-                {{remote_database}}
+                {{^dump}}
+                    {{remote_database}}
+                {{/dump}}
             </h2>
+            {{^dump}}
             <h3>{{tab_caps}} -- just add new objects</h3>
-            <textarea>{{create}}</textarea>
+            {{/dump}}
+            <textarea>{{left_sql}}</textarea>
         </div>
         <div class="right-col">
             <h2>
-                {{local_database}}
+                {{^dump}}
+                    {{local_database}}
+                {{/dump}}
                 {{#left_arrow}} &larr; {{/left_arrow}}
                 {{#right_arrow}} &rarr; {{/right_arrow}}
                 {{remote_database}}
             </h2>
+            {{^dump}}
             <h3>{{tab_caps}} -- add new objects and drop objects not on remote</h3>
-            <textarea>{{create_drop}}</textarea>
+            {{/dump}}
+            <textarea>{{right_sql}}</textarea>
         </div>
     </div>
     {{/tabs}}
