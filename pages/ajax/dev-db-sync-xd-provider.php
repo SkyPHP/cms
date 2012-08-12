@@ -29,8 +29,8 @@
                                     '/dev/db/sync/diff.json',
                                     post,
                                     function(data){
-                                        rpc.resetButton();
                                         rpc.renderDiffs(data);
+                                        rpc.resetButton();
                                     }
                                 );
                             } else {
