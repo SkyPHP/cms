@@ -132,14 +132,12 @@ form.standard_form label.checkbox_label {
 
 #header{
 	position: relative;
-	width: 978px;
+	width: 1020px;
 	margin: 0 auto;
 }
 #header-main{
 	position: relative;
-	width: 942px;
-	padding: 0 18px;
-	height: 100px;
+	padding: 0;
 }
 #header-right {
 	float: right;
@@ -162,7 +160,6 @@ form.standard_form label.checkbox_label {
 	display: inline;
 	float: left;
 	width: 50px;
-	height: 48px;
 	padding: 26px 0;
 }
 #home-link a{
@@ -174,8 +171,7 @@ form.standard_form label.checkbox_label {
 	position: relative;
 	display: inline;
 	float: left;
-	height: 38px;
-	padding: 28px 15px;
+	padding: 15px 0;
 	font-size: 32px;
 	font-weight: bold;
 	text-align: center;
@@ -265,6 +261,7 @@ ul.nav iframe {
 	width: 1000px;
 	padding: 10px 0;
 	margin: 0 auto;
+	min-height: 700px;
 }
 #content {
 	width: 100%;
