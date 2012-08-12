@@ -68,20 +68,25 @@ class Apgdiff
 
     public static function stripDrops($sql)
     {
-        // keep replacing matches until no more matches remain
+        // temporarily add leading ;
+        $sql = ';' . $sql;
+
+        // keep replacing DROP statements until no more remain
         $continue = 1;
         while ($continue) {
-            // remove one DROP statement
+            // remove DROP statement
             $sql = preg_replace('#\;\s*DROP.*?\;#', ';', $sql, 1, $continue);
         }
-        // remove DROP statement that happens to be the first statement
-        $sql = preg_replace('#^DROP.*?\;\s*#', 'x', $sql);
 
         // remove DROP columns
         // remove ALTER TABLE if it no longer has any alterations
         #$sql = preg_replace('#ALTER TABLE[^\;]*?ALTER#s', 'ALTER', $sql);
         #$sql = preg_replace('#ALTER TABLE[^\;]*?CREATE#s', 'CREATE', $sql);
         #$sql = preg_replace('#ALTER TABLE[^\;]*?GRANT#s', 'GRANT', $sql);
+
+        // remove temporary leading ;
+        $sql = substr($sql, 1);
+
         return $sql;
     }
 
