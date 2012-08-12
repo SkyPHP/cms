@@ -75,7 +75,7 @@ class Apgdiff
             $sql = preg_replace('#\;\s*DROP.*?\;#', ';', $sql, 1, $continue);
         }
         // remove DROP statement that happens to be the first statement
-        $sql = preg_replace('#^DROP.*?\;\s*#', '', $sql);
+        $sql = preg_replace('#^DROP.*?\;\s*#', 'x', $sql);
 
         // remove DROP columns
         // remove ALTER TABLE if it no longer has any alterations
