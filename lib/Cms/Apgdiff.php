@@ -5,9 +5,17 @@ namespace Cms;
 class Apgdiff
 {
 
-    public static $java_version_required = '1.6.0';
-
+    /**
+     * Path to apgdiff jar file (apgdiff-2.3.jar)
+     * http://apgdiff.startnet.biz/
+     * @var string
+     */
     public static $jar_path = '';
+
+    /**
+     * @var string
+     */
+    public static $java_version_required = '1.6.0';
 
     /**
      * Gets the necessary SQL commands to upgrade the original
@@ -47,8 +55,9 @@ class Apgdiff
     }
 
     /**
-     * Gets the dump of the current database
+     * Gets the dump sql of the current database
      * @param $db adodb database object
+     * @return string
      */
     public static function getDump($db=null)
     {
@@ -66,6 +75,11 @@ class Apgdiff
         return implode("\n", $output);
     }
 
+    /**
+     * Removes DROP statements from the given sql
+     * @param string $sql
+     * @return string
+     */
     public static function stripDrops($sql)
     {
         // temporarily add leading semi-colon
@@ -103,18 +117,33 @@ class Apgdiff
         return $sql;
     }
 
+    /**
+     * Determines if we have a valid apgdiff jar file
+     * @return bool
+     * @todo
+     */
     public static function validJarPath()
     {
         // TODO: check if jar exists
         return true;
     }
 
+    /**
+     * Determines if we have the required version of java installed
+     * @return bool
+     * @todo
+     */
     public static function javaInstalled()
     {
         // TODO: check if minimum version of java is installed
+        // static::$java_version_required
         return true;
     }
 
+    /**
+     * Gets the name of the current database
+     * @return string
+     */
     public static function getDatabaseName()
     {
         global $db;
