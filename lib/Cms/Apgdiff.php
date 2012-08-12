@@ -74,15 +74,17 @@ class Apgdiff
         // keep replacing DROP statements until no more remain
         $continue = 1;
         while ($continue) {
-            // remove DROP statement
             $sql = preg_replace('#\;\s*DROP.*?\;#', ';', $sql, 1, $continue);
         }
 
-        // remove DROP columns
+        // remove DROP COLUMN lines ending with comma
+        $continue = 1;
+        $pattern = '#(ALTER TABLE.*?)DROP COLUMN.*?\,\s*#s';
+        while ($continue) {
+            $sql = preg_replace($pattern, '$1', $sql, 1, $continue);
+        }
+
         // remove ALTER TABLE if it no longer has any alterations
-        #$sql = preg_replace('#ALTER TABLE[^\;]*?ALTER#s', 'ALTER', $sql);
-        #$sql = preg_replace('#ALTER TABLE[^\;]*?CREATE#s', 'CREATE', $sql);
-        #$sql = preg_replace('#ALTER TABLE[^\;]*?GRANT#s', 'GRANT', $sql);
 
         // remove temporary leading ;
         $sql = substr($sql, 1);
