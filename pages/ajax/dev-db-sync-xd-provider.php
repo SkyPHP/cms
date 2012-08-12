@@ -13,6 +13,7 @@ $this->template('xdm-provider', 'top');
                     $.post('/ajax/login-skybox/authenticate',function(data){
                         if (data=='true') {
                             // get the diffs
+                            rpc.showLoading();
                             $.post(
                                 '/dev/db/sync/diff.json',
                                 post,
@@ -31,7 +32,8 @@ $this->template('xdm-provider', 'top');
             },
             remote: {
                 renderDiffs:{},
-                resetButton:{}
+                resetButton:{},
+                showLoading:{}
             }
         });
 

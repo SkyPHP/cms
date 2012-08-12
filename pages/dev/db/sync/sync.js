@@ -34,6 +34,9 @@ $(function(){
                             $('#diffs').html(html);
                         });
                     },
+                    showLoading: function() {
+                        $('#diffs').html('<img src="/images/loading.gif" />');
+                    },
                     resetButton: function() {
                         btn.val(btn.attr('bval'));
                     }
