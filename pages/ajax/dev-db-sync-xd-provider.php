@@ -35,7 +35,8 @@
                                     }
                                 );
                             } else {
-                                alert('You need to be logged in at ' . location.host);
+                                console.log(window.location);
+                                alert('You need to be logged in at ' . domain);
                             }
                         });
                     },
