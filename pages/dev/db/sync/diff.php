@@ -7,10 +7,10 @@ if (!$_POST['sql'] || !$_POST['db_name']) {
     ));
 }
 
-$needle = '/cms/';
-$end = strrpos(__FILE__, $needle) + strlen($needle);
+$needle = '/pages/';
+$end = strrpos(__FILE__, $needle);
 $prefix =  substr(__FILE__, 0, $end);
-$jar_path = $prefix . 'lib/db/apgdiff-2.3.jar';
+$jar_path = $prefix . '/lib/db/apgdiff-2.3.jar';
 
 \Cms\Apgdiff::$jar_path = $jar_path;
 
