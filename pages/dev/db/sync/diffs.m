@@ -40,7 +40,7 @@
             </h2>
             {{^dump}}
             <h3>{{tab_caps}} -- add new objects and
-                <span style="color: red; font-weight: bold;">drop</span>
+                <span class="attention">drop</span>
                 extra tables/columns/etc.
             </h3>
             {{/dump}}

@@ -68,14 +68,15 @@ class Apgdiff
 
     public static function stripDrops($sql)
     {
-        $sql = preg_replace('#DROP TABLE.*?;\s*#', '', $sql);
-        $sql = preg_replace('#DROP SEQUENCE.*?;\s*#', '', $sql);
-        $sql = preg_replace('#DROP VIEW.*?;\s*#', '', $sql);
-        $sql = preg_replace('#DROP COLUMN.*?[\,\;]\s*#s', '', $sql);
+        // remove DROP statements
+        $sql = preg_replace('#^DROP.*?;\s*#', '', $sql);
+        $sql = preg_replace('#\;\s*DROP.*?;\s*#', ';', $sql);
+
+        // remove DROP columns
         // remove ALTER TABLE if it no longer has any alterations
-        $sql = preg_replace('#ALTER TABLE[^\;]*?ALTER#s', 'ALTER', $sql);
-        $sql = preg_replace('#ALTER TABLE[^\;]*?CREATE#s', 'CREATE', $sql);
-        $sql = preg_replace('#ALTER TABLE[^\;]*?GRANT#s', 'GRANT', $sql);
+        #$sql = preg_replace('#ALTER TABLE[^\;]*?ALTER#s', 'ALTER', $sql);
+        #$sql = preg_replace('#ALTER TABLE[^\;]*?CREATE#s', 'CREATE', $sql);
+        #$sql = preg_replace('#ALTER TABLE[^\;]*?GRANT#s', 'GRANT', $sql);
         return $sql;
     }
 

@@ -29,3 +29,8 @@ input {
 .right-col {
     margin-left: 25px;
 }
+
+.attention {
+    color: red;
+    font-weight: bold;
+}
