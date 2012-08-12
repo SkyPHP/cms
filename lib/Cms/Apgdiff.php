@@ -68,14 +68,14 @@ class Apgdiff
 
     public static function stripDrops($sql)
     {
-        // remove DROP statements
-
         // keep replacing matches until no more matches remain
         $continue = 1;
         while ($continue) {
+            // remove DROP statements
             $sql = preg_replace('#\;\s*DROP.*?;\s*#', ';', $sql, 1, $continue);
         }
-        $sql = preg_replace('#^DROP.*?;\s*#', '', $sql);
+        // remove DROP statement that happens to be the first statement
+        $sql = preg_replace('#^DROP.*?\;\s*#', '', $sql);
 
         // remove DROP columns
         // remove ALTER TABLE if it no longer has any alterations
