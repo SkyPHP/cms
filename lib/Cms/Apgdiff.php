@@ -62,6 +62,7 @@ class Apgdiff
      * Gets the dump sql of the current database
      * @param $db adodb database object
      * @return string
+     * @global $db
      */
     public static function getDump($db=null)
     {
@@ -147,6 +148,7 @@ class Apgdiff
     /**
      * Gets the name of the current database
      * @return string
+     * @global $db
      */
     public static function getDatabaseName()
     {
