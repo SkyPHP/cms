@@ -1,0 +1,36 @@
+#local-dump {
+    display: none;
+}
+
+textarea {
+    margin-top: 10px;
+    width: 450px;
+    height: 600px;
+}
+
+select,
+input {
+    font-size: 18px;
+    padding: 5px;
+}
+
+#remote-selector {
+    margin-bottom: 25px;
+}
+
+.columns {
+    overflow: hidden;
+}
+
+.left-col, .right-col {
+    float: left;
+}
+
+.right-col {
+    margin-left: 25px;
+}
+
+.attention {
+    color: red;
+    font-weight: bold;
+}
