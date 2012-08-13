@@ -25,6 +25,7 @@ class Apgdiff
      * @param $original_sql sql dump of original db
      * @param $modified_sql sql dump of modified db
      * @return string upgrade.sql
+     * @global $skyphp_storage_path;
      */
     public static function getUpgradeScript($original_sql, $modified_sql)
     {
