@@ -23,9 +23,7 @@ class example extends Model
      * @var array
      */
     protected static $possible_errors = array(
-        'already_exists' => array(
-            'message' => 'This record already exists in the database.'
-        )
+
     );
 
     /**
@@ -43,7 +41,7 @@ class example extends Model
     );
 
     /**
-     * Read-only Fields
+     * Read-only Properties
      * Specifies which data elements in the aql are read-only
      * = array(
      *     'tables' => array('table_name'),
@@ -60,8 +58,8 @@ class example extends Model
     /**
      * Foreign Keys
      * If this object has a foreign key that is used to populate a list in the foreign
-     * model, then add the foreign models here so the foreign
-     * list is refreshed when this model's foreign key changes.
+     * model, then add the foreign models here so the foreign list is refreshed when this
+     * model's foreign key changes.
      * = array(
      *     'foreign_model' => array('foreign_model_id')
      * );
@@ -72,6 +70,7 @@ class example extends Model
     );
 
     /**
+     * Construct
      * Runs when this object is instantiated. Set calculated properties here.
      * Do not override __construct().
      * This also runs after Model::reload()
@@ -82,9 +81,10 @@ class example extends Model
     }
 
     /**
+     * Before Checking Required Fields
      * Runs before checking the required fields and before validation.
-     * $this->addError('my-error-code') -- validation will not run and the save
-            transaction will fail and will roll back.
+     * $this->addError('my-error-code') -- validation will not run and the transaction
+     *      will fail and will roll back.
      * static::error('my-error-code') -- immediately throws ValidationException
      */
     public function beforeCheckRequiredFields()
@@ -93,20 +93,25 @@ class example extends Model
     }
 
     /**
+     * Specific Field Validation
      * Runs if $this->my_field is set and is not null.
-     * $this->addError('my-error-code') -- validation will continue to run but the save
-            transaction will fail and will roll back.
+     * $this->addError('my-error-code') -- validation will continue to run and validate
+     *      the remaining fields to determine all errors, but the transaction will fail
+     *      and roll back.
      * static::error('my-error-code') -- immediately throws ValidationException
+     * @param mixed $value the current value of $this->my_field
      */
-    public function validate_my_field()
+    public function validate_my_field($value)
     {
 
     }
 
     /**
+     * General Validation
      * Only runs if all individual fields are valid so far.
-     * $this->addError('my-error-code') -- validation will continue to run but the save
-            transaction will fail and will roll back.
+     * $this->addError('my-error-code') -- validation will continue to run and validate
+     *      the remaining fields to determine all errors, but the transaction will fail
+     *      and roll back.
      * static::error('my-error-code') -- immediately throws ValidationException
      */
     public function validate()
