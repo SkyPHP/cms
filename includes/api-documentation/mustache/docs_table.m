@@ -10,7 +10,7 @@
         {{#list}}
         <tr>
             <td>
-                <a href="/developers/api/{{name}}" class="resource-name">
+                <a href="{{page_path}}/{{name}}" class="resource-name">
                     {{name}}
                 </a>
             </td>
