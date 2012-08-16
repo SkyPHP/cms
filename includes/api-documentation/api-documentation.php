@@ -97,16 +97,26 @@ $parsed = $docs->walkResources();
 ksort($parsed);
 
 $d = array();
+$types = array('general', 'aspects');
+
 foreach ($parsed as $k => $value) {
     $d[] = array(
         'name' => $k,
         'state' => $k == $resource ? 'open' : 'closed', // used for right nav
-        'info' => call_user_func(function() use($value) {
-            return array(
-                'construct' => $value['construct'],
-                'general' => array_values($value['general']),
-                'aspects' => array_values($value['aspects'])
+        'info' => call_user_func(function() use($value, $types) {
+
+            $data = array(
+                'construct' => $value['construct']
             );
+
+            foreach ($types as $type) {
+                $t = array_values($value[$type]);
+                if ($t) {
+                    $data[$type] = array('list' => $t);
+                }
+            }
+
+            return $data;
         })
     );
     $i++;

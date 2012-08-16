@@ -55,24 +55,16 @@
             <div class="content">
 
                 <div class="content-group">
-                    <h5>General</h5>
-                    <ul>
                     {{#info.general}}
-                        <li>
-                            {{> method.m}}
-                        </li>
+                        <h5>General</h5>
+                        {{> methods_list.m }}
                     {{/info.general}}
-                    </ul>
                 </div>
                 <div class="content-group">
-                    <h5>Aspects</h5>
-                    <ul>
                     {{#info.aspects}}
-                        <li>
-                            {{> method.m}}
-                        </li>
+                        <h5>Aspects</h5>
+                        {{> methods_list.m }}
                     {{/info.aspects}}
-                    </ul>
                 </div>
             </div>
         </li>

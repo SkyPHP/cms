@@ -16,12 +16,12 @@
             </td>
             <td>
                 {{#info.general}}
-                    {{> method.m}}
+                    {{> methods_list.m }}
                 {{/info.general}}
             </td>
             <td>
                 {{#info.aspects}}
-                    {{> method.m}}
+                    {{> methods_list.m }}
                 {{/info.aspects}}
             </td>
         </tr>
