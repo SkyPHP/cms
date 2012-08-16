@@ -34,13 +34,13 @@ h1 {
     background: #f7f7f7;
     font-size: 14px;
     line-height: 18px;
-    margin: 10px 0;
     padding:10px;
 }
 
 h3 {
     font-size: 20px;
     border-bottom: 2px solid #444;
+    margin-top: 20px;
 }
 
 .no-docs {

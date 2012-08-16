@@ -3,6 +3,7 @@
 
     <div class="example-url">{{url.prefix}}<strong>{{url.rest}}</strong></div>
 
+    <h3>Description</h3>
     <div class="description">
         {{#doc}}
         <div class="api-desc">
@@ -20,7 +21,7 @@
 
 
     {{#params}}
-    <h3>Post Parameters</h3>
+    <h3><code>POST</code> Parameters</h3>
     <table class="api-table">
         {{#list}}
         <tr>
