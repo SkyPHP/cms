@@ -45,9 +45,9 @@ class boilerplate extends Model
      * Specifies which data elements in the aql are read-only
      * = array(
      *     'tables' => array('table_name'),
-     *     'objects' => array('another_model')
-     *     'subs' => array('subquery_primary_table')
      *     'fields' => array('field1', 'field2')
+     *     'objects' => array('model_name') // table { [model_name] }
+     *     'subs' => array('subquery_primary_table') // table { sub { } }
      * );
      * @var array
      */
