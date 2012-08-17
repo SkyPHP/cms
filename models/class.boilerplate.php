@@ -1,6 +1,6 @@
 <?php
 
-class example extends Model
+class boilerplate extends Model
 {
 
     /**
@@ -172,5 +172,5 @@ class example extends Model
     {
 
     }
-    
+
 }
