@@ -51,7 +51,7 @@ $docs = new Sky\Api\Documentor($api);
 $qf = $this->queryfolders;
 list($resource, $endpoint) = $qf;
 
-$this->title = ($this->queryfolders) ?  implode('/', $qf) . ' | '  . $title : $title;
+$this->title = ($this->queryfolders) ?  implode('/', $qf) : $title;
 
 if ($resource) {
 
@@ -126,6 +126,7 @@ $data = array(
     'conf' => $conf,
     'page_path' => $this->urlpath,
     'title' => $this->title,
+    'breadcrumb' => mustachify($breadcrumb, 'label', 'uri', 'list'),
     'all_docs' => $d ? array('list' => $d) : null,
     'method' => $method
 );
