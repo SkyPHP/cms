@@ -51,7 +51,7 @@ $docs = new Sky\Api\Documentor($api);
 $qf = $this->queryfolders;
 list($resource, $endpoint) = $qf;
 
-$this->title = ($this->queryfolders) ?  implode('/', $qf) : $title;
+$this->title = $qf ?  implode('/', $qf) : $title;
 
 if ($resource) {
 
