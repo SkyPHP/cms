@@ -45,7 +45,7 @@ class boilerplate extends Model
      * Specifies which data elements in the aql are read-only
      * = array(
      *     'tables' => array('table_name'),
-     *     'fields' => array('field1', 'field2')
+     *     'fields' => array('field1', 'field2') // field aliases
      *     'objects' => array('model_name') // table { [model_name] }
      *     'subs' => array('subquery_primary_table') // table { sub { } }
      * );
@@ -57,12 +57,20 @@ class boilerplate extends Model
 
     /**
      * Foreign Keys
-     * If this object has a foreign key that is used to populate a list in the foreign
-     * model, then add the foreign models here so the foreign list is refreshed when this
-     * model's foreign key changes.
-     * = array(
-     *     'foreign_model' => array('foreign_model_id')
-     * );
+     * Suppose this is an 'album' model.
+     * Album has a foreign key 'artist_id'.  The artist model has the following aql:
+     *      artist {
+     *          [album]s
+     *      }
+     *
+     * This means a list of albums is cached in the artist model.
+     * So, the album model "belongs to" the artist model:
+     *      $_belongs_to = array(
+     *          'artist' => array('artist_id')
+     *      );
+     *
+     * The cached albums, $artist->album[], will be refreshed when $album->artist_id is
+     * modified.
      * @var array
      */
     public $_belongs_to = array(
