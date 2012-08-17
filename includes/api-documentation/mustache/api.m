@@ -1,12 +1,7 @@
 {{#breadcrumb}}
 <div id="api-documentation-breadcrumb">
     {{#list}}
-        {{#uri}}
-            <a href="{{uri}}">{{label}}</a> &rsaquo;
-        {{/uri}}
-        {{^uri}}
-            <strong>{{label}}</strong>
-        {{/uri}}
+        <a href="{{uri}}">{{label}}</a> &rsaquo;
     {{/list}}
 
     {{title}}
