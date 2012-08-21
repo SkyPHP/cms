@@ -25,7 +25,7 @@
  * @see \Sky\Api\Resource
  */
 
-include_once 'lib/markdown.php';
+include_once 'lib/markdown/markdown.php';
 
 $template = $template ?: 'website';
 $title = $title ?: 'Developer API';

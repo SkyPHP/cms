@@ -55,25 +55,40 @@ $(function() {
     var CM_MODE_PATH = '/lib/codemirror/mode/',
         cm_modes = {
             php: {m: 'application/x-httpd-php', p: 'php/php.js'},
-            js: {m: 'text/javascript', p: 'javascript/javascript.js'},
-            html: this.php
+            js: {m: 'text/javascript', p: 'javascript/javascript.js'}
         };
 
-    var getMode = function(path, cb) {
-        $.getScript(CM_MODE_PATH + path, cb);
+    var looks_like = {
+        js: function(str) {
+            return str.match(/\/bvar\b/) ||
+                str.match(/\$\(/) ||
+                str.match(/\=\s*\{/) ||
+                str.match(/^\s*\{/);
+        },
+        php: function(str) {
+            return str.match(/\$[\w]+/) || str.match(/&lt;php/) || str.match(/array\(/);
+        }
     };
 
     // whenever code snippet appears on the page.
-    $('pre.mdown').livequery(function() {
+    $('pre').livequery(function() {
 
         var $t = $(this),
             $c = $t.find('code'),
-            lang = $c.data('lang'),
             content = $c.html();
 
-        if (!lang) return;
+        if (!$c.length) return;
 
-        var mode = cm_modes[lang];
+        var type = looks_like.php(content) ? 'php' : null;
+        if (!type) {
+            type = looks_like.js(content) ? 'js' : null;
+        }
+
+        if (!type) {
+            return;
+        }
+
+        var mode = cm_modes[type];
 
         content = content.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
         $t.addClass('cm-s-default');
