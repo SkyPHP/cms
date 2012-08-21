@@ -40,9 +40,6 @@ $this->js = array_merge($this->js, array(
     '/lib/codemirror/mode/php/php.js'
 
 ));
-// $this->js[] = '/lib/codemirror/lib/codemirror.js';
-// $this->js[] = '/lib/codemirror/lib/util/runmode.js';
-
 
 if (!$api) {
     throw new Exception('Must Pass An API Object to this inherited page.');
@@ -90,6 +87,7 @@ if ($resource) {
         $method['params'] = $method['params']
             ? array(
                 'list' => array_map(function($ea) {
+
                     $ea['description'] = Markdown(implode(PHP_EOL, $ea['description']));
 
                     return $ea;
