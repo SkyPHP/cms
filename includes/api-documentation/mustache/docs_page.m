@@ -7,9 +7,7 @@
     <div class="description">
         {{#doc}}
         <div class="api-desc">
-            {{#list}}
-                {{{text}}}
-            {{/list}}
+            {{{content}}}
         </div>
         {{/doc}}
         {{^doc}}
@@ -43,6 +41,7 @@
 
 
 <div id="doc-sidebar">
+    <a href="{{page_path}}" id="back-to-grid">Back</a>
     {{#all_docs}}
     <ul>
         {{#list}}

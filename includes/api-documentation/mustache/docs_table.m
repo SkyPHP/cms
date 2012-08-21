@@ -1,6 +1,6 @@
 {{#api_doc}}
 <div id="api-doc">
-    {{{.}}}
+    {{{api_doc}}}
 </div>
 {{/api_doc}}
 
