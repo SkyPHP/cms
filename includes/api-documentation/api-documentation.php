@@ -25,8 +25,21 @@
  * @see \Sky\Api\Resource
  */
 
+include_once 'lib/markdown/markdown.php';
+
 $template = $template ?: 'website';
 $title = $title ?: 'Developer API';
+
+$this->css[] = '/lib/codemirror/lib/codemirror.css';
+$this->js = array_merge($this->js, array(
+    '/lib/codemirror/lib/codemirror.js',
+    '/lib/codemirror/lib/util/runmode.js',
+    '/lib/codemirror/mode/xml/xml.js',
+    '/lib/codemirror/mode/javascript/javascript.js',
+    '/lib/codemirror/mode/clike/clike.js',
+    '/lib/codemirror/mode/php/php.js'
+
+));
 
 if (!$api) {
     throw new Exception('Must Pass An API Object to this inherited page.');
@@ -68,13 +81,14 @@ if ($resource) {
             ), '/')
         );
 
-        $doc = trim(\Sky\DocParser::docAsString($method['doc']));
+        $doc = trim(Markdown(\Sky\DocParser::docAsString($method['doc'])));
 
         $method['doc'] = $doc ? array('content' => $doc) : null;
         $method['params'] = $method['params']
             ? array(
                 'list' => array_map(function($ea) {
-                    $ea['description'] = implode(PHP_EOL, $ea['description']);
+
+                    $ea['description'] = Markdown(implode(PHP_EOL, $ea['description']));
 
                     return $ea;
                 }, $method['params'])
@@ -129,7 +143,7 @@ $data = array(
     'title' => $this->title,
     'breadcrumb' => mustachify($breadcrumb, 'label', 'uri', 'list'),
     'all_docs' => $d ? array('list' => $d) : null,
-    'api_doc' => $docs->getApiDoc(),
+    'api_doc' => Markdown($docs->getApiDoc()),
     'method' => $method
 );
 

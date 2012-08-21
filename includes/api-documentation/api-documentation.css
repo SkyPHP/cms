@@ -134,7 +134,7 @@ h3 {
         width: 135px;
     }
 
-pre.mdown {
+pre {
     background: #f8f8f8;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -148,17 +148,15 @@ code {
     border-radius: 2px;
     font-family: Consolas, "Liberation Mono", Courier, monospace;
     padding: 1px 3px;
-    color: red;
 }
 
-pre.mdown code {
+pre code {
     border-radius: none;
     border: none;
     padding: none;
-    color: inherit;
 }
 
-.api-desc pre.mdown {
+.api-desc pre {
     background: #fff;
 }
 
