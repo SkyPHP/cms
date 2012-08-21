@@ -68,17 +68,14 @@ if ($resource) {
             ), '/')
         );
 
-        $to_text = function($val) {
-            return array('list' => array_map(function($a) {
-                return array('text' => $a);
-            }, $val ?: array()));
-        };
+        $doc = trim(\Sky\DocParser::docAsString($method['doc']));
 
-        $method['doc'] = array_map($to_text, $method['doc'] ?: array());
+        $method['doc'] = $doc ? array('content' => $doc) : null;
         $method['params'] = $method['params']
             ? array(
                 'list' => array_map(function($ea) {
                     $ea['description'] = implode(PHP_EOL, $ea['description']);
+
                     return $ea;
                 }, $method['params'])
             )
@@ -92,6 +89,8 @@ if ($resource) {
 } else {
     $method = null;
 }
+
+
 
 $parsed = $docs->walkResources();
 ksort($parsed);
@@ -110,7 +109,9 @@ foreach ($parsed as $k => $value) {
             );
 
             foreach ($types as $type) {
+
                 $t = array_values($value[$type]);
+
                 if ($t) {
                     $data[$type] = array('list' => $t);
                 }
@@ -128,6 +129,7 @@ $data = array(
     'title' => $this->title,
     'breadcrumb' => mustachify($breadcrumb, 'label', 'uri', 'list'),
     'all_docs' => $d ? array('list' => $d) : null,
+    'api_doc' => $docs->getApiDoc(),
     'method' => $method
 );
 
