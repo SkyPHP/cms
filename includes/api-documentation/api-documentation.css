@@ -52,6 +52,10 @@ h3 {
     list-style: none;
 }
 
+#api-documentation-breadcrumb {
+    margin-bottom: 10px;
+}
+
 #doc-sidebar {
     float: left;
     margin-left:20px;
