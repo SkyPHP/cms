@@ -1,7 +1,7 @@
 #api-doc {
-    background: #f7f7f7;
-    padding: 10px;
-    margin-bottom: 10px;
+    background: #fff;
+    line-height: 18px;
+    margin-bottom: 15px;
 }
 
 .api-table {
@@ -134,5 +134,30 @@ h3 {
         width: 135px;
     }
 
+pre.mdown {
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 6px 10px;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    margin: 10px 0;
+}
 
+code {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    padding: 1px 3px;
+    color: red;
+}
 
+pre.mdown code {
+    border-radius: none;
+    border: none;
+    padding: none;
+    color: inherit;
+}
+
+.api-desc pre.mdown {
+    background: #fff;
+}

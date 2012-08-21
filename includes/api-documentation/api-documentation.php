@@ -25,8 +25,24 @@
  * @see \Sky\Api\Resource
  */
 
+include_once 'lib/markdown.php';
+
 $template = $template ?: 'website';
 $title = $title ?: 'Developer API';
+
+$this->css[] = '/lib/codemirror/lib/codemirror.css';
+$this->js = array_merge($this->js, array(
+    '/lib/codemirror/lib/codemirror.js',
+    '/lib/codemirror/lib/util/runmode.js',
+    '/lib/codemirror/mode/xml/xml.js',
+    '/lib/codemirror/mode/javascript/javascript.js',
+    '/lib/codemirror/mode/clike/clike.js',
+    '/lib/codemirror/mode/php/php.js'
+
+));
+// $this->js[] = '/lib/codemirror/lib/codemirror.js';
+// $this->js[] = '/lib/codemirror/lib/util/runmode.js';
+
 
 if (!$api) {
     throw new Exception('Must Pass An API Object to this inherited page.');
@@ -68,17 +84,14 @@ if ($resource) {
             ), '/')
         );
 
-        $to_text = function($val) {
-            return array('list' => array_map(function($a) {
-                return array('text' => $a);
-            }, $val ?: array()));
-        };
+        $doc = trim(Markdown(\Sky\DocParser::docAsString($method['doc'])));
 
-        $method['doc'] = array_map($to_text, $method['doc'] ?: array());
+        $method['doc'] = $doc ? array('content' => $doc) : null;
         $method['params'] = $method['params']
             ? array(
                 'list' => array_map(function($ea) {
-                    $ea['description'] = implode(PHP_EOL, $ea['description']);
+                    $ea['description'] = Markdown(implode(PHP_EOL, $ea['description']));
+
                     return $ea;
                 }, $method['params'])
             )
@@ -92,6 +105,8 @@ if ($resource) {
 } else {
     $method = null;
 }
+
+
 
 $parsed = $docs->walkResources();
 ksort($parsed);
@@ -110,7 +125,9 @@ foreach ($parsed as $k => $value) {
             );
 
             foreach ($types as $type) {
+
                 $t = array_values($value[$type]);
+
                 if ($t) {
                     $data[$type] = array('list' => $t);
                 }
@@ -128,7 +145,7 @@ $data = array(
     'title' => $this->title,
     'breadcrumb' => mustachify($breadcrumb, 'label', 'uri', 'list'),
     'all_docs' => $d ? array('list' => $d) : null,
-    'api_doc' => $docs->getApiDoc(),
+    'api_doc' => Markdown($docs->getApiDoc()),
     'method' => $method
 );
 

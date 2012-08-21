@@ -51,4 +51,34 @@ $(function() {
     // binding to the body because of ajax refreshing of the page
     $('#page').on('click', '#doc-sidebar h4', binder(headingClick));
 
+    // look for appearing pre.mdown for code styling
+    var CM_MODE_PATH = '/lib/codemirror/mode/',
+        cm_modes = {
+            php: {m: 'application/x-httpd-php', p: 'php/php.js'},
+            js: {m: 'text/javascript', p: 'javascript/javascript.js'},
+            html: this.php
+        };
+
+    var getMode = function(path, cb) {
+        $.getScript(CM_MODE_PATH + path, cb);
+    };
+
+    // whenever code snippet appears on the page.
+    $('pre.mdown').livequery(function() {
+
+        var $t = $(this),
+            $c = $t.find('code'),
+            lang = $c.data('lang'),
+            content = $c.html();
+
+        if (!lang) return;
+
+        var mode = cm_modes[lang];
+
+        content = content.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+        $t.addClass('cm-s-default');
+
+        CodeMirror.runMode(content, mode.m, $t.get(0));
+    });
+
 });
