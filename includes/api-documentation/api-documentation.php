@@ -128,6 +128,7 @@ $data = array(
     'title' => $this->title,
     'breadcrumb' => mustachify($breadcrumb, 'label', 'uri', 'list'),
     'all_docs' => $d ? array('list' => $d) : null,
+    'api_doc' => $docs->getApiDoc(),
     'method' => $method
 );
 

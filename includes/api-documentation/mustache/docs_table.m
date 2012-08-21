@@ -1,3 +1,9 @@
+{{#api_doc}}
+<div id="api-doc">
+    {{{.}}}
+</div>
+{{/api_doc}}
+
 {{#all_docs}}
     <table id="api-docs" class="api-table">
 
