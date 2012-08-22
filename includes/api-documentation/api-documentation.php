@@ -27,7 +27,7 @@
 
 include_once 'lib/markdown/markdown.php';
 
-$template = $template ?: 'website';
+$template = $template ?: 'html5';
 $title = $title ?: 'Developer API';
 
 $this->css[] = '/lib/codemirror/lib/codemirror.css';
@@ -46,12 +46,12 @@ if (!$api) {
 }
 
 $keys = array('protocol', 'domain', 'url');
-$url_prefix = vsprintf(
+$url_prefix = rtrim(vsprintf(
     '%s://%s%s',
     array_filter(array_map(function($k) use($config) {
         return $config['url'][$k];
     }, $keys))
-);
+), '/');
 
 if (!$config || !is_assoc($config) || !$url_prefix) {
     throw new Exception(

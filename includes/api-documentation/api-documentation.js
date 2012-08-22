@@ -49,7 +49,7 @@ $(function() {
     };
 
     // binding to the body because of ajax refreshing of the page
-    $('#page').on('click', '#doc-sidebar h4', binder(headingClick));
+    $('body').on('click', '#doc-sidebar h4', binder(headingClick));
 
     // look for appearing pre.mdown for code styling
     var CM_MODE_PATH = '/lib/codemirror/mode/',
