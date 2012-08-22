@@ -1,3 +1,9 @@
+#api-doc {
+    background: #fff;
+    line-height: 18px;
+    margin-bottom: 15px;
+}
+
 .api-table {
     width: 100%;
 }
@@ -50,6 +56,10 @@ h3 {
  ul.methods-list {
     margin:0;
     list-style: none;
+}
+
+#api-documentation-breadcrumb {
+    margin-bottom: 10px;
 }
 
 #doc-sidebar {
@@ -124,5 +134,33 @@ h3 {
         width: 135px;
     }
 
+pre {
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 6px 10px;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    margin: 10px 0;
+}
 
+code {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    padding: 1px 3px;
+}
 
+pre code {
+    border-radius: none;
+    border: none;
+    padding: none;
+}
+
+.api-desc pre {
+    background: #fff;
+}
+
+#back-to-grid {
+    display: block;
+    margin-bottom: 15px;
+}

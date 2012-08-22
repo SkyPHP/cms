@@ -1,3 +1,13 @@
+{{#breadcrumb}}
+<div id="api-documentation-breadcrumb">
+    {{#list}}
+        <a href="{{uri}}">{{label}}</a> &rsaquo;
+    {{/list}}
+
+    {{title}}
+</div>
+{{/breadcrumb}}
+
 <h1>{{title}}</h1>
 
 {{^method}}

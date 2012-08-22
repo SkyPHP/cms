@@ -49,6 +49,51 @@ $(function() {
     };
 
     // binding to the body because of ajax refreshing of the page
-    $('#page').on('click', '#doc-sidebar h4', binder(headingClick));
+    $('body').on('click', '#doc-sidebar h4', binder(headingClick));
+
+    // look for appearing pre.mdown for code styling
+    var CM_MODE_PATH = '/lib/codemirror/mode/',
+        cm_modes = {
+            php: {m: 'application/x-httpd-php', p: 'php/php.js'},
+            js: {m: 'text/javascript', p: 'javascript/javascript.js'}
+        };
+
+    var looks_like = {
+        js: function(str) {
+            return str.match(/\/bvar\b/) ||
+                str.match(/\$\(/) ||
+                str.match(/\=\s*\{/) ||
+                str.match(/^\s*\{/);
+        },
+        php: function(str) {
+            return str.match(/\$[\w]+/) || str.match(/&lt;php/) || str.match(/array\(/);
+        }
+    };
+
+    // whenever code snippet appears on the page.
+    $('pre').livequery(function() {
+
+        var $t = $(this),
+            $c = $t.find('code'),
+            content = $c.html();
+
+        if (!$c.length) return;
+
+        var type = looks_like.php(content) ? 'php' : null;
+        if (!type) {
+            type = looks_like.js(content) ? 'js' : null;
+        }
+
+        if (!type) {
+            return;
+        }
+
+        var mode = cm_modes[type];
+
+        content = content.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+        $t.addClass('cm-s-default');
+
+        CodeMirror.runMode(content, mode.m, $t.get(0));
+    });
 
 });

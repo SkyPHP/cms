@@ -7,9 +7,7 @@
     <div class="description">
         {{#doc}}
         <div class="api-desc">
-            {{#list}}
-                {{{text}}}
-            {{/list}}
+            {{{content}}}
         </div>
         {{/doc}}
         {{^doc}}
@@ -27,9 +25,15 @@
         <tr>
             <td class="param-type">
                 {{type}}
+                {{^type}}
+                --
+                {{/type}}
             </td>
             <td class="param-name">
                 {{name}}
+                {{^name}}
+                --
+                {{/name}}
             </td>
             <td class="param-description">
                 {{{description}}}
@@ -43,6 +47,7 @@
 
 
 <div id="doc-sidebar">
+    <a href="{{page_path}}" id="back-to-grid">Back</a>
     {{#all_docs}}
     <ul>
         {{#list}}

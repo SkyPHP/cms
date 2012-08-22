@@ -25,20 +25,33 @@
  * @see \Sky\Api\Resource
  */
 
-$template = $template ?: 'website';
+include_once 'lib/markdown/markdown.php';
+
+$template = $template ?: 'html5';
 $title = $title ?: 'Developer API';
+
+$this->css[] = '/lib/codemirror/lib/codemirror.css';
+$this->js = array_merge($this->js, array(
+    '/lib/codemirror/lib/codemirror.js',
+    '/lib/codemirror/lib/util/runmode.js',
+    '/lib/codemirror/mode/xml/xml.js',
+    '/lib/codemirror/mode/javascript/javascript.js',
+    '/lib/codemirror/mode/clike/clike.js',
+    '/lib/codemirror/mode/php/php.js'
+
+));
 
 if (!$api) {
     throw new Exception('Must Pass An API Object to this inherited page.');
 }
 
 $keys = array('protocol', 'domain', 'url');
-$url_prefix = vsprintf(
+$url_prefix = rtrim(vsprintf(
     '%s://%s%s',
     array_filter(array_map(function($k) use($config) {
         return $config['url'][$k];
     }, $keys))
-);
+), '/');
 
 if (!$config || !is_assoc($config) || !$url_prefix) {
     throw new Exception(
@@ -51,7 +64,7 @@ $docs = new Sky\Api\Documentor($api);
 $qf = $this->queryfolders;
 list($resource, $endpoint) = $qf;
 
-$this->title = ($this->queryfolders) ?  implode('/', $qf) . ' | '  . $title : $title;
+$this->title = $qf ?  implode('/', $qf) : $title;
 
 if ($resource) {
 
@@ -68,17 +81,15 @@ if ($resource) {
             ), '/')
         );
 
-        $to_text = function($val) {
-            return array('list' => array_map(function($a) {
-                return array('text' => $a);
-            }, $val ?: array()));
-        };
+        $doc = trim(Markdown(\Sky\DocParser::docAsString($method['doc'])));
 
-        $method['doc'] = array_map($to_text, $method['doc'] ?: array());
+        $method['doc'] = $doc ? array('content' => $doc) : null;
         $method['params'] = $method['params']
             ? array(
                 'list' => array_map(function($ea) {
-                    $ea['description'] = implode(PHP_EOL, $ea['description']);
+
+                    $ea['description'] = Markdown(implode(PHP_EOL, $ea['description']));
+
                     return $ea;
                 }, $method['params'])
             )
@@ -92,6 +103,8 @@ if ($resource) {
 } else {
     $method = null;
 }
+
+
 
 $parsed = $docs->walkResources();
 ksort($parsed);
@@ -110,7 +123,9 @@ foreach ($parsed as $k => $value) {
             );
 
             foreach ($types as $type) {
+
                 $t = array_values($value[$type]);
+
                 if ($t) {
                     $data[$type] = array('list' => $t);
                 }
@@ -126,7 +141,9 @@ $data = array(
     'conf' => $conf,
     'page_path' => $this->urlpath,
     'title' => $this->title,
+    'breadcrumb' => mustachify($breadcrumb, 'label', 'uri', 'list'),
     'all_docs' => $d ? array('list' => $d) : null,
+    'api_doc' => Markdown($docs->getApiDoc()),
     'method' => $method
 );
 
