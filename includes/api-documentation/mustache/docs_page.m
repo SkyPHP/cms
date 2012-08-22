@@ -25,9 +25,15 @@
         <tr>
             <td class="param-type">
                 {{type}}
+                {{^type}}
+                --
+                {{/type}}
             </td>
             <td class="param-name">
                 {{name}}
+                {{^name}}
+                --
+                {{/name}}
             </td>
             <td class="param-description">
                 {{{description}}}
