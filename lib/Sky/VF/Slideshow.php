@@ -1,8 +1,8 @@
 <?php
 
-namespace VF;
+namespace Sky\VF;
 
-class Slideshow extends GalleryInc
+class Slideshow extends Gallery\Inc
 {
     /**
      * @var array

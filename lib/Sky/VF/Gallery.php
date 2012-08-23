@@ -1,11 +1,11 @@
 <?php
 
-namespace VF;
+namespace Sky\VF;
 
 /**
  * @package VF
  */
-class Gallery extends GalleryInc
+class Gallery extends Gallery\Inc
 {
 
     /**
