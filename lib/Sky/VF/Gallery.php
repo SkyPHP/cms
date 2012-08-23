@@ -78,9 +78,8 @@ class Gallery extends Gallery\Inc
     {
         $vars = get_object_vars($this);
         $this->_token = md5(serialize($vars));
-        $mem_key = 'vf_gallery:' . $this->_token;
 
-        $_SESSION['vf_gallery'][$mem_key] = $vars;
+        $_SESSION['VF']['gallery'][$this->_token] = $vars;
     }
 
 }
