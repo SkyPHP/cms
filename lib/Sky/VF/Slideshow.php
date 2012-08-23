@@ -2,6 +2,9 @@
 
 namespace Sky\VF;
 
+/**
+ * @package SkyPHP
+ */
 class Slideshow extends Gallery\Inc
 {
     /**

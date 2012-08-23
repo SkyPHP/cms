@@ -3,7 +3,7 @@
 namespace Sky\VF\Gallery;
 
 /**
- * @package VF
+ * @package SkyPHP
  */
 abstract class Inc
 {
