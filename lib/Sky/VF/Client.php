@@ -70,9 +70,12 @@ class Client
         static::checkForClient();
 
         $params = static::prepOperations($width, $height, $crop);
-        $re = static::getClient()->getItem($id, $params);
 
-        return $re->item ?: $re;
+        $re = is_array($id)
+            ? static::getClient()->getItems($id, $params)
+            : static::getClient()->getItem($id, $params);
+
+        return $re->errors ? $re : (is_array($id) ? $re->items : $re->item);
     }
 
     /**

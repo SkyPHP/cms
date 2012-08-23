@@ -122,7 +122,7 @@ abstract class Inc
      */
     public function __construct($args)
     {
-        $this->setByArray(GalleryInc::$defaults, static::$defaults, $args);
+        $this->setByArray(self::$defaults, static::$defaults, $args);
 
         if ($args['width'] && !$args['height']) {
             $this->height = null;
@@ -138,12 +138,12 @@ abstract class Inc
             );
         }
 
-        if (!is_object($this->folder && !$this->items)) {
+        if ((!is_object($this->folder) || !$this->folder->items) && !$this->items) {
             $this->initFolder();
         }
 
         $this->validate();
-        $this->makeHTML();
+        // $this->makeHTML();
     }
 
     /**
@@ -151,11 +151,13 @@ abstract class Inc
      */
     public function initFolder()
     {
-        $path = (is_object($this->folder)) ? $this->folder->path : $this->folder;
+        $id = (is_object($this->folder))
+            ? $this->folder->id
+            : \Sky\VF\Client::getFolder($this->folder)->id;
 
-        return $this->folder = vf::getFolder($path, array(
+        return $this->folder = \Sky\VF\Client::getClient()->getFolderItems($id, array(
             'limit' => $this->limit
-        ));
+        ))->folder;
     }
 
     /**
@@ -194,6 +196,23 @@ abstract class Inc
         ob_end_clean();
 
         return $this->html;
+    }
+
+    public function getItemsIDs()
+    {
+        $items = $this->items ?: $this->folder->items;
+
+        if ($this->db_field && $this->db_row_id) {
+            $items = array(
+                (object) array(
+                    'id' => \aql::value($this->db_field, $this->db_row_id)
+                )
+            );
+        }
+
+        return array_filter(array_map(function($i) {
+            return $i->id;
+        }, $items));
     }
 
     /**

@@ -47,7 +47,7 @@ class Gallery extends Gallery\Inc
     public $_token;
 
     /**
-     * @global $p  \Sky\Page
+     *
      */
     public function makeHTML()
     {
@@ -66,9 +66,20 @@ class Gallery extends Gallery\Inc
         }
 
         self::$count++;
-
         $this->setMemToken();
-        return parent::makeHTML();
+
+        $items = $this->getItems();
+
+        $pars = array(
+            'id' => $this->identifier,
+            'empty' => !$items,
+            'list' => $items ? Client::getItem($items) : null,
+            'context_menu' => $this->contextMenu ? 'context_menu="true"' : null,
+            'folders_path' => $this->folder->path,
+            'token' => $this->_token
+        );
+
+        return $p->mustache('lib/Sky/VF/mustache/gallery.m', $pars);
     }
 
     /**
