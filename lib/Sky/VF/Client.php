@@ -61,6 +61,7 @@ class Client
      * Gets the given item and transforms it as necessary
      * Usage:
      *      vf::getItem($id, 300, 300)
+     * @param   mixed   $id     id | ide | array | csv
      * @param   mixed   $width  || array
      * @param   string  $height
      * @param   string  $crop
@@ -71,11 +72,23 @@ class Client
 
         $params = static::prepOperations($width, $height, $crop);
 
-        $re = is_array($id)
-            ? static::getClient()->getItems($id, $params)
-            : static::getClient()->getItem($id, $params);
+        if (!is_array($id)) {
+            $id = array_filter(explode(',', $id));
+            if (count($id) === 1) {
+                $single = true;
+            }
+        }
 
-        return $re->errors ? $re : (is_array($id) ? $re->items : $re->item);
+        $params = array_merge(
+            $params,
+            array(
+                'items' => implode(',', $id)
+            )
+        );
+
+        $re = static::getClient()->getItems($params);
+
+        return $re->errors ? $re : ($single ? $re->items[0] : $re->items);
     }
 
     /**
