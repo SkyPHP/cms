@@ -80,7 +80,7 @@ class Client
      * @param   array   $params
      * @return  \stdClass
      */
-    public static function getFolder($id, $params = array())
+    public static function getFolder($id, array $params = array())
     {
         static::checkForClient();
 
@@ -249,7 +249,7 @@ class Client
      */
     protected static function isPath($str)
     {
-        return strpos($a, '/') !== false;
+        return strpos($str, '/') !== false;
     }
 
 }
