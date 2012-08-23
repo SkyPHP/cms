@@ -11,7 +11,7 @@
     {{^empty}}
         {{#list}}
         <div class="vf-gallery-item" ide="{{ide}}">
-            {{{html}}}
+            {{{http_html}}}
         </div>
         {{/list}}
     {{/empty}}

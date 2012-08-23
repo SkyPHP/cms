@@ -105,16 +105,11 @@ class Uploader extends Gallery\Inc
             throw new \Exception('Could not get folder object from server.');
         }
 
-        $this->makeButton();
+        $this->makeHTML();
     }
 
-    public function makeButton()
+    public function getHTML()
     {
-        $p = static::getPage();
-        $p->js[] = '/lib/plupload/js/plupload.full.js';
-        $p->css[] = '/lib/vfolder/css/vf.css';
-        $p->js[] = '/lib/vfolder/js/vf.js';
-
         $pars = array(
             'refresh_gallery' => $this->gallery ? $this->gallery->identifier : null,
             'folders_path' => $this->folder->path,
@@ -124,7 +119,20 @@ class Uploader extends Gallery\Inc
             'class' => $this->class
         );
 
-        return $this->button = $p->mustache('lib/Sky/VF/mustache/button.m', $pars);
+        return $this->button = static::getPage()->mustache(
+            'lib/Sky/VF/mustache/button.m',
+            $pars
+        );
+    }
+
+    public function makeHTML()
+    {
+        $p = static::getPage();
+        $p->js[] = '/lib/plupload/js/plupload.full.js';
+        $p->css[] = '/lib/vfolder/css/vf.css';
+        $p->js[] = '/lib/vfolder/js/vf.js';
+
+        return $this->getHTML();
     }
 
     public function setMemToken()

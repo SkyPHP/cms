@@ -18,7 +18,6 @@ class Gallery extends Gallery\Inc
      * @var array
      */
     public static $defaults = array(
-        'html_include' => 'pages/ajax/vf/gallery.php',
         'contextMenu' => true,
         'fileName' => false,
         'width' => 100,
@@ -68,18 +67,31 @@ class Gallery extends Gallery\Inc
         self::$count++;
         $this->setMemToken();
 
-        $items = $this->getItems();
+        return $this->getHTML();
+    }
+
+    public function getHTML()
+    {
+        $items = $this->getItemIDs();
+
+        $params = array(
+            'width' => $this->width,
+            'height' => $this->height,
+            'crop' => $this->crop
+        );
 
         $pars = array(
             'id' => $this->identifier,
             'empty' => !$items,
-            'list' => $items ? Client::getItem($items) : null,
+            'list' => $items ? Client::getItem($items, $params) : null,
             'context_menu' => $this->contextMenu ? 'context_menu="true"' : null,
             'folders_path' => $this->folder->path,
             'token' => $this->_token
         );
 
-        return $p->mustache('lib/Sky/VF/mustache/gallery.m', $pars);
+        return $this->html = static::getPage()->mustache(
+            'lib/Sky/VF/mustache/gallery.m', $pars
+        );
     }
 
     /**

@@ -143,7 +143,7 @@ abstract class Inc
         }
 
         $this->validate();
-        // $this->makeHTML();
+        $this->makeHTML();
     }
 
     /**
@@ -181,24 +181,11 @@ abstract class Inc
     /**
      * @return string
      */
-    public function makeHTML()
-    {
-        if (!$this->html_include) {
-            return;
-        }
+    abstract public function makeHTML();
 
-        $gallery = $this;
+    abstract public function getHTML();
 
-        ob_start();
-        include $this->html_include;
-
-        $this->html = ob_get_contents();
-        ob_end_clean();
-
-        return $this->html;
-    }
-
-    public function getItemsIDs()
+    public function getItemIDs()
     {
         $items = $this->items ?: $this->folder->items;
 
