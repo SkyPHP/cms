@@ -271,3 +271,7 @@ class Client
     }
 
 }
+
+\Sky\VF\Client::config(array(
+    'host' => 'vfdev.skydev.net/api/v1'
+));
