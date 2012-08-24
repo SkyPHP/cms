@@ -46,18 +46,17 @@ class Gallery extends Gallery\Inc
     public $_token;
 
     /**
-     *
+     * Adds js/css to the page object, and generates a gallery of the items
+     * returns html string and sets $this->html
+     * @return  string
      */
-    public function makeHTML()
+    public function getHTML()
     {
-        $p = static::getPage();
-
-        $p->css[] = '/lib/vfolder/css/vf.css';
-        $p->js[] = '/lib/vfolder/js/vf.js';
-
         if ($this->contextMenu) {
-            $p->css[] = '/lib/jquery.contextMenu/jquery.contextMenu.css';
-            $p->js[] = '/lib/jquery.contextMenu/jquery.contextMenu.js';
+            static::addPageResources(array(
+                'css' => '/lib/jquery.contextMenu/jquery.contextMenu.css',
+                'js' => '/lib/jquery.contextMenu/jquery.contextMenu.js'
+            ));
         }
 
         if (!$this->identifier) {
@@ -67,11 +66,6 @@ class Gallery extends Gallery\Inc
         self::$count++;
         $this->setMemToken();
 
-        return $this->getHTML();
-    }
-
-    public function getHTML()
-    {
         $items = $this->getItemIDs();
 
         $params = array(
@@ -80,18 +74,19 @@ class Gallery extends Gallery\Inc
             'crop' => $this->crop
         );
 
-        $pars = array(
+        $list = $items ? Client::getIteM($items, $params) : null;
+
+        $data = array(
             'id' => $this->identifier,
-            'empty' => !$items,
-            'list' => $items ? Client::getItem($items, $params) : null,
+            'empty' => !$list,
+            'empty_message' => $this->empty_message,
+            'list' => $list,
             'context_menu' => $this->contextMenu ? 'context_menu="true"' : null,
             'folders_path' => $this->folder->path,
             'token' => $this->_token
         );
 
-        return $this->html = static::getPage()->mustache(
-            'lib/Sky/VF/mustache/gallery.m', $pars
-        );
+        return $this->html = static::getMustache('gallery', $data);
     }
 
     /**

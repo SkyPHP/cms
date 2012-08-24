@@ -75,24 +75,19 @@ class Slideshow extends Gallery\Inc
     public $transition;
 
     /**
-     * return string
+     * Adds js/css to the page object, and generates the slideshow html
+     * returns html string and sets $this->html
+     * @return  string
      */
-    public function makeHTML()
-    {
-        $p = static::getPage();
-        $p->css[] = '/lib/vfolder/css/vf.css';
-        $p->js[] = '/lib/js/jquery.hoverIntent.js';
-        $p->js[] = '/lib/vfolder/js/vf.js';
-
-        return $this->getHTML();
-    }
-
     public function getHTML()
     {
-        $items = $this->getItemIDs();
+        static::addPgaeResources(array(
+            'js' => '/lib/js/jquery.hoverIntent.js'
+        ));
 
         list($large_conf, $small_conf) = $this->getItemsConfs();
 
+        $items = $this->getItemIDs();
         $large = Client::getItem($items, $large_conf);
         $small = Client::getItem($items, $small_conf);
 
@@ -111,12 +106,13 @@ class Slideshow extends Gallery\Inc
             'thumbs' => $small
         );
 
-        return $this->html = static::getPage()->mustache(
-            'lib/Sky/VF/mustache/slideshow.m',
-            $data
-        );
+        return $this->html = static::getMustache('slideshow', $data);
     }
 
+    /**
+     * Gets the params for getItem
+     * @return array
+     */
     protected function getItemsConfs()
     {
         $large = array(

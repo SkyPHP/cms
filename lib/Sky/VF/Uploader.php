@@ -105,12 +105,21 @@ class Uploader extends Gallery\Inc
             throw new \Exception('Could not get folder object from server.');
         }
 
-        $this->makeHTML();
+        $this->getHTML();
     }
 
+    /**
+     * Adds js/css to the page object, and generates the button html
+     * returns html string and sets $this->button
+     * @return  string
+     */
     public function getHTML()
     {
-        $pars = array(
+        static::addPageResources(array(
+            'js' => '/lib/plupload/js/plupload.full.js'
+        ));
+
+        $data = array(
             'refresh_gallery' => $this->gallery ? $this->gallery->identifier : null,
             'folders_path' => $this->folder->path,
             'id' => $this->id,
@@ -119,22 +128,13 @@ class Uploader extends Gallery\Inc
             'class' => $this->class
         );
 
-        return $this->button = static::getPage()->mustache(
-            'lib/Sky/VF/mustache/button.m',
-            $pars
-        );
+        return $this->button = static::getMustache('button', $data);
     }
 
-    public function makeHTML()
-    {
-        $p = static::getPage();
-        $p->js[] = '/lib/plupload/js/plupload.full.js';
-        $p->css[] = '/lib/vfolder/css/vf.css';
-        $p->js[] = '/lib/vfolder/js/vf.js';
-
-        return $this->getHTML();
-    }
-
+    /**
+     * Sets $this->_token and sets this in the SESSION so the upload page will know
+     * what params and folder to upload to
+     */
     public function setMemToken()
     {
         $vars = get_object_vars($this);

@@ -2,7 +2,7 @@
     id="{{id}}"
     token="{{token}}"
     folders_path="{{folder_path}}"
-    {{context_menu}}
+    {{{context_menu}}}
     >
     {{#empty}}
         {{empty_message}}

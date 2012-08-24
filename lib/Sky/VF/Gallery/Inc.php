@@ -9,6 +9,12 @@ abstract class Inc
 {
 
     /**
+     * Location of resources
+     * @var string
+     */
+    public static $resource_path = 'lib/Sky/VF/resources/';
+
+    /**
      * @var array
      */
     public static $defaults = array(
@@ -133,7 +139,7 @@ abstract class Inc
         }
 
         if (!$this->folder && !$this->items) {
-            throw new Exception(
+            throw new \Exception(
                 'Gallery requires a folder or items to be set.'
             );
         }
@@ -143,7 +149,7 @@ abstract class Inc
         }
 
         $this->validate();
-        $this->makeHTML();
+        $this->getHTML();
     }
 
     /**
@@ -179,12 +185,45 @@ abstract class Inc
     }
 
     /**
-     * @return string
+     * Adds vf css and js to the page and whatever other css/js is passed in
+     * @param   array $resources    associative
+     * @return  \Sky\Page
      */
-    abstract public function makeHTML();
+    public static function addPageResources(array $resources = array())
+    {
+        $css = \arrayify($resources['css']) ?: array();
+        $js = \arrayify($resources['js']) ?: array();
 
+        $css[] = static::$resource_path . 'css/vf.css';
+        $js[] = static::$resource_path  . 'js/vf.js';
+
+        return static::getPage()->setConfig(array(
+            'css' => $css,
+            'js' => $js
+        ));
+    }
+
+    /**
+     * Shortcut for rendering mustache pages
+     * @param   string  $name
+     * @return  string  rendered mustache
+     */
+    public static function getMustache($name, $data = array())
+    {
+        $path = static::$resource_path . 'mustache/' . $name . '.m';
+
+        return static::getPage()->mustache($path, $data);
+    }
+
+    /**
+     * @return  string
+     */
     abstract public function getHTML();
 
+    /**
+     * Gets an array of vf_item ids from the current object
+     * @return array [id]
+     */
     public function getItemIDs()
     {
         $items = $this->items ?: $this->folder->items;
@@ -203,6 +242,7 @@ abstract class Inc
     }
 
     /**
+     * Sets configurable variables
      * @return  $this
      */
     public function setByArray()
@@ -220,7 +260,5 @@ abstract class Inc
 
         return $this;
     }
-
-
 
 }

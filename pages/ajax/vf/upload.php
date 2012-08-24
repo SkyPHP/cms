@@ -1,10 +1,9 @@
-<?
+<?php
 
-// this is the new upload script
+$handler = new \Sky\VF\UploadHandler($_POST, $_FILES);
 
-include 'lib/vfolder/class.vf_upload_handler.php';
+// makes sure that upload is proper
+$handler->validate();
 
-$handler = new vf_upload_handler($_POST, $_FILES);
-$handler->validate(); // makes sure that upload is proper
-$response = $handler->doUpload(); // will not run if there are errors
-exit_json($response);
+// will not run if there are errors
+exit_json($handler->doUpload());
