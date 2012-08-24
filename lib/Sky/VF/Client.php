@@ -247,7 +247,9 @@ class Client
             );
 
             if ($op['type'] != 'resize') {
-                $op['gravity'] = $params['crop'] ?: 'Center';
+                $op['gravity'] = (!$params['crop'] || is_bool($params['crop']))
+                    ? 'Center'
+                    : $params['crop'];
             }
 
             $operations[] = array_filter($op);

@@ -84,7 +84,53 @@ class Slideshow extends Gallery\Inc
         $p->js[] = '/lib/js/jquery.hoverIntent.js';
         $p->js[] = '/lib/vfolder/js/vf.js';
 
-        return parent::makeHTML();
+        return $this->getHTML();
+    }
+
+    public function getHTML()
+    {
+        $items = $this->getItemIDs();
+
+        list($large_conf, $small_conf) = $this->getItemsConfs();
+
+        $large = Client::getItem($items, $large_conf);
+        $small = Client::getItem($items, $small_conf);
+
+        $small[0]->class = $large[0]->class = "first selected";
+
+        $data = array(
+            'folders_path' => $this->folder->path,
+            'transition' => $this->transition,
+            'delay' => $this->delay,
+            'autohide' => $this->auto_hide_toolbar ? 'yes' : 'no',
+            'autostart' => $this->autostart ? 'autostart="true"' : '',
+            'enlarge' => $this->enlarge,
+            'controls' => $this->controls,
+            'captions' => $this->captions,
+            'main' => $large,
+            'thumbs' => $small
+        );
+
+        return $this->html = static::getPage()->mustache(
+            'lib/Sky/VF/mustache/slideshow.m',
+            $data
+        );
+    }
+
+    protected function getItemsConfs()
+    {
+        $large = array(
+            'width' => $this->width,
+            'height' => $this->height,
+            'crop' => $this->crop
+        );
+
+        $small = array_merge($large, array(
+            'width' => $this->thumb_width,
+            'height' => $this->thumb_height
+        ));
+
+        return array($large, $small);
     }
 
     /**
