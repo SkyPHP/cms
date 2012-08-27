@@ -81,7 +81,7 @@ class Slideshow extends Gallery\Inc
      */
     public function getHTML()
     {
-        static::addPgaeResources(array(
+        static::addPageResources(array(
             'js' => '/lib/js/jquery.hoverIntent.js'
         ));
 

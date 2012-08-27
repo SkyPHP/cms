@@ -2,9 +2,6 @@
 
 //  gallery
 
-// remove the next 3 lines! this is for testing only
-use \Sky\VF\Client as vf;
-
 if (!$_POST['_token']) {
 	return;
 }

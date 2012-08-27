@@ -161,8 +161,14 @@ abstract class Inc
             ? $this->folder->id
             : \Sky\VF\Client::getFolder($this->folder)->id;
 
+        if (!$id) {
+            return $this->folder = (object) array(
+                'path' => $this->folder
+            );
+        }
+
         return $this->folder = \Sky\VF\Client::getClient()->getFolderItems($id, array(
-            'limit' => $this->limit
+            'limit' => $this->limit ?: -1
         ))->folder;
     }
 
@@ -238,7 +244,7 @@ abstract class Inc
 
         return array_filter(array_map(function($i) {
             return $i->id;
-        }, $items));
+        }, $items ?: array()));
     }
 
     /**

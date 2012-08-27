@@ -174,7 +174,7 @@ class Client
     {
         static::checkForClient();
 
-        return static::getClient()->removeItem($id);
+        return static::getClient()->deleteItem($id);
     }
 
     /**
@@ -271,7 +271,3 @@ class Client
     }
 
 }
-
-\Sky\VF\Client::config(array(
-    'host' => 'vfdev.skydev.net/api/v1'
-));

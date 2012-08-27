@@ -74,7 +74,7 @@ class Gallery extends Gallery\Inc
             'crop' => $this->crop
         );
 
-        $list = $items ? Client::getIteM($items, $params) : null;
+        $list = $items ? Client::getItem($items, $params) : null;
 
         $data = array(
             'id' => $this->identifier,

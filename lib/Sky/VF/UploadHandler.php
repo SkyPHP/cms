@@ -223,15 +223,8 @@ class UploadHandler
             'folder' => $this->folders_path
         );
 
-        // $re = Client::getClient()->addItem($upload_opts, $this->uploaded_file);
+        $re = Client::getClient()->addItem($upload_opts, $this->uploaded_file);
 
-        $re = (object) array(
-            'errors' => array(
-                (object) array(
-                    'message' => 'Gave up here'
-                )
-            )
-        );
         unlink($this->uploaded_file); // delete file from tmpdir
 
         if ($re->errors) {
