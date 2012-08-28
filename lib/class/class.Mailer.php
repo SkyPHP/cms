@@ -285,7 +285,7 @@ class Mailer
      * @param   array   $data
      * @return  $this
      * @throws  Exception   if using a Mailer template and there is no inc_dir
-     * @throws  Excpetion   IF the file to include does not exist
+     * @throws  Excpetion   if the file to include does not exist
      */
     public function inc($name, array $data = array())
     {
