@@ -34,7 +34,7 @@ if ($re['status'] != 'OK') exit_json($re);
 
 $mlr = new Mailer;
 $mlr->addTo($person->email_address)
-    ->inc('reset-password', array(
+    ->inc('includes/Mailers/reset-password.php', array(
         'person' => $person,
         'host' => $_SERVER['HTTP_HOST']
     ))->send();

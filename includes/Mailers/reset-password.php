@@ -1,11 +1,13 @@
 <?
 
-$this->setSubject('Resetting Your Password.');
+$this->setSubject('Reset Your Password');
 $this->setContentType('html');
 
 $host = $data['host'];
 $ide = $data['person']->getIDE();
 $hash = $data['person']->password_reset_hash;
+
+$this->setFrom("no-reply@$host");
 
 $uri = sprintf('http://%s/reset-password/%s/%s', $host, $ide, $hash);
 
