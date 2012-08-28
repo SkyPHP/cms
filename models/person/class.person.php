@@ -59,19 +59,6 @@ class person extends Model {
     );
 
     /**
-     * Adds Virtual Properties (not saved)
-     */
-    public function construct()
-    {
-        // password validation (pw1, pw2, current_password)
-        $this->addProperty(
-            'password1',
-            'password2',
-            'current_password'
-        );
-    }
-
-    /**
      * Run password validation
      */
     public function beforeCheckRequiredFields()
