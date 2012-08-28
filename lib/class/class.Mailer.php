@@ -53,11 +53,6 @@ class Mailer
     /**
      * @var array
      */
-    public $to = array();
-
-    /**
-     * @var array
-     */
     public $cc = array();
 
     /**
