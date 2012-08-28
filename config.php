@@ -2,7 +2,7 @@
 $seo_field_array=array(
 	'target'=>array(
 		'title'=>75,
-		'meta_description'=>55,		
+		'meta_description'=>55,
 		'h1'=>100,
 		'h1_blurb'=>300,
 		'footer_blurb'=>300
@@ -39,6 +39,3 @@ $includes[] = 'lib/krumo/class.krumo.php';
 
 $quick_serve['media'] = 'lib/core/quick-serve/media.php';
 $quick_serve['media-zip'] = 'lib/core/quick-serve/media-zip.php';
-
-$sky_content_type['psd'] = 'image/vnd.adobe.photoshop';
-$sky_content_type['pdf'] = 'application/pdf';
