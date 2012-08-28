@@ -50,7 +50,7 @@ class Mailer {
 	}
 
 	public function makeHeaders() {
-		
+
 		if ($this->headers) return $this->headers;
 
 		if (!$this->from) {
@@ -74,7 +74,7 @@ class Mailer {
 		foreach ($this->bcc as $bcc) {
 			$this->headers .= 'Bcc: '.$bcc."\r\n";
 		}
-		
+
 		return $this->headers;
 
 	}
@@ -122,21 +122,22 @@ class Mailer {
 	}
 
 	public function inc($name, $data) {
-		
-		if (!self::$inc_dir) {
-			throw new Exception('Mailer::$inc_dir not set.');
-			return;
+
+		if (strpos($name, '.php')) {
+			$include = $name;
+		} else {
+			if (!self::$inc_dir) {
+				throw new Exception('Mailer::$inc_dir not set.');
+			}
+			$include = self::$inc_dir . $name . '.php';
 		}
 
-		$include = self::$inc_dir . $name . '.php';
-
 		if (!file_exists_incpath($include)) {
-			throw new Exception('Template ' . $name . ' does not exist');
-			return;
+			throw new Exception('Mailer "' . $include . '" does not exist');
 		}
 
 		return $this->setBody($this->_includeTemplate($include, $data));
-		
+
 	}
 
 	private function _includeTemplate($_include, $data) {
