@@ -1,6 +1,6 @@
 <?
 
-$this->setSubject('Resetting Your Password.');
+$this->setSubject('Reset Your Password');
 $this->setContentType('html');
 
 $host = $data['host'];
