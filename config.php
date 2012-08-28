@@ -39,3 +39,5 @@ $includes[] = 'lib/krumo/class.krumo.php';
 
 $quick_serve['media'] = 'lib/core/quick-serve/media.php';
 $quick_serve['media-zip'] = 'lib/core/quick-serve/media-zip.php';
+
+$person_encryption_key = 'set-this-variable-in-your-config-for-security-purposes';
