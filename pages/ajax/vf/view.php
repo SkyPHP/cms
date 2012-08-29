@@ -1,11 +1,9 @@
-<?
+<?php
 
 // view item
 
-$i = vf::getItem(IDE);
+$i = vf::getItem($this->ide);
 
-if ($i->errors) {
-	redirect('/404', 302);
-}
-
-redirect($i->src, 302);
+$this->redirect(
+    $i->errors ? '/404' : $i->http_url
+);

@@ -1,11 +1,9 @@
 <?php
 
-/**
- * @package VF
- */
-class vf_upload_handler
-{
+namespace Sky\Vf;
 
+class UploadHandler
+{
     /**
      * @var array
      */
@@ -84,7 +82,7 @@ class vf_upload_handler
      */
     public function getParams()
     {
-        $this->params = mem('vf_uploader:' . $this->POST['_token']);
+        $this->params = $_SESSION['VF']['uploader'][$this->POST['_token']];
         if (!$this->params) {
             $this->errors[] = 'Invalid upload token passed.';
         }
@@ -100,7 +98,7 @@ class vf_upload_handler
     {
         $folder = (is_string($this->params['folder']))
             ? $this->params['folder']
-            : $this->params['folder']->folders_path;
+            : $this->params['folder']->path;
 
         if ($folder == '/' || !$folder) {
             $this->errors[] = 'Folders Path was not set.';
@@ -222,25 +220,26 @@ class vf_upload_handler
         }
 
         $upload_opts = array(
-            'folders_path' => $this->folders_path
+            'folder' => $this->folders_path
         );
 
-        $re = vf::$client->upload_to_server($this->uploaded_file, $upload_opts);
+        $re = Client::getClient()->addItem($upload_opts, $this->uploaded_file);
 
         unlink($this->uploaded_file); // delete file from tmpdir
 
-        if (!$re['success']) {
+        if ($re->errors) {
+
             $this->errors[] = 'There was an error uploading the file:';
-            $this->errors[] = $re['last_error'];
+
+            $this->errors = array_merge($this->errors, array_map(function($e) {
+                return $e->message;
+            }, $re->errors));
+
             return $this->respond($re);
         }
 
-        // clear empty folder cache
-        $key = vf::getEmptyFolderKey($this->folders_path);
-        mem($key, null);
-
         if ($this->params['db_field'] && $this->params['db_row_id']) {
-            $this->updateDBRecord($re['items_id']);
+            $this->updateDBRecord($re->item->id);
         }
 
         return $this->respond($re);
@@ -361,5 +360,4 @@ class vf_upload_handler
             );
         }
     }
-
 }
