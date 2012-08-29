@@ -1,83 +1,73 @@
 
-	function forgotpw() {
-		$.skybox('/reset-password');
-	}
+    function forgotpw() {
+        $.skybox('/reset-password');
+    }
 
-	// login
-	$('#login_username:visible').livequery(function(){
-		$(this).focus();
-	});
+    // login
+    $('#login_username:visible').livequery(function(){
+        $(this).focus();
+    });
 
-	var	fields = ['button', 'message', 'password', 'form', 'username'],
-		uri = '/ajax/login-skybox/authenticate',
-		messages = {
-			'true' : 'You are being redirected to the requested page.',
-			'false': 'Incorrect Login. Please try again.'
-		},
-		redirectToPage = function() {
-			
-			var uri = window.location.href;
-			if (location.hash.substring(0, 2) != '#/') {
-				uri = uri.substr(0, uri.indexOf('#'));
-				uri = removeParam('skybox', uri);
-				uri = removeParam('logout', uri);
-			} else {
-				uri = window.location.pathname;
-			}
+    var fields = ['button', 'message', 'password', 'form', 'username'],
+        uri = '/ajax/login-skybox/authenticate',
+        messages = {
+            'true' : 'You are being redirected to the requested page.',
+            'false': 'Incorrect Login. Please try again.'
+        },
+        redirectToPage = function() {
 
-			window.location.href = uri;
-			
-		};
+            var uri = window.location.href;
+            if (location.hash.substring(0, 2) != '#/') {
+                uri = uri.substr(0, uri.indexOf('#'));
+                uri = removeParam('skybox', uri);
+                uri = removeParam('logout', uri);
+            } else {
+                uri = window.location.pathname;
+            }
 
-	$('#login_form:visible').die().live('submit', function() {
+            window.location.href = uri;
 
-		var $els = {}, i, data, message;
+        };
 
-		// get elements
-		for (i = 0; i < fields.length; i++) {
-			$els[fields[i]] = $('#login_' + fields[i]);
-		}
+    $('#skybox').on('submit', '#login_form', function(e) {
 
-		// hide message
-		$els.message.is(':visible') && $els.message.fadeTo('fast', 0.01);
+        e.preventDefault();
 
-		// disable login button
-		$els.button.val('Authenticating...').attr('disabled', true);
+        var $els = {}, i;
 
-		data = $els.form.serialize();
+        $.each(fields, function(i, item) {
+            $els[item] = $('#login_' + item);
+        });
 
-		$.post(uri, data, function(response) {
-			
-			message = messages[response] || response;
-			$els.message.html(message);
-			if ($els.message.is(':visible')) $els.message.fadeTo('fast', 1);
-			else $els.message.slideDown('fast');
+        if ($els.message.is(':visible')) {
+            $els.message.fadeTo('fast', 0.01);
+        }
 
-			if (response == 'true') {
-				
-				$els.message.css({
-					border: 0,
-					borderBottom: '1px solid',
-					borderTop: '1px solid',
-					textAlign: 'center',
-					background: 'black',
-					color: 'white',
-					fontWeight: 'bold',
-					fontSize: '16px'
-				});
+        $els.button.val('Authenticating...').attr('disabled', true);
 
-				setTimeout(redirectToPage, 500);
+        sky.post(uri, $els.form.serialize(), function(re) {
 
-			} else {
+            $els.message.html(messages[re] || re);
 
-				$els.password.val('');
-				$els.button.val('Sign In').attr('disabled', false);
-				if ($els.username.val() == '') $els.username.focus();
-				else $els.password.focus();
+            if ($els.message.is(':visible')) {
+                $els.message.fadeTo('fast', 1);
+            } else {
+                $els.message.slideDown('fast');
+            }
 
-			}
+            if (re == 'true') {
+                $els.message.addClass('successful-login');
+                setTimeout(redirectToPage, 500);
+            } else {
+                $els.password.val('');
+                $els.button.val('Sign In').attr('disabled', false);
+                if ($els.username.val() === '') {
+                    $els.username.focus();
+                } else {
+                    $els.password.focus();
+                }
+            }
 
-		});
+        });
 
-		return false;
-	});
+    });
