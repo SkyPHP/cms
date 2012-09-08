@@ -221,6 +221,10 @@ class Client
             }
         }
 
+        if (!curl_setopt($curl, CURLOPT_TIMEOUT_MS, 5000)) {
+            static::handleCurlError($curl, 'CURLOPT_TIMEOUT_MS');
+        }
+
         if (!curl_setopt($curl, CURLOPT_POST, true)) {
             static::handleCurlError($curl, 'CURLOPT_POST');
         }
