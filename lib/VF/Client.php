@@ -243,9 +243,34 @@ class Client
         $response = curl_exec($curl);
         elapsed('end ' . $name);
 
+        $error = curl_error($curl);
         curl_close($curl);
+        if ($error) {
+            // there was a curl transmission error
+            return (object) array(
+                'request' => array(
+                    'url' => $url,
+                    'post' => $post
+                ),
+                'errors' => array($error)
+            );
+        }
 
-        return json_decode($response);
+        $data = json_decode($response);
+        if (!$data) {
+            // the server did not respond with valid json
+            // return the unformatted output as an error
+            // there was a curl transmission error
+            return (object) array(
+                'request' => array(
+                    'url' => $url,
+                    'post' => $post
+                ),
+                'errors' => array($response)
+            );
+        }
+
+        return $data;
     }
 
     /**

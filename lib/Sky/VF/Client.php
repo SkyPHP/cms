@@ -9,6 +9,11 @@ class Client
 {
 
     /**
+     * @var string
+     */
+    public static $version = '2';
+
+    /**
      * @var \VF\Client
      */
     protected static $client = null;
@@ -57,16 +62,42 @@ class Client
         throw new \LogicException('Cannot instantiate this class. It is a singleton.');
     }
 
+
     /**
      * Gets the given item and transforms it as necessary
      * Usage:
      *      vf::getItem($id, 300, 300)
+     * @param   mixed   $id     id | ide | myid
+     * @param   mixed   $width  int | array
+     * @param   string  $height
+     * @param   string  $crop
+     */
+    public static function getItem($id, $width = null, $height = null, $crop = null)
+    {
+        static::checkForClient();
+
+        $params = static::prepOperations($width, $height, $crop);
+
+        $re = static::getClient()->getItem($id, $params);
+
+        if ($re->errors) {
+            return $re;
+        }
+
+        return $re->item;
+    }
+
+
+    /**
+     * Gets the given item and transforms it as necessary
+     * Usage:
+     *      vf::getItems($id, 300, 300)
      * @param   mixed   $id     id | ide | array | csv
      * @param   mixed   $width  || array
      * @param   string  $height
      * @param   string  $crop
      */
-    public static function getItem($id, $width = null, $height = null, $crop = null)
+    public static function getItems($id, $width = null, $height = null, $crop = null)
     {
         static::checkForClient();
 
@@ -88,7 +119,11 @@ class Client
 
         $re = static::getClient()->getItems($params);
 
-        return $re->errors ? $re : ($single ? $re->items[0] : $re->items);
+        if ($re->errors) {
+            return $re;
+        }
+
+        return $re->items;
     }
 
     /**
