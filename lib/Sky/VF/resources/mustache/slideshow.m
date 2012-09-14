@@ -9,7 +9,7 @@
     <div class="vf-slideshow-main">
         <div class="vf-slideshow-image">
             {{#main}}
-                {{{http_html}}}
+                {{{html}}}
             {{/main}}
         </div>
         <div class="vf-slideshow-controls has-floats">
@@ -30,7 +30,7 @@
     <div class="vf-slideshow-thumbs has-floats">
         {{#thumbs}}
         <div class="vf-slideshow-thumb {{class}}" caption="{{caption}}" ide="{{ide}}">
-            {{{http_html}}}
+            {{{html}}}
         </div>
         {{/thumbs}}
     </div>

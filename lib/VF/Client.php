@@ -240,6 +240,7 @@ class Client
 
         $name = '\VF\Client::makeRequest(' . $url .')';
         elapsed('begin ' . $name);
+        if ($_GET['elapsed']) print_r($post);
         $response = curl_exec($curl);
         elapsed('end ' . $name);
 

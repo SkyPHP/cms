@@ -92,28 +92,25 @@ class Client
      * Gets the given item and transforms it as necessary
      * Usage:
      *      vf::getItems($id, 300, 300)
-     * @param   mixed   $id     id | ide | array | csv
+     * @param   mixed   $id     array | csv
      * @param   mixed   $width  || array
      * @param   string  $height
      * @param   string  $crop
      */
-    public static function getItems($id, $width = null, $height = null, $crop = null)
+    public static function getItems($items, $width = null, $height = null, $crop = null)
     {
         static::checkForClient();
 
         $params = static::prepOperations($width, $height, $crop);
 
-        if (!is_array($id)) {
-            $id = array_filter(explode(',', $id));
-            if (count($id) === 1) {
-                $single = true;
-            }
+        if (!is_array($items)) {
+            $items = array_filter(explode(',', $items));
         }
 
         $params = array_merge(
             $params,
             array(
-                'items' => implode(',', $id)
+                'items' => implode(',', $items)
             )
         );
 

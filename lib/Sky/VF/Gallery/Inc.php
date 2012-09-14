@@ -139,9 +139,12 @@ abstract class Inc
         }
 
         if (!$this->folder && !$this->items) {
-            throw new \Exception(
-                'Gallery requires a folder or items to be set.'
-            );
+            // throw new \Exception(
+            //     'Gallery requires a folder or items to be set.'
+            // );
+
+            // if there are no images to show, just fail silently
+            return;
         }
 
         if ((!is_object($this->folder) || !$this->folder->items) && !$this->items) {
@@ -200,8 +203,8 @@ abstract class Inc
         $css = \arrayify($resources['css']) ?: array();
         $js = \arrayify($resources['js']) ?: array();
 
-        $css[] = static::$resource_path . 'css/vf.css';
-        $js[] = static::$resource_path  . 'js/vf.js';
+        $css[] = '/' . static::$resource_path . 'css/vf.css';
+        $js[] = '/' . static::$resource_path  . 'js/vf.js';
 
         return static::getPage()->setConfig(array(
             'css' => $css,

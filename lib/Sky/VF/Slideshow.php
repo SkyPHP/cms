@@ -88,8 +88,8 @@ class Slideshow extends Gallery\Inc
         list($large_conf, $small_conf) = $this->getItemsConfs();
 
         $items = $this->getItemIDs();
-        $large = Client::getItem($items, $large_conf);
-        $small = Client::getItem($items, $small_conf);
+        $large = Client::getItems($items, $large_conf);
+        $small = Client::getItems($items, $small_conf);
 
         $small[0]->class = $large[0]->class = "first selected";
 
