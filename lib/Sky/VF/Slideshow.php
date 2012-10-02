@@ -88,6 +88,7 @@ class Slideshow extends Gallery\Inc
         list($large_conf, $small_conf) = $this->getItemsConfs();
 
         $items = $this->getItemIDs();
+
         $large = Client::getItems($items, $large_conf);
         $small = Client::getItems($items, $small_conf);
 
