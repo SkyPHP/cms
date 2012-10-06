@@ -166,7 +166,7 @@ abstract class Inc
 
         $this->folder = \Sky\VF\Client::getFolder($this->folder);
 
-        return $folder->folder;
+        return $this->folder;
     }
 
     /**
