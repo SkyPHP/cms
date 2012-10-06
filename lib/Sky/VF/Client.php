@@ -151,6 +151,8 @@ class Client
     {
         static::checkForClient();
 
+        $params = static::prepOperations($params['width'], $params['height'], $params['crop']);
+
         $re = !static::isPath($id)
             ? static::getClient()->getFolder($id, $params)
             : static::getClient()->getFolderByPath(array_merge(

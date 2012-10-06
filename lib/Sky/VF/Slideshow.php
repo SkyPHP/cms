@@ -104,7 +104,9 @@ class Slideshow extends Gallery\Inc
             'controls' => $this->controls,
             'captions' => $this->captions,
             'main' => $large,
-            'thumbs' => $small
+            'thumbs' => $small,
+            'width' => $this->width,
+            'height' => $this->height
         );
 
         return $this->html = static::getMustache('slideshow', $data);
