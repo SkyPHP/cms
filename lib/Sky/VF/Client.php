@@ -74,9 +74,16 @@ class Client
      */
     public static function getItem($id, $width = null, $height = null, $crop = null)
     {
+        if (!$id) return false;
+
         static::checkForClient();
 
         $params = static::prepOperations($width, $height, $crop);
+
+        // use cached getItem request if it exists
+        $memkey = "vf2:getItem:" . serialize(array($id, $params));
+        $cached_response = mem($memkey);
+        if ($cached_response) return $cached_response;
 
         $re = static::getClient()->getItem($id, $params);
 
@@ -84,7 +91,10 @@ class Client
             return $re;
         }
 
-        return $re->item;
+        // cache getItem request if no error
+        $response = $re->item;
+        mem($memkey, $response);
+        return $response;
     }
 
 
@@ -114,13 +124,22 @@ class Client
             )
         );
 
+        // use cached getItems request if it exists
+        $memkey = "vf2:getItems:" . serialize($params);
+        $cached_response = mem($memkey);
+        if ($cached_response) return $cached_response;
+
+
         $re = static::getClient()->getItems($params);
 
         if ($re->errors) {
             return $re;
         }
 
-        return $re->items;
+        // cache getItems request if no error
+        $response = $re->items;
+        mem($memkey, $response);
+        return $response;
     }
 
     /**
@@ -131,6 +150,8 @@ class Client
     public static function getFolder($id, array $params = array())
     {
         static::checkForClient();
+
+        $params = static::prepOperations($params['width'], $params['height'], $params['crop']);
 
         $re = !static::isPath($id)
             ? static::getClient()->getFolder($id, $params)

@@ -6,7 +6,7 @@
     {{autostart}}
     >
 
-    <div class="vf-slideshow-main">
+    <div class="vf-slideshow-main" style="width:{{width}}px; height:{{height}}px;">
         <div class="vf-slideshow-image">
             {{#main}}
                 {{{html}}}
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="vf-slideshow-thumbs has-floats">
+    <div class="vf-slideshow-thumbs has-floats" style="width:{{width}}px;">
         {{#thumbs}}
         <div class="vf-slideshow-thumb {{class}}" caption="{{caption}}" ide="{{ide}}">
             {{{html}}}

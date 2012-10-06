@@ -160,19 +160,13 @@ abstract class Inc
      */
     public function initFolder()
     {
-        $id = (is_object($this->folder))
-            ? $this->folder->id
-            : \Sky\VF\Client::getFolder($this->folder)->id;
 
-        if (!$id) {
-            return $this->folder = (object) array(
-                'path' => $this->folder
-            );
-        }
+        if ($_GET['vf_debug']) echo 'initFolder: ' . $this->folder . '<br />';
+        if (is_object($this->folder)) return;
 
-        return $this->folder = \Sky\VF\Client::getClient()->getFolderItems($id, array(
-            'limit' => $this->limit ?: -1
-        ))->folder;
+        $this->folder = \Sky\VF\Client::getFolder($this->folder);
+
+        return $this->folder;
     }
 
     /**

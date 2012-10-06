@@ -11,6 +11,15 @@
 
 }
 
+.vf-slideshow-image {
+    overflow: hidden;
+}
+
+.vf-slideshow-image img {
+    display: block;
+    float: left;
+}
+
 .vf-slideshow-caption {
     color: #000;
     font-size: 12px;
