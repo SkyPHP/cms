@@ -190,7 +190,7 @@ class Client
         if (!$info->static) {
             $arg = $args[0];
             if (!$arg || is_array($arg) || is_object($arg)) {
-                throw new \InvalidArgumentException('Invalid argument for this endpoint');
+                throw new \InvalidArgumentException("Invalid args for $name");
             }
         }
 
@@ -238,9 +238,15 @@ class Client
             static::handleCurlError($culr, 'CURLOPT_RETURNTRANSFER');
         }
 
-        $name = '\VF\Client::makeRequest(' . $url .')';
+        $name = '\VF\Client::makeRequest: ' . $url;
         elapsed('begin ' . $name);
-        if ($_GET['elapsed']) print_r($post);
+
+        if ($_GET['vf_debug']) {
+
+            echo $url . '<br />POST:';
+            krumo($post);
+        }
+
         $response = curl_exec($curl);
         elapsed('end ' . $name);
 
@@ -258,11 +264,12 @@ class Client
         }
 
         $data = json_decode($response);
+
         if (!$data) {
             // the server did not respond with valid json
             // return the unformatted output as an error
             // there was a curl transmission error
-            return (object) array(
+            $data = (object) array(
                 'request' => array(
                     'url' => $url,
                     'post' => $post
@@ -271,7 +278,14 @@ class Client
             );
         }
 
+        if ($_GET['vf_debug']) {
+            echo 'response:<br />';
+            krumo($data);
+            echo '<br />';
+        }
+
         return $data;
+
     }
 
     /**

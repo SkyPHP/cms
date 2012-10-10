@@ -88,6 +88,7 @@ class Slideshow extends Gallery\Inc
         list($large_conf, $small_conf) = $this->getItemsConfs();
 
         $items = $this->getItemIDs();
+
         $large = Client::getItems($items, $large_conf);
         $small = Client::getItems($items, $small_conf);
 
@@ -103,7 +104,9 @@ class Slideshow extends Gallery\Inc
             'controls' => $this->controls,
             'captions' => $this->captions,
             'main' => $large,
-            'thumbs' => $small
+            'thumbs' => $small,
+            'width' => $this->width,
+            'height' => $this->height
         );
 
         return $this->html = static::getMustache('slideshow', $data);
