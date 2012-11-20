@@ -82,7 +82,8 @@ class Client
 
         // use cached getItem request if it exists
         $memkey = "vf2:getItem:" . serialize(array($id, $params));
-        $cached_response = mem($memkey);
+        if (!$_GET['vf_refresh']) $cached_response = mem($memkey);
+        if ($_GET['elapsed']) krumo($cached_response);
         if ($cached_response) return $cached_response;
 
         $re = static::getClient()->getItem($id, $params);
