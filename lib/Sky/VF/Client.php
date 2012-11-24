@@ -152,7 +152,21 @@ class Client
     {
         static::checkForClient();
 
+        /*
+        if ($_GET['vf_debug']) {
+            echo 'getFolder $params:';
+            krumo($params);
+        }
+        */
+
         $params = static::prepOperations($params['width'], $params['height'], $params['crop']);
+
+        /*
+        if ($_GET['vf_debug']) {
+            echo 'getFolder $params after prepOperations:';
+            krumo($params);
+        }
+        */
 
         $re = !static::isPath($id)
             ? static::getClient()->getFolder($id, $params)
@@ -211,9 +225,23 @@ class Client
     {
         static::checkForClient();
 
-        $params = static::prepOperations($width, $height, $crop);
-        $params['limit'] = $limit;
-        $params['random'] = true;
+        //$params = static::prepOperations($width, $height, $crop);
+        $params = array(
+            'width' => $width,
+            'height' => $height,
+            'crop' => $crop,
+            'limit' => $limit,
+            'random' => true
+        );
+        #$params['limit'] = $limit;
+        #$params['random'] = true;
+
+        /*
+        if ($_GET['vf_debug']) {
+            echo 'getRandomItems $params:';
+            krumo($params);
+        }
+        */
 
         $re = static::getFolder($folder, $params);
 
