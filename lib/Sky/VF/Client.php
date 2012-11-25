@@ -82,7 +82,8 @@ class Client
 
         // use cached getItem request if it exists
         $memkey = "vf2:getItem:" . serialize(array($id, $params));
-        $cached_response = mem($memkey);
+        if (!$_GET['vf_refresh']) $cached_response = mem($memkey);
+        if ($_GET['elapsed']) krumo($cached_response);
         if ($cached_response) return $cached_response;
 
         $re = static::getClient()->getItem($id, $params);
@@ -151,7 +152,21 @@ class Client
     {
         static::checkForClient();
 
+        /*
+        if ($_GET['vf_debug']) {
+            echo 'getFolder $params:';
+            krumo($params);
+        }
+        */
+
         $params = static::prepOperations($params['width'], $params['height'], $params['crop']);
+
+        /*
+        if ($_GET['vf_debug']) {
+            echo 'getFolder $params after prepOperations:';
+            krumo($params);
+        }
+        */
 
         $re = !static::isPath($id)
             ? static::getClient()->getFolder($id, $params)
@@ -210,9 +225,23 @@ class Client
     {
         static::checkForClient();
 
-        $params = static::prepOperations($width, $height, $crop);
-        $params['limit'] = $limit;
-        $params['random'] = true;
+        //$params = static::prepOperations($width, $height, $crop);
+        $params = array(
+            'width' => $width,
+            'height' => $height,
+            'crop' => $crop,
+            'limit' => $limit,
+            'random' => true
+        );
+        #$params['limit'] = $limit;
+        #$params['random'] = true;
+
+        /*
+        if ($_GET['vf_debug']) {
+            echo 'getRandomItems $params:';
+            krumo($params);
+        }
+        */
 
         $re = static::getFolder($folder, $params);
 
