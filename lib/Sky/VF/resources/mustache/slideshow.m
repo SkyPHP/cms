@@ -7,6 +7,7 @@
     >
 
     <div class="vf-slideshow-main" style="width:{{width}}px; height:{{height}}px;">
+        {{! keep the following loop without whitespace to prevent padding }}
         <div class="vf-slideshow-image">{{#main}}{{{html}}}{{/main}}</div>
         <div class="vf-slideshow-controls has-floats">
             {{#captions}}
