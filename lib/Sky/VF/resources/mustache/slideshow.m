@@ -7,11 +7,7 @@
     >
 
     <div class="vf-slideshow-main" style="width:{{width}}px; height:{{height}}px;">
-        <div class="vf-slideshow-image">
-            {{#main}}
-                {{{html}}}
-            {{/main}}
-        </div>
+        <div class="vf-slideshow-image">{{#main}}{{{html}}}{{/main}}</div>
         <div class="vf-slideshow-controls has-floats">
             {{#captions}}
             <div class="vf-slideshow-caption float-left"></div>

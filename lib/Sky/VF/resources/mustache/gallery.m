@@ -10,9 +10,7 @@
 
     {{^empty}}
         {{#list}}
-        <div class="vf-gallery-item" ide="{{ide}}">
-            {{{html}}}
-        </div>
+        <div class="vf-gallery-item" ide="{{ide}}">{{{html}}}</div>
         {{/list}}
     {{/empty}}
 
