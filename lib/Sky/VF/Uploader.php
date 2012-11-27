@@ -102,7 +102,8 @@ class Uploader extends Gallery\Inc
         }
 
         if (!$this->folder->path) {
-            throw new \Exception('Could not get folder object from server.');
+            // don't throw exception if the folder doesn't exist. -will
+            //throw new \Exception('Could not get folder object from server.');
         }
 
         $this->getHTML();
