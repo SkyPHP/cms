@@ -261,7 +261,7 @@ class UploadHandler
             return;
         }
 
-        aql::update(
+        \aql::update(
             $table,
             array($field => $id),
             $this->params['db_row_id']
