@@ -156,7 +156,7 @@ abstract class Inc
     }
 
     /**
-     * initializes the volder object by path
+     * initializes the vfolder object by path
      */
     public function initFolder()
     {
@@ -164,7 +164,12 @@ abstract class Inc
         if ($_GET['vf_debug']) echo 'initFolder: ' . $this->folder . '<br />';
         if (is_object($this->folder)) return;
 
+        $folder_path = $this->folder;
+
         $this->folder = \Sky\VF\Client::getFolder($this->folder);
+        if ($this->folder->errors) {
+            $this->folder->path = $folder_path;
+        }
 
         return $this->folder;
     }
