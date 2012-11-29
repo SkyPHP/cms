@@ -245,7 +245,7 @@ class Client
 
         $re = static::getFolder($folder, $params);
 
-        return $re->items ?: $re;
+        return is_array($re->items) ? $re->items : $re;
     }
 
     /**
