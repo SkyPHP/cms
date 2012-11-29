@@ -208,6 +208,8 @@ class Client
 
         $re = static::getRandomItems($folder, 1, $width, $height, $crop);
 
+        krumo($re);
+
         return $re->errors ? $re : $re[0];
     }
 
@@ -245,7 +247,7 @@ class Client
 
         $re = static::getFolder($folder, $params);
 
-        return $re->items ?: $re;
+        return is_array($re->items) ? $re->items : $re;
     }
 
     /**
