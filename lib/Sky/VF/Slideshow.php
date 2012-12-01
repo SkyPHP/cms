@@ -17,7 +17,7 @@ class Slideshow extends Gallery\Inc
         'html_include' => 'pages/ajax/vf/slideshow.php',
         'thumb_type' => 'slide',
         'transition' => 'slide',
-        'auto_hide_toolbar' => true,
+        'auto_hide_toolbar' => false,
         'captions' => true,
         'controls' => true
     );

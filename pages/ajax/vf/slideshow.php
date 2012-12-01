@@ -38,12 +38,7 @@ $single_to_multiple = function($i) {
 	<?=($show_vf) ? 'folders_path="'.$gallery->folder->folders_path.'"':''?>
 	transition="<?=$gallery->transition?>"
 	delay="<?=$gallery->delay?>"
-	autohide="no"
-<?
-/*
 	autohide="<?=($gallery->auto_hide_toolbar)?'yes':'no'?>"
-*/
-?>
 	<?=($gallery->autostart)?'autostart="true"':''?>
 	>
 	<div class="vf-slideshow-main">
