@@ -34,19 +34,24 @@ $single_to_multiple = function($i) {
 // krumo($items_arr);
 
 ?>
-<div class="vf-slideshow has-floats" 
+<div class="vf-slideshow has-floats"
 	<?=($show_vf) ? 'folders_path="'.$gallery->folder->folders_path.'"':''?>
-	transition="<?=$gallery->transition?>" 
+	transition="<?=$gallery->transition?>"
 	delay="<?=$gallery->delay?>"
+	autohide="no"
+<?
+/*
 	autohide="<?=($gallery->auto_hide_toolbar)?'yes':'no'?>"
+*/
+?>
 	<?=($gallery->autostart)?'autostart="true"':''?>
 	>
 	<div class="vf-slideshow-main">
 		<div class="vf-slideshow-image"><?
 			// elapsed('before getting main images in batch');
 			$fetched = vf::getItem($items_arr, array(
-				'width' => $gallery->width, 
-				'height' => $gallery->height, 
+				'width' => $gallery->width,
+				'height' => $gallery->height,
 				'crop' => $gallery->crop
 			));
 			// krumo(vf::$client);
