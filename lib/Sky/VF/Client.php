@@ -150,6 +150,8 @@ class Client
      */
     public static function getFolder($id, array $params = array())
     {
+        global $cache_vf2_folders;
+
         static::checkForClient();
 
         /*
@@ -168,16 +170,27 @@ class Client
         }
         */
 
-        $re = !static::isPath($id)
-            ? static::getClient()->getFolder($id, $params)
-            : static::getClient()->getFolderByPath(array_merge(
-                $params,
-                array(
-                    'path' => $id
-                )
-            ));
+        $memkey = "vf2:getFolder:" . serialize($id);
+        if ($cache_vf2_folders) $re = mem($memkey);
 
-        return $re->folder ?: $re;
+        if (!$re) {
+
+            $re = !static::isPath($id)
+                ? static::getClient()->getFolder($id, $params)
+                : static::getClient()->getFolderByPath(array_merge(
+                    $params,
+                    array(
+                        'path' => $id
+                    )
+                ));
+
+        }
+
+        if ($re->folder) {
+            mem($memkey, $re);
+            return $re->folder;
+        }
+        return $re;
     }
 
     /**
