@@ -171,7 +171,7 @@ class Client
         */
 
         $memkey = "vf2:getFolder:" . serialize($id);
-        $re = mem($memkey);
+        if ($cache_vf2_folders) $re = mem($memkey);
 
         if (!$re) {
 
