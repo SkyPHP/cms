@@ -154,27 +154,29 @@ class Client
 
         static::checkForClient();
 
-        /*
-        if ($_GET['vf_debug']) {
-            echo 'getFolder $params:';
-            krumo($params);
-        }
-        */
-
         $params = static::prepOperations($params['width'], $params['height'], $params['crop']);
 
-        /*
-        if ($_GET['vf_debug']) {
-            echo 'getFolder $params after prepOperations:';
-            krumo($params);
-        }
-        */
+        $memkey = "vf2:getFolder:" . serialize(array($id,$params));
 
-        $memkey = "vf2:getFolder:" . serialize($id);
-        if ($cache_vf2_folders) $re = mem($memkey);
+        if ($cache_vf2_folders) {
+
+            $re = mem($memkey);
+
+            // if there has been an upload to this folder since being cached, refresh it
+            $last_upload_memkey = "vf2:getFolder:lastUpload:" . $id;
+            $last_upload = mem($last_upload_memkey);
+
+            if (!$re->cache_time || $re->cache_time < $last_upload) {
+                elapsed($re->cache_time . ' < ' . $last_upload);
+                $re = null;
+            } else {
+                elapsed($re->cache_time . ' !< ' . $last_upload);
+            }
+
+
+        }
 
         if (!$re) {
-
             $re = !static::isPath($id)
                 ? static::getClient()->getFolder($id, $params)
                 : static::getClient()->getFolderByPath(array_merge(
@@ -184,10 +186,14 @@ class Client
                     )
                 ));
 
+            $save_to_mem = true;
         }
 
         if ($re->folder) {
-            mem($memkey, $re);
+            if ($save_to_mem) {
+                $re->cache_time = date('U');
+                mem($memkey, $re);
+            }
             return $re->folder;
         }
         return $re;
@@ -268,6 +274,16 @@ class Client
     public static function removeItem($id)
     {
         static::checkForClient();
+
+        $item = static::getItem($id);
+        $path = $item->folder;
+        $folder = static::getFolder($path);
+
+        // update the last upload time so we know when to refresh cached folders
+        $memkey = "vf2:getFolder:lastUpload:" . $path;
+        mem($memkey, date('U'));
+        $memkey = "vf2:getFolder:lastUpload:" . $folder->id;
+        mem($memkey, date('U'));
 
         return static::getClient()->deleteItem($id);
     }
