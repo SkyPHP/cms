@@ -17,7 +17,7 @@ class Slideshow extends Gallery\Inc
         'html_include' => 'pages/ajax/vf/slideshow.php',
         'thumb_type' => 'slide',
         'transition' => 'slide',
-        'auto_hide_toolbar' => true,
+        'auto_hide_toolbar' => false,
         'captions' => true,
         'controls' => true
     );
@@ -91,6 +91,8 @@ class Slideshow extends Gallery\Inc
 
         $large = Client::getItems($items, $large_conf);
         $small = Client::getItems($items, $small_conf);
+
+        if (!is_array($small)) return;
 
         $small[0]->class = $large[0]->class = "first selected";
 

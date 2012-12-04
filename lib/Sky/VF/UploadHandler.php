@@ -242,6 +242,14 @@ class UploadHandler
             $this->updateDBRecord($re->item->id);
         }
 
+        $folder = Client::getFolder($this->folders_path);
+
+        // update the last upload time so we know when to refresh cached folders
+        $memkey = "vf2:getFolder:lastUpload:" . $this->folders_path;
+        mem($memkey, date('U'));
+        $memkey = "vf2:getFolder:lastUpload:" . $folder->id;
+        mem($memkey, date('U'));
+
         return $this->respond($re);
     }
 
