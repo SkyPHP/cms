@@ -17,7 +17,7 @@ class Slideshow extends Gallery\Inc
         'html_include' => 'pages/ajax/vf/slideshow.php',
         'thumb_type' => 'slide',
         'transition' => 'slide',
-        'auto_hide_toolbar' => false,
+        'auto_hide_toolbar' => true,
         'captions' => true,
         'controls' => true
     );
@@ -101,7 +101,7 @@ class Slideshow extends Gallery\Inc
             'transition' => $this->transition,
             'delay' => $this->delay,
             'autohide' => $this->auto_hide_toolbar ? 'yes' : 'no',
-            'autostart' => $this->autostart ? 'autostart="true"' : '',
+            'autostart' => $this->autostart ? 'true' : 'false',
             'enlarge' => $this->enlarge,
             'controls' => $this->controls,
             'captions' => $this->captions,
