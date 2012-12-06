@@ -244,9 +244,15 @@ abstract class Inc
             );
         }
 
-        return array_filter(array_map(function($i) {
+        $r = array_filter(array_map(function($i) {
             return $i->id;
         }, $items ?: array()));
+
+        if ($this->limit) {
+            $r = array_slice($r, 0, $this->limit);
+        }
+
+        return $r;
     }
 
     /**
