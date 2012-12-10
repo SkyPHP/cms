@@ -261,9 +261,13 @@ class snippet {
 
 	function youtube_embed($url, $width = NULL, $height_px = NULL, $silent_px = NULL) {
 
-		if(strpos($url,'youtu.be')) {
+		$url = 'http://www.youtube.com/watch?v=YiP_w7i9QRA';
+		$url = 'http://youtu.be/YiP_w7i9QRA';
+		$url = "http://vimeo.com/9001766";
+		if(strpos($url,'youtu.be') == 7) {
 			$id = substr($url, 16);
 		} elseif (strpos($url,'vimeo.com')) {
+			echo strpos($url,'vimeo.com');
 			$vimeo_id = substr($url, 17);
 		} else {
 			$ar = explode('?', $url);
