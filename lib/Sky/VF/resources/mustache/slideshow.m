@@ -3,7 +3,9 @@
     transition="{{transition}}"
     delay="{{delay}}"
     autohide="{{autohide}}"
-    {{autostart}}
+    autostart="{{autostart}}"
+    w="{{width}}"
+    h="{{height}}"
     >
 
     <div class="vf-slideshow-main" style="width:{{width}}px; height:{{height}}px;">
