@@ -256,28 +256,46 @@ class snippet {
 	}//function
 
 
-	function youtube_embed($url, $width = NULL, $height = NULL, $silent = NULL) {
-		// get ID from youtube URL
-		// http://www.youtube.com/watch?v=cEVCjUG1Mww
-		$ar = explode('?', $url);
-		$params = parse_querystring($ar[1]);
-		$id = $params['v'];
 
-        $ytqs = 'fs=1&rel=0&showinfo=0&color1=0xffffff&color2=0xffffff&hd=0&hl=en_US&wmode=transparent';
 
-		if (!$width) $width = 560;
-		if (!$height) $height = $width*9/16;
+
+	function youtube_embed($url, $width = NULL, $height_px = NULL, $silent_px = NULL) {
+
+		if(strpos($url,'youtu.be') == 7) {
+			$id = substr($url, 16);
+		} elseif (strpos($url,'vimeo.com') == 7) {
+			$vimeo_id = substr($url, 17);
+		} else {
+			$ar = explode('?', $url);
+			$params = parse_querystring($ar[1]);
+			$id = $params['v'];
+		}
+
+		if (!$width_px) $width_px = 560;
+		if (!$height_px) $height_px = $width_px*9/16;
 		
-		if ($width) $width = 'width="'.$width.'"';
-		if ($height) $height = 'height="'.$height.'"';
-
+		$width = 'width="'.$width_px.'"';
+		$height = 'height="'.$height_px.'"';
+		
 		if ($id) {
+        	$ytqs = 'fs=1&rel=0&showinfo=0&color1=0xffffff&color2=0xffffff&hd=0&hl=en_US&wmode=transparent';
 			$embed = 	'<object '.$width.' '.$height.'>'.
 						'<param name="movie" value="http://www.youtube.com/v/'.$id.'?'.$ytqs.'"></param>'.
 						'<param name="allowFullScreen" value="true"></param>'.
 						'<param name="wmode" value="transparent"></param>'.
 						'<param name="allowscriptaccess" value="always"></param>'.
 						'<embed src="http://www.youtube.com/v/'.$id.'?'.$ytqs.'" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" '.$width.' '.$height.' wmode="transparent"></embed></object>';
+			if ($silent) return $embed;
+			else echo $embed;
+		} elseif ($vimeo_id) {
+			$embed = '<iframe src="http://player.vimeo.com/video/'.$vimeo_id.'?byline=0&amp;badge=0&amp;color=ff000d" 
+						width="'.$width_px.'"
+						height="'.$height_px.'"
+						frameborder="0"
+						webkitAllowFullScreen
+						mozallowfullscreen
+						allowFullScreen>
+					</iframe>';
 			if ($silent) return $embed;
 			else echo $embed;
 		} else {

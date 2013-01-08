@@ -92,6 +92,8 @@ class Slideshow extends Gallery\Inc
         $large = Client::getItems($items, $large_conf);
         $small = Client::getItems($items, $small_conf);
 
+        if (!is_array($small)) return;
+
         $small[0]->class = $large[0]->class = "first selected";
 
         $data = array(
@@ -99,7 +101,7 @@ class Slideshow extends Gallery\Inc
             'transition' => $this->transition,
             'delay' => $this->delay,
             'autohide' => $this->auto_hide_toolbar ? 'yes' : 'no',
-            'autostart' => $this->autostart ? 'autostart="true"' : '',
+            'autostart' => $this->autostart ? 'true' : 'false',
             'enlarge' => $this->enlarge,
             'controls' => $this->controls,
             'captions' => $this->captions,

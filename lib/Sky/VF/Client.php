@@ -82,7 +82,8 @@ class Client
 
         // use cached getItem request if it exists
         $memkey = "vf2:getItem:" . serialize(array($id, $params));
-        $cached_response = mem($memkey);
+        if (!$_GET['vf_refresh']) $cached_response = mem($memkey);
+        if ($_GET['elapsed']) krumo($cached_response);
         if ($cached_response) return $cached_response;
 
         $re = static::getClient()->getItem($id, $params);
@@ -149,20 +150,53 @@ class Client
      */
     public static function getFolder($id, array $params = array())
     {
+        global $cache_vf2_folders;
+
         static::checkForClient();
 
         $params = static::prepOperations($params['width'], $params['height'], $params['crop']);
 
-        $re = !static::isPath($id)
-            ? static::getClient()->getFolder($id, $params)
-            : static::getClient()->getFolderByPath(array_merge(
-                $params,
-                array(
-                    'path' => $id
-                )
-            ));
+        $memkey = "vf2:getFolder:" . serialize(array($id,$params));
 
-        return $re->folder ?: $re;
+        if ($cache_vf2_folders) {
+
+            $re = mem($memkey);
+
+            // if there has been an upload to this folder since being cached, refresh it
+            $last_upload_memkey = "vf2:getFolder:lastUpload:" . $id;
+            $last_upload = mem($last_upload_memkey);
+
+            if (!$re->cache_time || $re->cache_time < $last_upload) {
+                elapsed($re->cache_time . ' < ' . $last_upload);
+                $re = null;
+            } else {
+                elapsed($re->cache_time . ' !< ' . $last_upload);
+            }
+
+
+        }
+
+        if (!$re) {
+            $re = !static::isPath($id)
+                ? static::getClient()->getFolder($id, $params)
+                : static::getClient()->getFolderByPath(array_merge(
+                    $params,
+                    array(
+                        'path' => $id
+                    )
+                ));
+
+            $save_to_mem = true;
+        }
+
+        if ($re->folder) {
+            if ($save_to_mem) {
+                $re->cache_time = date('U');
+                mem($memkey, $re);
+            }
+            return $re->folder;
+        }
+        return $re;
     }
 
     /**
@@ -210,13 +244,27 @@ class Client
     {
         static::checkForClient();
 
-        $params = static::prepOperations($width, $height, $crop);
-        $params['limit'] = $limit;
-        $params['random'] = true;
+        //$params = static::prepOperations($width, $height, $crop);
+        $params = array(
+            'width' => $width,
+            'height' => $height,
+            'crop' => $crop,
+            'limit' => $limit,
+            'random' => true
+        );
+        #$params['limit'] = $limit;
+        #$params['random'] = true;
+
+        /*
+        if ($_GET['vf_debug']) {
+            echo 'getRandomItems $params:';
+            krumo($params);
+        }
+        */
 
         $re = static::getFolder($folder, $params);
 
-        return $re->items ?: $re;
+        return is_array($re->items) ? $re->items : $re;
     }
 
     /**
@@ -226,6 +274,16 @@ class Client
     public static function removeItem($id)
     {
         static::checkForClient();
+
+        $item = static::getItem($id);
+        $path = $item->folder;
+        $folder = static::getFolder($path);
+
+        // update the last upload time so we know when to refresh cached folders
+        $memkey = "vf2:getFolder:lastUpload:" . $path;
+        mem($memkey, date('U'));
+        $memkey = "vf2:getFolder:lastUpload:" . $folder->id;
+        mem($memkey, date('U'));
 
         return static::getClient()->deleteItem($id);
     }
