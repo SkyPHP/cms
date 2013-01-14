@@ -243,12 +243,11 @@ abstract class Inc
                 )
             );
         }
-        // if there is no items, returns null        
+ 
+        // if there are no items, return null.        
         if ( !empty ( $items ) ) {
-
             return null;
         }               
-        
 
         $r = array_filter(array_map(function($i) {
             return $i->id;
