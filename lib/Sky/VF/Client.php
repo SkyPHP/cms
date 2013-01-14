@@ -154,7 +154,8 @@ class Client
 
         static::checkForClient();
 
-        $params = static::prepOperations($params['width'], $params['height'], $params['crop']);
+        $new_params = static::prepOperations($params['width'], $params['height'], $params['crop']);
+        $params = array_merge($params, $new_params);
 
         $memkey = "vf2:getFolder:" . serialize(array($id,$params));
 
