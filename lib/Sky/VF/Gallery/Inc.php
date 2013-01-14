@@ -245,7 +245,7 @@ abstract class Inc
         }
  
         // if there are no items, return null.        
-        if ( !empty ( $items ) ) {
+        if (!empty ($items)) {
             return null;
         }               
 
