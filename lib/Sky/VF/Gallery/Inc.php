@@ -244,8 +244,8 @@ abstract class Inc
             );
         }
  
-        // if there are no items, return null.        
-        if (!empty ($items)) {
+        // if there are no items, return null      
+        if (!is_array($items)) {
             return null;
         }               
 
