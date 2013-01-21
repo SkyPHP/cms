@@ -243,6 +243,11 @@ abstract class Inc
                 )
             );
         }
+ 
+        // if there are no items, return array      
+        if (!is_array($items)) {
+            return array();
+        }               
 
         $r = array_filter(array_map(function($i) {
             return $i->id;
