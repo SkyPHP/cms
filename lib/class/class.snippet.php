@@ -259,7 +259,7 @@ class snippet {
 
 
 
-	function youtube_embed($url, $width = NULL, $height_px = NULL, $silent_px = NULL) {
+	function youtube_embed($url, $width_px = NULL, $height_px = NULL, $silent_px = NULL) {
 
 		if(strpos($url,'youtu.be') == 7) {
 			$id = substr($url, 16);
