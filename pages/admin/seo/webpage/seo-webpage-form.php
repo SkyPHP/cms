@@ -2,8 +2,12 @@
 
 <link rel="stylesheet" href="/admin/seo/webpage/seo-webpage-skybox.css">
 <div style="width:900px">
-<?
-	global $website_id;
+<? 
+
+	global $website_id, $seo_field_array;
+
+	if ($_POST['website_ide']) $website_id = decrypt($_POST['website_ide'],'website');
+
 	if (!$website_id) $website_id=$_POST['website_id'];
 	if (!$website_id) {
 		$rs = aql::select("website { where domain = '{$_SERVER['HTTP_HOST']}' }");	
@@ -16,10 +20,10 @@
 		$page = $rs[0];
 	}
 	$uri = $_POST['uri'];
-	
+
 	if ($_POST['uri_enabled'] == 1 || $url_specific_flag) $uri_enabled = true;
 	else $uri_enabled=false;
-	
+
  	if (is_numeric($page['website_page_id'])) {
 		$page['website_page_ide'] = encrypt($page['website_page_id'],'website_page');
 		$rs = aql::select("website_page_data { field, value where website_page_id = {$page['website_page_id']} }");
