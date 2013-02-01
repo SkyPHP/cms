@@ -11,7 +11,7 @@ if (!$items) exit;
 // krumo($gallery);
 
 $items_arr = array_map(function($i) {
-	if (is_object($i)) return $i->items_id;
+	if (is_object($i)) return $i->id;
 	return $i['_id'];
 }, $items);
 
@@ -42,9 +42,10 @@ $single_to_multiple = function($i) {
 	<?=($gallery->autostart)?'autostart="true"':''?>
 	>
 	<div class="vf-slideshow-main">
-		<div class="vf-slideshow-image"><?
+		<div class="vf-slideshow-image">
+<?
 			// elapsed('before getting main images in batch');
-			$fetched = vf::getItem($items_arr, array(
+			$fetched = vf::getItems($items_arr, array(
 				'width' => $gallery->width,
 				'height' => $gallery->height,
 				'crop' => $gallery->crop
