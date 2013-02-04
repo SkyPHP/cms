@@ -37,6 +37,7 @@ class getList_pagination {
 		$this->first_row = $this->offset + 1;
 		$this->last_row = count($this->rs) + $this->first_row - 1;
 		// krumo($this);
+
 		$this->num_pages = ceil($this->total_rows / $this->limit);
 
 		return $this->rs;
