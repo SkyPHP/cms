@@ -1,4 +1,7 @@
-<?
+<?php
+
+use \Sky\Model\person;
+use \Sky\Model\person_cookie;
 
 class Login {
 
