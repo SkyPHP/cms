@@ -161,7 +161,9 @@ class Client
 
         if ($cache_vf2_folders) {
 
-            $re = mem($memkey);
+            if (!$_GET['vf_refresh']) {
+                $re = mem($memkey);
+            }
 
             // if there has been an upload to this folder since being cached, refresh it
             $last_upload_memkey = "vf2:getFolder:lastUpload:" . $id;
