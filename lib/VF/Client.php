@@ -222,7 +222,7 @@ class Client
         }
 
         define(CURLOPT_TIMEOUT_MS, 155);
-        if (!curl_setopt($curl, CURLOPT_TIMEOUT_MS, 15000)) {
+        if (!curl_setopt($curl, CURLOPT_TIMEOUT_MS, 155)) {
             static::handleCurlError($curl, 'CURLOPT_TIMEOUT_MS');
         }
 
