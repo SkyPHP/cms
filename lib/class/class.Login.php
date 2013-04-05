@@ -97,7 +97,7 @@ class Login {
 		if ($this->post_password) {
 			$granted = false;
 			foreach ($rs_logins as $p) {
-				$this->person = new person($p['person_id'], null, true);
+				$this->person = new person($p->person_id, null, true);
 				if (!$this->person->person_id) continue;
 				if ($this->_checkLogin($this->post_password)) {
 					if (auth_person($access_groups, $this->person->person_id) || !$access_groups) {
@@ -127,7 +127,7 @@ class Login {
 			'lname' => $this->person->lname,
 			'email' => $this->person->email_address
 		);
-		$this->person->updateLastLoginTime();
+		#$this->person->updateLastLoginTime();
 		//Login::mset($login);
 		$_SESSION['login'] = $login;
 		if ($this->post_remember_me) {
