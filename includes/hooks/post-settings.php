@@ -5,6 +5,6 @@ if ($access_groups) {
     else {
         $access_denied = true;
         // access denied hook
-        @include('lib/core/hooks/login/access-denied-script.php');
+        @include('includes/hooks/login-access-denied-script.php');
     }
 }
