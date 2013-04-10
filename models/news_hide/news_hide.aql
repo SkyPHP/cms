@@ -1,4 +1,0 @@
-news_hide {
-    person_id,
-    news_item_id
-}

@@ -12,6 +12,8 @@ class news_item extends \Sky\Model
         }
     ";
 
+    public static $_meta = [];
+
     public function beforeCheckRequiredFields() {
         if ( !$this->person_id ) {
             $this->person_id = PERSON_ID;

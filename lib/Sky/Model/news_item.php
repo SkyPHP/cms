@@ -20,16 +20,19 @@ class news_item extends \Sky\Model
         }
     ";
 
+    public static $_meta = [];
+
     public function construct() {
         // get the fname and lname of the mod__person_id
         $r = \aql::value("person{fname,lname}",$this->mod__person_id);
         $this->addProperty('modified_by');
-        $this->modified_by = $r['fname'] . ' ' . $r['lname'];
+        $this->modified_by = $r->fname . ' ' . $r->lname;
         $this->addProperty('message');
         $this->message = $this->getMessage();
     }
 
     public function getLayoutPath() {
+        //d($this);
         return sprintf('lib/news/layouts/%s.php', $this->category);
     }
 
@@ -42,3 +45,5 @@ class news_item extends \Sky\Model
         return $message;
     }
 }
+
+
