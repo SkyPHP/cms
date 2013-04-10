@@ -66,15 +66,11 @@ class Apgdiff
      */
     public static function getDump($db=null)
     {
-        global $db;
-        $db_name = $db->database;
-        $db_host = $db->host;
-        $db_user = $db->user;
-        $db_password = $db->password;
+        global $db_name, $db_host, $db_username, $db_password;
         #print_r($db);
 
         // get the schema of the database
-        $command = "export PGPASSWORD=$db_password; pg_dump -s -h $db_host -U $db_user $db_name 2>&1;";
+        $command = "export PGPASSWORD=$db_password; pg_dump -s -h $db_host -U $db_username $db_name 2>&1;";
         exec($command, $output);
 
         return implode("\n", $output);
@@ -152,8 +148,8 @@ class Apgdiff
      */
     public static function getDatabaseName()
     {
-        global $db;
-        return $db->database;
+        global $db_name;
+        return $db_name;
     }
 
 }

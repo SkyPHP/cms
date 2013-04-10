@@ -1,7 +1,7 @@
 <?php
 
 class getList_pagination {
-	
+
 	private $limits = array(20, 25, 50, 100, 250);
 
 	function __construct($class = null, $params = null) {
@@ -22,14 +22,14 @@ class getList_pagination {
 
 	function select($class = null, $params = null) {
 		if ($class) $this->class= $class;
-		if ($params) $this->params = $params;	
+		if ($params) $this->params = $params;
 
 		// pagination settings;
-		
+
 		$this->params['limit'] = $this->limit;
 		$this->params['page'] = $this->page;
 		$this->params['offset'] = ($this->page - 1) * $this->limit;
-		
+
 		$cl = $this->class;
 		$this->rs = $cl::getList($this->params);
 

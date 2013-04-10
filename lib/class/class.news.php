@@ -163,7 +163,7 @@ class news {
         global $dbw;
         if ( $GLOBALS['news_db_time'] ) return $GLOBALS['news_db_time'];
         $r = sql("select current_timestamp(0) as now",$dbw);
-        $now = strtotime($r->Fields('now'));
+        $now = strtotime($r->now);
         $GLOBALS['news_db_time'] = $now;
         return $now;
     }

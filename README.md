@@ -1,4 +1,4 @@
 Content Management System for SkyPHP
 
-PHP 5.3 required
+PHP 5.4 required
 

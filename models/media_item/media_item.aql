@@ -1,9 +1,0 @@
-media_item {
-	credits,
-	title,
-	caption,
-	keywords
-}
-media_vfolder {
-	quality
-}

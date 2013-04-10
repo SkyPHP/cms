@@ -1,5 +1,7 @@
 <?
 
+use \Sky\Model\person_cookie;
+
 $access_denied = ($access_groups) ? true : false;
 
 if ($_GET['logout']) {
@@ -7,10 +9,10 @@ if ($_GET['logout']) {
 }
 
 if ($_POST['login_username'] && $_POST['login_password']) {
-    
+
     $o = new Login(
-        $_POST['login_username'], 
-        $_POST['login_password'], 
+        $_POST['login_username'],
+        $_POST['login_password'],
         array(
             'remember_me' => $_POST['remember_me'],
             'login_path' => $_POST['login_referer']
@@ -39,12 +41,12 @@ if (!Login::isLoggedIn()) {
 }
 
 if (Login::isLoggedIn()) {
-    
-    if ($access_groups) { 
+
+    if ($access_groups) {
         if (auth_person($access_groups, $_SESSION['login']['person_id'])) {
             $access_denied = false;
         }
-    } 
+    }
 
     Login::setConstants();
 }

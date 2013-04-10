@@ -1,15 +1,70 @@
 <?php
 
-class person extends Model {
+namespace Sky\Model;
+
+class person extends \Sky\Model
+{
+
+    const AQL = "
+        person {
+            email_address,
+            fname,
+            last_login_time,
+            lname,
+            password_hash,
+            password_reset_hash,
+            phone_mobile,
+            username
+        }
+    ";
 
     /**
-     * Required Fields
-     * @var array
+     *
      */
-    public $_required_fields = array(
-        'fname'         => 'First Name',
-        'lname'         => 'Last Name',
-        'email_address' => 'Email Address'
+    public static $_meta = array(
+
+        'requiredFields' => array(
+            'fname'         => 'First Name',
+            'lname'         => 'Last Name',
+            'email_address' => 'Email Address'
+        ),
+
+        'possibleErrors' => array(
+            'invalid_email_address' => array(
+                'message' => 'Invalid Email.',
+                'fields'  => array('email_address')
+            ),
+            'invalid_password1' => array(
+                'message' => 'Invalid Password.',
+                'fields'  => array('password1')
+            ),
+            'password_too_short' => array(
+                'message' => 'Choose a password of at least 6 characters.',
+                'fields'  => array('password1')
+            ),
+            'invalid_password2' => array(
+                'message' => 'You must re-enter your password',
+                'fields'  => array('password2')
+            ),
+            'password_reentered_incorrectly' => array(
+                'message' => 'Password was re-entered incorrectly. Try again.',
+                'fields'  => array('password2', 'password1')
+            ),
+            'invalid_reset_hash' => array(
+                'message' => 'Request another password reset, this token is no longer valid.',
+                'fields' => array('password_reset_hash')
+            ),
+            'invalid_current_password' => array(
+                'message' => 'The password you entered is incorrect.',
+                'fields' => array('current_password')
+            ),
+            'duplicate_account' => array(
+                'message' => 'You already have an account.',
+                'type'    => 'duplicate_account',
+                'fields' => array('email_address')
+            )
+        )
+
     );
 
     /**
@@ -18,45 +73,6 @@ class person extends Model {
      */
     public static $min_password_length = 6;
 
-    /**
-     * Possible Errors
-     * @var array
-     */
-    public static $possible_errors = array(
-        'invalid_email_address' => array(
-            'message' => 'Invalid Email.',
-            'fields'  => array('email_address')
-        ),
-        'invalid_password1' => array(
-            'message' => 'Invalid Password.',
-            'fields'  => array('password1')
-        ),
-        'password_too_short' => array(
-            'message' => 'Choose a password of at least 6 characters.',
-            'fields'  => array('password1')
-        ),
-        'invalid_password2' => array(
-            'message' => 'You must re-enter your password',
-            'fields'  => array('password2')
-        ),
-        'password_reentered_incorrectly' => array(
-            'message' => 'Password was re-entered incorrectly. Try again.',
-            'fields'  => array('password2', 'password1')
-        ),
-        'invalid_reset_hash' => array(
-            'message' => 'Request another password reset, this token is no longer valid.',
-            'fields' => array('password_reset_hash')
-        ),
-        'invalid_current_password' => array(
-            'message' => 'The password you entered is incorrect.',
-            'fields' => array('current_password')
-        ),
-        'duplicate_account' => array(
-            'message' => 'You already have an account.',
-            'type'    => 'duplicate_account',
-            'fields' => array('email_address')
-        )
-    );
 
     /**
      * Run password validation
@@ -140,9 +156,9 @@ class person extends Model {
         if ($this->isUpdate()) {
 
             // a password cannot be removed
-            $this->addRequiredFields(array(
-                'password' => 'Password'
-            ));
+            // $this->addRequiredFields(array(
+            //     'password' => 'Password'
+            // ));
 
             // the user is not attempting to change their own password via a form
             if (!$this->password1) return;
@@ -174,7 +190,7 @@ class person extends Model {
 
                 if ($this->password_reset_hash != $o->password_reset_hash) {
                     $this->addError('invalid_reset_hash');
-                    $this->saveProperties(array(
+                    $this->update(array(
                         'password_reset_hash' => null
                     ));
                 } else {
@@ -215,7 +231,7 @@ class person extends Model {
     public function generateResetHash()
     {
         return ($this->getID())
-            ? $this->saveProperties(array(
+            ? $this->update(array(
                 'password_reset_hash' => $this->makeResetHash()
             ))
             : null;
@@ -228,7 +244,7 @@ class person extends Model {
     public function generateUserSalt()
     {
         return ($this->getID())
-            ? Login::generateUserSalt($this->getIDE())
+            ? \Login::generateUserSalt($this->getIDE())
             : null;
     }
 
@@ -261,7 +277,7 @@ class person extends Model {
      */
     public function updateLastLoginTime()
     {
-        $this->saveProperties(array(
+        $this->update(array(
             'last_login_time' => 'now()'
         ));
     }
