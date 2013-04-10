@@ -1,4 +1,5 @@
 <?
+	global $seo_field_array;
 	$website_id = aql::value("website_page.website_id",$_POST['website_page_id']);
 	if ($_POST['val'] == 1) { 
 
