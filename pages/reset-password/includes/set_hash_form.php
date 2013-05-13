@@ -9,13 +9,24 @@ if($hash_mismatch) {
 
 ?>
 
-<div class="info" id="response_div"><?=$message?></div> 
+<div class="info" id="response_div"><?=$message?></div>
 <form id="email_hash">
 
-	<input name="email_address" id="email_address" type="text" style="width:200px;" placeholder="Your Email Address" />
-	
+	<input
+		name="email_address"
+		id="email_address"
+		type="text"
+		style="width:200px;"
+		placeholder="Your Email Address"
+		/>
+
     <input type="hidden" />
 
-    <input type="submit" value="Submit"  id="submit" style="width:75px;margin-top:25px;" />
+    <input
+    	type="submit"
+    	value="Submit"
+    	id="submit"
+    	style="width:75px;margin-top:25px;"
+    	/>
 
 </form>
