@@ -252,8 +252,10 @@ class person extends \Sky\Model
      * Sets password
      * @param type $val
      */
-    public function validate_password($val)
+    public function validate_password()
     {
+        $val = $this->password;
+
         if (!$val) return;
 
         if (strlen($val) < static::$min_password_length) {
