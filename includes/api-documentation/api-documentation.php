@@ -45,6 +45,10 @@ if (!$api) {
     throw new Exception('Must Pass An API Object to this inherited page.');
 }
 
+$config = [
+    'url' => $api::$url
+];
+
 $keys = array('protocol', 'domain', 'url');
 $url_prefix = rtrim(vsprintf(
     '%s://%s%s',
@@ -94,6 +98,26 @@ if ($resource) {
                 }, $method['params'])
             )
             : array();
+
+        // get sample response
+
+        // TODO: get these values from the specific resource
+        #$oauth_token = $api::$documentation_settings['oauth_token'];
+        #$sampleID = $api::$documentation_settings['sampleID'];
+        $sampleID = -1;
+
+        $url = $method['url']['prefix'] . $method['url']['rest'];
+        $url = str_replace('ID', $sampleID, $url);
+        $url .= '?oauth_token=' . $oauth_token;
+        $cache_key = 'api-responses/' . slugize($url);
+        $response = disk($cache_key);
+        if (!$response || $_GET['disk-refresh']) {
+            $response = GetCurlPage($url, [
+                'documentation' => true
+            ]);
+            disk($cache_key, $response, '30 days');
+        }
+        $method['response'] = json_beautify($response);
 
     } catch (\Exception $e) {
         include 'pages/404.php';

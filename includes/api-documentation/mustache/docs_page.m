@@ -43,6 +43,9 @@
     </table>
     {{/params}}
 
+    <h3>Sample Response</h3>
+    <pre><code>{{response}}</code></pre>
+
 </div>
 
 

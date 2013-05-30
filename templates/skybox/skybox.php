@@ -2,8 +2,8 @@
 
 if ( $template_area == 'top' ) {
 
-	if ($p->is_ajax_request) {
-		$p->css[] = '/templates/skybox/skybox.css';
+	if ($this->is_ajax_request) {
+		$this->css[] = '/templates/skybox/skybox.css';
 	}
 
 ?>

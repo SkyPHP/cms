@@ -2,6 +2,7 @@
 
 use \Sky\Model\person;
 use \Sky\Model\person_cookie;
+use \Sky\AQL;
 
 class Login {
 
@@ -93,7 +94,7 @@ class Login {
 						order by id desc
 					}
 				";
-		$rs_logins = aql::select($aql);
+		$rs_logins = AQL::select($aql);
 		if ($this->post_password) {
 			$granted = false;
 			foreach ($rs_logins as $p) {

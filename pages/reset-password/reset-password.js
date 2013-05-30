@@ -3,7 +3,7 @@ $(document).ready(function() {
 		if( $(this).val() == '') {
 			$(this).val($(this).attr('default'));
 		}
-	});	
+	});
 	$('.autoclear').focus(function() {
 		if( $(this).val() == $(this).attr('default')) {
 			$(this).val('');
@@ -14,9 +14,9 @@ $(document).ready(function() {
 			$(this).val($(this).attr('default'));
 		}
 	});
-	
+
 	var url = '/reset-password/includes/set_hash';
-	$('#email_hash').die().live('submit',function(e) {
+	$('#email_hash').on('submit',function(e) {
 		e.preventDefault();
 		if( $('#email_address').val() != $('#email_address').attr('default') ) {
 			$('#response_div').html('<img src="/images/loading.gif" style="display:block;margin:0 auto;" />');
@@ -27,9 +27,9 @@ $(document).ready(function() {
 			});
 		}
 	});
-	
+
 	$('#password_form').saveForm({
 		saveText:"Your password has been updated."
 	});
-	
+
 });
