@@ -46,7 +46,8 @@ class Login {
 
 	public function checkLoginPath() {
 		$n = $_SERVER['SERVER_NAME'];
-		$this->login_path = reset(explode('?', $this->login_path));
+		$explode = explode('?', $this->login_path);
+		$this->login_path = reset($explode);
 		if (stripos($this->login_path, $n) === false) return;
 		if ('http://'.$n.$_SERVER['REQUEST_URI'] == $this->login_path) return;
 		$name = str_replace(array($n, 'http://'), '', $this->login_path);
@@ -196,7 +197,7 @@ class Login {
 		return crypt($password.$salt, $prefix.$salt.Login::GetGlobalSalt().$suffix);
 	}
 
-	public function getGlobalSalt() {
+	public static function getGlobalSalt() {
 		global $person_encryption_key;
 		return $person_encryption_key;
 	}
