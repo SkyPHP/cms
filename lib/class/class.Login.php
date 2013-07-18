@@ -156,7 +156,7 @@ class Login {
 		return is_numeric($id) ? $ide : '_login';
 	}
 
-	public function unsetLogin() {
+	public static function unsetLogin() {
 		//Login::$session = array();
 		$o = person_cookie::getByCookie();
 		if ($o) $o->delete();
