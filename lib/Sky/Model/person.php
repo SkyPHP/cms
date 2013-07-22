@@ -181,7 +181,6 @@ class person extends \Sky\Model
             // set password to password1, this will automatically generate the hash etc.
             $this->password = $this->password1;
 
-            d($this);
         }
 
         if ($this->isUpdate()) {
