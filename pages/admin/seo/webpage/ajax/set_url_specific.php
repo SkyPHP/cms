@@ -15,7 +15,7 @@
 				$data['field'] = $field;
 				$rs = aql::select("website_uri_data { id as uri_id where website_id = ".$website_id." and uri = '".$data->uri."' and field='".$field."' }");
 				if (!is_numeric($rs[0]->uri_id)) {
-					$data->field = $field; 
+					$data['field'] = $field; 
 					aql::insert('website_uri_data',$data);
 				}
 				
