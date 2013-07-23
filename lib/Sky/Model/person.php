@@ -98,6 +98,7 @@ class person extends \Sky\Model
             $this->addError('invalid_email_address');
         }
 
+        // todo: fix this so you can't update to cause a duplicate
         if ($this->isInsert() && static::getByEmail($val)) {
             $this->addError('duplicate_account', [
                 'message' => "An account already exists for email address '$val'."
@@ -121,9 +122,15 @@ class person extends \Sky\Model
             ]);
         }
 
+        // if this is not an insert, it's only a duplicate if it's not this id
+        if ($this->id) {
+            $not_this_id = "id != " . $this->id;
+        }
+
         $duplicates = static::getCount([
             'where' => [
-                "username ilike '$username'"
+                "username ilike '$username'",
+                $not_this_id
             ]
         ]);
         if ($duplicates) {
