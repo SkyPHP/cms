@@ -71,17 +71,17 @@ class person_cookie extends \Sky\Model
         }
     }
 
-    public function setCookie($key, $value = null, $time = null) {
+    public static function setCookie($key, $value = null, $time = null) {
         global $cookie_domain;
         if (!$time) $time = time() + 5184000;
         @setcookie($key, $value, $time, '/', $cookie_domain);
     }
 
-    public function unsetCookie($key) {
+    public static function unsetCookie($key) {
         self::setCookie($key, '', time() - 3600);
     }
 
-    public function unsetAllSessions($person_id) {
+    public static function unsetAllSessions($person_id) {
         $os = person_cookie::getByClause(array(
             'where' => 'person_id = '.$person_id
         ));
