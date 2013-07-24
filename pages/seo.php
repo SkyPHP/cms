@@ -7,18 +7,22 @@
     if (!$website_id) $website_id = $this->vars['website']->website_id;
 
 	if ($website_id) {
+
 		//$mem_key = "seo:".$website_id.":".$p->page_path;
-		$page_data = mem($mem_key);
-//		$page_data = NULL;
+		//$page_data = mem($mem_key);
+
 		if (!$page_data) {
+
 			$rs = aql::select("website_page { url_specific where page_path = '{$p->page_path}' and website_id = {$website_id} }");
-			if (is_numeric($rs[0]['website_page_id'])) {
-				$pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]['website_page_id']} } ");
+
+			if (is_numeric($rs[0]->website_page_id)) {
+				$pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]->website_page_id} } ");
 				if (is_array($pd)) {			
 					foreach ($pd as $data) {
-						$page_data[$data['field']] = $data['value'];	
+						$page_data[$data->field] = $data->value;
 					}
-					if ($rs[0]['url_specific'] == 1) $page_data['url_specific']=true;
+					if ($rs[0]->url_specific == 1) 
+						$page_data['url_specific']=true;
 					//mem($mem_key, $page_data);
 				}
 			}
@@ -51,4 +55,6 @@
 			}
 		}		
 	}
+
+
 ?>

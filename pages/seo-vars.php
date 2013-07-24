@@ -31,26 +31,25 @@ if ($p->vars['ct_event_id']) {
 }
 
 if ($market_id) {
-	$market=aql::profile('market',$market_id);
-	$market_name = $market['name'];
-	$market_state = $market['state'];
-	$market_state_full = $market['state_full'];
-	$market1 = $market['market1'].$website_id;
-	$market2 = $market['market2'];
-	$market3 = $market['market3'];
-	$market4 = $market['market4'];
-	$name_alt1 = $market['name_alt1'];
-	$name_alt2 = $market['name_alt2'];
-	$name_alt3 = $market['name_alt3'];
-	$market_county = $market['county'];
-
+	$market=new \crave\model\market($market_id);
+	$market_name = $market->name;
+	$market_state = $market->state;
+	$market_state_full = $market->state_full;
+	$market1 = $market->market1.$website_id;
+	$market2 = $market->market2;
+	$market3 = $market->market3;
+	$market4 = $market->market4;
+	$name_alt1 = $market->name_alt1;
+	$name_alt2 = $market->name_alt2;
+	$name_alt3 = $market->name_alt3;
+	$market_county = $market->county;
 	if (!$p->seo['ICBM']) {
-		$p->seo['ICBM'] = $market['latitude'].','.$market['longitude'];
-		$p->seo['geo-position'] = $market['latitude'].';'.$market['longitude'];
-		$p->seo['placename'] = $market['city'];
-		$p->seo['city'] = $market['city'];
-		$p->seo['state'] = $market['state'];
-		$p->seo['geo-region'] = 'US-'.$market['state'];
+		$p->seo['ICBM'] = $market->latitude.','.$market->longitude;
+		$p->seo['geo-position'] = $market->latitude.';'.$market->longitude;
+		$p->seo['placename'] = $market->city;
+		$p->seo['city'] = $market->city;
+		$p->seo['state'] = $market->state;
+		$p->seo['geo-region'] = 'US-'.$market->state;
 	}
 }
 
