@@ -98,12 +98,48 @@ class person extends \Sky\Model
             $this->addError('invalid_email_address');
         }
 
+        // todo: fix this so you can't update to cause a duplicate
         if ($this->isInsert() && static::getByEmail($val)) {
-            $this->addError('duplicate_account');
+            $this->addError('duplicate_account', [
+                'message' => "An account already exists for email address '$val'."
+            ]);
         }
 
         $this->email_email_address = trim($val);
     }
+
+
+    /**
+     * 
+     */
+    public function validate_username()
+    {
+        $username = trim($this->username);
+
+        if (strpos($username, ' ') !== false) {
+            $this->addError('invalid_username', [
+                'message' => 'Username cannot contain a space.'
+            ]);
+        }
+
+        // if this is not an insert, it's only a duplicate if it's not this id
+        if ($this->id) {
+            $not_this_id = "id != " . $this->id;
+        }
+
+        $duplicates = static::getCount([
+            'where' => [
+                "username ilike '$username'",
+                $not_this_id
+            ]
+        ]);
+        if ($duplicates) {
+            $this->addError('duplicate_account', [
+                'message' => "An account already exists for username '$username'."
+            ]);
+        }
+    }
+
 
     /**
      * Gets a person by email address
@@ -112,10 +148,10 @@ class person extends \Sky\Model
     public static function getByEmail($email)
     {
         $email = addslashes(trim($email));
-        return self::getOne(array(
-            'where' => array("email_address ILIKE '{$email}'"),
+        return self::getOne([
+            'where' => ["email_address ILIKE '{$email}'"],
             'order_by' => 'last_login_time DESC'
-        ));
+        ]);
     }
 
     /**
@@ -151,6 +187,7 @@ class person extends \Sky\Model
 
             // set password to password1, this will automatically generate the hash etc.
             $this->password = $this->password1;
+
         }
 
         if ($this->isUpdate()) {
@@ -164,7 +201,9 @@ class person extends \Sky\Model
             if (!$this->password1) return;
 
             // if passwords entered do not match
-            if (!$this->checkPasswordEntered()) return;
+            if (!$this->checkPasswordEntered()) {
+                $this->addError('passwords_do_not_match');
+            }
 
             // need current password || password reset hash to update the password
             // using pw1 or pw2
@@ -217,12 +256,22 @@ class person extends \Sky\Model
     }
 
     /**
-     * Sets Password after insert
+     * 
      */
     public function afterInsert()
     {
-        $this->_postSavePassword();
+        $this->setPassword();
     }
+
+
+    /**
+     * 
+     */
+    public function afterUpdate()
+    {
+        $this->setPassword();
+    }
+
 
     /**
      * Generates a password reset hash
@@ -254,25 +303,26 @@ class person extends \Sky\Model
      */
     public function validate_password()
     {
-        $val = $this->password;
-
-        if (!$val) return;
-
-        if (strlen($val) < static::$min_password_length) {
+        if (strlen($this->password) < static::$min_password_length) {
             $this->addError('password_too_short');
         }
+    }
 
-        // only do this during an update because we cannot generate a salt
-        // without an ID
-        if ($this->isUpdate()) {
-            $this->_data['password_hash'] = Login::generateHash(
-                $val,
-                $this->generateUserSalt()
-            );
-            // @todo: Uncomment this when we no longer have that dependency
-            // $this->_data['password'] = null;
+
+    /**
+     * 
+     */
+    private function setPassword()
+    {
+        if ($this->password) {
+            $password = $this->password;
+            $this->password = null;
+            $this->update([
+                'password_hash' => \Login::generateHash($password, $this->generateUserSalt())
+            ]);
         }
     }
+
 
     /**
      * Updates last login time
