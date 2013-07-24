@@ -1,7 +1,6 @@
 <? 
 	$rs = aql::select("website_page { page_path, website_id where website_page.id = {$_POST['wp_id']} }");
 
-
 	$website_page_fields = array('nickname', 'page_type');
 	if( in_array($_POST['field'],$website_page_fields) ) {
 		$data = array(
@@ -37,7 +36,7 @@
 			'update_time' => 'now()'
 		);	
 		if (is_numeric($rs[0]->website_page_data_id)) {
-			$update=aql::update('website_page_data',$data,$rs[0]->website_page_data_ide);
+			$update=aql::update('website_page_data',$data,$rs[0]->website_page_data_id);
 			if ($update) exit('saved');
 			else exit($update);
 		}
@@ -58,7 +57,7 @@
 			'update_time' => 'now()'
 		);	
 		if (is_numeric($rs[0]->website_uri_data_id)) {
-			$update=aql::update('website_uri_data',$data,$rs[0]->website_uri_data_ide);
+			$update=aql::update('website_uri_data',$data,$rs[0]->website_uri_data_id);
 			if ($update) exit('saved');
 			else exit($update);
 		}
