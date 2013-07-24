@@ -31,7 +31,7 @@ if ($p->vars['ct_event_id']) {
 }
 
 if ($market_id) {
-	$market=new \crave\model\market($market_id);
+	$market=new \Crave\Model\market($market_id);
 	$market_name = $market->name;
 	$market_state = $market->state;
 	$market_state_full = $market->state_full;
