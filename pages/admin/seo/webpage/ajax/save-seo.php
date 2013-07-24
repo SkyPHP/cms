@@ -3,10 +3,13 @@
 
 
 	$website_page_fields = array('nickname', 'page_type');
+
 	if( in_array($_POST['field'],$website_page_fields) ) {
+
 		$data = array(
 			$_POST['field'] => $_POST['value']
 		);
+
 		$update = aql::update('website_page',$data,$_POST['wp_id']);
 		
 		//update all data record with this field
@@ -27,7 +30,9 @@
 		if($update) exit('saved');
 	
 	} elseif (!$_POST['uri_enabled']) {
+		
 		$rs = aql::select("website_page_data { where website_page_id = {$_POST['wp_id']} and field = '{$_POST['field']}' }");
+
 		$data = array(
 			'field' => $_POST['field'],
 			'value' => $_POST['value'],
@@ -36,8 +41,11 @@
 			'mod__person_id' => PERSON_ID,
 			'update_time' => 'now()'
 		);	
+
 		if (is_numeric($rs[0]->website_page_data_id)) {
-			$update=aql::update('website_page_data',$data,$rs[0]->website_page_data_ide);
+			$ide = $rs[0]->website_page_data_ide; 
+			
+			$update=aql::update('website_page_data',$data,$ide );
 			if ($update) exit('saved');
 			else exit($update);
 		}
