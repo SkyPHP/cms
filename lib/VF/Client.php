@@ -254,7 +254,7 @@ class Client
         curl_close($curl);
         if ($error) {
             // there was a curl transmission error
-            $response = $error;
+            //$response = $error;
         }
 
         $data = json_decode($response);
