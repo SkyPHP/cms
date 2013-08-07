@@ -221,8 +221,8 @@ class Client
             }
         }
 
-        define(CURLOPT_TIMEOUT_MS, 3000);
-        if (!curl_setopt($curl, CURLOPT_TIMEOUT_MS, 3000)) {
+        define(CURLOPT_TIMEOUT_MS, 5000);
+        if (!curl_setopt($curl, CURLOPT_TIMEOUT_MS, 5000)) {
             static::handleCurlError($curl, 'CURLOPT_TIMEOUT_MS');
         }
 
