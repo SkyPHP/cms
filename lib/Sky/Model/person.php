@@ -129,7 +129,7 @@ class person extends \Sky\Model
 
         $duplicates = static::getCount([
             'where' => [
-                "lower(username) ilike lower('$username')",
+                "lower(username) = lower('$username')",
                 $not_this_id
             ]
         ]);
@@ -149,7 +149,7 @@ class person extends \Sky\Model
     {
         $email = addslashes(trim($email));
         return self::getOne([
-            'where' => ["lower(email_address) ILIKE lower('{$email}')"],
+            'where' => ["lower(email_address) = lower('{$email}')"],
             'order_by' => 'last_login_time DESC'
         ]);
     }
