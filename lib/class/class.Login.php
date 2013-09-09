@@ -67,7 +67,11 @@ class Login {
 	}
 
 	public function checkLogin() {
-		global $access_groups, $access_denied, $rs_logins;
+		global $access_groups, $access_denied, $rs_logins, $person_email_field;
+
+		if (!$person_email_field) {
+			$person_email_field = 'email_address';
+		}
 
 		if ($this->login_path) {
 			$this->checkLoginPath();
@@ -89,7 +93,7 @@ class Login {
 		$aql = 	"
 					person {
 						where (
-							lower(email_address) like '{$username}' or lower(username) like '{$username}'
+							lower($person_email_field) like '{$username}' or lower(username) like '{$username}'
 							and password_hash is not null
 						)
 						order by id desc
