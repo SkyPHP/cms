@@ -266,11 +266,17 @@ class Mailer
      */
     public function send()
     {
+        $mail = stdClass;
+        $mail->to = $this->makeTo();
+        $mail->subject = $this->makeSubject();
+        $mail->body = $this->body;
+        $mail->headers = $this->makeHeaders();
+        #d($mail);
         return @mail(
-            $this->makeTo(),
-            $this->makeSubject(),
-            $this->body,
-            $this->makeHeaders()
+            $mail->to,
+            $mail->subject,
+            $mail->body,
+            $mail->headers
         );
     }
 
