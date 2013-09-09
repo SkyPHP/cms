@@ -266,7 +266,7 @@ class Mailer
      */
     public function send()
     {
-        $mail = stdClass;
+        $mail = new stdClass;
         $mail->to = $this->makeTo();
         $mail->subject = $this->makeSubject();
         $mail->body = $this->body;
