@@ -147,9 +147,15 @@ class person extends \Sky\Model
      */
     public static function getByEmail($email)
     {
+        global $person_email_field;
+
+        if (!$person_email_field) {
+            $person_email_field = 'email_address';
+        }
+
         $email = addslashes(trim($email));
         return self::getOne([
-            'where' => ["lower(email_address) = lower('{$email}')"],
+            'where' => ["lower($person_email_field) = lower('{$email}')"],
             'order_by' => 'last_login_time DESC'
         ]);
     }
