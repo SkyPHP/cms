@@ -266,17 +266,11 @@ class Mailer
      */
     public function send()
     {
-        $mail = new stdClass;
-        $mail->to = $this->makeTo();
-        $mail->subject = $this->makeSubject();
-        $mail->body = $this->body;
-        $mail->headers = $this->makeHeaders();
-        #d($mail);
         return @mail(
-            $mail->to,
-            $mail->subject,
-            $mail->body,
-            $mail->headers
+            $this->makeTo(),
+            $this->makeSubject(),
+            $this->body,
+            $this->makeHeaders()
         );
     }
 
@@ -288,8 +282,17 @@ class Mailer
      * @throws  Exception   if using a Mailer template and there is no inc_dir
      * @throws  Excpetion   if the file to include does not exist
      */
-    public function inc($name, array $data = array())
+
+
+    public function inc($name,  $data )
     {
+
+        if(!is_array($data))
+                $data =
+            \Sky\DataConversion::objectToArray($data);
+
+
+
         if (strpos($name, '.php')) {
             $include = $name;
         } else {
