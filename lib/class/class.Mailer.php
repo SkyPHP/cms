@@ -71,6 +71,12 @@ class Mailer
     public $content_type;
 
     /**
+    *  @var object
+    */
+    public $data; 
+
+
+    /**
      * Sets properties based on args if they are set
      * @param   mixed   $to
      * @param   string  $subject
@@ -287,10 +293,12 @@ class Mailer
     public function inc($name,  $data )
     {
 
-        if(!is_array($data))
-                $data =
-            \Sky\DataConversion::objectToArray($data);
 
+        // if(!is_array($data))
+        //         $data = \Sky\DataConversion::objectToArray($data);
+
+        //     d($data);
+        $this->data = (object)$data;
 
 
         if (strpos($name, '.php')) {
