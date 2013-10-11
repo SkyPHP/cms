@@ -8,6 +8,22 @@ class Mailer
 {
 
     /**
+    * @var string
+    * 
+    * localhost : the traditional PHP's mail method
+    * mandrill  : mandrill's API, require $credentials with username/password 
+    */
+    public static $method = 'localhost' ;
+
+
+    /**
+    * @var object 
+    */ 
+    public static $credentials = null; 
+
+
+
+    /**
      * @var string
      */
     public static $from_default = null;
@@ -272,13 +288,71 @@ class Mailer
      */
     public function send()
     {
+        $mail = new stdClass;
+        $mail->to = $this->makeTo();
+        $mail->subject = $this->makeSubject();
+        $mail->body = $this->body;
+        $mail->headers = $this->makeHeaders();
+        #d($mail);
+
+        if($this->method == 'mandrill')
+            return $this->send_mandrill($mail);
+        
+        return $this->send_local($mail);
+    }
+
+
+    /**
+    * Send email using localhost
+    * @param    string  $mail   well formed mail object  - must contain : to, subject, body 
+    */
+    function send_local ($mail){
         return @mail(
-            $this->makeTo(),
-            $this->makeSubject(),
-            $this->body,
-            $this->makeHeaders()
+            $mail->to,
+            $mail->subject,
+            $mail->body,
+            $mail->headers
         );
     }
+
+    /**
+    * Send email using mandrill
+    * @param    string  $mail   well formed mail object  - must contain : to, subject, body 
+    */
+    function send_mandrill ($mail){
+
+        // add the mandrill's API library 
+        require_once 'lib/mandrill/Mandrill.php';
+
+        $mandrill = new Mandrill($this->credentials->api);
+    
+
+        
+            $message = array(
+                'html' => $mail->body,
+                //'text' => 'Example text content',
+                'subject' => $mail->subject,
+                'to' => array(
+                    array(
+                        'email' => $mail->to,
+                    )
+                )
+                );
+              
+            
+            $result = $mandrill->messages->send($message, true);
+            
+    }
+
+
+    /**
+    * @param    object  $creds  credentials are specific for delivery method
+    */
+    function setCredentials ($creds){
+
+        $this->credentials = $creds;
+    }
+
 
     /**
      * Includes the template and sets the body of the email with it
