@@ -7,20 +7,6 @@
 class Mailer
 {
 
-    /**
-    * @var string
-    * 
-    * localhost : the traditional PHP's mail method
-    * mandrill  : mandrill's API, require $credentials with username/password 
-    */
-    public static $method = 'localhost' ;
-
-
-    /**
-    * @var object 
-    */ 
-    public static $credentials = null; 
-
 
 
     /**
@@ -40,6 +26,24 @@ class Mailer
         'html' => "MIME-Verson: 1.0\r\nContent-type: text/html; charset=iso-8859-1\r\n",
         'text' => ''
     );
+
+
+
+
+    /**
+    * @var string
+    * 
+    * localhost : the traditional PHP's mail method
+    * mandrill  : mandrill's API, require $credentials with username/password 
+    */
+    public $method = 'localhost' ;
+
+
+    /**
+    * @var object 
+    */ 
+    public $credentials = null; 
+
 
     /**
      * @var array
@@ -159,6 +163,19 @@ class Mailer
     public function setSubject($s)
     {
         $this->subject = $s;
+        return $this;
+    }
+
+
+
+    /**
+     * Sets the delivery method
+     * @param   string  $s
+     * @return  $this
+     */
+    public function setMethod($s)
+    {
+        $this->method = $s;
         return $this;
     }
 
@@ -325,11 +342,14 @@ class Mailer
         require_once 'lib/mandrill/Mandrill.php';
 
         $mandrill = new Mandrill($this->credentials->api);
-    
 
         
             $message = array(
                 'html' => $mail->body,
+
+                'from_email' => "no-reply@cravetickets.com",
+                'from_name' => "Crave Tickets",
+
                 //'text' => 'Example text content',
                 'subject' => $mail->subject,
                 'to' => array(
@@ -341,7 +361,7 @@ class Mailer
               
             
             $result = $mandrill->messages->send($message, true);
-            
+
     }
 
 
@@ -351,6 +371,7 @@ class Mailer
     function setCredentials ($creds){
 
         $this->credentials = $creds;
+        return $this;
     }
 
 
