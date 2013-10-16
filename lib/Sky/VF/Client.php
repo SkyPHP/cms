@@ -150,7 +150,7 @@ class Client
      */
     // due to invalid artument, the function has been changed from  : 
     //public static function getFolder($id, array $params = array())
-    public static function getFolder($id, $params)
+    public static function getFolder($id, $params = null)
     {
         if (!is_array($params))
             return  ;
