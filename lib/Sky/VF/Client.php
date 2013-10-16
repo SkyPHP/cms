@@ -148,8 +148,14 @@ class Client
      * @param   array   $params
      * @return  \stdClass
      */
-    public static function getFolder($id, array $params = array())
+    // due to invalid artument, the function has been changed from  : 
+    //public static function getFolder($id, array $params = array())
+    public static function getFolder($id, $params)
     {
+        if (!is_array($params))
+            $params = [] ;
+
+        
         global $cache_vf2_folders;
 
         static::checkForClient();
