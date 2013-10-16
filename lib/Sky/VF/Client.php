@@ -153,7 +153,7 @@ class Client
     public static function getFolder($id, $params = null)
     {
         if (!is_array($params))
-            return  ;
+            $params = array() ;
 
         
         global $cache_vf2_folders;
