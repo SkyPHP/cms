@@ -30,7 +30,7 @@ if ($p->vars['ct_event_id']) {
 	$market_id = $seo_event->venue->market_id;
 }
 
-if ($market_id) {
+if (false && $market_id) {
 	$market=new \Crave\Model\market($market_id);
 	$market_name = $market->name;
 	$market_state = $market->state;
