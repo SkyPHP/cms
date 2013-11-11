@@ -80,6 +80,9 @@ class vf {
          $extra_params = array('files_domain' => self::$filesDomain);
       }
 
+      if(!$client &&  !self::$client)
+         return ;
+
       $response = (object) self::$client->get_item($items_id, $params);
 
       if (!is_array($items_id)) return $response;
@@ -103,6 +106,8 @@ class vf {
       if ($folder && !$_GET['refresh_empty_folders']) {
          return $folder;
       }
+      if(!$client)
+         return ;
       // it's not a known empty folder (or we are refreshing)
       // get the folder
       $folder = (object) self::$client->get_folder($folders_id, $params, $extra_params);
