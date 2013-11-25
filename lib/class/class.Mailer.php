@@ -310,6 +310,7 @@ class Mailer
         $mail->subject = $this->makeSubject();
         $mail->body = $this->body;
         $mail->headers = $this->makeHeaders();
+        $mail->from = $this->from ; 
         #d($mail);
 
         if($this->method == 'mandrill')
@@ -347,7 +348,7 @@ class Mailer
             $message = array(
                 'html' => $mail->body,
 
-                'from_email' => "no-reply@cravetickets.com",
+                'from_email' => $mail->from,
                 'from_name' => "Crave Tickets",
 
                 //'text' => 'Example text content',
