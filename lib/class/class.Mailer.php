@@ -339,6 +339,8 @@ class Mailer
     */
     function send_mandrill ($mail){
 
+        global $message; 
+        
         // add the mandrill's API library 
         require_once 'lib/mandrill/Mandrill.php';
 
@@ -356,9 +358,26 @@ class Mailer
                 'to' => array(
                     array(
                         'email' => $mail->to,
+                        )
                     )
-                )
                 );
+
+
+            if($this->bcc && count($this->bcc)){
+
+                array_walk($this->bcc , function ($value){
+                    global $message;
+
+
+                    $message['to'][] = [
+                        'email' => $value, 
+                        'type' => 'bcc'
+                    ];
+
+                });
+
+            }
+
               
             
             $result = $mandrill->messages->send($message, true);
