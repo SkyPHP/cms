@@ -150,24 +150,33 @@ class Client
      */
     public static function getFolder($id, array $params = array())
     {
-        global $cache_vf2_folders;
+        global $cache_vf2_folders, $cache_vf2_folders_skyphp_version;
 
         static::checkForClient();
 
         $new_params = static::prepOperations($params['width'], $params['height'], $params['crop']);
         $params = array_merge($params, $new_params);
 
+        $mem_params = null;
+        // set the mem params if we need to read vf2 cache from a different skyphp version
+        if ($cache_vf2_folders_skyphp_version) {
+            $mem_params = [
+                'sky_php_version' => $cache_vf2_folders_skyphp_version
+            ];
+        }
+
         $memkey = "vf2:getFolder:" . serialize(array($id,$params));
 
         if ($cache_vf2_folders) {
 
             if (!$_GET['vf_refresh']) {
-                $re = mem($memkey);
+                // read from memcached -- we might be reading a key from a different skyphp version
+                $re = mem($memkey, null, null, $mem_params);
             }
 
             // if there has been an upload to this folder since being cached, refresh it
             $last_upload_memkey = "vf2:getFolder:lastUpload:" . $id;
-            $last_upload = mem($last_upload_memkey);
+            $last_upload = mem($last_upload_memkey, null, null, $mem_params);
 
             if (!$re->cache_time || $re->cache_time < $last_upload) {
                 elapsed($re->cache_time . ' < ' . $last_upload);
@@ -195,7 +204,8 @@ class Client
         if ($re->folder) {
             if ($save_to_mem) {
                 $re->cache_time = date('U');
-                mem($memkey, $re);
+                // save to memcached -- we might be saving to a different skyphp version
+                mem($memkey, $re, null, $mem_params);
             }
             return $re->folder;
         }
