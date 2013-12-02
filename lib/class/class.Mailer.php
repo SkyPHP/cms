@@ -273,6 +273,9 @@ class Mailer
      */
     private function _append($arr, $args)
     {
+        if(!$args)
+            return ;
+
         foreach ($args as $arg) {
             $arg = arrayify($arg);
             foreach ($arg as $a) {
