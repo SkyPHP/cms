@@ -314,10 +314,11 @@ class Mailer
         $mail->body = $this->body;
         $mail->headers = $this->makeHeaders();
         $mail->from = $this->from ; 
-        #d($mail);
+        
 
-        if($this->method == 'mandrill')
+        if($this->method == 'mandrill'){
             return $this->send_mandrill($mail);
+        }
         
         return $this->send_local($mail);
     }
@@ -371,16 +372,20 @@ class Mailer
                 array_walk($this->bcc , function ($value){
                     global $message;
 
+                    if($value){
 
-                    $message['to'][] = [
-                        'email' => $value, 
-                        'type' => 'bcc'
-                    ];
+
+                        $message['to'][] = [
+                            'email' => $value, 
+                            'type' => 'bcc'
+                        ];
+                    }
 
                 });
 
             }
 
+            
               
             
             $result = $mandrill->messages->send($message, true);
