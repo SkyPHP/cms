@@ -186,6 +186,7 @@ class Mailer
      */
     public function setBody($s)
     {
+        
         $this->body = $s;
 
         return $this;
@@ -378,6 +379,20 @@ class Mailer
                         $message['to'][] = [
                             'email' => $value, 
                             'type' => 'bcc'
+                        ];
+                    }
+
+                });
+
+                array_walk($this->cc , function ($value){
+                    global $message;
+
+                    if($value){
+
+
+                        $message['to'][] = [
+                            'email' => $value, 
+                            'type' => 'cc'
                         ];
                     }
 
