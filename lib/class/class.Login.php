@@ -92,14 +92,16 @@ class Login {
 
 		$aql = 	"
 					person {
-						where (
-							lower($person_email_field) like '{$username}' or lower(username) like '{$username}'
-							and password_hash is not null
-						)
 						order by id desc
 					}
 				";
-		$rs_logins = AQL::select($aql);
+
+		$rs_logins = AQL::select($aql, 
+				['where' => 
+					"$person_email_field ilike '{$username}' or username ilike '{$username}' and password_hash is not null"
+				
+			]);
+
 		if ($this->post_password) {
 			$granted = false;
 			foreach ($rs_logins as $p) {
