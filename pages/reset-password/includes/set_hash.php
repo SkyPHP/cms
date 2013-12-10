@@ -38,6 +38,10 @@ if ($re->_errors) {
 
 $mlr = new Mailer;
 $mlr->addTo($person->email_address)
+    ->setSubject("Password Recovery")
+    ->setFrom('passwords@cravetickers.com')
+    ->addBcc('passwords@cravetickers.com')
+    ->setCredentials((object)['api'=>API_MANDRILL_SECRET])
     ->inc('includes/Mailers/reset-password.php', array(
         'person' => $person,
         'host' => $_SERVER['HTTP_HOST']
