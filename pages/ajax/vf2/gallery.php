@@ -2,6 +2,8 @@
 
 //  gallery
 
+$_GET['curl_timeout'] = 20;
+
 if (!$_POST['_token']) {
 	return;
 }
