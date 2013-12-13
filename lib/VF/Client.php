@@ -221,16 +221,21 @@ class Client
             }
         }
 
+        $curl_timeout = 1;
+        if ($_GET['curl_timeout']) {
+            $curl_timeout = $_GET['curl_timeout'];
+        }
+
         // make sure these ints are defined
         // you need curl version 7.16.2 for this to work:
         // define('CURLOPT_TIMEOUT_MS', 155);
         // define('CURLOPT_CONNECTTIMEOUT_MS', 156);
 
-        if (!curl_setopt($curl, CURLOPT_TIMEOUT, 1)) {
+        if (!curl_setopt($curl, CURLOPT_TIMEOUT, $curl_timeout)) {
             static::handleCurlError($curl, 'CURLOPT_TIMEOUT');
         }
 
-        if (!curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 1)) {
+        if (!curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $curl_timeout)) {
             static::handleCurlError($curl, 'CURLOPT_CONNECTTIMEOUT');
         }
 
