@@ -1,5 +1,7 @@
 <?php
 
+$_GET['curl_timeout'] = 20;
+
 $handler = new \Sky\VF\UploadHandler($_POST, $_FILES);
 
 // makes sure that upload is proper
