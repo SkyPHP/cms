@@ -40,8 +40,8 @@ $mlr = new Mailer;
 $mlr->addTo($person->email_address)
     ->setMethod('mandrill')
     ->setSubject("Password Recovery")
-    ->setFrom('passwords@cravetickers.com')
-    ->addBcc('passwords@cravetickers.com')
+    ->setFrom('passwords@cravetickets.com')
+    ->addBcc('passwords@cravetickets.com')
     ->setCredentials((object)['api'=>API_MANDRILL_SECRET])
     ->inc('includes/Mailers/reset-password.php', array(
         'person' => $person,
