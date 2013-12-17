@@ -38,6 +38,7 @@ if ($re->_errors) {
 
 $mlr = new Mailer;
 $mlr->addTo($person->email_address)
+    ->setMethod('mandrill')
     ->setSubject("Password Recovery")
     ->setFrom('passwords@cravetickers.com')
     ->addBcc('passwords@cravetickers.com')
