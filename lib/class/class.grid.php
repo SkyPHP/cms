@@ -72,9 +72,26 @@ class grid {
     public function table() {
         $this->run();
 
-        if ($this->pagination->rs) {
-?>          
-            <table class="<?=$this->table_class?>">
+        $results_sets = array() ;
+
+        if ($this->max_rows_per_page) {
+            $temp_array = $this->pagination->rs; 
+            while(count($temp_array)>0){
+                array_push($results_sets ,array_splice($temp_array,0,$this->max_rows_per_page) );
+            }
+        } elseif ($this->pagination->rs) {
+            array_push($results_sets,$this->pagination->rs);
+        }else {
+            echo $this->empty_message;
+        }
+
+        $total_pages = count($results_sets);
+        $page_index = 0;
+
+        foreach ($results_sets as $results_set) { ?>
+
+ <h1 class="willcall"><?= $this->page_title ?></h1>
+ <table class="<?=$this->table_class?>">
                 <tr>
 <?
                 foreach ( $this->columns as $column ) {
@@ -93,7 +110,7 @@ class grid {
 ?>
                 </tr>
 <?
-            foreach ( $this->pagination->rs as &$r ) {
+            foreach ( $results_set as &$r ) {
 ?>
                 <tr>
 <?
@@ -134,9 +151,10 @@ class grid {
             }
 ?>
             </table>
-<?
-        } else {
-            echo $this->empty_message;
+
+            <?php if ($this->max_rows_per_page) { ?>
+                <div style="float:right; margin-right:100px">Page <?= $page_index+1 ?> out of <?= $total_pages ?></div>
+            <?php } $page_index++;            
         }
 
     }
