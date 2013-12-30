@@ -89,6 +89,12 @@ class Client
         $re = static::getClient()->getItem($id, $params);
 
         if ($re->errors) {
+            // cache the error for 1 minute to give some relief to vf server
+            // only if this isn't already cached
+            if (!$re->cached) {
+                $re->cached = true;
+                mem($memkey, $re, '1 minute');
+            }
             return $re;
         }
 
