@@ -211,6 +211,14 @@ class Client
             }
             return $re->folder;
         }
+
+        // cache the error for 1 minute to give some relief to vf server
+        // only if this isn't already cached
+        if (!$re->cache_time) {
+            $re->cache_time = date('U');
+            mem($memkey, $re, '1 minute');
+        }
+
         return $re;
     }
 
