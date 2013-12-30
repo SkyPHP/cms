@@ -94,6 +94,8 @@ class Slideshow extends Gallery\Inc
 
         if (!is_array($small)) return;
 
+        if (!is_object($small[0])) return;
+
         $small[0]->class = $large[0]->class = "first selected";
 
         $data = array(
