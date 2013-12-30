@@ -19,6 +19,12 @@ class Client
     protected static $client = null;
 
     /**
+     * [$error_cache_duration description]
+     * @var string
+     */
+    public static $error_cache_duration = '5 minutes';
+
+    /**
      * Sets the client with the config array
      * @param   array   $conf
      */
@@ -209,6 +215,14 @@ class Client
             }
             return $re->folder;
         }
+
+        // cache the error for 1 minute to give some relief to vf server
+        // only if this isn't already cached
+        if (!$re->cache_time) {
+            $re->cache_time = date('U');
+            mem($memkey, $re, static::$error_cache_duration);
+        }
+
         return $re;
     }
 
