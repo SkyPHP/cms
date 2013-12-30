@@ -19,6 +19,12 @@ class Client
     protected static $client = null;
 
     /**
+     * [$error_cache_duration description]
+     * @var string
+     */
+    public static $error_cache_duration = '5 minutes';
+
+    /**
      * Sets the client with the config array
      * @param   array   $conf
      */
@@ -93,7 +99,7 @@ class Client
             // only if this isn't already cached
             if (!$re->cached) {
                 $re->cached = true;
-                mem($memkey, $re, '1 minute');
+                mem($memkey, $re, static::$error_cache_duration);
             }
             return $re;
         }
@@ -216,7 +222,7 @@ class Client
         // only if this isn't already cached
         if (!$re->cache_time) {
             $re->cache_time = date('U');
-            mem($memkey, $re, '1 minute');
+            mem($memkey, $re, static::$error_cache_duration);
         }
 
         return $re;
