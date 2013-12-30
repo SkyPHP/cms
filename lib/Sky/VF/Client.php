@@ -22,7 +22,7 @@ class Client
      * [$error_cache_duration description]
      * @var string
      */
-    public static $error_cache_duration = '5 minutes';
+    public static $error_cache_duration = '15 minutes';
 
     /**
      * Sets the client with the config array
