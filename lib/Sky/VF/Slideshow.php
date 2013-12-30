@@ -93,8 +93,10 @@ class Slideshow extends Gallery\Inc
         $small = Client::getItems($items, $small_conf);
 
         if (!is_array($small)) return;
-
         if (!is_object($small[0])) return;
+
+        if (!is_array($large)) return;
+        if (!is_object($large[0])) return;
 
         $small[0]->class = $large[0]->class = "first selected";
 
