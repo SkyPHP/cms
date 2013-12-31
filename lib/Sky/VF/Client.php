@@ -194,9 +194,9 @@ class Client
         if (!$re) {
 
             // connect to vf server only 10% of the time
-            if (rand(0,9) != 9) {
-                return (object) array();
-            }
+            //if (rand(0,9) != 9) {
+            //    return (object) array();
+            //}
 
             $re = !static::isPath($id)
                 ? static::getClient()->getFolder($id, $params)
