@@ -83,10 +83,10 @@ if($market_nbhd_id)
 	
 	
 if ($ct_category_id) {
-	$ct_category=aql::profile('ct_category',$ct_category_id);
-	$category_name = $ct_category['name'];
-	if($ct_category['ct_holiday_id'])
-		$ct_holiday_id = $ct_category['ct_holiday_id'];
+	$ct_category=aql::profile('ct_category{}',$ct_category_id);
+	$category_name = $ct_category->name;
+	if($ct_category->ct_holiday_id)
+		$ct_holiday_id = $ct_category->ct_holiday_id;
 }
 
 if ($ct_holiday_id) {
@@ -114,9 +114,9 @@ if ($ct_contract_id) {
 	$contract_open_bar_end = $ct_contract['open_bar_end'];
 }
 
-$website_name = $p->seo['domain'] = $website->website['domain'];
+$website_name = $p->seo->domain = $website->website->domain;
 
-$seo_phone =  $website->website['seo_phone'];
+$seo_phone =  $website->website->seo_phone;
 
 $seo_year = date('Y');
 if ($ct_campaign_id == 1 || $ct_holiday_id == 1) $seo_year++;
