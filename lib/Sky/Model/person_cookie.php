@@ -36,7 +36,7 @@ class person_cookie extends \Sky\Model
             $cookie = addslashes(trim($_COOKIE['cookie']));
             if (preg_match('/[^a-zA-Z0-9]/im', $cookie)) return;
         }
-        return person_cookie::getByClause(array(
+        return person_cookie::getMany(array(
             'where' => "cookie = '{$cookie}' and person_id = {$person_id}",
             'limit' => 1
         ));

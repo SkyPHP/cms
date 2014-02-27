@@ -1,4 +1,6 @@
 <?
+	use Crave\Model\aql;
+
 	$page_data = NULL;
 	global $seo_field_array;
 	global $website_id;
@@ -13,7 +15,7 @@
 
 		if (!$page_data) {
 
-			$rs = aql::select("website_page { url_specific where page_path = '{$p->page_path}' and website_id = {$website_id} }");
+			//$rs = aql::select("website_page { url_specific where page_path = '{$p->page_path}' and website_id = {$website_id} }");
 
 			if (is_numeric($rs[0]->website_page_id)) {
 				$pd = aql::select("website_page_data { field, value where website_page_id = {$rs[0]->website_page_id} } ");
