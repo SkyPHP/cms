@@ -1,5 +1,5 @@
 <?php
-
+namespace Crave\Model;
 /**
  * Deprecated.
  * For backwards compatibility.

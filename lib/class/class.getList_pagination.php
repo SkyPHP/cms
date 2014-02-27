@@ -1,4 +1,5 @@
 <?php
+ use Crave\Model\venue;
 
 class getList_pagination {
 
