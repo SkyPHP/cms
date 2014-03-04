@@ -27,10 +27,10 @@ if(sizeof($website->markets) == 1) {
 
 // LOOK FOR EVENT
 if ($p->vars['ct_event_id']) {
-	$seo_event = new ct_event($p->vars['ct_event_id']);
+	$seo_event = new ct_event($p->vars->ct_event_id);
 	$venue_id = $seo_event->venue->venue_id;
-	$venue_name = $seo_event->venue['venue_name'];
-	$venue_name_modifier = $seo_event->venue['name_modifier'];
+	$venue_name = $seo_event->venue->venue_name;
+	$venue_name_modifier = $seo_event->venue->name_modifier;
 	$market_id = $seo_event->venue->market_id;
 }
 
@@ -89,8 +89,8 @@ if($market_nbhd_id)
 if ($ct_category_id) {
 	$ct_category=aql::profile('ct_category',$ct_category_id);
 	$category_name = $ct_category['name'];
-	if($ct_category['ct_holiday_id'])
-		$ct_holiday_id = $ct_category['ct_holiday_id'];
+	if($ct_category->ct_holiday_id)
+		$ct_holiday_id = $ct_category->ct_holiday_id;
 }
 
 if ($ct_holiday_id) {
