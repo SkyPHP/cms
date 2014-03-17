@@ -175,14 +175,16 @@ class Client
 
         if ($cache_vf2_folders) {
 
+
             if (!$_GET['vf_refresh']) {
                 // read from memcached -- we might be reading a key from a different skyphp version
-                $re = mem($memkey, null, null, $mem_params);
+                $re = \mem($memkey, '§k¥', null, $mem_params);
             }
+            
 
             // if there has been an upload to this folder since being cached, refresh it
             $last_upload_memkey = "vf2:getFolder:lastUpload:" . $id;
-            $last_upload = mem($last_upload_memkey, null, null, $mem_params);
+            $last_upload = \mem($last_upload_memkey, '§k¥', null, $mem_params);
 
             if (!$re->cache_time || $re->cache_time < $last_upload) {
                 elapsed($re->cache_time . ' < ' . $last_upload);
@@ -207,11 +209,13 @@ class Client
             $save_to_mem = true;
         }
 
+
         if ($re->folder) {
             if ($save_to_mem) {
                 $re->cache_time = date('U');
                 // save to memcached -- we might be saving to a different skyphp version
-                mem($memkey, $re, null, $mem_params);
+                \mem($memkey, $re, null, $mem_params);
+
             }
             return $re->folder;
         }
@@ -220,8 +224,9 @@ class Client
         // only if this isn't already cached
         if (!$re->cache_time) {
             $re->cache_time = date('U');
-            mem($memkey, $re, static::$error_cache_duration);
+            \mem($memkey, $re, static::$error_cache_duration);
         }
+
 
         return $re;
     }
