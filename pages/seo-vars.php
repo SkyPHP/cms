@@ -85,14 +85,15 @@ if ($p->vars['market_nbhd_id'])
 if($market_nbhd_id)
 	$p->seo['placename'] = aql::value('market_nbhd.name',$market_nbhd_id);
 	
-	
+
+/*	
 if ($ct_category_id) {
 	$ct_category=aql::profile('ct_category',$ct_category_id);
 	$category_name = $ct_category['name'];
 	if($ct_category->ct_holiday_id)
 		$ct_holiday_id = $ct_category->ct_holiday_id;
 }
-
+*/
 if ($ct_holiday_id) {
 	$ct_holiday= new ct_holiday($ct_holiday_id);
 	$holiday_name = $ct_holiday->name;
