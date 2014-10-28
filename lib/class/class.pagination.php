@@ -26,13 +26,13 @@ class pagination {
 
         $this->clause['limit'] = $_GET['limit'.$this->i];
         $this->clause['offset'] = $this->offset;
-        $this->rs = aql::select($this->aql,$this->clause);
-
+        //$this->rs = aql::select($this->aql,$this->clause);
+        $this->rs = \Sky\AQL::select($this->aql,$this->clause);
         $this->first_row = $this->offset + 1;
         $this->last_row = count($this->rs) + $this->first_row - 1;
-        $c = aql::sql($this->aql,$this->clause);
-        $c = sql($c['sql_count']);
-        $this->total_rows = $c->Fields('count');
+        //$c = aql::sql($this->aql,$this->clause);
+        $c = \Sky\AQL::count($this->aql,$this->clause);
+        $this->total_rows = $c;
         $this->num_pages = ceil($this->total_rows / $_GET['limit'.$this->i]);
         return $this->rs;
     }
