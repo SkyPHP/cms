@@ -1,6 +1,7 @@
 <?
 
-use \Sky\Model\person_cookie;
+use \Sky\Model\person_cookie,
+    \Crave\Model\person;
 
 $access_denied = ($access_groups) ? true : false;
 

@@ -33,7 +33,7 @@ class news_item extends \Sky\Model
 
     public function getLayoutPath() {
         //d($this);
-        return sprintf('lib/news/layouts/%s.php', $this->category);
+        return sprintf('/lib/news/layouts/%s.php', $this->category);
     }
 
     public function getMessage() {

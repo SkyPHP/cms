@@ -114,7 +114,7 @@ class news {
      */
     public function add($param) {
 
-        $n = new news_item();
+        $n = new \Sky\Model\news_item();
         $n->category = $param['category'];
         $n->json = $param['json'];
         $n->mod__person_id = $param['mod__person_id'];
@@ -127,6 +127,7 @@ class news {
             $n->news_who[$i]['who'] = $who;
             //$n->news_who[$i]['insert_time'] = 'now()';
         }
+        d($n);
         $n->save();
 
     }
