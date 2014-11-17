@@ -5,8 +5,12 @@
 	global $seo_field_array;
 	global $website_id;
 
-    if (!$website_id) $website_id = $p->vars['seo']['website']['website_id'];
-    if (!$website_id) $website_id = $this->vars['website']->website_id;
+    if (!$website_id) {
+		if (is_array($p->vars['seo']['website']))
+			$website_id = $p->vars['seo']['website']['website_id'];
+		else 
+			$website_id = $this->vars['website']->website_id;
+	}
 
 	if ($website_id) {
 
