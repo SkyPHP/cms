@@ -12,6 +12,7 @@
 			$website_id = $this->vars['website']->website_id;
 	}
 
+
 	if ($website_id) {
 
 		//$mem_key = "seo:".$website_id.":".$p->page_path;
