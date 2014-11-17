@@ -1,4 +1,4 @@
-<?
+<?php
 	use Crave\Model\aql;
 
 	$page_data = NULL;
@@ -64,4 +64,3 @@
 	}
 
 
-?>
