@@ -127,7 +127,7 @@ class news {
             $n->news_who[$i]['who'] = $who;
             //$n->news_who[$i]['insert_time'] = 'now()';
         }
-        d($n);
+        //d($n);
         $n->save();
 
     }
