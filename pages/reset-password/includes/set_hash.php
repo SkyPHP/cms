@@ -2,6 +2,8 @@
 
 use \Sky\Model\person;
 
+$_POST['refresh'] = 1 ;
+
 $errors = array();
 
 $email = trim($_POST['email_address']);
@@ -47,8 +49,10 @@ $mlr->addTo($person->email_address)
         'person' => $person,
         'host' => $_SERVER['HTTP_HOST']
     ))->send();
-
+//d($mlr);
+//print_r($mlr);
 exit_json([
     'status' => 'OK',
-    'email_address' => $re->email_address
+    'email_address' => $re->email_address,
+    'mlr' => $mlr
 ]);

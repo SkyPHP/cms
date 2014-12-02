@@ -1,5 +1,7 @@
 <?php
 
+$_POST['refresh'] = 1 ;
+
 use \Sky\Model\person;
 
 $o = new person($p->queryfolders[0]);
