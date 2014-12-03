@@ -30,9 +30,9 @@ class pagination {
 
         $this->first_row = $this->offset + 1;
         $this->last_row = count($this->rs) + $this->first_row - 1;
-        $c = aql::sql($this->aql,$this->clause);
+        $c = aql::select($this->aql,$this->clause);
         $c = sql($c['sql_count']);
-        $this->total_rows = $c->Fields('count');
+        $this->total_rows = $c->count;
         $this->num_pages = ceil($this->total_rows / $_GET['limit'.$this->i]);
         return $this->rs;
     }
