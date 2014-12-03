@@ -220,7 +220,7 @@ class person extends \Sky\Model
 
             if ($this->current_password) {
 
-                $hashed = Login::generateHash(
+                $hashed = \Login::generateHash(
                     $this->current_password,
                     $this->generateUserSalt()
                 );

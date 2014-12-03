@@ -144,7 +144,7 @@ form.standard_form .radio_field label {
 }
 .aql_saved, .aql_success {
 	border: 1px #00FF00 dashed;
-	background-color:#EEFFEE;
+	/* background-color:#EEFFEE; */
 	padding: 10px;
 	margin: 15px 0 15px 0;
 	font-weight:bold;

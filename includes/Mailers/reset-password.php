@@ -12,7 +12,7 @@ $this->setCredentials((object)['api'=>API_MANDRILL_SECRET]);
 $this->setMethod('mandrill');
 
 $uri = sprintf('http://%s/reset-password/%s/%s', $host, $ide, $hash);
-
+//d($uri);
 ?>
 
 <p> 
