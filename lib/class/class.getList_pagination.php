@@ -1,5 +1,6 @@
 <?php
- use Crave\Model\venue;
+ use \Crave\Model\venue,
+ 	 \Crave\Model\ct_promoter;
 
 class getList_pagination {
 
@@ -22,6 +23,8 @@ class getList_pagination {
 	}
 
 	function select($class = null, $params = null) {
+
+		//Kint::trace();
 		if ($class) $this->class= $class;
 		if ($params) $this->params = $params;
 
@@ -32,6 +35,7 @@ class getList_pagination {
 		$this->params['offset'] = ($this->page - 1) * $this->limit;
 
 		$cl = $this->class;
+		//d($cl);
 		$this->rs = $cl::getList($this->params);
 
 		$this->total_rows = $cl::getList($this->params, true);
