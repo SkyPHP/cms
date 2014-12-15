@@ -343,11 +343,6 @@ class person extends \Sky\Model
             //$this->password = null;
             $password_hash = \Login::generateHash($password, $this->generateUserSalt());
             $this->password_hash = $password_hash;
-
-            //dd($this->password_hash);
-            /*$this->update([
-                'password_hash' => \Login::generateHash($password, $this->generateUserSalt())
-            ]);*/
         }
     }
 

@@ -113,10 +113,6 @@ class Login {
 				
 				$this->person = $p ; // new person($p->person_id, null, true);
 
-				/*$this->person = new person($p->id); 
-				$pide = $this->person->getIDE();
-				dd($pide, $p->ide);*/
-
 				//dd($this->person);
 				if (!$this->person->person_id) continue;
 				if ($this->_checkLogin($this->post_password)) {
