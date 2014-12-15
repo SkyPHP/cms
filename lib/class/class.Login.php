@@ -91,10 +91,13 @@ class Login {
 		$username = trim(strtolower($this->post_username));
 
 		$aql = 	"
-					person {
+					person { 
+						password_hash
 						order by id desc
 					}
 				";
+
+
 
 		$rs_logins = AQL::select($aql, 
 				['where' => 
@@ -105,11 +108,22 @@ class Login {
 		if ($this->post_password) {
 			$granted = false;
 			foreach ($rs_logins as $p) {
-				$this->person = new person($p->person_id, null, true);
+				
+				$p->ide = encrypt($p->id, 'person');
+				
+				$this->person = $p ; // new person($p->person_id, null, true);
+
+				/*$this->person = new person($p->id); 
+				$pide = $this->person->getIDE();
+				dd($pide, $p->ide);*/
+
+				//dd($this->person);
 				if (!$this->person->person_id) continue;
 				if ($this->_checkLogin($this->post_password)) {
 					if (auth_person($access_groups, $this->person->person_id) || !$access_groups) {
+						$this->person = new person($p->id); 
 						$access_denied = false;
+						//dd($access_groups, $this->person->person_id, $access_denied);
 						return $this->r(array('person_ide' => $this->person->person_ide));
 					}
 				}
@@ -120,9 +134,10 @@ class Login {
 	}
 
 	public function _checkLogin($password) {
-		$salt = $this->person->generateUserSalt();
+		$salt = self::generateUserSalt($this->person->ide); //$this->person->generateUserSalt();
 		$pw = Login::generateHash($password, $salt);
 		// return ($password == $this->person->password); // temp fix while new hash algo
+		//dd($password, $salt, $pw, $this->person->password_hash);
 		return ($pw == $this->person->password_hash);
 	}
 

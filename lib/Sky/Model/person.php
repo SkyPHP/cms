@@ -267,6 +267,7 @@ class person extends \Sky\Model
     public function afterInsert()
     {
         $this->setPassword();
+        $this->save();
     }
 
 
@@ -275,7 +276,7 @@ class person extends \Sky\Model
      */
     public function afterUpdate()
     {
-        $this->setPassword();
+        //$this->setPassword();
     }
 
 
@@ -318,14 +319,35 @@ class person extends \Sky\Model
     /**
      * 
      */
+    public function beforeInsert()
+    {
+        //$this->setPassword();
+    }
+
+
+    /**
+     * 
+     */
+    public function beforeUpdate()
+    {
+        $this->setPassword();
+    }
+
+    /**
+     * 
+     */
     private function setPassword()
     {
         if ($this->password) {
             $password = $this->password;
-            $this->password = null;
-            $this->update([
+            //$this->password = null;
+            $password_hash = \Login::generateHash($password, $this->generateUserSalt());
+            $this->password_hash = $password_hash;
+
+            //dd($this->password_hash);
+            /*$this->update([
                 'password_hash' => \Login::generateHash($password, $this->generateUserSalt())
-            ]);
+            ]);*/
         }
     }
 
