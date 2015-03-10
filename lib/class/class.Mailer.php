@@ -407,6 +407,10 @@ class Mailer
             
             
             $result = $mandrill->messages->send($message, true);
+
+            if($_GET['debug'] && $_GET['elapsed']) {
+                d($result);
+            }
             
             if ($result[0] && $result[0]['status']) {
                 return 1 ;
