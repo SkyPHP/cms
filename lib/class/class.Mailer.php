@@ -8,6 +8,7 @@ class Mailer
 {
 
 
+    public $result = null ;
 
     /**
      * @var string
@@ -345,6 +346,7 @@ class Mailer
     function send_mandrill ($mail){
 
         global $message; 
+
         
         // add the mandrill's API library 
         require_once 'lib/mandrill/Mandrill.php';
@@ -373,7 +375,7 @@ class Mailer
                 array_walk($this->bcc , function ($value){
                     global $message;
 
-                    if($value){
+                    if($value && stristr($value, '@')){
 
 
                         $message['to'][] = [
@@ -383,11 +385,15 @@ class Mailer
                     }
 
                 });
+            }
+
+
+            if($this->cc && count($this->cc)){
 
                 array_walk($this->cc , function ($value){
                     global $message;
 
-                    if($value){
+                    if($value && stristr($value, '@')){
 
 
                         $message['to'][] = [
@@ -397,13 +403,17 @@ class Mailer
                     }
 
                 });
-
             }
-
             
-              
             
             $result = $mandrill->messages->send($message, true);
+            
+            if ($result[0] && $result[0]['status']) {
+                return 1 ;
+            }else {
+                $this->result = $result; 
+            }
+            
 
     }
 
