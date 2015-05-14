@@ -5,7 +5,7 @@ namespace VF;
 /**
  * @package VF
  */
-class Client
+class Client_v2
 {
 
     /**
@@ -88,9 +88,9 @@ class Client
      * @param   array
      */
     public function __construct(array $config = array())
-    {   
-        $this->api_url = $config['api_url'];
-        $this->oauth_token = $config['oauth_token'];
+    {
+        $this->api_url = 'https://api.vfolder.net/v3';
+        $this->oauth_token = 'mytoken';
 
         $this->validateConfiguration();
     }
@@ -109,13 +109,8 @@ class Client
 
         // set what arguments will be posted
         $post = ($info->static ? $args[0] : $args[1]) ?: array();
-        if($post == "v2"){
-            $opts = $args[2];
-        }else{
-            $opts = null;
-        }
-        //d($method, $args, $url, $info, $opts);
-        return $this->makeRequest($url, $post, $opts);
+
+        return $this->makeRequest($url, $post);
     }
 
     /**
@@ -198,7 +193,7 @@ class Client
                 throw new \InvalidArgumentException("Invalid args for $name");
             }
         }
-        //d($name, $args);
+
         $url = array_filter(array(
             $info->resource,
             $info->static ? null : reset($args),
@@ -217,32 +212,16 @@ class Client
      */
     protected function makeRequest($url, $post = array(), $opts = array())
     {
-        //d($url, $post, $opts);
-        if($post == "v2"){
-            $config = $opts['config'];
-            $params = $opts['venue_ide'] ."/".$opts['filename']."/".implode("/",$config);
-            //d($config, $params);
-            //$url = "https://api.vfolder.net/v3/items/".$params."?oauth_token=mytoken";
-            $url = "http://localdev.vfolder.com/v3/items/".$params."?oauth_token=mytoken";
-        }else{
-            $url = $this->getRequestUrl($url);
-        }
-        //d($url);
+        $url = $this->getRequestUrl($url);
         $curl = curl_init($url);
-        //d($curl);
 
         if ($opts['HTTPHEADER']) {
             if (!curl_setopt($curl, CURLOPT_HTTPHEADER, $opts['HTTPHEADER'])) {
                 static::handleCurlError($curl, 'CURLOPT_HTTPHEADER');
             }
         }
-        if($post == "v2"){
-            if (!curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'))) {
-                static::handleCurlError($curl, 'CURLOPT_HTTPHEADER');
-            }
-        }
 
-        $curl_timeout = 10;
+        $curl_timeout = 1;
         if ($_GET['curl_timeout']) {
             $curl_timeout = $_GET['curl_timeout'];
         }
@@ -317,7 +296,7 @@ class Client
             krumo($data);
             echo '<br />';
         }
-        //d($data);
+
         return $data;
 
     }
