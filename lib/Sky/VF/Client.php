@@ -95,6 +95,7 @@ class Client
         //d($id);
         if($vf_version == "v2"){
             $re = static::getClient()->getItem($id, "v2", $v2params);
+            //d($re);
         }else{
             $re = static::getClient()->getItem($id, $params);
         }

@@ -42,3 +42,5 @@ $quick_serve['media'] = 'lib/core/quick-serve/media.php';
 $quick_serve['media-zip'] = 'lib/core/quick-serve/media-zip.php';
 
 $person_encryption_key = 'set-this-variable-in-your-config-for-security-purposes';
+
+$vfolder_path = 'http://api.vfolder.net'; // http://localdev.vfolder.com

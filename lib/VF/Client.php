@@ -217,17 +217,24 @@ class Client
      */
     protected function makeRequest($url, $post = array(), $opts = array())
     {
+        global $vfolder_path;
         //d($url, $post, $opts);
         if($post == "v2"){
             $config = $opts['config'];
-            $params = $opts['venue_ide'] ."/".$opts['filename']."/".implode("/",$config);
+            if($config['crop'] === false){
+                $config['crop'] = 0;
+            }
+            if($config['resize'] === false){
+                $config['resize'] = 0;
+            }
+            $params = $opts['venue_ide'] ."/".$opts['filename']."/".implode("/",$config)."/".$opts['type']."/".$opts['flyer_type'];
             //d($config, $params);
-            //$url = "https://api.vfolder.net/v3/items/".$params."?oauth_token=mytoken";
-            $url = "http://localdev.vfolder.com/v3/items/".$params."?oauth_token=mytoken";
+            $url = $vfolder_path."/v3/items/".$params."?oauth_token=mytoken";
+            //$url = "http://localdev.vfolder.com/v3/items/".$params."?oauth_token=mytoken";
         }else{
             $url = $this->getRequestUrl($url);
         }
-        //d($url);
+        //dd($url);
         $curl = curl_init($url);
         //d($curl);
 
