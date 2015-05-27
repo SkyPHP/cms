@@ -109,8 +109,13 @@ class Client
 
         // set what arguments will be posted
         $post = ($info->static ? $args[0] : $args[1]) ?: array();
-
-        return $this->makeRequest($url, $post);
+        if($post == "v2"){
+            $opts = $args[2];
+        }else{
+            $opts = null;
+        }
+        //d($method, $args, $url, $info, $opts);
+        return $this->makeRequest($url, $post, $opts);
     }
 
     /**
@@ -212,11 +217,33 @@ class Client
      */
     protected function makeRequest($url, $post = array(), $opts = array())
     {
-        $url = $this->getRequestUrl($url);
+        global $vfolder_path;
+        //d($url, $post, $opts);
+        if($post == "v2"){
+            $config = $opts['config'];
+            if($config['crop'] === false){
+                $config['crop'] = 0;
+            }
+            if($config['resize'] === false){
+                $config['resize'] = 0;
+            }
+            $params = $opts['venue_ide'] ."/".$opts['filename']."/".implode("/",$config)."/".$opts['type']."/".$opts['flyer_type'];
+            //d($config, $params);
+            $url = $vfolder_path."/v3/items/".$params."?oauth_token=mytoken";
+            //$url = "http://localdev.vfolder.com/v3/items/".$params."?oauth_token=mytoken";
+        }else{
+            $url = $this->getRequestUrl($url);
+        }
         $curl = curl_init($url);
 
         if ($opts['HTTPHEADER']) {
             if (!curl_setopt($curl, CURLOPT_HTTPHEADER, $opts['HTTPHEADER'])) {
+                static::handleCurlError($curl, 'CURLOPT_HTTPHEADER');
+            }
+        }
+
+        if($post == "v2"){
+            if (!curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'))) {
                 static::handleCurlError($curl, 'CURLOPT_HTTPHEADER');
             }
         }
@@ -226,7 +253,7 @@ class Client
         // define('CURLOPT_TIMEOUT_MS', 155);
         // define('CURLOPT_CONNECTTIMEOUT_MS', 156);
 
-        $curl_timeout = 1;
+        $curl_timeout = 10;
         if ($_GET['curl_timeout']) {
             $curl_timeout = $_GET['curl_timeout'];
         }

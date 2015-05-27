@@ -78,7 +78,7 @@ class Client
      * @param   string  $height
      * @param   string  $crop
      */
-    public static function getItem($id, $width = null, $height = null, $crop = null)
+    public static function getItem($id, $width = null, $height = null, $crop = null, $vf_version = null, $v2params = null)
     {
         if (!$id) return false;
 
@@ -87,13 +87,18 @@ class Client
         $params = static::prepOperations($width, $height, $crop);
 
         // use cached getItem request if it exists
-        $memkey = "vf2:getItem:" . serialize(array($id, $params));
+        /*$memkey = "vf2:getItem:" . serialize(array($id, $params));
         if (!$_GET['vf_refresh']) $cached_response = mem($memkey);
         if ($_GET['elapsed']) krumo($cached_response);
-        if ($cached_response) return $cached_response;
+        if ($cached_response) return $cached_response;*/
 
-        $re = static::getClient()->getItem($id, $params);
-
+        if($vf_version == "v2"){
+            $re = static::getClient()->getItem($id, "v2", $v2params);
+            //d($re);
+        }else{
+            $re = static::getClient()->getItem($id, $params);
+        }
+        
         if ($re->errors) {
             // cache the error for 1 minute to give some relief to vf server
             // only if this isn't already cached
