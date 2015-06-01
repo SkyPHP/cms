@@ -1,6 +1,9 @@
-<?
+<?php
 
-$model = $this->queryfolders[0];
+$namespace = '\\Crave\\Model\\';
+
+$model_name = $this->queryfolders[0];
+$model = $namespace.$model_name;
 $ide = $this->queryfolders[1];
 
 $this->template('skybox', 'top', array(
@@ -10,10 +13,10 @@ $this->template('skybox', 'top', array(
 ?>
 
 <form 
-	model="<?=$model?>" 
+	model="<?=$model_name?>" 
 	method="post" 
 	class="aqlForm standard_form" 
-	action="/aql/save/<?=$model?>"
+	action="/aql/save/<?=$model_name?>"
 	>
 <?
 	

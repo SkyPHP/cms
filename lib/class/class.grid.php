@@ -120,7 +120,7 @@ class grid {
                         $this->get_incpath();
                         include( $this->incpath . '/' . $column['td'] );
                     } else if ( array_key_exists($column['td'],$r) ) {
-                        echo $r[ $column['td'] ];
+                        echo $r->{$column['td']}; 
                     } else {
                         echo $column['td'];
                     }
