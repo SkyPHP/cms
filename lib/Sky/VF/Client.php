@@ -99,12 +99,16 @@ class Client
         }else{
             $re = static::getClient()->getItem($id, $params);
         }
-        //dd($params, $re);
+        //d($params, $re);
         if ($re->errors) {
             return $re;
         }
 
         // cache getItem request if no error
+        if($re->items){
+            $response = $re->items;
+            return $response;
+        }
         $response = $re->item;
         mem($memkey, $response);
         return $response;
