@@ -29,7 +29,7 @@ class Client
      * @param   array   $conf
      */
     public static function config($conf = array())
-    {
+    {   
         static::$client = new \VF\Client($conf);
     }
 
@@ -37,7 +37,7 @@ class Client
      * @return  \VF\Client
      */
     public static function getClient()
-    {
+    {   
         return static::$client;
     }
 
@@ -78,8 +78,9 @@ class Client
      * @param   string  $height
      * @param   string  $crop
      */
-    public static function getItem($id, $width = null, $height = null, $crop = null)
+    public static function getItem($id, $width = null, $height = null, $crop = null, $vf_version = null, $v2params = null)
     {
+
         if (!$id) return false;
 
         static::checkForClient();
@@ -87,18 +88,27 @@ class Client
         $params = static::prepOperations($width, $height, $crop);
 
         // use cached getItem request if it exists
-        $memkey = "vf2:getItem:" . serialize(array($id, $params));
+        /*$memkey = "vf2:getItem:" . serialize(array($id, $params));
         if (!$_GET['vf_refresh']) $cached_response = mem($memkey);
         if ($_GET['elapsed']) krumo($cached_response);
-        if ($cached_response) return $cached_response;
-
-        $re = static::getClient()->getItem($id, $params);
-
+        if ($cached_response) return $cached_response;*/
+        //d($id);
+        if($vf_version == "v2"){
+            $re = static::getClient()->getItem($id, "v2", $v2params);
+            //d($re);
+        }else{
+            $re = static::getClient()->getItem($id, $params);
+        }
+        //d($params, $re);
         if ($re->errors) {
             return $re;
         }
 
         // cache getItem request if no error
+        if($re->items){
+            $response = $re->items;
+            return $response;
+        }
         $response = $re->item;
         mem($memkey, $response);
         return $response;
