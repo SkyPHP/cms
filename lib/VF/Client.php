@@ -128,6 +128,120 @@ class Client
      */
     public function addItem(array $args = array(), $userfile = null)
     {
+        if($userfile){
+            if(is_array($userfile)){
+                $params['post'] = json_encode($args);
+                $params['files'] = json_encode($userfile);
+
+                $filename = $userfile['file']['name'];
+                $filedata = $userfile['file']['tmp_name'];
+                $filesize = $userfile['file']['size'];
+
+                $params['filename'] = $filename;
+                $params['filedata'] = "@$filedata";
+
+                $headers = array("Content-Type:multipart/form-data");
+
+                //$params = json_encode($params);
+
+                //d($params);
+                global $vfolder_path;
+                $url = $vfolder_path."/v3/items/add/?oauth_token=mytoken";
+
+                $curl = curl_init($url);
+                //d($curl);
+
+                $curl_timeout = 100;
+                if ($_GET['curl_timeout']) {
+                    $curl_timeout = $_GET['curl_timeout'];
+                }
+
+                // make sure these ints are defined
+                // you need curl version 7.16.2 for this to work:
+                // define('CURLOPT_TIMEOUT_MS', 155);
+                // define('CURLOPT_CONNECTTIMEOUT_MS', 156);
+
+                if (!curl_setopt($curl, CURLOPT_TIMEOUT, $curl_timeout)) {
+                    static::handleCurlError($curl, 'CURLOPT_TIMEOUT');
+                }
+
+                if (!curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $curl_timeout)) {
+                    static::handleCurlError($curl, 'CURLOPT_CONNECTTIMEOUT');
+                }
+
+                if (!curl_setopt($curl, CURLOPT_POST, true)) {
+                    static::handleCurlError($curl, 'CURLOPT_POST');
+                }
+
+                if (!curl_setopt($curl, CURLOPT_HTTPHEADER, $headers)) {
+                    static::handleCurlError($curl, 'CURLOPT_HTTPHEADER');
+                }
+
+                if (!curl_setopt($curl, CURLOPT_POSTFIELDS, $params)) {
+                    static::handleCurlError($curl, 'CURLOPT_POSTFIELDS');
+                }
+
+                if (!curl_setopt($curl, CURLOPT_INFILESIZE, $filesize)) {
+                    static::handleCurlError($curl, 'CURLOPT_INFILESIZE');
+                }
+
+                if (!curl_setopt($curl, CURLOPT_RETURNTRANSFER, true)) {
+                    static::handleCurlError($curl, 'CURLOPT_RETURNTRANSFER');
+                }
+
+                $name = '\VF\Client::addItem: ' . $url;
+                elapsed('begin ' . $name);
+
+                if ($_GET['vf_debug']) {
+
+                    echo $url . '<br />POST:';
+                    krumo("v2");
+                }
+
+                $response = curl_exec($curl);
+                elapsed('end ' . $name);
+
+                $error = curl_error($curl);
+                //d($curl, $response, $error);
+                curl_close($curl);
+                if ($error) {
+                    // there was a curl transmission error
+                    return (object) array(
+                        'request' => array(
+                            'url' => $url,
+                            'post' => "v2"
+                        ),
+                        'errors' => array($error)
+                    );
+                }
+
+                $data = json_decode($response);
+
+                if (!$data) {
+                    // the server did not respond with valid json
+                    // return the unformatted output as an error
+                    // there was a curl transmission error
+                    $data = (object) array(
+                        'request' => array(
+                            'url' => $url,
+                            'post' => "v2"
+                        ),
+                        'errors' => array($response)
+                    );
+                }
+
+                if ($_GET['vf_debug']) {
+                    echo 'response:<br />';
+                    krumo($data);
+                    echo '<br />';
+                }
+                //d($data);
+                return $data;
+
+                exit();
+            }
+        }
+
         $extra = array();
 
         if ($userfile) {
@@ -227,36 +341,42 @@ class Client
             if($config['resize'] === false){
                 $config['resize'] = 0;
             }
-            $params = $opts['venue_ide'] ."/".$opts['filename']."/".implode("/",$config)."/".$opts['type']."/".$opts['flyer_type'];
+            //$params = $opts['venue_ide'] ."/".$opts['filename']."/".implode("/",$config)."/".$opts['type']."/".$opts['flyer_type'];
             //d($config, $params);
-            $url = $vfolder_path."/v3/items/".$params."?oauth_token=mytoken";
+            //$url = $vfolder_path."/v3/items/".$params."?oauth_token=mytoken";
+            $url = $vfolder_path."/v3/items/get/?oauth_token=mytoken";
             //$url = "http://localdev.vfolder.com/v3/items/".$params."?oauth_token=mytoken";
         }else{
             $url = $this->getRequestUrl($url);
         }
+
         $curl = curl_init($url);
+        //d($curl);
 
         if ($opts['HTTPHEADER']) {
             if (!curl_setopt($curl, CURLOPT_HTTPHEADER, $opts['HTTPHEADER'])) {
                 static::handleCurlError($curl, 'CURLOPT_HTTPHEADER');
             }
         }
-
         if($post == "v2"){
-            if (!curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'))) {
-                static::handleCurlError($curl, 'CURLOPT_HTTPHEADER');
-            }
+            $v2post['method'] = "item";
+            $v2post['ide'] = $opts['ide'];
+            $v2post['filename'] = $opts['filename'];
+            $v2post['config'] = json_encode($config);
+            $v2post['type'] = $opts['type'];
+            $v2post['flyer_type'] = $opts['flyer_type'];
+            $v2post['folder'] = $opts['folder'];
+        }
+
+        $curl_timeout = 100;
+        if ($_GET['curl_timeout']) {
+            $curl_timeout = $_GET['curl_timeout'];
         }
 
         // make sure these ints are defined
         // you need curl version 7.16.2 for this to work:
         // define('CURLOPT_TIMEOUT_MS', 155);
         // define('CURLOPT_CONNECTTIMEOUT_MS', 156);
-
-        $curl_timeout = 10;
-        if ($_GET['curl_timeout']) {
-            $curl_timeout = $_GET['curl_timeout'];
-        }
 
         if (!curl_setopt($curl, CURLOPT_TIMEOUT, $curl_timeout)) {
             static::handleCurlError($curl, 'CURLOPT_TIMEOUT');
@@ -270,12 +390,18 @@ class Client
             static::handleCurlError($curl, 'CURLOPT_POST');
         }
 
-        if (!curl_setopt($curl, CURLOPT_POSTFIELDS, $post)) {
-            static::handleCurlError($curl, 'CURLOPT_POSTFIELDS');
+        if($post == "v2"){
+            if (!curl_setopt($curl, CURLOPT_POSTFIELDS, $v2post)) {
+                static::handleCurlError($curl, 'CURLOPT_POSTFIELDS');
+            }
+        }else{
+            if (!curl_setopt($curl, CURLOPT_POSTFIELDS, $post)) {
+                static::handleCurlError($curl, 'CURLOPT_POSTFIELDS');
+            }
         }
 
         if (!curl_setopt($curl, CURLOPT_RETURNTRANSFER, true)) {
-            static::handleCurlError($culr, 'CURLOPT_RETURNTRANSFER');
+            static::handleCurlError($curl, 'CURLOPT_RETURNTRANSFER');
         }
 
         $name = '\VF\Client::makeRequest: ' . $url;
@@ -291,10 +417,17 @@ class Client
         elapsed('end ' . $name);
 
         $error = curl_error($curl);
+        //d($response, $error);
         curl_close($curl);
         if ($error) {
             // there was a curl transmission error
-            $response = $error;
+            return (object) array(
+                'request' => array(
+                    'url' => $url,
+                    'post' => $post
+                ),
+                'errors' => array($error)
+            );
         }
 
         $data = json_decode($response);
@@ -317,7 +450,7 @@ class Client
             krumo($data);
             echo '<br />';
         }
-
+        //d($data);
         return $data;
 
     }
