@@ -344,11 +344,12 @@ class Client
         }
         if($post == "v2"){
             $v2post['method'] = "item";
-            $v2post['venue_ide'] = $opts['venue_ide'];
+            $v2post['ide'] = $opts['ide'];
             $v2post['filename'] = $opts['filename'];
             $v2post['config'] = json_encode($config);
             $v2post['type'] = $opts['type'];
             $v2post['flyer_type'] = $opts['flyer_type'];
+            $v2post['folder'] = $opts['folder'];
         }
 
         $curl_timeout = 100;
