@@ -133,6 +133,15 @@ class Client
                 $params['post'] = json_encode($args);
                 $params['files'] = json_encode($userfile);
 
+                $filename = $userfile['file']['name'];
+                $filedata = $userfile['file']['tmp_name'];
+                $filesize = $userfile['file']['size'];
+
+                $params['filename'] = $filename;
+                $params['filedata'] = "@$filedata";
+
+                $headers = array("Content-Type:multipart/form-data");
+
                 //$params = json_encode($params);
 
                 //d($params);
@@ -164,8 +173,16 @@ class Client
                     static::handleCurlError($curl, 'CURLOPT_POST');
                 }
 
+                if (!curl_setopt($curl, CURLOPT_HTTPHEADER, $headers)) {
+                    static::handleCurlError($curl, 'CURLOPT_HTTPHEADER');
+                }
+
                 if (!curl_setopt($curl, CURLOPT_POSTFIELDS, $params)) {
                     static::handleCurlError($curl, 'CURLOPT_POSTFIELDS');
+                }
+
+                if (!curl_setopt($curl, CURLOPT_INFILESIZE, $filesize)) {
+                    static::handleCurlError($curl, 'CURLOPT_INFILESIZE');
                 }
 
                 if (!curl_setopt($curl, CURLOPT_RETURNTRANSFER, true)) {
