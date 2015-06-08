@@ -100,16 +100,14 @@ class Client
         }
         
         if ($re->errors) {
-            // cache the error for 1 minute to give some relief to vf server
-            // only if this isn't already cached
-            if (!$re->cached) {
-                $re->cached = true;
-                mem($memkey, $re, static::$error_cache_duration);
-            }
             return $re;
         }
 
         // cache getItem request if no error
+        if($re->items){
+            $response = $re->items;
+            return $response;
+        }
         $response = $re->item;
         mem($memkey, $response);
         return $response;
