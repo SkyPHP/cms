@@ -8,13 +8,12 @@ namespace Sky\VF;
 class ImageManager
 {
 
-    public static $base_url = "http://vfolder.net/photos/";
-
     /**
     * Get event flyer, resized with imgix
     */
     public static function get_flyer($eventide, $flyer_type, $w, $h){ 
-        $imgix_base = self::$base_url;
+        global $vfolder_base_url;
+        $imgix_base = $vfolder_base_url;
         $imgix_w = "";
         $imgix_h = "";
         if(!is_null($w)){
