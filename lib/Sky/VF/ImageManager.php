@@ -17,10 +17,10 @@ class ImageManager
         $imgix_w = "";
         $imgix_h = "";
         if(!is_null($w)){
-            $imgix_w = "&w=".$w;
+            $imgix_w = "&amp;w=".$w;
         }
         if(!is_null($h)){
-            $imgix_h = "&h=".$h;
+            $imgix_h = "&amp;h=".$h;
         }
         $imgix_params = "?fit=crop".$imgix_w.$imgix_h;
 
@@ -80,10 +80,10 @@ class ImageManager
         $imgix_w = "";
         $imgix_h = "";
         if(!is_null($w)){
-            $imgix_w = "&w=".$w;
+            $imgix_w = "&amp;w=".$w;
         }
         if(!is_null($h)){
-            $imgix_h = "&h=".$h;
+            $imgix_h = "&amp;h=".$h;
         }
         $imgix_params = "?fit=crop".$imgix_w.$imgix_h;
 
