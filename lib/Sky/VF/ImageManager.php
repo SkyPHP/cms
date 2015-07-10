@@ -7,7 +7,6 @@ namespace Sky\VF;
  */
 class ImageManager
 {
-
     /**
     * Get event flyer, resized with imgix
     */
@@ -91,6 +90,50 @@ class ImageManager
         $img->src = $imgix_base . $image->venue_ide . "/" . $image->name . $imgix_params;
 
         return $img;
+    }
+
+    /**
+    * Grab appropriate alt_text for venue images
+    * $site = website_ide
+    */
+    public static function get_venue_image_alt_text($image, $site = NULL){
+        if(is_null($site) || $site == "0"){
+            $site = "default";
+        }
+
+        $alt_text_obj = json_decode($image->alt_text);
+
+        $alt_text = "";
+
+        if($alt_text_obj->$site != ""){
+            $alt_text = $alt_text_obj->$site;
+        }else{
+            $alt_text = $alt_text_obj->default;
+        }
+
+        return $alt_text;
+    }
+
+    /**
+    * Grab appropriate caption for venue images
+    * $site = website_ide
+    */
+    public static function get_venue_image_caption($image, $site = NULL){
+        if(is_null($site) || $site == "0"){
+            $site = "default";
+        }
+
+        $caption_obj = json_decode($image->caption);
+
+        $caption = "";
+
+        if($caption_obj->$site != ""){
+            $caption = $caption_obj->$site;
+        }else{
+            $caption = $caption_obj->default;
+        }
+
+        return $caption;
     }
 
     /** LEGACY **
