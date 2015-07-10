@@ -7,7 +7,6 @@ namespace Sky\VF;
  */
 class ImageManager
 {
-
     /**
     * Get event flyer, resized with imgix
     */
@@ -46,7 +45,7 @@ class ImageManager
     * Get a single venue image from the new system, with featured as priority
     * This system uses imgix for image manipulation
     */
-    public static function get_venue_image($venueide, $w, $h){
+    public static function get_venue_image($venueide, $w, $h, $site = NULL){
         $venue = new \Crave\Model\venue($venueide);
 
         $media_items = $venue->media_items;
@@ -56,13 +55,13 @@ class ImageManager
             if(stripos($media_items, 'featured":"1"')){
                 foreach($media as $image){
                     if($image->featured == 1){
-                        $img = self::get_venue_image_src($image, $w, $h);
+                        $img = self::get_venue_image_src($image, $w, $h, $site);
                         return $img;
                     }
                 }
             }else{
                 $image = $media[0];
-                $img = self::get_venue_image_src($image, $w, $h);
+                $img = self::get_venue_image_src($image, $w, $h, $site);
                 return $img;
             }
         }
@@ -73,8 +72,9 @@ class ImageManager
     /**
     * Get venue image imgix url
     * Must pass a single $image object from a media_items array
+    * $site = website_ide
     */
-    public static function get_venue_image_src($image, $w, $h){
+    public static function get_venue_image_src($image, $w, $h, $site = NULL){
         global $vfolder_base_url;
         $imgix_base = $vfolder_base_url;
         $imgix_w = "";
@@ -89,6 +89,31 @@ class ImageManager
 
         $img = new \stdClass();
         $img->src = $imgix_base . $image->venue_ide . "/" . $image->name . $imgix_params;
+
+        if(is_null($site) || $site == "0"){
+            $site = "default";
+        }
+
+        $alt_text_obj = json_decode($image->alt_text);
+        $caption_obj = json_decode($image->caption);
+
+        $alt_text = "";
+        $caption = "";
+
+        if($alt_text_obj->$site != ""){
+            $alt_text = $alt_text_obj->$site;
+        }else{
+            $alt_text = $alt_text_obj->default;
+        }
+
+        if($caption_obj->$site != ""){
+            $caption = $caption_obj->$site;
+        }else{
+            $caption = $caption_obj->default;
+        }
+
+        $img->alt_text = $alt_text;
+        $img->caption = $caption;
 
         return $img;
     }
