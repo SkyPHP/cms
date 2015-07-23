@@ -413,8 +413,10 @@ class Mailer
             }
             
             if ($result[0] && $result[0]['status']) {
+                d($this);
                 return 1 ;
             }else {
+                d($this);
                 $this->result = $result; 
             }
             
