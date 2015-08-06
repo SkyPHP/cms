@@ -1,4 +1,4 @@
-<?
+<?php
 
 if (Login::isLoggedIn()) {
 
