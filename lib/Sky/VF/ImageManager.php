@@ -42,6 +42,43 @@ class ImageManager
     }
 
     /**
+    * Get event flyer, using params [array]
+    */
+    public static function get_flyer_array($params){
+
+        global $vfolder_base_url;
+    
+        $imgix_base = $vfolder_base_url;
+        $imgix_w = "";
+        $imgix_h = "";
+        if(!is_null($params['width'])){
+            $imgix_w = "&amp;w=".$params['width'];
+        }
+        if(!is_null($params['height'])){
+            $imgix_h = "&amp;h=".$params['height'];
+        }
+        $imgix_params = "?fit=crop".$imgix_w.$imgix_h;
+
+        $media = json_decode($params['media_items']);
+
+
+        $flyers = [] ;
+        if($media){
+            foreach ($media as $type => $image) {
+                $flyers[$type] = $image; 
+            } 
+        }
+        $flyer_type = $params['type'];
+
+        $flyer = "";
+        if(isset($flyers[$flyer_type]) && $flyers[$flyer_type] != ""){
+            $flyer = $imgix_base . "events/" . $params['ide'] . "/". $flyer_type ."/" . $flyers[$flyer_type] . $imgix_params;
+        }
+
+        return $flyer;
+    }
+
+    /**
     * Get a single venue image from the new system, with featured as priority
     * This system uses imgix for image manipulation
     */
