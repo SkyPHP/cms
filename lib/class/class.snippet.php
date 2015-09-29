@@ -69,12 +69,13 @@ class snippet {
  * @param array $param array of parameters: i.e. name, selected_value, onchange
  * @return true on success
  */
-	function dropdown($array,$param=NULL) {
+	function dropdown($array,$param=NULL) { 
 		$name = $param['name'];
 		if (!$param['id']) $param['id'] = $name;
 		echo '<select name="' . $name . '" id="' . $param['id'] . '"' . '" class="' . $param['class'] . '"';
 		if ($param['onchange']) echo ' onchange="' . $param['onchange'] . '"';
 		if ($param['class']) echo ' class="' . $param['class'] . '"';
+		if ($param['required']) echo $param['required'];
 		echo '>' . "\n";
 		if ( $param['null_option'] !== false ) echo "\t" . '<option value="">' . $param['null_option'] . '</option>';
 		foreach ($array as $value => $option) {
