@@ -111,7 +111,7 @@ class ImageManager
     * Must pass a single $image object from a media_items array
     * $site = website_ide
     */
-    public static function get_venue_image_src($image, $w, $h, $site = NULL){
+    public static function get_venue_image_src($image, $w = NULL, $h = NULL, $site = NULL){
         global $vfolder_base_url;
         $imgix_base = $vfolder_base_url;
         $imgix_w = "";
@@ -159,7 +159,7 @@ class ImageManager
     * Get a single venue image from the new system, with featured as priority
     * This is the old way, by using the vf::getItem function to manipulate the image
     */
-    public static function get_venue_image_vf($venueide, $w, $h){
+    public static function get_venue_image_vf($venueide, $w = NULL, $h = NULL){
         $venue = new \Crave\Model\venue($venueide);
 
         $media_items = $venue->media_items;
