@@ -63,7 +63,8 @@ include 'pages/dev/dev-nav.php';
         } else {
             $ide = $this->ide;
             $id = decrypt($ide);
-            if (!$id) {
+            if (!is_numeric($id)) {
+
                 $sql = 'SELECT tablename
                         FROM pg_tables
                         WHERE schemaname = \'public\'
@@ -73,7 +74,7 @@ include 'pages/dev/dev-nav.php';
                 foreach ($tables as $table) {
                     $tablename = $table['tablename'];
                     $id = decrypt($ide, $tablename);
-                    if ($id) break;
+                    if (is_numeric($id)) break;
                 }
 
             }
@@ -99,7 +100,7 @@ include 'pages/dev/dev-nav.php';
 
 <?php
 
-            print_a($aql_data);
+            print_a((array)$aql_data);
             elapsed('before getting cols');
 
             $column_name = $tablename . "_id";
