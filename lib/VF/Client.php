@@ -405,18 +405,19 @@ class Client
             static::handleCurlError($curl, 'CURLOPT_RETURNTRANSFER');
         }
 
+
         $name = '\VF\Client::makeRequest: ' . $url;
         elapsed('begin ' . $name);
 
         if ($_GET['vf_debug']) {
 
             echo $url . '<br />POST:';
-            krumo($post);
+            d($url, $post);
         }
 
         $response = curl_exec($curl);
         elapsed('end ' . $name);
-
+        
         $error = curl_error($curl);
         //d($response, $error);
         curl_close($curl);
@@ -448,7 +449,7 @@ class Client
 
         if ($_GET['vf_debug']) {
             echo 'response:<br />';
-            krumo($data);
+            d($data);
             echo '<br />';
         }
         //d($data);

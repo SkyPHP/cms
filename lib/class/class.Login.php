@@ -19,6 +19,10 @@ class Login {
 	public $person;
 
 	public function __construct($username = null, $password = null, $extra = array()) {
+
+		// make sure there's no caching 
+		$_GET['refresh'] = 1 ;
+
 		$this->post_username = addslashes(trim($username));
 		$this->post_password = addslashes(trim($password));
 		$this->post_remember_me = $extra['remember_me'];

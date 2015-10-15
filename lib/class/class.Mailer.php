@@ -443,9 +443,8 @@ class Mailer
      */
 
 
-    public function inc($name,  $data )
+    public function inc($name,  $data = null)
     {
-
 
         // if(!is_array($data))
         //         $data = \Sky\DataConversion::objectToArray($data);
