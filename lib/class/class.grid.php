@@ -12,7 +12,7 @@ class grid {
             $limit,
             $clause_array,
             $order_by,
-            $table_class = 'listing',
+            $table_class,
             $empty_message = 'No Results',
             $style;
 
@@ -71,74 +71,76 @@ class grid {
 
     public function table() {
         $this->run();
-
         if ($this->pagination->rs) {
 ?>          
             <table class="<?=$this->table_class?>">
-                <tr>
-<?
-                foreach ( $this->columns as $column ) {
-                    if ( !$column['th_class'] ) $column['th_class'] = $column['class'];
-                    if ( !$column['th_style'] ) $column['th_style'] = $column['style'];
-                    $th_attr = '';
-                    if ( $column['th_id'] ) $th_attr .= ' id="' . $column['th_id'] . '"';
-                    if ( $column['th_class'] ) $th_attr .= ' class="' . $column['th_class'] . '"';
-                    if ( $column['th_style'] ) $th_attr .= ' style="' . $column['th_style'] . '"';
-?>
-                    <th<?=$th_attr?>>
-                        <?=$column['th']?>
-                    </th>
-<?
-                }
-?>
-                </tr>
+                <thead>
+                    <tr>
+    <?
+                    foreach ( $this->columns as $column ) {
+                        if ( !$column['th_class'] ) $column['th_class'] = $column['class'];
+                        if ( !$column['th_style'] ) $column['th_style'] = $column['style'];
+                        $th_attr = '';
+                        if ( $column['th_id'] ) $th_attr .= ' id="' . $column['th_id'] . '"';
+                        if ( $column['th_class'] ) $th_attr .= ' class="' . $column['th_class'] . '"';
+                        if ( $column['th_style'] ) $th_attr .= ' style="' . $column['th_style'] . '"';
+    ?>
+                        <th<?=$th_attr?>>
+                            <?=$column['th']?>
+                        </th>
+    <?
+                    }
+    ?>
+                    </tr>
+                </thead>
+                <tbody>
 <?
             foreach ( $this->pagination->rs as &$r ) {
 ?>
-                <tr>
-<?
-                foreach ( $this->columns as $column ) {
-                    if ( !$column['td_class'] ) $column['td_class'] = $column['class'];
-                    if ( !$column['td_style'] ) $column['td_style'] = $column['style'];
-                    $td_attr = '';
-                    if ( $column['td_id'] ) $td_attr .= ' id="' . $column['td_id'] . '"';
-                    if ( $column['td_class'] ) $td_attr .= ' class="' . $column['td_class'] . '"';
-                    if ( $column['td_style'] ) $td_attr .= ' style="' . $column['td_style'] . '"';
-?>
-                    <td<?=$td_attr?>>
-<?
-                    if ( is_callable($column['td']) ) {
-                        echo $column['td']($r);
-                    } else if ( strpos( $column['td'], '->' )) {
-                        $keys = explode('->', $column['td']);
-                        $val = $r[array_shift($keys)];
-                        foreach ($keys as $key) {
-                            if (is_array($val)) $val = $val[$key];
+                    <tr>
+    <?  
+                    foreach ( $this->columns as $column ) {
+                        if ( !$column['td_class'] ) $column['td_class'] = $column['class'];
+                        if ( !$column['td_style'] ) $column['td_style'] = $column['style'];
+                        $td_attr = '';
+                        if ( $column['td_id'] ) $td_attr .= ' id="' . $column['td_id'] . '"';
+                        if ( $column['td_class'] ) $td_attr .= ' class="' . $column['td_class'] . '"';
+                        if ( $column['td_style'] ) $td_attr .= ' style="' . $column['td_style'] . '"';
+    ?>
+                        <td<?=$td_attr?>>
+    <?
+                        if ( is_callable($column['td']) ) {
+                            echo $column['td']($r);
+                        } else if ( strpos( $column['td'], '->' )) {
+                            $keys = explode('->', $column['td']);
+                            $val = $r->{array_shift($keys)};
+                            foreach ($keys as $key) {
+                                if (is_array($val)) $val = $val[$key];
+                            }
+                            echo $val;
+                        } else if ( strpos( $column['td'], '.php' ) ) {
+                            $this->get_incpath();
+                            include( $this->incpath . '/' . $column['td'] );
+                        } else if ( array_key_exists($column['td'],$r) ) {
+                            echo $r->{$column['td']}; 
+                        } else {
+                            echo $column['td'];
                         }
-                        echo $val;
-                    } else if ( strpos( $column['td'], '.php' ) ) {
-                        $this->get_incpath();
-                        include( $this->incpath . '/' . $column['td'] );
-                    } else if ( array_key_exists($column['td'],$r) ) {
-                        echo $r->{$column['td']}; 
-                    } else {
-                        echo $column['td'];
+    ?>
+                        </td>
+    <?
                     }
-?>
-                    </td>
-<?
-                }
-?>
-                </tr>
+    ?>
+                    </tr>
 <?
             }
 ?>
+                <tbody>
             </table>
 <?
         } else {
             echo $this->empty_message;
         }
-
     }
 
     public function showing() {
