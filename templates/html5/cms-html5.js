@@ -1,6 +1,6 @@
 $(function(){
 
-    $('.pagination-limit').on('change',function() {
+    $('.pagination-limit').change(function() {
 
         var $this   = $(this),
             name    = $this.attr('name'),
@@ -21,7 +21,7 @@ $(function(){
 
     });
 
-    $('#skybox_error .ui-icon-circle-close').off().on('click', function() {
+    $('#skybox_error .ui-icon-circle-close').live('click', function() {
         $.skyboxHide();
         return false;
     });
