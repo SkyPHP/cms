@@ -1,6 +1,6 @@
 $(function(){
 
-    $('.pagination-limit').change(function() {
+    $('.pagination-limit').live('change',function() {
 
         var $this   = $(this),
             name    = $this.attr('name'),
