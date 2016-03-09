@@ -73,8 +73,8 @@ if ( $template_area == 'top' ) {
     }
 ?>
 
-    <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     
 <?php
     if (true) echo $this->javascript();
