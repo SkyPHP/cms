@@ -46,9 +46,10 @@ class ImageManager
     */
     public static function get_flyer_array($params){
 
-        global $vfolder_base_url;
+        global $imgix_base_url;
     
-        $imgix_base = $vfolder_base_url;
+        $imgix_base = $imgix_base_url;
+        d($imgix_base, $params);
         $imgix_w = "";
         $imgix_h = "";
         if(!is_null($params['width'])){
@@ -112,8 +113,8 @@ class ImageManager
     * $site = website_ide
     */
     public static function get_venue_image_src($image, $w = NULL, $h = NULL, $site = NULL){
-        global $vfolder_base_url;
-        $imgix_base = $vfolder_base_url;
+        global $imgix_base_url;
+        $imgix_base = $imgix_base_url;
         $imgix_w = "";
         $imgix_h = "";
         if(!is_null($w)){
