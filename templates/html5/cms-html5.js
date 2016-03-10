@@ -21,7 +21,7 @@ $(function(){
 
     });
 
-    $('#skybox_error .ui-icon-circle-close').off().on('click', function() {
+    $('#skybox_error .ui-icon-circle-close').on('click', function() {
         $.skyboxHide();
         return false;
     });
