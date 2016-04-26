@@ -4,11 +4,9 @@
  * @package SkyPHP
  * @todo    Add ability to to send Attachments
  */
-class Mailer
-{
+class Mailer {
 
-
-    public $result = null ;
+    public $result = null;
 
     /**
      * @var string
@@ -28,23 +26,18 @@ class Mailer
         'text' => ''
     );
 
-
-
+    /**
+     * @var string
+     *
+     * localhost : the traditional PHP's mail method
+     * mandrill  : mandrill's API, require $credentials with username/password
+     */
+    public $method = 'localhost';
 
     /**
-    * @var string
-    * 
-    * localhost : the traditional PHP's mail method
-    * mandrill  : mandrill's API, require $credentials with username/password 
-    */
-    public $method = 'localhost' ;
-
-
-    /**
-    * @var object 
-    */ 
-    public $credentials = null; 
-
+     * @var object
+     */
+    public $credentials = null;
 
     /**
      * @var array
@@ -81,7 +74,7 @@ class Mailer
      */
     public $bcc = array();
 
-     /**
+    /**
      * @var string
      */
     public $headers;
@@ -92,10 +85,9 @@ class Mailer
     public $content_type;
 
     /**
-    *  @var object
-    */
-    public $data; 
-
+     *  @var object
+     */
+    public $data;
 
     /**
      * Sets properties based on args if they are set
@@ -104,8 +96,7 @@ class Mailer
      * @param   string  $body
      * @param   string  $from
      */
-    public function __construct($to = null, $subject = null, $body = null, $from = null)
-    {
+    public function __construct($to = null, $subject = null, $body = null, $from = null) {
         $this->from = self::$from_default;
 
         if ($to) {
@@ -129,8 +120,7 @@ class Mailer
      * Sets the default FROM value
      * @param   string  $from
      */
-    public static function setDefaultFrom($from)
-    {
+    public static function setDefaultFrom($from) {
         self::$from_default = $from;
     }
 
@@ -139,8 +129,7 @@ class Mailer
      * @param   string  $s
      * @return  $this
      */
-    public function setFrom($s)
-    {
+    public function setFrom($s) {
         $this->from = $s;
         return $this;
     }
@@ -150,8 +139,7 @@ class Mailer
      * @param   string  $s
      * @return  $this
      */
-    public function setReplyTo($s)
-    {
+    public function setReplyTo($s) {
         $this->reply_to = $s;
         return $this;
     }
@@ -161,21 +149,17 @@ class Mailer
      * @param   string  $s
      * @return  $this
      */
-    public function setSubject($s)
-    {
+    public function setSubject($s) {
         $this->subject = $s;
         return $this;
     }
-
-
 
     /**
      * Sets the delivery method
      * @param   string  $s
      * @return  $this
      */
-    public function setMethod($s)
-    {
+    public function setMethod($s) {
         $this->method = $s;
         return $this;
     }
@@ -185,9 +169,8 @@ class Mailer
      * @param   string  $s
      * @return  $this
      */
-    public function setBody($s)
-    {
-        
+    public function setBody($s) {
+
         $this->body = $s;
 
         return $this;
@@ -198,8 +181,7 @@ class Mailer
      * @return  string
      * @throws  Exception   if FROM not set
      */
-    public function makeHeaders()
-    {
+    public function makeHeaders() {
         if ($this->headers) {
             return $this->headers;
         }
@@ -211,7 +193,7 @@ class Mailer
         $this->headers = $this->content_type;
 
         if ($this->from) {
-            $this->headers .= 'From: '.$this->from."\r\n";
+            $this->headers .= 'From: ' . $this->from . "\r\n";
         }
 
         if ($this->reply_to) {
@@ -219,11 +201,11 @@ class Mailer
         }
 
         foreach ($this->cc as $cc) {
-            $this->headers .= 'Cc: '.$cc."\r\n";
+            $this->headers .= 'Cc: ' . $cc . "\r\n";
         }
 
         foreach ($this->bcc as $bcc) {
-            $this->headers .= 'Bcc: '.$bcc."\r\n";
+            $this->headers .= 'Bcc: ' . $bcc . "\r\n";
         }
 
         return $this->headers;
@@ -234,9 +216,8 @@ class Mailer
      * @param string  $type
      * @return  $this
      */
-    public function setContentType($type)
-    {
-        $this->content_type = self::$contents[$type];
+    public function setContentType($type) {
+      $this->content_type = self::$contents[$type];
         return $this;
     }
 
@@ -244,8 +225,7 @@ class Mailer
      * @param   ...     emails
      * @return  $this
      */
-    public function addCc()
-    {
+    public function addCc() {
         return $this->_append('cc', func_get_args());
     }
 
@@ -253,8 +233,7 @@ class Mailer
      * @param   ...     emails
      * @return  $this
      */
-    public function addBcc()
-    {
+    public function addBcc() {
         return $this->_append('bcc', func_get_args());
     }
 
@@ -262,8 +241,7 @@ class Mailer
      * @param   ...     emails
      * @return  $this
      */
-    public function addTo()
-    {
+    public function addTo() {
         return $this->_append('to', func_get_args());
     }
 
@@ -273,10 +251,9 @@ class Mailer
      * @param   array   $args
      * @return  $this
      */
-    private function _append($arr, $args)
-    {
-        if(!$args)
-            return ;
+    private function _append($arr, $args) {
+        if (!$args)
+            return;
 
         foreach ($args as $arg) {
             $arg = arrayify($arg);
@@ -291,16 +268,14 @@ class Mailer
     /**
      * @return  string
      */
-    public function makeSubject()
-    {
-        return $this->subject ?: '(no subject)';
+    public function makeSubject() {
+        return $this->subject ? : '(no subject)';
     }
 
     /**
      * @return  string
      */
-    public function makeTo()
-    {
+    public function makeTo() {
         return implode(',', $this->to);
     }
 
@@ -308,130 +283,189 @@ class Mailer
      * Sends the email
      * @return  Boolean
      */
-    public function send()
-    {
+    public function send() {
         $mail = new stdClass;
         $mail->to = $this->makeTo();
         $mail->subject = $this->makeSubject();
         $mail->body = $this->body;
         $mail->headers = $this->makeHeaders();
-        $mail->from = $this->from ; 
-        
+        $mail->from = $this->from;
 
-        if($this->method == 'mandrill'){
+
+        if ($this->method == 'mandrill') {
             return $this->send_mandrill($mail);
         }
-        
+
         return $this->send_local($mail);
     }
 
-
     /**
-    * Send email using localhost
-    * @param    string  $mail   well formed mail object  - must contain : to, subject, body 
-    */
-    function send_local ($mail){
+     * Send email using localhost
+     * @param    string  $mail   well formed mail object  - must contain : to, subject, body
+     */
+    function send_local($mail) {
         return @mail(
-            $mail->to,
-            $mail->subject,
-            $mail->body,
-            $mail->headers
+            $mail->to, $mail->subject, $mail->body, $mail->headers
         );
     }
 
     /**
-    * Send email using mandrill
-    * @param    string  $mail   well formed mail object  - must contain : to, subject, body 
-    */
+     * Send email using mandrill
+     * @param    string  $mail   well formed mail object  - must contain : to, subject, body
+
     function send_mandrill ($mail){
 
-        global $message; 
-
-        
-        // add the mandrill's API library 
-        require_once 'lib/mandrill/Mandrill.php';
-
-        $mandrill = new Mandrill($this->credentials->api);
-
-        
-            $message = array(
-                'html' => $mail->body,
-
-                'from_email' => $mail->from,
-                'from_name' => "Crave Tickets",
-
-                //'text' => 'Example text content',
-                'subject' => $mail->subject,
-                'to' => array(
-                    array(
-                        'email' => $mail->to,
-                        )
-                    )
-                );
+    global $message;
 
 
-            if($this->bcc && count($this->bcc)){
+    // add the mandrill's API library
+    require_once 'lib/mandrill/Mandrill.php';
 
-                array_walk($this->bcc , function ($value){
-                    global $message;
-
-                    if($value && stristr($value, '@')){
+    $mandrill = new Mandrill($this->credentials->api);
 
 
-                        $message['to'][] = [
-                            'email' => $value, 
-                            'type' => 'bcc'
-                        ];
-                    }
+    $message = array(
+    'html' => $mail->body,
 
-                });
-            }
+    'from_email' => $mail->from,
+    'from_name' => "Crave Tickets",
 
-
-            if($this->cc && count($this->cc)){
-
-                array_walk($this->cc , function ($value){
-                    global $message;
-
-                    if($value && stristr($value, '@')){
+    //'text' => 'Example text content',
+    'subject' => $mail->subject,
+    'to' => array(
+    array(
+    'email' => $mail->to,
+    )
+    )
+    );
 
 
-                        $message['to'][] = [
-                            'email' => $value, 
-                            'type' => 'cc'
-                        ];
-                    }
+    if($this->bcc && count($this->bcc)){
 
-                });
-            }
-            
-            
-            $result = $mandrill->messages->send($message, true);
+    array_walk($this->bcc , function ($value){
+    global $message;
 
-            if($_GET['debug'] && $_GET['elapsed']) {
-                d($result, $mandril, $result);
-            }
-            
-            if ($result[0] && $result[0]['status'] == "sent") {
-                return $result;
-                //return 1 ;
-            }else {
-                $this->result = $result; 
-            }
-            
+    if($value && stristr($value, '@')){
 
+
+    $message['to'][] = [
+    'email' => $value,
+    'type' => 'bcc'
+    ];
+    }
+
+    });
     }
 
 
+    if($this->cc && count($this->cc)){
+
+    array_walk($this->cc , function ($value){
+    global $message;
+
+    if($value && stristr($value, '@')){
+
+
+    $message['to'][] = [
+    'email' => $value,
+    'type' => 'cc'
+    ];
+    }
+
+    });
+    }
+
+
+    $result = $mandrill->messages->send($message, true);
+
+    if($_GET['debug'] && $_GET['elapsed']) {
+    d($result, $mandril, $result);
+    }
+
+    if ($result[0] && $result[0]['status'] == "sent") {
+    return $result;
+    //return 1 ;
+    }else {
+    $this->result = $result;
+    }
+
+
+    }
+     */
+
     /**
-    * @param    object  $creds  credentials are specific for delivery method
-    */
-    function setCredentials ($creds){
+     * Send email using mandrill
+     * @param    string  $mail   well formed mail object  - must contain : to, subject, body
+     */
+    function send_mandrill($mail) {
+
+        global $message;
+
+
+        // add the mandrill's API library
+        require_once 'lib/swiftmailer/lib/swift_required.php';
+
+        $transport = Swift_SmtpTransport::newInstance('email-smtp.us-east-1.amazonaws.com', 465, "ssl")
+            ->setUsername('AKIAJYKJKNQB43F6FXUQ')
+            ->setPassword('Apno4gG/6dwsN4BnVNrK3EPZB6XqOCAg7+TtYhZatjSE');
+
+        $message = Swift_Message::newInstance();
+
+        $message->setSubject($mail->subject);
+        $message->setBody($mail->body,'text/html');
+        $message->setFrom("services@cravetickets.com", "Crave Tickets");
+        $message->setTo(array(
+            $mail->to => ""
+        ));
+
+
+        if ($this->bcc && count($this->bcc)) {
+
+            array_walk($this->bcc, function ($value) {
+                global $message;
+
+                if ($value && stristr($value, '@')) {
+                    $message->setBcc(array($value => ""));
+                }
+            });
+        }
+
+
+        if ($this->cc && count($this->cc)) {
+
+            array_walk($this->cc, function ($value) {
+                global $message;
+
+                if ($value && stristr($value, '@')) {
+                    $message->setCc(array($value => ""));
+                }
+            });
+        }
+
+        $mailer = Swift_Mailer::newInstance($transport);
+
+        $result = $mailer->send($message);
+
+        if ($_GET['debug'] && $_GET['elapsed']) {
+            d($result, $mandril, $result);
+        }
+
+        if ($result[0] && $result[0]['status'] == "sent") {
+            return $result;
+            //return 1 ;
+        } else {
+            $this->result = $result;
+        }
+    }
+
+    /**
+     * @param    object  $creds  credentials are specific for delivery method
+     */
+    function setCredentials($creds) {
 
         $this->credentials = $creds;
         return $this;
     }
-
 
     /**
      * Includes the template and sets the body of the email with it
@@ -441,16 +475,12 @@ class Mailer
      * @throws  Exception   if using a Mailer template and there is no inc_dir
      * @throws  Excpetion   if the file to include does not exist
      */
-
-
-    public function inc($name,  $data = null)
-    {
+    public function inc($name, $data = null) {
 
         // if(!is_array($data))
         //         $data = \Sky\DataConversion::objectToArray($data);
-
         //     d($data);
-        $this->data = (object)$data;
+        $this->data = (object) $data;
 
 
         if (strpos($name, '.php')) {
@@ -476,8 +506,7 @@ class Mailer
      * @param   mixed   $data   should be an associative array or stdClass
      * @return  string
      */
-    private function _includeTemplate($_include, $data)
-    {
+    private function _includeTemplate($_include, $data) {
         ob_start();
         include $_include;
         $r = ob_get_contents();
