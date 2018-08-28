@@ -12,7 +12,8 @@ class ImageManager
     */
     public static function get_flyer($eventide, $flyer_type, $w, $h){ 
         global $vfolder_base_url;
-        $imgix_base = $vfolder_base_url;
+        global $imgix_base_url;
+        $imgix_base = $imgix_base_url;
         $imgix_w = "";
         $imgix_h = "";
         if(!is_null($w)){
@@ -47,8 +48,8 @@ class ImageManager
     public static function get_flyer_array($params){
 
         global $vfolder_base_url;
-    
-        $imgix_base = $vfolder_base_url;
+        global $imgix_base_url;
+        $imgix_base = $imgix_base_url;
         $imgix_w = "";
         $imgix_h = "";
         if(!is_null($params['width'])){
